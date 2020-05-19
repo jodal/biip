@@ -17,6 +17,10 @@ pytest = "^5.2"
 black = {version = "^19.10b0", allow-prereleases = true}
 coverage = {extras = ["toml"], version = "^5.1"}
 pytest-cov = "^2.8.1"
+flake8 = "^3.8.1"
+flake8-bugbear = "^20.1.4"
+flake8-import-order = "^0.18.1"
+flake8-black = "^0.1.2"
 
 [tool.black]
 target-version = ["py37", "py38"]

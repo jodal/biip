@@ -6,3 +6,12 @@ def tests(session):
     args = session.posargs or ["--cov"]
     session.run("poetry", "install", external=True)
     session.run("pytest", *args)
+
+
+@nox.session(python="3.8")
+def flake8(session):
+    args = session.posargs or []
+    session.install(
+        "flake8", "flake8-black", "flake8-bugbear", "flake8-import-order"
+    )
+    session.run("flake8", *args)
