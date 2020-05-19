@@ -25,6 +25,7 @@ mypy = "^0.770"
 flake8-annotations = "^2.1.0"
 flake8-docstrings = "^1.5.0"
 darglint = "^1.3.0"
+xdoctest = "^0.12.0"
 
 [tool.black]
 target-version = ["py37", "py38"]

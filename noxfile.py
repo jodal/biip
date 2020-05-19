@@ -3,6 +3,7 @@
 import nox
 
 
+package = "biip"
 locations = ["src", "tests", "noxfile.py"]
 
 
@@ -36,3 +37,12 @@ def mypy(session):
     args = session.posargs or locations
     session.install("mypy")
     session.run("mypy", *args)
+
+
+@nox.session(python=["3.7", "3.8"])
+def xdoctest(session):
+    """Run examples with xdoctest."""
+    args = session.posargs or ["all"]
+    session.run("poetry", "install", "--no-dev", external=True)
+    session.install("xdoctest")
+    session.run("python", "-m", "xdoctest", package, *args)
