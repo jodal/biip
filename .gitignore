@@ -1,4 +1,5 @@
 *.egg-info/
+/.coverage
 /.venv/
 /poetry.lock
 __pycache__/
