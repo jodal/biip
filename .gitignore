@@ -4,5 +4,6 @@
 /.nox/
 /.python-version
 /.venv/
+/dist/
 /poetry.lock
 __pycache__/
