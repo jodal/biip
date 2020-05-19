@@ -1,5 +1,7 @@
 *.egg-info/
 /.coverage
+/.nox/
+/.python-version
 /.venv/
 /poetry.lock
 __pycache__/
