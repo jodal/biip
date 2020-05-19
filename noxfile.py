@@ -15,7 +15,7 @@ def tests(session):
     session.run("pytest", *args)
 
 
-@nox.session(python="3.8")
+@nox.session(python=["3.7", "3.8"])
 def flake8(session):
     """Lint using flake8."""
     args = session.posargs or locations
@@ -31,7 +31,7 @@ def flake8(session):
     session.run("flake8", *args)
 
 
-@nox.session(python="3.8")
+@nox.session(python=["3.7", "3.8"])
 def mypy(session):
     """Type-check using mypy."""
     args = session.posargs or locations
