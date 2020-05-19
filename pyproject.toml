@@ -23,6 +23,7 @@ flake8-import-order = "^0.18.1"
 flake8-black = "^0.1.2"
 mypy = "^0.770"
 flake8-annotations = "^2.1.0"
+flake8-docstrings = "^1.5.0"
 
 [tool.black]
 target-version = ["py37", "py38"]

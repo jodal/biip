@@ -1,3 +1,5 @@
+"""Nox sessions."""
+
 import nox
 
 
@@ -6,6 +8,7 @@ locations = ["src", "tests", "noxfile.py"]
 
 @nox.session(python=["3.7", "3.8"])
 def tests(session):
+    """Run the test suite."""
     args = session.posargs or ["--cov"]
     session.run("poetry", "install", external=True)
     session.run("pytest", *args)
@@ -13,12 +16,14 @@ def tests(session):
 
 @nox.session(python="3.8")
 def flake8(session):
+    """Lint using flake8."""
     args = session.posargs or locations
     session.install(
         "flake8",
         "flake8-annotations",
         "flake8-black",
         "flake8-bugbear",
+        "flake8-docstrings",
         "flake8-import-order",
     )
     session.run("flake8", *args)
@@ -26,6 +31,7 @@ def flake8(session):
 
 @nox.session(python="3.8")
 def mypy(session):
+    """Type-check using mypy."""
     args = session.posargs or locations
     session.install("mypy")
     session.run("mypy", *args)
