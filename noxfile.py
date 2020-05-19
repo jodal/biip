@@ -15,7 +15,11 @@ def tests(session):
 def flake8(session):
     args = session.posargs or locations
     session.install(
-        "flake8", "flake8-black", "flake8-bugbear", "flake8-import-order"
+        "flake8",
+        "flake8-annotations",
+        "flake8-black",
+        "flake8-bugbear",
+        "flake8-import-order",
     )
     session.run("flake8", *args)
 
