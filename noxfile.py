@@ -19,6 +19,7 @@ def flake8(session):
     """Lint using flake8."""
     args = session.posargs or locations
     session.install(
+        "darglint",
         "flake8",
         "flake8-annotations",
         "flake8-black",
