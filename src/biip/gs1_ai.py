@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+import pathlib
 from dataclasses import dataclass
 from typing import Optional, Type
 
@@ -82,13 +84,11 @@ def get_predefined_length(value: str) -> Optional[int]:
     }.get(ai_prefix)
 
 
+_GS1_APPLICATION_IDENTIFIERS_FILE = (
+    pathlib.Path(__file__).parent / "gs1_ai.json"
+)
+
 _GS1_APPLICATION_IDENTIFIERS = [
-    GS1ApplicationIdentifier(
-        ai="01",
-        description="Global Trade Item Number (GTIN)",
-        data_title="GTIN",
-        fnc1_required=False,
-        format="N2+N14",
-        pattern=r"^01(\d{14})$",
-    )
+    GS1ApplicationIdentifier(**kwargs)
+    for kwargs in json.loads(_GS1_APPLICATION_IDENTIFIERS_FILE.read_text())
 ]

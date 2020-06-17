@@ -28,7 +28,7 @@ def test_get_predefined_length(value: str, length: Optional[int]) -> None:
     assert get_predefined_length(value) == length
 
 
-@pytest.mark.parametrize("unknown_ai", ["abcdef", "999999"])
+@pytest.mark.parametrize("unknown_ai", ["abcdef", "3376999999"])
 def test_unknown_gs1_ai(unknown_ai: str) -> None:
     with pytest.raises(ParseError) as exc_info:
         GS1ApplicationIdentifier.extract(unknown_ai)
