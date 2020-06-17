@@ -37,10 +37,18 @@ class GS1ApplicationIdentifier:
             ``GS1ApplicationIdentifier` with metadata on the AI.
 
         Raises:
+            TypeError: If the input isn't str or bytes.
             ParseError: If the parsing fails.
         """
+        if isinstance(value, str):
+            data = value.encode()
+        elif isinstance(value, bytes):
+            data = value
+        else:
+            raise TypeError(f"Expected str or bytes, got {type(value)}.")
+
         for application_identifier in _GS1_APPLICATION_IDENTIFIERS:
-            if value.startswith(application_identifier.ai):
+            if data.startswith(application_identifier.ai.encode()):
                 return application_identifier
 
         raise ParseError(
