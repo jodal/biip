@@ -2,7 +2,48 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from dataclasses import dataclass
+from typing import Optional, Type
+
+from biip import ParseError
+
+
+@dataclass
+class GS1ApplicationIdentifier:
+    """Application Identifier assigned by GS1.
+
+    Source: https://www.gs1.org/standards/barcodes/application-identifiers
+    """
+
+    ai: str
+    description: str
+    data_title: str
+    fnc1_required: bool
+    format: str
+    pattern: str
+
+    @classmethod
+    def extract(
+        cls: Type[GS1ApplicationIdentifier], value: str
+    ) -> GS1ApplicationIdentifier:
+        """Extract the GS1 Application Identifier (AI) from the given value.
+
+        Args:
+            value: The string to extract an AI from.
+
+        Returns:
+            ``GS1ApplicationIdentifier` with metadata on the AI.
+
+        Raises:
+            ParseError: If the parsing fails.
+        """
+        for application_identifier in _GS1_APPLICATION_IDENTIFIERS:
+            if value.startswith(application_identifier.ai):
+                return application_identifier
+
+        raise ParseError(
+            f"Failed to get GS1 Application Identifier from {value!r}."
+        )
 
 
 def get_predefined_length(value: str) -> Optional[int]:
@@ -39,3 +80,15 @@ def get_predefined_length(value: str) -> Optional[int]:
         "36": 10,
         "41": 16,
     }.get(ai_prefix)
+
+
+_GS1_APPLICATION_IDENTIFIERS = [
+    GS1ApplicationIdentifier(
+        ai="01",
+        description="Global Trade Item Number (GTIN)",
+        data_title="GTIN",
+        fnc1_required=False,
+        format="N2+N14",
+        pattern=r"^01(\d{14})$",
+    )
+]
