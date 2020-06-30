@@ -1,6 +1,6 @@
 <h1 align="center">
    &#x1F4E6;<br>
-   grotten
+   Biip
 </h1>
 
 <p align="center">
@@ -8,8 +8,12 @@
 </p>
 
 <p align="center">
-  [![Tests](https://github.com/jodal/biip/workflows/Tests/badge.svg)](https://github.com/jodal/biip/actions?workflow=Tests)
-  [![PyPI](https://img.shields.io/pypi/v/biip.svg)](https://pypi.org/project/biip/)
+  <a href="https://github.com/jodal/biip/actions?workflow=Tests">
+    <img src="https://github.com/jodal/biip/workflows/Tests/badge.svg" alt="Tests">
+  </a>
+  <a href="https://pypi.org/project/biip/">
+    <img src="https://img.shields.io/pypi/v/biip.svg" alt="PyPI">
+  </a>
 </p>
 
 ---
