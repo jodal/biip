@@ -25,6 +25,26 @@ class GS1ApplicationIdentifier:
     pattern: str
 
     @classmethod
+    def get(
+        cls: Type[GS1ApplicationIdentifier], value: str
+    ) -> GS1ApplicationIdentifier:
+        """Lookup the given GS1 Application Identifier (AI).
+
+        Args:
+            value: The AI code, e.g. "01".
+
+        Returns:
+            ``GS1ApplicationIdentifier`` with metadata on the AI.
+
+        Raises:
+            KeyError: If the given AI is not found.
+        """
+        for application_identifier in _GS1_APPLICATION_IDENTIFIERS:
+            if application_identifier.ai == value:
+                return application_identifier
+        raise KeyError(value)
+
+    @classmethod
     def extract(
         cls: Type[GS1ApplicationIdentifier], value: str
     ) -> GS1ApplicationIdentifier:
@@ -54,6 +74,10 @@ class GS1ApplicationIdentifier:
         raise ParseError(
             f"Failed to get GS1 Application Identifier from {value!r}."
         )
+
+    def __len__(self: GS1ApplicationIdentifier) -> int:
+        """Get the length of the Application Identifier code."""
+        return len(self.ai)
 
 
 def get_predefined_length(value: str) -> Optional[int]:
