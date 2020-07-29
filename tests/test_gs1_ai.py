@@ -120,3 +120,9 @@ def test_extract_from_invalid_type() -> None:
 )
 def test_extract_gs1_ai(value: str, expected: GS1ApplicationIdentifier) -> None:
     assert GS1ApplicationIdentifier.extract(value) == expected
+
+
+def test_gs1_ai_object_len_is_ai_str_len() -> None:
+    ai = GS1ApplicationIdentifier.get("01")
+
+    assert len(ai) == len("01")

@@ -75,6 +75,10 @@ class GS1ApplicationIdentifier:
             f"Failed to get GS1 Application Identifier from {value!r}."
         )
 
+    def __len__(self: GS1ApplicationIdentifier) -> int:
+        """Get the length of the Application Identifier code."""
+        return len(self.ai)
+
 
 def get_predefined_length(value: str) -> Optional[int]:
     """Get predefined length of element string, including Application Identifier prefix.
