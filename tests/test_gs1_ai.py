@@ -29,7 +29,7 @@ def test_get_predefined_length(value: str, length: Optional[int]) -> None:
 
 
 @pytest.mark.parametrize("unknown_ai", ["abcdef", "3376999999"])
-def test_unknown_gs1_ai(unknown_ai: str) -> None:
+def test_extract_unknown_gs1_ai(unknown_ai: str) -> None:
     with pytest.raises(ParseError) as exc_info:
         GS1ApplicationIdentifier.extract(unknown_ai)
 
@@ -39,7 +39,7 @@ def test_unknown_gs1_ai(unknown_ai: str) -> None:
     )
 
 
-def test_invalid_type() -> None:
+def test_extract_from_invalid_type() -> None:
     with pytest.raises(TypeError) as exc_info:
         GS1ApplicationIdentifier.extract(1234)  # type: ignore
 
@@ -76,5 +76,5 @@ def test_invalid_type() -> None:
         ),
     ],
 )
-def test_gs1_ai(value: str, expected: GS1ApplicationIdentifier) -> None:
+def test_extract_gs1_ai(value: str, expected: GS1ApplicationIdentifier) -> None:
     assert GS1ApplicationIdentifier.extract(value) == expected
