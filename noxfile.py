@@ -45,3 +45,11 @@ def docs(session):
     session.run("poetry", "install", "--no-dev", external=True)
     session.install("sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints")
     session.run("sphinx-build", "docs", "docs/_build")
+
+
+@nox.session(python="3.8")
+def coverage(session):
+    """Upload test coverage data."""
+    session.install("coverage[toml]", "codecov")
+    session.run("coverage", "xml", "--fail-under=0")
+    session.run("codecov", *session.posargs)
