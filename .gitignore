@@ -4,6 +4,7 @@
 /.nox/
 /.python-version
 /.venv/
+/coverage.xml
 /dist/
 /docs/_build/
 /poetry.lock

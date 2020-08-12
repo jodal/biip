@@ -11,6 +11,9 @@
   <a href="https://github.com/jodal/biip/actions?workflow=Tests">
     <img src="https://github.com/jodal/biip/workflows/Tests/badge.svg" alt="Tests">
   </a>
+  <a href="https://codecov.io/gh/jodal/biip">
+    <img src="https://codecov.io/gh/jodal/biip/branch/master/graph/badge.svg" alt="Coverage">
+  </a>
   <a href="https://pypi.org/project/biip/">
     <img src="https://img.shields.io/pypi/v/biip.svg" alt="PyPI">
   </a>
