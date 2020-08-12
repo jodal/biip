@@ -12,11 +12,18 @@ from biip.gs1.checksums import numeric_check_digit
 
 
 class GTINFormat(IntEnum):
-    """Global Trade Item Number (GTIN) formats."""
+    """Enum of GTIN formats."""
 
+    #: GTIN-8
     GTIN_8 = 8
+
+    #: GTIN-12
     GTIN_12 = 12
+
+    #: GTIN-13
     GTIN_13 = 13
+
+    #: GTIN-14
     GTIN_14 = 14
 
     def __str__(self: GTINFormat) -> str:
@@ -26,7 +33,7 @@ class GTINFormat(IntEnum):
 
 @dataclass
 class GTIN:
-    """Global Trade Item Number (GTIN)."""
+    """Data class containing a GTIN and its components."""
 
     #: Raw unprocessed value.
     #:
@@ -79,7 +86,7 @@ class GTIN:
 
 
 def parse(value: str) -> GTIN:
-    """Attempt to parse the value as a GTIN.
+    """Parse the given value into a `GTIN` object.
 
     Both GTIN-8, GTIN-12, GTIN-13, and GTIN-14 are supported.
 
@@ -88,9 +95,20 @@ def parse(value: str) -> GTIN:
 
     Returns:
         GTIN data structure with the successfully extracted data.
+        The checksum is guaranteed to be valid if a GTIN object is returned.
 
     Raises:
         ParseError: If the parsing fails.
+
+    Example:
+        >>> from biip.gtin import parse
+        >>> gtin = parse("5901234123457")
+        >>> gtin
+        GTIN(value='5901234123457', format=<GTINFormat.GTIN_13: 13>,
+        prefix=GS1Prefix(value='590', usage='GS1 Poland'),
+        payload='590123412345', check_digit=7, packaging_level=None)
+        >>> gtin.as_gtin_14()
+        '05901234123457'
     """
     if len(value) not in (8, 12, 13, 14):
         raise ParseError(

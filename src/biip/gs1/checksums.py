@@ -1,4 +1,4 @@
-"""GS1 check digit calculations."""
+"""Checksum algorithms used by GS1 standards."""
 
 import itertools
 import math
@@ -16,7 +16,7 @@ def numeric_check_digit(value: str) -> int:
     Raises:
         ValueError: If the value isn't numeric.
 
-    Reference:
+    References:
         GS1 General Specification, chapter 7.9.
     """
     if not value.isnumeric():
@@ -44,7 +44,7 @@ def price_check_digit(value: str) -> int:
     Raises:
         ValueError: If the value isn't numeric.
 
-    Reference:
+    References:
         GS1 General Specification, chapter 7.9.2-7.9.4.
     """
     if not value.isnumeric():

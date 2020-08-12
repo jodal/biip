@@ -184,10 +184,10 @@ class GS1Prefix:
     Source: https://www.gs1.org/standards/id-keys/company-prefix
     """
 
-    #: The prefix itself
+    #: The prefix itself.
     value: str
 
-    #: The prefix usage
+    #: Description of who is using the prefix.
     usage: str
 
     @classmethod
@@ -198,7 +198,7 @@ class GS1Prefix:
             value: The string to extract a GS1 Prefix from.
 
         Returns:
-            ``GS1Prefix`` with metadata on the prefix.
+            Metadata about the extracted prefix.
 
         Raises:
             ParseError: If the parsing fails.

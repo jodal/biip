@@ -4,7 +4,7 @@ import nox
 
 
 package = "biip"
-locations = ["src", "tests", "noxfile.py"]
+locations = ["src", "tests", "noxfile.py", "docs/conf.py"]
 
 
 @nox.session(python=["3.7", "3.8"])
@@ -39,10 +39,9 @@ def mypy(session):
     session.run("mypy", *args)
 
 
-@nox.session(python=["3.7", "3.8"])
-def xdoctest(session):
-    """Run examples with xdoctest."""
-    args = session.posargs or ["all"]
+@nox.session(python="3.8")
+def docs(session):
+    """Build the documentation."""
     session.run("poetry", "install", "--no-dev", external=True)
-    session.install("xdoctest")
-    session.run("python", "-m", "xdoctest", package, *args)
+    session.install("sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints")
+    session.run("sphinx-build", "docs", "docs/_build")

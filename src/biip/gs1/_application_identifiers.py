@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import pathlib
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional, Type
 
 from biip import ParseError
@@ -17,12 +17,24 @@ class GS1ApplicationIdentifier:
     Source: https://www.gs1.org/standards/barcodes/application-identifiers
     """
 
+    #: The Application Identifier (AI) itself.
     ai: str
+
+    #: Description of the AIs use.
     description: str
+
+    #: Commonly used label/abbreviation for the AI.
     data_title: str
+
+    #: Whether a FNC1 character is required after element strings of this type.
+    #: This is the case for all AIs that have a variable length.
     fnc1_required: bool
+
+    #: Human readable format of the AIs element string.
     format: str
-    pattern: str
+
+    #: Regular expression for parsing the AIs element string.
+    pattern: str = field(repr=False)
 
     @classmethod
     def get(
@@ -34,7 +46,7 @@ class GS1ApplicationIdentifier:
             value: The AI code, e.g. "01".
 
         Returns:
-            ``GS1ApplicationIdentifier`` with metadata on the AI.
+            Metadata about the given AI.
 
         Raises:
             KeyError: If the given AI is not found.
@@ -54,7 +66,7 @@ class GS1ApplicationIdentifier:
             value: The string to extract an AI from.
 
         Returns:
-            ``GS1ApplicationIdentifier` with metadata on the AI.
+            Metadata about the extracted AI.
 
         Raises:
             TypeError: If the input isn't str or bytes.
