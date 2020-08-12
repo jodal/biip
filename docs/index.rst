@@ -3,6 +3,13 @@ biip
 ====
 
 
+.. toctree::
+    :hidden:
+    :maxdepth: 1
+
+    api
+
+
 Biip is a Python library for making sense of the data in barcodes.
 
 The initial goal is to parse GS1-128 data.
@@ -31,6 +38,8 @@ Usage
 This project is still in its infancy.
 Documentation and usage examples will be added
 once the implementation is generally useful.
+
+For details, please refer to the :doc:`api`.
 
 
 References

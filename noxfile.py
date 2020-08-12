@@ -51,5 +51,6 @@ def xdoctest(session):
 @nox.session(python="3.8")
 def docs(session):
     """Build the documentation."""
-    session.install("sphinx")
+    session.run("poetry", "install", "--no-dev", external=True)
+    session.install("sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints")
     session.run("sphinx-build", "docs", "docs/_build")
