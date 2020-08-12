@@ -16,3 +16,9 @@ class ParseError(Exception):
     """Error raised if parsing of barcode data fails."""
 
     pass
+
+
+class EncodeError(Exception):
+    """Error raised if encoding of a value fails."""
+
+    pass

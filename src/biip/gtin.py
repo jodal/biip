@@ -1,20 +1,26 @@
 """Support for Global Trade Item Number (GTIN)."""
 
+from __future__ import annotations
+
 from dataclasses import dataclass
-from enum import Enum
+from enum import IntEnum
 from typing import Optional
 
-from biip import ParseError, gs1_check_digit
+from biip import EncodeError, ParseError, gs1_check_digit
 from biip.gs1_prefixes import GS1Prefix
 
 
-class GTINFormat(Enum):
+class GTINFormat(IntEnum):
     """Global Trade Item Number (GTIN) formats."""
 
     GTIN_8 = 8
     GTIN_12 = 12
     GTIN_13 = 13
     GTIN_14 = 14
+
+    def __str__(self: GTINFormat) -> str:
+        """Pretty string representation of format."""
+        return self.name.replace("_", "-")
 
 
 @dataclass
@@ -48,6 +54,27 @@ class GTIN:
     #: identifier in GS1-128 barcodes, but not in the GTIN-13 barcodes used for
     #: retail products.
     packaging_level: Optional[int] = None
+
+    def as_gtin_8(self: GTIN) -> str:
+        """Format as a GTIN-8."""
+        return self._as_format(GTINFormat.GTIN_8)
+
+    def as_gtin_12(self: GTIN) -> str:
+        """Format as a GTIN-12."""
+        return self._as_format(GTINFormat.GTIN_12)
+
+    def as_gtin_13(self: GTIN) -> str:
+        """Format as a GTIN-13."""
+        return self._as_format(GTINFormat.GTIN_13)
+
+    def as_gtin_14(self: GTIN) -> str:
+        """Format as a GTIN-14."""
+        return self._as_format(GTINFormat.GTIN_14)
+
+    def _as_format(self: GTIN, format_: GTINFormat) -> str:
+        if int(self.format) > int(format_):
+            raise EncodeError(f"Failed encoding {self.value!r} as {format_!s}.")
+        return f"{self.payload}{self.check_digit}".zfill(int(format_))
 
 
 def parse(value: str) -> GTIN:
