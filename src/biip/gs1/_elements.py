@@ -1,4 +1,4 @@
-"""Support for parsing of GS1-128 data."""
+"""GS1 element strings."""
 
 from __future__ import annotations
 
@@ -8,10 +8,7 @@ from dataclasses import dataclass
 from typing import List, Optional, Type
 
 from biip import ParseError
-from biip.gs1_ai import GS1ApplicationIdentifier
-
-
-__all__ = ["GS1ApplicationIdentifier", "GS1Element", "GS1Message", "parse"]
+from biip.gs1 import GS1ApplicationIdentifier
 
 
 @dataclass
@@ -58,34 +55,3 @@ class GS1Element:
     def __len__(self: GS1Element) -> int:
         """Get the length of the element string."""
         return len(self.ai) + len(self.value)
-
-
-@dataclass
-class GS1Message:
-    """A GS1 message is the result of a single barcode scan.
-
-    It may contain one or more GS1 element strings.
-    """
-
-    value: str
-    elements: List[GS1Element]
-
-
-def parse(value: str) -> GS1Message:
-    """Parse a GS1-128 barcode data string.
-
-    Args:
-        value: The string to parse.
-
-    Returns:
-        ``GS1Message`` with one or more ``GS1Element``.
-    """
-    elements = []
-    rest = value[:]
-
-    while rest:
-        element = GS1Element.extract(rest)
-        elements.append(element)
-        rest = rest[len(element) :]
-
-    return GS1Message(value=value, elements=elements)

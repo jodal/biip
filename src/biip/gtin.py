@@ -6,8 +6,9 @@ from dataclasses import dataclass
 from enum import IntEnum
 from typing import Optional
 
-from biip import EncodeError, ParseError, gs1_check_digit
-from biip.gs1_prefixes import GS1Prefix
+from biip import EncodeError, ParseError
+from biip.gs1 import GS1Prefix
+from biip.gs1.checksums import numeric_check_digit
 
 
 class GTINFormat(IntEnum):
@@ -116,7 +117,7 @@ def parse(value: str) -> GTIN:
         packaging_level = None
         prefix = GS1Prefix.extract(stripped_value)
 
-    calculated_check_digit = gs1_check_digit.numeric_check_digit(payload)
+    calculated_check_digit = numeric_check_digit(payload)
     if check_digit != calculated_check_digit:
         raise ParseError(
             f"Invalid GTIN check digit for {value!r}: "

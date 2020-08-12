@@ -117,7 +117,7 @@ def get_predefined_length(value: str) -> Optional[int]:
 
 
 _GS1_APPLICATION_IDENTIFIERS_FILE = (
-    pathlib.Path(__file__).parent / "gs1_ai.json"
+    pathlib.Path(__file__).parent / "_application_identifiers.json"
 )
 
 _GS1_APPLICATION_IDENTIFIERS = [
