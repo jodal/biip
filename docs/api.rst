@@ -22,6 +22,9 @@ biip.gs1
     :members:
 
 
+biip.gs1.checksums
+==================
+
 .. automodule:: biip.gs1.checksums
     :members:
 

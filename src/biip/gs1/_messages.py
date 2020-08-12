@@ -15,5 +15,8 @@ class GS1Message:
     It may contain one or more GS1 element strings.
     """
 
+    #: Raw unprocessed value.
     value: str
+
+    #: List of element strings found in the message.
     elements: List[GS1Element]

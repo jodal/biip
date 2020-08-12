@@ -24,7 +24,29 @@ def parse(value: str) -> GS1Message:
         value: The string to parse.
 
     Returns:
-        ``GS1Message`` with one or more ``GS1Element``.
+        A message object with one or more element strings.
+
+    Example:
+        >>> from biip.gs1 import parse
+        >>> msg = parse("010703206980498815210526100329")
+        >>> msg.value
+        '010703206980498815210526100329'
+        >>> len(msg.elements)
+        3
+        >>> msg.elements[0]
+        GS1Element(value='07032069804988', ai=GS1ApplicationIdentifier(ai='01',
+        description='Global Trade Item Number (GTIN)', data_title='GTIN',
+        fnc1_required=False, format='N2+N14'), groups=['07032069804988'],
+        date=None)
+        >>> msg.elements[1]
+        GS1Element(value='210526', ai=GS1ApplicationIdentifier(ai='15',
+        description='Best before date (YYMMDD)', data_title='BEST BEFORE or
+        BEST BY', fnc1_required=False, format='N2+N6'), groups=['210526'],
+        date=datetime.date(2021, 5, 26))
+        >>> msg.elements[2]
+        GS1Element(value='0329', ai=GS1ApplicationIdentifier(ai='10',
+        description='Batch or lot number', data_title='BATCH/LOT',
+        fnc1_required=True, format='N2+X..20'), groups=['0329'], date=None)
     """
     elements = []
     rest = value[:]

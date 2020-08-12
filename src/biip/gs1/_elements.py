@@ -15,11 +15,16 @@ from biip.gs1 import GS1ApplicationIdentifier
 class GS1Element:
     """A GS1 element string consists of a GS1 Application Identifier and its value."""
 
-    ai: GS1ApplicationIdentifier
+    #: Raw unprocessed value.
     value: str
+
+    #: The element's Application Identifier (AI).
+    ai: GS1ApplicationIdentifier
+
+    #: List of pattern groups extracted from the element string.
     groups: List[str]
 
-    # Extra fields that are populated for some AI
+    #: A date created from the element string, if the AI represents a date.
     date: Optional[datetime.date] = None
 
     @classmethod
