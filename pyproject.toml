@@ -7,6 +7,7 @@ license = "Apache License, Version 2.0"
 readme = "README.md"
 homepage = "https://github.com/jodal/biip"
 repository = "https://github.com/jodal/biip"
+documentation = "https://biip.readthedocs.io"
 keywords = ["barcodes", "ean", "isbn", "gs1", "gtin", "upc"]
 
 [tool.poetry.dependencies]

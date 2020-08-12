@@ -24,11 +24,6 @@ The initial goal is to parse GS1-128 data. Support for other barcode formats
 might be added later.
 
 
-## Requirements
-
-Python 3.7+
-
-
 ## Installation
 
 Biip is available from [PyPI](https://pypi.org/project/biip/):
@@ -37,15 +32,13 @@ Biip is available from [PyPI](https://pypi.org/project/biip/):
 python3 -m pip install biip
 ```
 
+Biip requires Python 3.7 or newer.
+
+
 ## Usage
 
-This project is still in its infancy. Documentation and usage examples will be
-added once the implementation is generally useful.
-
-
-## References
-
-- [GS1 General Specifications (PDF)](https://www.gs1.org/docs/barcodes/GS1_General_Specifications.pdf)
+This project is still in its infancy.
+However, some [documentation](https://biip.readthedocs.io/) already exists.
 
 
 ## License
