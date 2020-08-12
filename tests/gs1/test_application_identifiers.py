@@ -3,7 +3,10 @@ from typing import Optional
 import pytest
 
 from biip import ParseError
-from biip.gs1_ai import GS1ApplicationIdentifier, get_predefined_length
+from biip.gs1 import GS1ApplicationIdentifier
+from biip.gs1._application_identifiers import (  # XXX Not public API yet
+    get_predefined_length,
+)
 
 
 @pytest.mark.parametrize(

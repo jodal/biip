@@ -3,7 +3,7 @@
 import pytest
 
 from biip import ParseError
-from biip.gs1_prefixes import GS1Prefix
+from biip.gs1 import GS1Prefix
 
 
 @pytest.mark.parametrize("bad_value", ["abcdef", "199999"])

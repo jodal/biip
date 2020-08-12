@@ -1,6 +1,6 @@
 import pytest
 
-from biip.gs1_check_digit import (
+from biip.gs1.checksums import (
     numeric_check_digit,
     price_check_digit,
 )
