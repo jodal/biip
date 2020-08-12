@@ -24,6 +24,13 @@ Biip requires Python 3.7 or newer.
     api
 
 
+.. toctree::
+    :maxdepth: 2
+    :caption: About
+
+    changes
+
+
 License
 =======
 
