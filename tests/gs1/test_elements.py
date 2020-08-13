@@ -62,15 +62,6 @@ def test_extract_with_invalid_date(ai_code: str, bad_value: str) -> None:
             ),
         ),
         (
-            "15210526",
-            GS1Element(
-                ai=GS1ApplicationIdentifier.get("15"),
-                value="210526",
-                groups=["210526"],
-                date=date(2021, 5, 26),
-            ),
-        ),
-        (
             "100329",
             GS1Element(
                 ai=GS1ApplicationIdentifier.get("10"),
@@ -89,4 +80,51 @@ def test_extract_with_invalid_date(ai_code: str, bad_value: str) -> None:
     ],
 )
 def test_extract(value: str, expected: GS1Element) -> None:
+    assert GS1Element.extract(value) == expected
+
+
+THIS_YEAR = date.today().year
+THIS_YEAR_SHORT = str(THIS_YEAR)[2:]
+MIN_YEAR = THIS_YEAR - 49
+MIN_YEAR_SHORT = str(MIN_YEAR)[2:]
+MAX_YEAR = THIS_YEAR + 50
+MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        (
+            # Best before date, around the current date
+            f"15{THIS_YEAR_SHORT}0526",
+            GS1Element(
+                ai=GS1ApplicationIdentifier.get("15"),
+                value=f"{THIS_YEAR_SHORT}0526",
+                groups=[f"{THIS_YEAR_SHORT}0526"],
+                date=date(THIS_YEAR, 5, 26),
+            ),
+        ),
+        (
+            # Best before date, 49 years into the past
+            f"15{MIN_YEAR_SHORT}0526",
+            GS1Element(
+                ai=GS1ApplicationIdentifier.get("15"),
+                value=f"{MIN_YEAR_SHORT}0526",
+                groups=[f"{MIN_YEAR_SHORT}0526"],
+                date=date(MIN_YEAR, 5, 26),
+            ),
+        ),
+        (
+            # Best before date, 50 years into the future
+            f"15{MAX_YEAR_SHORT}0526",
+            GS1Element(
+                ai=GS1ApplicationIdentifier.get("15"),
+                value=f"{MAX_YEAR_SHORT}0526",
+                groups=[f"{MAX_YEAR_SHORT}0526"],
+                date=date(MAX_YEAR, 5, 26),
+            ),
+        ),
+    ],
+)
+def test_extract_date(value: str, expected: GS1Element) -> None:
     assert GS1Element.extract(value) == expected
