@@ -31,6 +31,8 @@ def parse(value: str) -> GS1Message:
         >>> msg = parse("010703206980498815210526100329")
         >>> msg.value
         '010703206980498815210526100329'
+        >>> msg.as_hri()
+        '(01)07032069804988(15)210526(10)0329'
         >>> len(msg.elements)
         3
         >>> msg.elements[0]

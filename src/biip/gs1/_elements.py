@@ -59,6 +59,16 @@ class GS1Element:
         """Get the length of the element string."""
         return len(self.ai) + len(self.value)
 
+    def as_hri(self: GS1Element) -> str:
+        """Render as a human readable interpretation (HRI).
+
+        The HRI is often printed directly below barcodes.
+
+        Returns:
+            A human-readable string where the AI is wrapped in parenthesis.
+        """
+        return f"({self.ai.ai}){self.value}"
+
 
 def _parse_date(value: str) -> datetime.date:
     result = datetime.datetime.strptime(value, r"%y%m%d").date()

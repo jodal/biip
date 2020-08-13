@@ -20,3 +20,13 @@ class GS1Message:
 
     #: List of element strings found in the message.
     elements: List[GS1Element]
+
+    def as_hri(self: GS1Message) -> str:
+        """Render as a human readable interpretation (HRI).
+
+        The HRI is often printed directly below barcodes.
+
+        Returns:
+            A human-readable string where the AIs are wrapped in parenthesis.
+        """
+        return "".join(e.as_hri() for e in self.elements)

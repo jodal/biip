@@ -128,3 +128,10 @@ MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
 )
 def test_extract_date(value: str, expected: GS1Element) -> None:
     assert GS1Element.extract(value) == expected
+
+
+@pytest.mark.parametrize(
+    "value, expected", [("0107032069804988", "(01)07032069804988",)],
+)
+def test_as_hri(value: str, expected: str) -> None:
+    assert GS1Element.extract(value).as_hri() == expected
