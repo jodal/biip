@@ -49,9 +49,7 @@ class GS1Element:
     def _set_date(self: GS1Element) -> None:
         if "(YYMMDD)" in self.ai.description:  # TODO: A more robust condition
             try:
-                self.date = datetime.datetime.strptime(
-                    self.value, r"%y%m%d"
-                ).date()
+                self.date = _parse_date(self.value)
             except ValueError:
                 raise ParseError(
                     f"Failed to parse GS1 AI {self.ai.ai} date from {self.value!r}."
@@ -60,3 +58,19 @@ class GS1Element:
     def __len__(self: GS1Element) -> int:
         """Get the length of the element string."""
         return len(self.ai) + len(self.value)
+
+
+def _parse_date(value: str) -> datetime.date:
+    result = datetime.datetime.strptime(value, r"%y%m%d").date()
+
+    # The two-digit year refers to a year in the range between 49 years past
+    # and 50 years into the future. However, Python uses 1969 as the pivot
+    # point when selecting the century, so we must adjust all dates that are
+    # interpreted as more than 49 years ago.
+    #
+    # References: See GS1 General Specifications, chapter 7.12.
+    min_year = datetime.date.today().year - 49
+    if result.year < min_year:
+        result = result.replace(year=result.year + 100)
+
+    return result
