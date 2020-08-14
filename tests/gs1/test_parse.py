@@ -24,7 +24,7 @@ from biip.gs1 import GS1ApplicationIdentifier, GS1ElementString, GS1Message
                             pattern="^01(\\d{14})$",
                         ),
                         value="07032069804988",
-                        groups=["07032069804988"],
+                        pattern_groups=["07032069804988"],
                         date=None,
                     ),
                     GS1ElementString(
@@ -37,7 +37,7 @@ from biip.gs1 import GS1ApplicationIdentifier, GS1ElementString, GS1Message
                             pattern="^15(\\d{6})$",
                         ),
                         value="210526",
-                        groups=["210526"],
+                        pattern_groups=["210526"],
                         date=date(2021, 5, 26),
                     ),
                     GS1ElementString(
@@ -53,7 +53,7 @@ from biip.gs1 import GS1ApplicationIdentifier, GS1ElementString, GS1Message
                             ),
                         ),
                         value="0329",
-                        groups=["0329"],
+                        pattern_groups=["0329"],
                     ),
                 ],
             ),
@@ -76,7 +76,7 @@ from biip.gs1 import GS1ApplicationIdentifier, GS1ElementString, GS1Message
                             ),
                         ),
                         value="70713240010220085952",
-                        groups=["70713240010220", "085952"],
+                        pattern_groups=["70713240010220", "085952"],
                     )
                 ],
             ),

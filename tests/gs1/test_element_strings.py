@@ -58,7 +58,7 @@ def test_extract_with_invalid_date(ai_code: str, bad_value: str) -> None:
             GS1ElementString(
                 ai=GS1ApplicationIdentifier.get("01"),
                 value="07032069804988",
-                groups=["07032069804988"],
+                pattern_groups=["07032069804988"],
             ),
         ),
         (
@@ -66,7 +66,7 @@ def test_extract_with_invalid_date(ai_code: str, bad_value: str) -> None:
             GS1ElementString(
                 ai=GS1ApplicationIdentifier.get("10"),
                 value="0329",
-                groups=["0329"],
+                pattern_groups=["0329"],
             ),
         ),
         (
@@ -74,7 +74,7 @@ def test_extract_with_invalid_date(ai_code: str, bad_value: str) -> None:
             GS1ElementString(
                 ai=GS1ApplicationIdentifier.get("8003"),
                 value="70713240010220085952",
-                groups=["70713240010220", "085952"],
+                pattern_groups=["70713240010220", "085952"],
             ),
         ),
     ],
@@ -100,7 +100,7 @@ MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
             GS1ElementString(
                 ai=GS1ApplicationIdentifier.get("15"),
                 value=f"{THIS_YEAR_SHORT}0526",
-                groups=[f"{THIS_YEAR_SHORT}0526"],
+                pattern_groups=[f"{THIS_YEAR_SHORT}0526"],
                 date=date(THIS_YEAR, 5, 26),
             ),
         ),
@@ -110,7 +110,7 @@ MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
             GS1ElementString(
                 ai=GS1ApplicationIdentifier.get("15"),
                 value=f"{MIN_YEAR_SHORT}0526",
-                groups=[f"{MIN_YEAR_SHORT}0526"],
+                pattern_groups=[f"{MIN_YEAR_SHORT}0526"],
                 date=date(MIN_YEAR, 5, 26),
             ),
         ),
@@ -120,7 +120,7 @@ MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
             GS1ElementString(
                 ai=GS1ApplicationIdentifier.get("15"),
                 value=f"{MAX_YEAR_SHORT}0526",
-                groups=[f"{MAX_YEAR_SHORT}0526"],
+                pattern_groups=[f"{MAX_YEAR_SHORT}0526"],
                 date=date(MAX_YEAR, 5, 26),
             ),
         ),
