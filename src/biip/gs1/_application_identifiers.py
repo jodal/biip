@@ -1,4 +1,4 @@
-"""Application Identifiers specified by GS1."""
+"""GS1 Application Identifiers."""
 
 from __future__ import annotations
 
@@ -12,9 +12,27 @@ from biip import ParseError
 
 @dataclass
 class GS1ApplicationIdentifier:
-    """Application Identifier assigned by GS1.
+    r"""GS1 Application Identifier (AI).
 
-    Source: https://www.gs1.org/standards/barcodes/application-identifiers
+    AIs are data field prefixes used in several types of barcodes, including
+    GS1-128. The AI defines what semantical meaning and format of the following
+    data field.
+
+    AIs standardize how to include e.g. product weight, expiration dates,
+    and lot numbers in barcodes.
+
+    References:
+        https://www.gs1.org/standards/barcodes/application-identifiers
+
+    Example:
+        >>> from biip.gs1 import GS1ApplicationIdentifier
+        >>> ai = GS1ApplicationIdentifier.get("01")
+        >>> ai
+        GS1ApplicationIdentifier(ai='01', description='Global Trade Item
+        Number (GTIN)', data_title='GTIN', fnc1_required=False,
+        format='N2+N14')
+        >>> ai.pattern
+        '^01(\\d{14})$'
     """
 
     #: The Application Identifier (AI) itself.
@@ -50,6 +68,13 @@ class GS1ApplicationIdentifier:
 
         Raises:
             KeyError: If the given AI is not found.
+
+        Example:
+            >>> from biip.gs1 import GS1ApplicationIdentifier
+            >>> GS1ApplicationIdentifier.get("01")
+            GS1ApplicationIdentifier(ai='01', description='Global Trade Item
+            Number (GTIN)', data_title='GTIN', fnc1_required=False,
+            format='N2+N14')
         """
         for application_identifier in _GS1_APPLICATION_IDENTIFIERS:
             if application_identifier.ai == value:
@@ -71,6 +96,13 @@ class GS1ApplicationIdentifier:
         Raises:
             TypeError: If the input isn't str or bytes.
             ParseError: If the parsing fails.
+
+        Example:
+            >>> from biip.gs1 import GS1ApplicationIdentifier
+            >>> GS1ApplicationIdentifier.extract("010703206980498815210526100329")
+            GS1ApplicationIdentifier(ai='01', description='Global Trade Item
+            Number (GTIN)', data_title='GTIN', fnc1_required=False,
+            format='N2+N14')
         """
         if isinstance(value, str):
             data = value.encode()

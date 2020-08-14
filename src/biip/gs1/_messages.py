@@ -12,7 +12,7 @@ from biip.gs1 import GS1ElementString
 class GS1Message:
     """A GS1 message is the result of a single barcode scan.
 
-    It may contain one or more GS1 element strings.
+    It may contain one or more GS1 Element Strings.
     """
 
     #: Raw unprocessed value.

@@ -181,7 +181,14 @@ _GS1_PREFIX_RANGES = [
 class GS1Prefix:
     """Prefix assigned by GS1.
 
-    Source: https://www.gs1.org/standards/id-keys/company-prefix
+    Used to split the allocation space of various number schemes, e.g. GTIN,
+    among GS1 organizations worldwide.
+
+    The GS1 Prefix does not identify the origin of a product, only where the
+    number was assigned to a GS1 member organization.
+
+    References:
+        https://www.gs1.org/standards/id-keys/company-prefix
     """
 
     #: The prefix itself.
