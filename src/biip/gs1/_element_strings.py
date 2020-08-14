@@ -27,7 +27,7 @@ class GS1ElementString:
         GS1ElementString(ai=GS1ApplicationIdentifier(ai='01',
         description='Global Trade Item Number (GTIN)', data_title='GTIN',
         fnc1_required=False, format='N2+N14'), value='07032069804988',
-        groups=['07032069804988'], date=None)
+        pattern_groups=['07032069804988'], date=None)
         >>> element_string.as_hri()
         '(01)07032069804988'
     """
@@ -39,7 +39,7 @@ class GS1ElementString:
     value: str
 
     #: List of pattern groups extracted from the Element String.
-    groups: List[str]
+    pattern_groups: List[str]
 
     #: A date created from the element string, if the AI represents a date.
     date: Optional[datetime.date] = None
@@ -64,7 +64,7 @@ class GS1ElementString:
             GS1ElementString(ai=GS1ApplicationIdentifier(ai='01',
             description='Global Trade Item Number (GTIN)', data_title='GTIN',
             fnc1_required=False, format='N2+N14'), value='07032069804988',
-            groups=['07032069804988'], date=None)
+            pattern_groups=['07032069804988'], date=None)
         """
         ai = GS1ApplicationIdentifier.extract(value)
 
@@ -74,10 +74,10 @@ class GS1ElementString:
             raise ParseError(
                 f"Failed to match GS1 AI {ai.ai} pattern {ai.pattern!r} with {value!r}."
             )
-        groups = list(matches.groups())
-        value = "".join(groups)
+        pattern_groups = list(matches.groups())
+        value = "".join(pattern_groups)
 
-        element = cls(ai=ai, value=value, groups=groups)
+        element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
         element._set_date()
 
         return element
