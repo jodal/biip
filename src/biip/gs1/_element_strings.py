@@ -1,4 +1,4 @@
-"""GS1 element strings."""
+"""GS1 Element Strings."""
 
 from __future__ import annotations
 
@@ -13,7 +13,24 @@ from biip.gs1 import GS1ApplicationIdentifier
 
 @dataclass
 class GS1ElementString:
-    """A GS1 Element String consists of a GS1 Application Identifier and its value."""
+    """GS1 Element String.
+
+    An Element String consists of a GS1 Application Identifier (AI) and its data field.
+
+    A single barcode can contain multiple Element Strings. Together these are
+    called a "message."
+
+    Example:
+        >>> from biip.gs1 import GS1ElementString
+        >>> element_string = GS1ElementString.extract("0107032069804988")
+        >>> element_string
+        GS1ElementString(ai=GS1ApplicationIdentifier(ai='01',
+        description='Global Trade Item Number (GTIN)', data_title='GTIN',
+        fnc1_required=False, format='N2+N14'), value='07032069804988',
+        groups=['07032069804988'], date=None)
+        >>> element_string.as_hri()
+        '(01)07032069804988'
+    """
 
     #: The element's Application Identifier (AI).
     ai: GS1ApplicationIdentifier
@@ -29,7 +46,26 @@ class GS1ElementString:
 
     @classmethod
     def extract(cls: Type[GS1ElementString], value: str) -> GS1ElementString:
-        """Extract the GS1 element string from the given value."""
+        """Extract the first GS1 Element String from the given value.
+
+        Args:
+            value: The string to extract an Element String from. May contain
+                more than one Element String.
+
+        Returns:
+            A data class with the Element String's parts and data extracted from it.
+
+        Raises:
+            ParseError: If the parsing fails.
+
+        Example:
+            >>> from biip.gs1 import GS1ElementString
+            >>> GS1ElementString.extract("0107032069804988")
+            GS1ElementString(ai=GS1ApplicationIdentifier(ai='01',
+            description='Global Trade Item Number (GTIN)', data_title='GTIN',
+            fnc1_required=False, format='N2+N14'), value='07032069804988',
+            groups=['07032069804988'], date=None)
+        """
         ai = GS1ApplicationIdentifier.extract(value)
 
         pattern = ai.pattern[:-1] if ai.pattern.endswith("$") else ai.pattern
@@ -62,10 +98,15 @@ class GS1ElementString:
     def as_hri(self: GS1ElementString) -> str:
         """Render as a human readable interpretation (HRI).
 
-        The HRI is often printed directly below barcodes.
+        The HRI is often printed directly below the barcode.
 
         Returns:
             A human-readable string where the AI is wrapped in parenthesis.
+
+        Example:
+            >>> from biip.gs1 import GS1ElementString
+            >>> GS1ElementString.extract("0107032069804988").as_hri()
+            '(01)07032069804988'
         """
         return f"({self.ai.ai}){self.value}"
 
@@ -80,7 +121,7 @@ def _parse_date(value: str) -> datetime.date:
     # point when selecting the century, so we must adjust all dates that are
     # interpreted as more than 49 years ago.
     #
-    # References: See GS1 General Specifications, chapter 7.12.
+    # References: GS1 General Specifications, chapter 7.12.
     min_year = datetime.date.today().year - 49
     if result.year < min_year:
         result = result.replace(year=result.year + 100)

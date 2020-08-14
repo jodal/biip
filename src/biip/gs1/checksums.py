@@ -17,6 +17,13 @@ def numeric_check_digit(value: str) -> int:
 
     References:
         GS1 General Specification, chapter 7.9.
+
+    Example:
+        >>> from biip.gs1.checksums import numeric_check_digit
+        >>> numeric_check_digit("950110153100")  # GTIN-13
+        0
+        >>> numeric_check_digit("9501234")  # GTIN-8
+        6
     """
     if not value.isnumeric():
         raise ValueError(f"Expected numeric value, got {value!r}.")
@@ -45,6 +52,13 @@ def price_check_digit(value: str) -> int:
 
     References:
         GS1 General Specification, chapter 7.9.2-7.9.4.
+
+    Example:
+        >>> from biip.gs1.checksums import price_check_digit
+        >>> price_check_digit("2875")
+        9
+        >>> price_check_digit("14685")
+        6
     """
     if not value.isnumeric():
         raise ValueError(f"Expected numeric value, got {value!r}.")
