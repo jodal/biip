@@ -3,7 +3,7 @@ from datetime import date
 import pytest
 
 from biip import ParseError
-from biip.gs1 import GS1ApplicationIdentifier, GS1Element
+from biip.gs1 import GS1ApplicationIdentifier, GS1ElementString
 
 
 @pytest.mark.parametrize(
@@ -21,7 +21,7 @@ def test_extract_when_not_matching_pattern(
     ai = GS1ApplicationIdentifier.get(ai_code)
 
     with pytest.raises(ParseError) as exc_info:
-        GS1Element.extract(bad_value)
+        GS1ElementString.extract(bad_value)
 
     assert (
         str(exc_info.value)
@@ -42,7 +42,7 @@ def test_extract_with_invalid_date(ai_code: str, bad_value: str) -> None:
     ai = GS1ApplicationIdentifier.get(ai_code)
 
     with pytest.raises(ParseError) as exc_info:
-        GS1Element.extract(f"{ai_code}{bad_value}")
+        GS1ElementString.extract(f"{ai_code}{bad_value}")
 
     assert (
         str(exc_info.value)
@@ -55,7 +55,7 @@ def test_extract_with_invalid_date(ai_code: str, bad_value: str) -> None:
     [
         (
             "0107032069804988",
-            GS1Element(
+            GS1ElementString(
                 ai=GS1ApplicationIdentifier.get("01"),
                 value="07032069804988",
                 groups=["07032069804988"],
@@ -63,7 +63,7 @@ def test_extract_with_invalid_date(ai_code: str, bad_value: str) -> None:
         ),
         (
             "100329",
-            GS1Element(
+            GS1ElementString(
                 ai=GS1ApplicationIdentifier.get("10"),
                 value="0329",
                 groups=["0329"],
@@ -71,7 +71,7 @@ def test_extract_with_invalid_date(ai_code: str, bad_value: str) -> None:
         ),
         (
             "800370713240010220085952",
-            GS1Element(
+            GS1ElementString(
                 ai=GS1ApplicationIdentifier.get("8003"),
                 value="70713240010220085952",
                 groups=["70713240010220", "085952"],
@@ -79,8 +79,8 @@ def test_extract_with_invalid_date(ai_code: str, bad_value: str) -> None:
         ),
     ],
 )
-def test_extract(value: str, expected: GS1Element) -> None:
-    assert GS1Element.extract(value) == expected
+def test_extract(value: str, expected: GS1ElementString) -> None:
+    assert GS1ElementString.extract(value) == expected
 
 
 THIS_YEAR = date.today().year
@@ -97,7 +97,7 @@ MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
         (
             # Best before date, around the current date
             f"15{THIS_YEAR_SHORT}0526",
-            GS1Element(
+            GS1ElementString(
                 ai=GS1ApplicationIdentifier.get("15"),
                 value=f"{THIS_YEAR_SHORT}0526",
                 groups=[f"{THIS_YEAR_SHORT}0526"],
@@ -107,7 +107,7 @@ MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
         (
             # Best before date, 49 years into the past
             f"15{MIN_YEAR_SHORT}0526",
-            GS1Element(
+            GS1ElementString(
                 ai=GS1ApplicationIdentifier.get("15"),
                 value=f"{MIN_YEAR_SHORT}0526",
                 groups=[f"{MIN_YEAR_SHORT}0526"],
@@ -117,7 +117,7 @@ MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
         (
             # Best before date, 50 years into the future
             f"15{MAX_YEAR_SHORT}0526",
-            GS1Element(
+            GS1ElementString(
                 ai=GS1ApplicationIdentifier.get("15"),
                 value=f"{MAX_YEAR_SHORT}0526",
                 groups=[f"{MAX_YEAR_SHORT}0526"],
@@ -126,12 +126,12 @@ MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
         ),
     ],
 )
-def test_extract_date(value: str, expected: GS1Element) -> None:
-    assert GS1Element.extract(value) == expected
+def test_extract_date(value: str, expected: GS1ElementString) -> None:
+    assert GS1ElementString.extract(value) == expected
 
 
 @pytest.mark.parametrize(
     "value, expected", [("0107032069804988", "(01)07032069804988",)],
 )
 def test_as_hri(value: str, expected: str) -> None:
-    assert GS1Element.extract(value).as_hri() == expected
+    assert GS1ElementString.extract(value).as_hri() == expected

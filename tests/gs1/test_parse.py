@@ -3,7 +3,7 @@ from datetime import date
 import pytest
 
 from biip import gs1
-from biip.gs1 import GS1ApplicationIdentifier, GS1Element, GS1Message
+from biip.gs1 import GS1ApplicationIdentifier, GS1ElementString, GS1Message
 
 
 @pytest.mark.parametrize(
@@ -13,8 +13,8 @@ from biip.gs1 import GS1ApplicationIdentifier, GS1Element, GS1Message
             "010703206980498815210526100329",
             GS1Message(
                 value="010703206980498815210526100329",
-                elements=[
-                    GS1Element(
+                element_strings=[
+                    GS1ElementString(
                         ai=GS1ApplicationIdentifier(
                             ai="01",
                             description="Global Trade Item Number (GTIN)",
@@ -27,7 +27,7 @@ from biip.gs1 import GS1ApplicationIdentifier, GS1Element, GS1Message
                         groups=["07032069804988"],
                         date=None,
                     ),
-                    GS1Element(
+                    GS1ElementString(
                         ai=GS1ApplicationIdentifier(
                             ai="15",
                             description="Best before date (YYMMDD)",
@@ -40,7 +40,7 @@ from biip.gs1 import GS1ApplicationIdentifier, GS1Element, GS1Message
                         groups=["210526"],
                         date=date(2021, 5, 26),
                     ),
-                    GS1Element(
+                    GS1ElementString(
                         ai=GS1ApplicationIdentifier(
                             ai="10",
                             description="Batch or lot number",
@@ -62,8 +62,8 @@ from biip.gs1 import GS1ApplicationIdentifier, GS1Element, GS1Message
             "800370713240010220085952",
             GS1Message(
                 value="800370713240010220085952",
-                elements=[
-                    GS1Element(
+                element_strings=[
+                    GS1ElementString(
                         ai=GS1ApplicationIdentifier(
                             ai="8003",
                             description="Global Returnable Asset Identifier (GRAI)",
