@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import List
 
-from biip.gs1 import GS1Element
+from biip.gs1 import GS1ElementString
 
 
 @dataclass
@@ -18,8 +18,8 @@ class GS1Message:
     #: Raw unprocessed value.
     value: str
 
-    #: List of element strings found in the message.
-    elements: List[GS1Element]
+    #: List of Element Strings found in the message.
+    element_strings: List[GS1ElementString]
 
     def as_hri(self: GS1Message) -> str:
         """Render as a human readable interpretation (HRI).
@@ -29,4 +29,4 @@ class GS1Message:
         Returns:
             A human-readable string where the AIs are wrapped in parenthesis.
         """
-        return "".join(e.as_hri() for e in self.elements)
+        return "".join(es.as_hri() for es in self.element_strings)
