@@ -28,7 +28,7 @@ def numeric_check_digit(value: str) -> int:
     for digit, weight in zip(reversed_digits, itertools.cycle([3, 1])):
         weighted_sum += digit * weight
 
-    return 10 - weighted_sum % 10
+    return (10 - weighted_sum % 10) % 10
 
 
 def price_check_digit(value: str) -> int:
@@ -63,7 +63,7 @@ def _four_digit_price_check_digit(value: str) -> int:
     for digit, weight_map in zip(digits, _FOUR_DIGIT_POSITION_WEIGHTS):
         weight = weight_map[digit]
         weight_sum += weight
-    return weight_sum * 3
+    return (weight_sum * 3) % 10
 
 
 def _five_digit_price_check_digit(value: str) -> int:
@@ -72,7 +72,7 @@ def _five_digit_price_check_digit(value: str) -> int:
     for digit, weight_map in zip(digits, _FIVE_DIGIT_POSITION_WEIGHTS):
         weight = weight_map[digit]
         weighted_sum += weight
-    result = 10 - weighted_sum % 10
+    result = (10 - weighted_sum % 10) % 10
     return _FIVE_MINUS_WEIGHT_REVERSE[result]
 
 
