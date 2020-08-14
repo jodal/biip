@@ -21,6 +21,7 @@ def test_numeric_check_digit_with_nonnumeric_value() -> None:
         # GTIN-13 from a product
         ("629104150021", 3),
         ("703801005447", 1),
+        ("950110153100", 0),
         # ISBN from a book
         ("978820551237", 5),
         # GLN for an organization
@@ -61,7 +62,7 @@ def test_price_check_digit_on_values_with_wrong_length(value: str) -> None:
     "value, expected",
     [
         # Four-digit price field
-        ("2875", 39),
+        ("2875", 9),
         # Five-digit price field
         ("14685", 6),
     ],
