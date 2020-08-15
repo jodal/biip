@@ -85,3 +85,34 @@ from biip.gs1 import GS1ApplicationIdentifier, GS1ElementString, GS1Message
 )
 def test_parse(value: str, expected: GS1Message) -> None:
     assert gs1.parse(value) == expected
+
+
+@pytest.mark.parametrize(
+    "value, fnc1_char, expected_hri",
+    [
+        (
+            # Variable-length lot number field last, all OK.
+            "010703206980498815210526100329",
+            None,
+            "(01)07032069804988(15)210526(10)0329",
+        ),
+        (
+            # Variable-length lot number field in the middle, consuming the
+            # best before date field at the end.
+            "010703206980498810032915210526",
+            None,
+            "(01)07032069804988(10)032915210526",
+        ),
+        (
+            # Variable-length lot number field in the middle, end marked with
+            # FNC1 replacement character.
+            "0107032069804988100329|15210526",
+            "|",
+            "(01)07032069804988(10)0329(15)210526",
+        ),
+    ],
+)
+def test_parse_with_fnc1_char(
+    value: str, fnc1_char: str, expected_hri: str
+) -> None:
+    assert gs1.parse(value, fnc1_char=fnc1_char).as_hri() == expected_hri
