@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Optional
+
 from biip.gs1._application_identifiers import GS1ApplicationIdentifier
 from biip.gs1._prefixes import GS1Prefix
 from biip.gs1._element_strings import (  # noqa: Must be imported early
@@ -19,11 +21,14 @@ __all__ = [
 ]
 
 
-def parse(value: str) -> GS1Message:
+def parse(value: str, *, fnc1_char: Optional[str] = None) -> GS1Message:
     """Parse a GS1-128 barcode data string.
 
     Args:
         value: The string to parse.
+        fnc1_char: Character used in place of the FNC1 symbol. If not provided,
+            parsing of variable-length fields in the middle of the message
+            might greedily consume later fields.
 
     Returns:
         A message object with one or more element strings.
@@ -57,8 +62,11 @@ def parse(value: str) -> GS1Message:
     rest = value[:]
 
     while rest:
-        element_string = GS1ElementString.extract(rest)
+        element_string = GS1ElementString.extract(rest, fnc1_char=fnc1_char)
         element_strings.append(element_string)
+
         rest = rest[len(element_string) :]
+        if fnc1_char is not None and rest.startswith(fnc1_char):
+            rest = rest[1:]
 
     return GS1Message(value=value, element_strings=element_strings)

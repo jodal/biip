@@ -45,12 +45,20 @@ class GS1ElementString:
     date: Optional[datetime.date] = None
 
     @classmethod
-    def extract(cls: Type[GS1ElementString], value: str) -> GS1ElementString:
+    def extract(
+        cls: Type[GS1ElementString],
+        value: str,
+        *,
+        fnc1_char: Optional[str] = None,
+    ) -> GS1ElementString:
         """Extract the first GS1 Element String from the given value.
 
         Args:
             value: The string to extract an Element String from. May contain
                 more than one Element String.
+            fnc1_char: Character used in place of the FNC1 symbol. If not
+                provided, parsing of a variable-length field might greedily
+                consume later fields.
 
         Returns:
             A data class with the Element String's parts and data extracted from it.
@@ -67,6 +75,9 @@ class GS1ElementString:
             pattern_groups=['07032069804988'], date=None)
         """
         ai = GS1ApplicationIdentifier.extract(value)
+
+        if fnc1_char is not None:
+            value = value.split(fnc1_char, maxsplit=1)[0]
 
         pattern = ai.pattern[:-1] if ai.pattern.endswith("$") else ai.pattern
         matches = re.match(pattern, value)
