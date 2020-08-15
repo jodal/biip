@@ -3,7 +3,8 @@ from datetime import date
 import pytest
 
 from biip import ParseError
-from biip.gs1 import GS1ApplicationIdentifier, GS1ElementString
+from biip.gs1 import GS1ApplicationIdentifier, GS1ElementString, GS1Prefix
+from biip.gtin import GTIN, GTINFormat
 
 
 @pytest.mark.parametrize(
@@ -59,6 +60,14 @@ def test_extract_with_invalid_date(ai_code: str, bad_value: str) -> None:
                 ai=GS1ApplicationIdentifier.get("01"),
                 value="07032069804988",
                 pattern_groups=["07032069804988"],
+                gtin=GTIN(
+                    value="07032069804988",
+                    format=GTINFormat.GTIN_13,
+                    prefix=GS1Prefix(value="703", usage="GS1 Norway"),
+                    payload="703206980498",
+                    check_digit=8,
+                    packaging_level=None,
+                ),
             ),
         ),
         (
