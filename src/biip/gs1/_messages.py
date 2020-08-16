@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import List, Type
 
+from biip import ParseError
 from biip.gs1 import DEFAULT_SEPARATOR_CHAR, GS1ElementString
 
 
@@ -44,6 +45,8 @@ class GS1Message:
         Returns:
             A message object with one or more element strings.
 
+        Raises:
+            ParseError: If a fixed-length field ends with a separator character.
         """
         element_strings = []
         rest = value[:]
@@ -55,8 +58,16 @@ class GS1Message:
             element_strings.append(element_string)
 
             rest = rest[len(element_string) :]
-            if separator_char is not None and rest.startswith(separator_char):
-                rest = rest[1:]
+
+            if rest.startswith(separator_char):
+                if element_string.ai.fnc1_required:
+                    rest = rest[1:]
+                else:
+                    raise ParseError(
+                        f"Element String {element_string.as_hri()!r} has fixed length "
+                        "and should not end with a separator character. "
+                        f"Separator character {separator_char!r} found in {value!r}."
+                    )
 
         return cls(value=value, element_strings=element_strings)
 
