@@ -10,7 +10,7 @@ from typing import Type
 from biip import ParseError
 
 
-@dataclass
+@dataclass(frozen=True)
 class GS1Prefix:
     """Prefix assigned by GS1.
 
@@ -61,7 +61,7 @@ class GS1Prefix:
         raise ParseError(f"Failed to get GS1 Prefix from {value!r}.")
 
 
-@dataclass
+@dataclass(frozen=True)
 class _GS1PrefixRange:
     length: int
     min_value: int

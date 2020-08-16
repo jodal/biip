@@ -10,7 +10,7 @@ from typing import Type
 from biip import ParseError
 
 
-@dataclass
+@dataclass(frozen=True)
 class GS1ApplicationIdentifier:
     r"""GS1 Application Identifier (AI).
 
