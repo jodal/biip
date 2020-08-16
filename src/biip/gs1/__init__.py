@@ -52,8 +52,8 @@ from biip.gs1._messages import GS1Message
 
 
 __all__ = [
-    "GS1ApplicationIdentifier",
-    "GS1ElementString",
     "GS1Message",
+    "GS1ElementString",
+    "GS1ApplicationIdentifier",
     "GS1Prefix",
 ]
