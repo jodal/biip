@@ -33,3 +33,9 @@ def test_invalid_gs1_prefix(bad_value: str) -> None:
 )
 def test_gs1_prefix(value: str, expected: GS1Prefix) -> None:
     assert GS1Prefix.extract(value) == expected
+
+
+def test_is_hashable() -> None:
+    prefix = GS1Prefix.extract("978")
+
+    assert hash(prefix) is not None

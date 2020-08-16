@@ -102,3 +102,9 @@ def test_gs1_ai_object_len_is_ai_str_len() -> None:
     ai = GS1ApplicationIdentifier.get("01")
 
     assert len(ai) == len("01")
+
+
+def test_is_hashable() -> None:
+    ai = GS1ApplicationIdentifier.get("01")
+
+    assert hash(ai) is not None
