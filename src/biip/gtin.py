@@ -11,6 +11,9 @@ from biip.gs1 import GS1Prefix
 from biip.gs1.checksums import numeric_check_digit
 
 
+__all__ = ["GtinFormat", "Gtin"]
+
+
 class GtinFormat(IntEnum):
     """Enum of GTIN formats."""
 
