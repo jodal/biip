@@ -9,7 +9,7 @@ from typing import List, Optional, Type
 
 from biip import ParseError
 from biip.gs1 import GS1ApplicationIdentifier
-from biip.gtin import Gtin, parse as gtin_parse
+from biip.gtin import Gtin
 
 
 @dataclass
@@ -109,7 +109,7 @@ class GS1ElementString:
         if self.ai.ai not in ("01", "02"):
             return
 
-        self.gtin = gtin_parse(self.value)
+        self.gtin = Gtin.parse(self.value)
 
     def _set_date(self: GS1ElementString) -> None:
         if (
