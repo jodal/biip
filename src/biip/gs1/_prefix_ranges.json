@@ -1,0 +1,806 @@
+[
+  {
+    "length": 7,
+    "min_value": 0,
+    "max_value": 0,
+    "usage": "Used to issue Restricted Circulation Numbers within a company"
+  },
+  {
+    "length": 7,
+    "min_value": 1,
+    "max_value": 99,
+    "usage": "Unused to avoid collision with GTIN-8"
+  },
+  {
+    "length": 5,
+    "min_value": 1,
+    "max_value": 9,
+    "usage": "GS1 US"
+  },
+  {
+    "length": 4,
+    "min_value": 1,
+    "max_value": 9,
+    "usage": "GS1 US"
+  },
+  {
+    "length": 3,
+    "min_value": 1,
+    "max_value": 19,
+    "usage": "GS1 US"
+  },
+  {
+    "length": 3,
+    "min_value": 20,
+    "max_value": 29,
+    "usage": "Used to issue Restricted Circulation Numbers within a geographic region (MO defined)"
+  },
+  {
+    "length": 3,
+    "min_value": 30,
+    "max_value": 39,
+    "usage": "GS1 US"
+  },
+  {
+    "length": 3,
+    "min_value": 40,
+    "max_value": 49,
+    "usage": "Used to issue GS1 Restricted Circulation Numbers within a company"
+  },
+  {
+    "length": 3,
+    "min_value": 50,
+    "max_value": 59,
+    "usage": "GS1 US reserved for future use"
+  },
+  {
+    "length": 3,
+    "min_value": 60,
+    "max_value": 139,
+    "usage": "GS1 US"
+  },
+  {
+    "length": 3,
+    "min_value": 200,
+    "max_value": 299,
+    "usage": "Used to issue Restricted Circulation Numbers within a geographic region (MO defined)"
+  },
+  {
+    "length": 3,
+    "min_value": 300,
+    "max_value": 379,
+    "usage": "GS1 France"
+  },
+  {
+    "length": 3,
+    "min_value": 380,
+    "max_value": 380,
+    "usage": "GS1 Bulgaria"
+  },
+  {
+    "length": 3,
+    "min_value": 383,
+    "max_value": 383,
+    "usage": "GS1 Slovenija"
+  },
+  {
+    "length": 3,
+    "min_value": 385,
+    "max_value": 385,
+    "usage": "GS1 Croatia"
+  },
+  {
+    "length": 3,
+    "min_value": 387,
+    "max_value": 387,
+    "usage": "GS1 BIH (Bosnia-Herzegovina)"
+  },
+  {
+    "length": 3,
+    "min_value": 389,
+    "max_value": 389,
+    "usage": "GS1 Montenegro"
+  },
+  {
+    "length": 3,
+    "min_value": 400,
+    "max_value": 440,
+    "usage": "GS1 Germany"
+  },
+  {
+    "length": 3,
+    "min_value": 450,
+    "max_value": 459,
+    "usage": "GS1 Japan"
+  },
+  {
+    "length": 3,
+    "min_value": 490,
+    "max_value": 499,
+    "usage": "GS1 Japan"
+  },
+  {
+    "length": 3,
+    "min_value": 460,
+    "max_value": 469,
+    "usage": "GS1 Russia"
+  },
+  {
+    "length": 3,
+    "min_value": 470,
+    "max_value": 470,
+    "usage": "GS1 Kyrgyzstan"
+  },
+  {
+    "length": 3,
+    "min_value": 471,
+    "max_value": 471,
+    "usage": "GS1 Chinese Taipei"
+  },
+  {
+    "length": 3,
+    "min_value": 474,
+    "max_value": 474,
+    "usage": "GS1 Estonia"
+  },
+  {
+    "length": 3,
+    "min_value": 475,
+    "max_value": 475,
+    "usage": "GS1 Latvia"
+  },
+  {
+    "length": 3,
+    "min_value": 476,
+    "max_value": 476,
+    "usage": "GS1 Azerbaijan"
+  },
+  {
+    "length": 3,
+    "min_value": 477,
+    "max_value": 477,
+    "usage": "GS1 Lithuania"
+  },
+  {
+    "length": 3,
+    "min_value": 478,
+    "max_value": 478,
+    "usage": "GS1 Uzbekistan"
+  },
+  {
+    "length": 3,
+    "min_value": 479,
+    "max_value": 479,
+    "usage": "GS1 Sri Lanka"
+  },
+  {
+    "length": 3,
+    "min_value": 480,
+    "max_value": 480,
+    "usage": "GS1 Philippines"
+  },
+  {
+    "length": 3,
+    "min_value": 481,
+    "max_value": 481,
+    "usage": "GS1 Belarus"
+  },
+  {
+    "length": 3,
+    "min_value": 482,
+    "max_value": 482,
+    "usage": "GS1 Ukraine"
+  },
+  {
+    "length": 3,
+    "min_value": 483,
+    "max_value": 483,
+    "usage": "GS1 Turkmenistan"
+  },
+  {
+    "length": 3,
+    "min_value": 484,
+    "max_value": 484,
+    "usage": "GS1 Moldova"
+  },
+  {
+    "length": 3,
+    "min_value": 485,
+    "max_value": 485,
+    "usage": "GS1 Armenia"
+  },
+  {
+    "length": 3,
+    "min_value": 486,
+    "max_value": 486,
+    "usage": "GS1 Georgia"
+  },
+  {
+    "length": 3,
+    "min_value": 487,
+    "max_value": 487,
+    "usage": "GS1 Kazakstan"
+  },
+  {
+    "length": 3,
+    "min_value": 488,
+    "max_value": 488,
+    "usage": "GS1 Tajikistan"
+  },
+  {
+    "length": 3,
+    "min_value": 489,
+    "max_value": 489,
+    "usage": "GS1 Hong Kong, China"
+  },
+  {
+    "length": 3,
+    "min_value": 500,
+    "max_value": 509,
+    "usage": "GS1 UK"
+  },
+  {
+    "length": 3,
+    "min_value": 520,
+    "max_value": 521,
+    "usage": "GS1 Association Greece"
+  },
+  {
+    "length": 3,
+    "min_value": 528,
+    "max_value": 528,
+    "usage": "GS1 Lebanon"
+  },
+  {
+    "length": 3,
+    "min_value": 529,
+    "max_value": 529,
+    "usage": "GS1 Cyprus"
+  },
+  {
+    "length": 3,
+    "min_value": 530,
+    "max_value": 530,
+    "usage": "GS1 Albania"
+  },
+  {
+    "length": 3,
+    "min_value": 531,
+    "max_value": 531,
+    "usage": "GS1 Macedonia"
+  },
+  {
+    "length": 3,
+    "min_value": 535,
+    "max_value": 535,
+    "usage": "GS1 Malta"
+  },
+  {
+    "length": 3,
+    "min_value": 539,
+    "max_value": 539,
+    "usage": "GS1 Ireland"
+  },
+  {
+    "length": 3,
+    "min_value": 540,
+    "max_value": 549,
+    "usage": "GS1 Belgium & Luxembourg"
+  },
+  {
+    "length": 3,
+    "min_value": 560,
+    "max_value": 560,
+    "usage": "GS1 Portugal"
+  },
+  {
+    "length": 3,
+    "min_value": 569,
+    "max_value": 569,
+    "usage": "GS1 Iceland"
+  },
+  {
+    "length": 3,
+    "min_value": 570,
+    "max_value": 579,
+    "usage": "GS1 Denmark"
+  },
+  {
+    "length": 3,
+    "min_value": 590,
+    "max_value": 590,
+    "usage": "GS1 Poland"
+  },
+  {
+    "length": 3,
+    "min_value": 594,
+    "max_value": 594,
+    "usage": "GS1 Romania"
+  },
+  {
+    "length": 3,
+    "min_value": 599,
+    "max_value": 599,
+    "usage": "GS1 Hungary"
+  },
+  {
+    "length": 3,
+    "min_value": 600,
+    "max_value": 601,
+    "usage": "GS1 South Africa"
+  },
+  {
+    "length": 3,
+    "min_value": 603,
+    "max_value": 603,
+    "usage": "GS1 Ghana"
+  },
+  {
+    "length": 3,
+    "min_value": 604,
+    "max_value": 604,
+    "usage": "GS1 Senegal"
+  },
+  {
+    "length": 3,
+    "min_value": 608,
+    "max_value": 608,
+    "usage": "GS1 Bahrain"
+  },
+  {
+    "length": 3,
+    "min_value": 609,
+    "max_value": 609,
+    "usage": "GS1 Mauritius"
+  },
+  {
+    "length": 3,
+    "min_value": 611,
+    "max_value": 611,
+    "usage": "GS1 Morocco"
+  },
+  {
+    "length": 3,
+    "min_value": 613,
+    "max_value": 613,
+    "usage": "GS1 Algeria"
+  },
+  {
+    "length": 3,
+    "min_value": 615,
+    "max_value": 615,
+    "usage": "GS1 Nigeria"
+  },
+  {
+    "length": 3,
+    "min_value": 616,
+    "max_value": 616,
+    "usage": "GS1 Kenya"
+  },
+  {
+    "length": 3,
+    "min_value": 617,
+    "max_value": 617,
+    "usage": "GS1 Cameroon"
+  },
+  {
+    "length": 3,
+    "min_value": 618,
+    "max_value": 618,
+    "usage": "GS1 C\u00f4te d'Ivoire"
+  },
+  {
+    "length": 3,
+    "min_value": 619,
+    "max_value": 619,
+    "usage": "GS1 Tunisia"
+  },
+  {
+    "length": 3,
+    "min_value": 620,
+    "max_value": 620,
+    "usage": "GS1 Tanzania"
+  },
+  {
+    "length": 3,
+    "min_value": 621,
+    "max_value": 621,
+    "usage": "GS1 Syria"
+  },
+  {
+    "length": 3,
+    "min_value": 622,
+    "max_value": 622,
+    "usage": "GS1 Egypt"
+  },
+  {
+    "length": 3,
+    "min_value": 623,
+    "max_value": 623,
+    "usage": "GS1 Brunei"
+  },
+  {
+    "length": 3,
+    "min_value": 624,
+    "max_value": 624,
+    "usage": "GS1 Libya"
+  },
+  {
+    "length": 3,
+    "min_value": 625,
+    "max_value": 625,
+    "usage": "GS1 Jordan"
+  },
+  {
+    "length": 3,
+    "min_value": 626,
+    "max_value": 626,
+    "usage": "GS1 Iran"
+  },
+  {
+    "length": 3,
+    "min_value": 627,
+    "max_value": 627,
+    "usage": "GS1 Kuwait"
+  },
+  {
+    "length": 3,
+    "min_value": 628,
+    "max_value": 628,
+    "usage": "GS1 Saudi Arabia"
+  },
+  {
+    "length": 3,
+    "min_value": 629,
+    "max_value": 629,
+    "usage": "GS1 Emirates"
+  },
+  {
+    "length": 3,
+    "min_value": 640,
+    "max_value": 649,
+    "usage": "GS1 Finland"
+  },
+  {
+    "length": 3,
+    "min_value": 690,
+    "max_value": 699,
+    "usage": "GS1 China"
+  },
+  {
+    "length": 3,
+    "min_value": 700,
+    "max_value": 709,
+    "usage": "GS1 Norway"
+  },
+  {
+    "length": 3,
+    "min_value": 729,
+    "max_value": 729,
+    "usage": "GS1 Israel"
+  },
+  {
+    "length": 3,
+    "min_value": 730,
+    "max_value": 739,
+    "usage": "GS1 Sweden"
+  },
+  {
+    "length": 3,
+    "min_value": 740,
+    "max_value": 740,
+    "usage": "GS1 Guatemala"
+  },
+  {
+    "length": 3,
+    "min_value": 741,
+    "max_value": 741,
+    "usage": "GS1 El Salvador"
+  },
+  {
+    "length": 3,
+    "min_value": 742,
+    "max_value": 742,
+    "usage": "GS1 Honduras"
+  },
+  {
+    "length": 3,
+    "min_value": 743,
+    "max_value": 743,
+    "usage": "GS1 Nicaragua"
+  },
+  {
+    "length": 3,
+    "min_value": 744,
+    "max_value": 744,
+    "usage": "GS1 Costa Rica"
+  },
+  {
+    "length": 3,
+    "min_value": 745,
+    "max_value": 745,
+    "usage": "GS1 Panama"
+  },
+  {
+    "length": 3,
+    "min_value": 746,
+    "max_value": 746,
+    "usage": "GS1 Republica Dominicana"
+  },
+  {
+    "length": 3,
+    "min_value": 750,
+    "max_value": 750,
+    "usage": "GS1 Mexico"
+  },
+  {
+    "length": 3,
+    "min_value": 754,
+    "max_value": 755,
+    "usage": "GS1 Canada"
+  },
+  {
+    "length": 3,
+    "min_value": 759,
+    "max_value": 759,
+    "usage": "GS1 Venezuela"
+  },
+  {
+    "length": 3,
+    "min_value": 760,
+    "max_value": 769,
+    "usage": "GS1 Schweiz, Suisse, Svizzera"
+  },
+  {
+    "length": 3,
+    "min_value": 770,
+    "max_value": 771,
+    "usage": "GS1 Colombia"
+  },
+  {
+    "length": 3,
+    "min_value": 773,
+    "max_value": 773,
+    "usage": "GS1 Uruguay"
+  },
+  {
+    "length": 3,
+    "min_value": 775,
+    "max_value": 775,
+    "usage": "GS1 Peru"
+  },
+  {
+    "length": 3,
+    "min_value": 777,
+    "max_value": 777,
+    "usage": "GS1 Bolivia"
+  },
+  {
+    "length": 3,
+    "min_value": 778,
+    "max_value": 779,
+    "usage": "GS1 Argentina"
+  },
+  {
+    "length": 3,
+    "min_value": 780,
+    "max_value": 780,
+    "usage": "GS1 Chile"
+  },
+  {
+    "length": 3,
+    "min_value": 784,
+    "max_value": 784,
+    "usage": "GS1 Paraguay"
+  },
+  {
+    "length": 3,
+    "min_value": 786,
+    "max_value": 786,
+    "usage": "GS1 Ecuador"
+  },
+  {
+    "length": 3,
+    "min_value": 789,
+    "max_value": 790,
+    "usage": "GS1 Brasil"
+  },
+  {
+    "length": 3,
+    "min_value": 800,
+    "max_value": 839,
+    "usage": "GS1 Italy"
+  },
+  {
+    "length": 3,
+    "min_value": 840,
+    "max_value": 849,
+    "usage": "GS1 Spain"
+  },
+  {
+    "length": 3,
+    "min_value": 850,
+    "max_value": 850,
+    "usage": "GS1 Cuba"
+  },
+  {
+    "length": 3,
+    "min_value": 858,
+    "max_value": 858,
+    "usage": "GS1 Slovakia"
+  },
+  {
+    "length": 3,
+    "min_value": 859,
+    "max_value": 859,
+    "usage": "GS1 Czech"
+  },
+  {
+    "length": 3,
+    "min_value": 860,
+    "max_value": 860,
+    "usage": "GS1 Serbia"
+  },
+  {
+    "length": 3,
+    "min_value": 865,
+    "max_value": 865,
+    "usage": "GS1 Mongolia"
+  },
+  {
+    "length": 3,
+    "min_value": 867,
+    "max_value": 867,
+    "usage": "GS1 North Korea"
+  },
+  {
+    "length": 3,
+    "min_value": 868,
+    "max_value": 869,
+    "usage": "GS1 Turkey"
+  },
+  {
+    "length": 3,
+    "min_value": 870,
+    "max_value": 879,
+    "usage": "GS1 Netherlands"
+  },
+  {
+    "length": 3,
+    "min_value": 880,
+    "max_value": 880,
+    "usage": "GS1 South Korea"
+  },
+  {
+    "length": 3,
+    "min_value": 883,
+    "max_value": 883,
+    "usage": "GS1 Myanmar"
+  },
+  {
+    "length": 3,
+    "min_value": 884,
+    "max_value": 884,
+    "usage": "GS1 Cambodia"
+  },
+  {
+    "length": 3,
+    "min_value": 885,
+    "max_value": 885,
+    "usage": "GS1 Thailand"
+  },
+  {
+    "length": 3,
+    "min_value": 888,
+    "max_value": 888,
+    "usage": "GS1 Singapore"
+  },
+  {
+    "length": 3,
+    "min_value": 890,
+    "max_value": 890,
+    "usage": "GS1 India"
+  },
+  {
+    "length": 3,
+    "min_value": 893,
+    "max_value": 893,
+    "usage": "GS1 Vietnam"
+  },
+  {
+    "length": 3,
+    "min_value": 896,
+    "max_value": 896,
+    "usage": "GS1 Pakistan"
+  },
+  {
+    "length": 3,
+    "min_value": 899,
+    "max_value": 899,
+    "usage": "GS1 Indonesia"
+  },
+  {
+    "length": 3,
+    "min_value": 900,
+    "max_value": 919,
+    "usage": "GS1 Austria"
+  },
+  {
+    "length": 3,
+    "min_value": 930,
+    "max_value": 939,
+    "usage": "GS1 Australia"
+  },
+  {
+    "length": 3,
+    "min_value": 940,
+    "max_value": 949,
+    "usage": "GS1 New Zealand"
+  },
+  {
+    "length": 3,
+    "min_value": 950,
+    "max_value": 950,
+    "usage": "GS1 Global Office"
+  },
+  {
+    "length": 3,
+    "min_value": 951,
+    "max_value": 951,
+    "usage": "Global Office - General Manager Number"
+  },
+  {
+    "length": 3,
+    "min_value": 952,
+    "max_value": 952,
+    "usage": "Used for demonstrations and examples of the GS1 system"
+  },
+  {
+    "length": 3,
+    "min_value": 955,
+    "max_value": 955,
+    "usage": "GS1 Malaysia"
+  },
+  {
+    "length": 3,
+    "min_value": 958,
+    "max_value": 958,
+    "usage": "GS1 Macau, China"
+  },
+  {
+    "length": 3,
+    "min_value": 960,
+    "max_value": 969,
+    "usage": "Global Office - GTIN-8"
+  },
+  {
+    "length": 3,
+    "min_value": 977,
+    "max_value": 977,
+    "usage": "Serial publications (ISSN)"
+  },
+  {
+    "length": 3,
+    "min_value": 978,
+    "max_value": 979,
+    "usage": "Bookland (ISBN)"
+  },
+  {
+    "length": 3,
+    "min_value": 980,
+    "max_value": 980,
+    "usage": "Refund receipts"
+  },
+  {
+    "length": 3,
+    "min_value": 981,
+    "max_value": 984,
+    "usage": "GS1 coupon identification for common currency areas"
+  },
+  {
+    "length": 2,
+    "min_value": 99,
+    "max_value": 99,
+    "usage": "GS1 coupon identification"
+  }
+]
