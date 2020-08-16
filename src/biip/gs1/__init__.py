@@ -43,12 +43,17 @@ Example:
 from __future__ import annotations
 
 
-from biip.gs1._application_identifiers import GS1ApplicationIdentifier
-from biip.gs1._prefixes import GS1Prefix
-from biip.gs1._element_strings import (  # noqa: Must be imported before GS1Message
-    GS1ElementString,
-)
-from biip.gs1._messages import GS1Message
+#: The default separator character is <GS>, ASCII value 29.
+#:
+#: References:
+#:   GS1 General Specifications, chapter 7.8.3.
+DEFAULT_SEPARATOR_CHAR = "\x1d"
+
+
+from biip.gs1._application_identifiers import GS1ApplicationIdentifier  # noqa
+from biip.gs1._prefixes import GS1Prefix  # noqa
+from biip.gs1._element_strings import GS1ElementString  # noqa
+from biip.gs1._messages import GS1Message  # noqa
 
 
 __all__ = [
@@ -56,4 +61,5 @@ __all__ = [
     "GS1ElementString",
     "GS1ApplicationIdentifier",
     "GS1Prefix",
+    "DEFAULT_SEPARATOR_CHAR",
 ]

@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from typing import List, Optional, Type
 
 from biip import ParseError
-from biip.gs1 import GS1ApplicationIdentifier
+from biip.gs1 import DEFAULT_SEPARATOR_CHAR, GS1ApplicationIdentifier
 from biip.gtin import Gtin
 
 
@@ -56,27 +56,30 @@ class GS1ElementString:
         cls: Type[GS1ElementString],
         value: str,
         *,
-        fnc1_char: Optional[str] = None,
+        separator_char: str = DEFAULT_SEPARATOR_CHAR,
     ) -> GS1ElementString:
         """Extract the first GS1 Element String from the given value.
 
         Args:
             value: The string to extract an Element String from. May contain
                 more than one Element String.
-            fnc1_char: Character used in place of the FNC1 symbol. If not
-                provided, parsing of a variable-length field might greedily
-                consume later fields.
+            separator_char: Character used in place of the FNC1 symbol.
+                Defaults to `<GS>` (ASCII value 29).
+                If variable-length fields are not terminated with this
+                character, the parser might greedily consume later fields.
 
         Returns:
             A data class with the Element String's parts and data extracted from it.
 
         Raises:
+            ValueError: If the ``separator_char`` isn't exactly 1 character long.
             ParseError: If the parsing fails.
         """
-        ai = GS1ApplicationIdentifier.extract(value)
+        if len(separator_char) != 1:
+            raise ValueError("separator_char must be exactly 1 character long.")
 
-        if fnc1_char is not None:
-            value = value.split(fnc1_char, maxsplit=1)[0]
+        ai = GS1ApplicationIdentifier.extract(value)
+        value = value.split(separator_char, maxsplit=1)[0]
 
         pattern = ai.pattern[:-1] if ai.pattern.endswith("$") else ai.pattern
         matches = re.match(pattern, value)
