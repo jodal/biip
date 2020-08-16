@@ -2,6 +2,7 @@ from datetime import date
 
 import pytest
 
+from biip import ParseError
 from biip.gs1 import (
     GS1ApplicationIdentifier,
     GS1ElementString,
@@ -129,6 +130,21 @@ def test_parse_with_fnc1_char(
     value: str, fnc1_char: str, expected_hri: str
 ) -> None:
     assert GS1Message.parse(value, fnc1_char=fnc1_char).as_hri() == expected_hri
+
+
+def test_parse_fails_if_unparsed_data_left() -> None:
+    # 10 = AI for BATCH/LOT
+    # 222... = Max length BATCH/LOT
+    # aaa = Superflous data
+    value = "1022222222222222222222aaa"
+
+    with pytest.raises(ParseError) as exc_info:
+        GS1Message.parse(value)
+
+    assert (
+        str(exc_info.value)
+        == "Failed to get GS1 Application Identifier from 'aaa'."
+    )
 
 
 @pytest.mark.parametrize(
