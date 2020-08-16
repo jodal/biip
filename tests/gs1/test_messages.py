@@ -1,6 +1,6 @@
 import pytest
 
-from biip.gs1 import parse
+from biip.gs1 import GS1Message
 
 
 @pytest.mark.parametrize(
@@ -13,4 +13,4 @@ from biip.gs1 import parse
     ],
 )
 def test_as_hri(value: str, expected: str) -> None:
-    assert parse(value).as_hri() == expected
+    assert GS1Message.parse(value).as_hri() == expected

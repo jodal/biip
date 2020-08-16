@@ -2,7 +2,6 @@ from datetime import date
 
 import pytest
 
-from biip import gs1
 from biip.gs1 import (
     GS1ApplicationIdentifier,
     GS1ElementString,
@@ -98,7 +97,7 @@ from biip.gtin import Gtin, GtinFormat
     ],
 )
 def test_parse(value: str, expected: GS1Message) -> None:
-    assert gs1.parse(value) == expected
+    assert GS1Message.parse(value) == expected
 
 
 @pytest.mark.parametrize(
@@ -129,4 +128,4 @@ def test_parse(value: str, expected: GS1Message) -> None:
 def test_parse_with_fnc1_char(
     value: str, fnc1_char: str, expected_hri: str
 ) -> None:
-    assert gs1.parse(value, fnc1_char=fnc1_char).as_hri() == expected_hri
+    assert GS1Message.parse(value, fnc1_char=fnc1_char).as_hri() == expected_hri
