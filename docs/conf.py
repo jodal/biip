@@ -12,3 +12,5 @@ extensions = [
 ]
 
 html_theme = "sphinx_rtd_theme"
+
+autodoc_member_order = "bysource"
