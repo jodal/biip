@@ -3,7 +3,7 @@
 import pytest
 
 from biip import EncodeError
-from biip.gtin import parse
+from biip.gtin import Gtin
 
 
 @pytest.mark.parametrize(
@@ -25,7 +25,7 @@ from biip.gtin import parse
     ],
 )
 def test_as_gtin_14(value: str, expected: str) -> None:
-    assert parse(value).as_gtin_14() == expected
+    assert Gtin.parse(value).as_gtin_14() == expected
 
 
 @pytest.mark.parametrize(
@@ -45,7 +45,7 @@ def test_as_gtin_14(value: str, expected: str) -> None:
     ],
 )
 def test_as_gtin_13(value: str, expected: str) -> None:
-    assert parse(value).as_gtin_13() == expected
+    assert Gtin.parse(value).as_gtin_13() == expected
 
 
 @pytest.mark.parametrize(
@@ -56,7 +56,7 @@ def test_as_gtin_13(value: str, expected: str) -> None:
     ],
 )
 def test_as_gtin_13_fails_for_too_long_values(value: str) -> None:
-    gtin = parse(value)
+    gtin = Gtin.parse(value)
 
     with pytest.raises(EncodeError) as exc_info:
         gtin.as_gtin_13()
@@ -80,7 +80,7 @@ def test_as_gtin_13_fails_for_too_long_values(value: str) -> None:
     ],
 )
 def test_as_gtin_12(value: str, expected: str) -> None:
-    assert parse(value).as_gtin_12() == expected
+    assert Gtin.parse(value).as_gtin_12() == expected
 
 
 @pytest.mark.parametrize(
@@ -93,7 +93,7 @@ def test_as_gtin_12(value: str, expected: str) -> None:
     ],
 )
 def test_as_gtin_12_fails_for_too_long_values(value: str) -> None:
-    gtin = parse(value)
+    gtin = Gtin.parse(value)
 
     with pytest.raises(EncodeError) as exc_info:
         gtin.as_gtin_12()
@@ -109,7 +109,7 @@ def test_as_gtin_12_fails_for_too_long_values(value: str) -> None:
     ],
 )
 def test_as_gtin_8(value: str, expected: str) -> None:
-    assert parse(value).as_gtin_8() == expected
+    assert Gtin.parse(value).as_gtin_8() == expected
 
 
 @pytest.mark.parametrize(
@@ -125,7 +125,7 @@ def test_as_gtin_8(value: str, expected: str) -> None:
     ],
 )
 def test_as_gtin_8_fails_for_too_long_values(value: str) -> None:
-    gtin = parse(value)
+    gtin = Gtin.parse(value)
 
     with pytest.raises(EncodeError) as exc_info:
         gtin.as_gtin_8()

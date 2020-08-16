@@ -4,12 +4,12 @@ import pytest
 
 from biip import ParseError
 from biip.gs1 import GS1Prefix
-from biip.gtin import GTIN, GTINFormat, parse
+from biip.gtin import Gtin, GtinFormat
 
 
 def test_parse_value_with_invalid_length() -> None:
     with pytest.raises(ParseError) as exc_info:
-        parse("123")
+        Gtin.parse("123")
 
     assert (
         str(exc_info.value)
@@ -19,7 +19,7 @@ def test_parse_value_with_invalid_length() -> None:
 
 def test_parse_nonnumeric_value() -> None:
     with pytest.raises(ParseError) as exc_info:
-        parse("0123456789abc")
+        Gtin.parse("0123456789abc")
 
     assert (
         str(exc_info.value)
@@ -29,7 +29,7 @@ def test_parse_nonnumeric_value() -> None:
 
 def test_parse_gtin_13_with_invalid_check_digit() -> None:
     with pytest.raises(ParseError) as exc_info:
-        parse("5901234123458")
+        Gtin.parse("5901234123458")
 
     assert (
         str(exc_info.value)
@@ -51,9 +51,9 @@ def test_parse_gtin_13_with_invalid_check_digit() -> None:
     ],
 )
 def test_parse_gtin_8(value: str) -> None:
-    assert parse(value) == GTIN(
+    assert Gtin.parse(value) == Gtin(
         value=value,
-        format=GTINFormat.GTIN_8,
+        format=GtinFormat.GTIN_8,
         prefix=GS1Prefix(value="963", usage="Global Office - GTIN-8"),
         payload="9638507",
         check_digit=4,
@@ -73,9 +73,9 @@ def test_parse_gtin_8(value: str) -> None:
     ],
 )
 def test_parse_gtin_12_without_leading_zero(value: str) -> None:
-    assert parse(value) == GTIN(
+    assert Gtin.parse(value) == Gtin(
         value=value,
-        format=GTINFormat.GTIN_12,
+        format=GtinFormat.GTIN_12,
         prefix=GS1Prefix(value="123", usage="GS1 US"),
         payload="12360105707",
         check_digit=2,
@@ -95,9 +95,9 @@ def test_parse_gtin_12_without_leading_zero(value: str) -> None:
     ],
 )
 def test_parse_gtin_12_with_1_leading_zero(value: str) -> None:
-    assert parse(value) == GTIN(
+    assert Gtin.parse(value) == Gtin(
         value=value,
-        format=GTINFormat.GTIN_12,
+        format=GtinFormat.GTIN_12,
         prefix=GS1Prefix(value="036", usage="GS1 US"),
         payload="03600029145",
         check_digit=2,
@@ -117,9 +117,9 @@ def test_parse_gtin_12_with_1_leading_zero(value: str) -> None:
     ],
 )
 def test_parse_gtin_12_with_2_leading_zero(value: str) -> None:
-    assert parse(value) == GTIN(
+    assert Gtin.parse(value) == Gtin(
         value=value,
-        format=GTINFormat.GTIN_12,
+        format=GtinFormat.GTIN_12,
         prefix=GS1Prefix(value="006", usage="GS1 US"),
         payload="00600029145",
         check_digit=5,
@@ -139,9 +139,9 @@ def test_parse_gtin_12_with_2_leading_zero(value: str) -> None:
     ],
 )
 def test_parse_gtin_12_with_3_leading_zero(value: str) -> None:
-    assert parse(value) == GTIN(
+    assert Gtin.parse(value) == Gtin(
         value=value,
-        format=GTINFormat.GTIN_12,
+        format=GtinFormat.GTIN_12,
         prefix=GS1Prefix(value="0009", usage="GS1 US"),
         payload="00090291451",
         check_digit=1,
@@ -159,9 +159,9 @@ def test_parse_gtin_12_with_3_leading_zero(value: str) -> None:
     ],
 )
 def test_parse_gtin_13(value: str) -> None:
-    assert parse(value) == GTIN(
+    assert Gtin.parse(value) == Gtin(
         value=value,
-        format=GTINFormat.GTIN_13,
+        format=GtinFormat.GTIN_13,
         prefix=GS1Prefix(value="590", usage="GS1 Poland"),
         payload="590123412345",
         check_digit=7,
@@ -170,9 +170,9 @@ def test_parse_gtin_13(value: str) -> None:
 
 
 def test_parse_gtin_14() -> None:
-    assert parse("98765432109213") == GTIN(
+    assert Gtin.parse("98765432109213") == Gtin(
         value="98765432109213",
-        format=GTINFormat.GTIN_14,
+        format=GtinFormat.GTIN_14,
         prefix=GS1Prefix(value="876", usage="GS1 Netherlands"),
         payload="9876543210921",
         check_digit=3,

@@ -2,14 +2,13 @@ from datetime import date
 
 import pytest
 
-from biip import gs1
 from biip.gs1 import (
     GS1ApplicationIdentifier,
     GS1ElementString,
     GS1Message,
     GS1Prefix,
 )
-from biip.gtin import GTIN, GTINFormat
+from biip.gtin import Gtin, GtinFormat
 
 
 @pytest.mark.parametrize(
@@ -31,9 +30,9 @@ from biip.gtin import GTIN, GTINFormat
                         ),
                         value="07032069804988",
                         pattern_groups=["07032069804988"],
-                        gtin=GTIN(
+                        gtin=Gtin(
                             value="07032069804988",
-                            format=GTINFormat.GTIN_13,
+                            format=GtinFormat.GTIN_13,
                             prefix=GS1Prefix(value="703", usage="GS1 Norway"),
                             payload="703206980498",
                             check_digit=8,
@@ -98,7 +97,7 @@ from biip.gtin import GTIN, GTINFormat
     ],
 )
 def test_parse(value: str, expected: GS1Message) -> None:
-    assert gs1.parse(value) == expected
+    assert GS1Message.parse(value) == expected
 
 
 @pytest.mark.parametrize(
@@ -129,4 +128,4 @@ def test_parse(value: str, expected: GS1Message) -> None:
 def test_parse_with_fnc1_char(
     value: str, fnc1_char: str, expected_hri: str
 ) -> None:
-    assert gs1.parse(value, fnc1_char=fnc1_char).as_hri() == expected_hri
+    assert GS1Message.parse(value, fnc1_char=fnc1_char).as_hri() == expected_hri
