@@ -189,6 +189,11 @@ class GS1Prefix:
 
     References:
         https://www.gs1.org/standards/id-keys/company-prefix
+
+    Example:
+        >>> from biip.gs1 import GS1Prefix
+        >>> GS1Prefix.extract("978-1-492-05374-3")
+        GS1Prefix(value='978', usage='Bookland (ISBN)')
     """
 
     #: The prefix itself.
