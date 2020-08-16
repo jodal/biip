@@ -9,7 +9,7 @@ from typing import List, Optional, Type
 
 from biip import ParseError
 from biip.gs1 import GS1ApplicationIdentifier
-from biip.gtin import GTIN, parse as gtin_parse
+from biip.gtin import Gtin, parse as gtin_parse
 
 
 @dataclass
@@ -28,8 +28,8 @@ class GS1ElementString:
         GS1ElementString(ai=GS1ApplicationIdentifier(ai='01',
         description='Global Trade Item Number (GTIN)', data_title='GTIN',
         fnc1_required=False, format='N2+N14'), value='07032069804988',
-        pattern_groups=['07032069804988'], gtin=GTIN(value='07032069804988',
-        format=<GTINFormat.GTIN_13: 13>, prefix=GS1Prefix(value='703',
+        pattern_groups=['07032069804988'], gtin=Gtin(value='07032069804988',
+        format=<GtinFormat.GTIN_13: 13>, prefix=GS1Prefix(value='703',
         usage='GS1 Norway'), payload='703206980498', check_digit=8,
         packaging_level=None), date=None)
         >>> element_string.as_hri()
@@ -46,7 +46,7 @@ class GS1ElementString:
     pattern_groups: List[str]
 
     #: A GTIN created from the element string, if the AI represents a GTIN.
-    gtin: Optional[GTIN] = None
+    gtin: Optional[Gtin] = None
 
     #: A date created from the element string, if the AI represents a date.
     date: Optional[datetime.date] = None
@@ -80,7 +80,7 @@ class GS1ElementString:
             description='Global Trade Item Number (GTIN)', data_title='GTIN',
             fnc1_required=False, format='N2+N14'), value='07032069804988',
             pattern_groups=['07032069804988'],
-            gtin=GTIN(value='07032069804988', format=<GTINFormat.GTIN_13:
+            gtin=Gtin(value='07032069804988', format=<GtinFormat.GTIN_13:
             13>, prefix=GS1Prefix(value='703', usage='GS1 Norway'),
             payload='703206980498', check_digit=8, packaging_level=None),
             date=None)
@@ -100,12 +100,12 @@ class GS1ElementString:
         value = "".join(pattern_groups)
 
         element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
-        element._set_gtin()
+        element._set_Gtin()
         element._set_date()
 
         return element
 
-    def _set_gtin(self: GS1ElementString) -> None:
+    def _set_Gtin(self: GS1ElementString) -> None:
         if self.ai.ai not in ("01", "02"):
             return
 

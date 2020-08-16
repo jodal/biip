@@ -11,7 +11,7 @@ from biip.gs1 import GS1Prefix
 from biip.gs1.checksums import numeric_check_digit
 
 
-class GTINFormat(IntEnum):
+class GtinFormat(IntEnum):
     """Enum of GTIN formats."""
 
     #: GTIN-8
@@ -26,13 +26,13 @@ class GTINFormat(IntEnum):
     #: GTIN-14
     GTIN_14 = 14
 
-    def __str__(self: GTINFormat) -> str:
+    def __str__(self: GtinFormat) -> str:
         """Pretty string representation of format."""
         return self.name.replace("_", "-")
 
 
 @dataclass
-class GTIN:
+class Gtin:
     """Data class containing a GTIN and its components."""
 
     #: Raw unprocessed value.
@@ -43,7 +43,7 @@ class GTIN:
     #: GTIN format, either GTIN-8, GTIN-12, GTIN-13, or GTIN-14.
     #:
     #: Classification is done after stripping leading zeros.
-    format: GTINFormat
+    format: GtinFormat
 
     #: The GS1 prefix, indicating what GS1 country organization that assigned
     #: code range.
@@ -63,29 +63,29 @@ class GTIN:
     #: retail products.
     packaging_level: Optional[int] = None
 
-    def as_gtin_8(self: GTIN) -> str:
+    def as_gtin_8(self: Gtin) -> str:
         """Format as a GTIN-8."""
-        return self._as_format(GTINFormat.GTIN_8)
+        return self._as_format(GtinFormat.GTIN_8)
 
-    def as_gtin_12(self: GTIN) -> str:
+    def as_gtin_12(self: Gtin) -> str:
         """Format as a GTIN-12."""
-        return self._as_format(GTINFormat.GTIN_12)
+        return self._as_format(GtinFormat.GTIN_12)
 
-    def as_gtin_13(self: GTIN) -> str:
+    def as_gtin_13(self: Gtin) -> str:
         """Format as a GTIN-13."""
-        return self._as_format(GTINFormat.GTIN_13)
+        return self._as_format(GtinFormat.GTIN_13)
 
-    def as_gtin_14(self: GTIN) -> str:
+    def as_gtin_14(self: Gtin) -> str:
         """Format as a GTIN-14."""
-        return self._as_format(GTINFormat.GTIN_14)
+        return self._as_format(GtinFormat.GTIN_14)
 
-    def _as_format(self: GTIN, format_: GTINFormat) -> str:
+    def _as_format(self: Gtin, format_: GtinFormat) -> str:
         if int(self.format) > int(format_):
             raise EncodeError(f"Failed encoding {self.value!r} as {format_!s}.")
         return f"{self.payload}{self.check_digit}".zfill(int(format_))
 
 
-def parse(value: str) -> GTIN:
+def parse(value: str) -> Gtin:
     """Parse the given value into a `GTIN` object.
 
     Both GTIN-8, GTIN-12, GTIN-13, and GTIN-14 are supported.
@@ -104,7 +104,7 @@ def parse(value: str) -> GTIN:
         >>> from biip.gtin import parse
         >>> gtin = parse("5901234123457")
         >>> gtin
-        GTIN(value='5901234123457', format=<GTINFormat.GTIN_13: 13>,
+        Gtin(value='5901234123457', format=<GtinFormat.GTIN_13: 13>,
         prefix=GS1Prefix(value='590', usage='GS1 Poland'),
         payload='590123412345', check_digit=7, packaging_level=None)
         >>> gtin.as_gtin_14()
@@ -122,12 +122,12 @@ def parse(value: str) -> GTIN:
         )
 
     stripped_value = _strip_leading_zeros(value)
-    gtin_format = GTINFormat(len(stripped_value))
+    gtin_format = GtinFormat(len(stripped_value))
     payload = stripped_value[:-1]
     check_digit = int(stripped_value[-1])
 
     packaging_level: Optional[int]
-    if gtin_format == GTINFormat.GTIN_14:
+    if gtin_format == GtinFormat.GTIN_14:
         packaging_level = int(stripped_value[0])
         value_without_packaging_level = stripped_value[1:]
         prefix = GS1Prefix.extract(value_without_packaging_level)
@@ -142,7 +142,7 @@ def parse(value: str) -> GTIN:
             f"Expected {calculated_check_digit!r}, got {check_digit!r}."
         )
 
-    return GTIN(
+    return Gtin(
         value=value,
         format=gtin_format,
         prefix=prefix,
