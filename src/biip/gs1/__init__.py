@@ -47,7 +47,7 @@ def parse(value: str, *, fnc1_char: Optional[str] = None) -> GS1Message:
         description='Global Trade Item Number (GTIN)', data_title='GTIN',
         fnc1_required=False, format='N2+N14'), value='07032069804988',
         pattern_groups=['07032069804988'], gtin=Gtin(value='07032069804988',
-        format=<GtinFormat.GTIN_13: 13>, prefix=GS1Prefix(value='703',
+        format=GtinFormat.GTIN_13, prefix=GS1Prefix(value='703',
         usage='GS1 Norway'), payload='703206980498', check_digit=8,
         packaging_level=None), date=None)
         >>> msg.element_strings[1]
