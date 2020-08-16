@@ -34,6 +34,20 @@ class GtinFormat(IntEnum):
         """Canonical string representation of format."""
         return f"GtinFormat.{self.name}"
 
+    @property
+    def length(self: GtinFormat) -> int:
+        """Length of a GTIN of the given format.
+
+        Returns:
+            The number of characters.
+
+        Example:
+            >>> from biip.gtin import GtinFormat
+            >>> GtinFormat.GTIN_13.length
+            13
+        """
+        return int(self)
+
 
 @dataclass
 class Gtin:
@@ -150,10 +164,12 @@ class Gtin:
         """Format as a GTIN-14."""
         return self._as_format(GtinFormat.GTIN_14)
 
-    def _as_format(self: Gtin, format_: GtinFormat) -> str:
-        if int(self.format) > int(format_):
-            raise EncodeError(f"Failed encoding {self.value!r} as {format_!s}.")
-        return f"{self.payload}{self.check_digit}".zfill(int(format_))
+    def _as_format(self: Gtin, gtin_format: GtinFormat) -> str:
+        if self.format.length > gtin_format.length:
+            raise EncodeError(
+                f"Failed encoding {self.value!r} as {gtin_format!s}."
+            )
+        return f"{self.payload}{self.check_digit}".zfill(gtin_format.length)
 
 
 def _strip_leading_zeros(value: str) -> str:
