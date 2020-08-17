@@ -26,7 +26,7 @@ class GS1ApplicationIdentifier:
 
     Example:
         >>> from biip.gs1 import GS1ApplicationIdentifier
-        >>> ai = GS1ApplicationIdentifier.get("01")
+        >>> ai = GS1ApplicationIdentifier.extract("01")
         >>> ai
         GS1ApplicationIdentifier(ai='01', description='Global Trade Item
         Number (GTIN)', data_title='GTIN', fnc1_required=False,
@@ -53,33 +53,6 @@ class GS1ApplicationIdentifier:
 
     #: Regular expression for parsing the AIs element string.
     pattern: str = field(repr=False)
-
-    @classmethod
-    def get(
-        cls: Type[GS1ApplicationIdentifier], value: str
-    ) -> GS1ApplicationIdentifier:
-        """Lookup the given GS1 Application Identifier (AI).
-
-        Args:
-            value: The AI code, e.g. "01".
-
-        Returns:
-            Metadata about the given AI.
-
-        Raises:
-            KeyError: If the given AI is not found.
-
-        Example:
-            >>> from biip.gs1 import GS1ApplicationIdentifier
-            >>> GS1ApplicationIdentifier.get("01")
-            GS1ApplicationIdentifier(ai='01', description='Global Trade Item
-            Number (GTIN)', data_title='GTIN', fnc1_required=False,
-            format='N2+N14')
-        """
-        for application_identifier in _GS1_APPLICATION_IDENTIFIERS:
-            if application_identifier.ai == value:
-                return application_identifier
-        raise KeyError(value)
 
     @classmethod
     def extract(
