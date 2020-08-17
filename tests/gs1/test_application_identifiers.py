@@ -57,13 +57,6 @@ def test_extract_unknown_gs1_ai(unknown_ai: str) -> None:
     )
 
 
-def test_extract_from_invalid_type() -> None:
-    with pytest.raises(TypeError) as exc_info:
-        GS1ApplicationIdentifier.extract(1234)  # type: ignore
-
-    assert str(exc_info.value) == "Expected str or bytes, got <class 'int'>."
-
-
 @pytest.mark.parametrize(
     "value, expected",
     [
@@ -79,7 +72,7 @@ def test_extract_from_invalid_type() -> None:
             ),
         ),
         (
-            b"90SE011\x1d2501611262",
+            "90SE011\x1d2501611262",
             GS1ApplicationIdentifier(
                 ai="90",
                 description="Information mutually agreed between trading partners",

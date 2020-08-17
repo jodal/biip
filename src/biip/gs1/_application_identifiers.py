@@ -94,7 +94,6 @@ class GS1ApplicationIdentifier:
             Metadata about the extracted AI.
 
         Raises:
-            TypeError: If the input isn't str or bytes.
             ParseError: If the parsing fails.
 
         Example:
@@ -104,15 +103,8 @@ class GS1ApplicationIdentifier:
             Number (GTIN)', data_title='GTIN', fnc1_required=False,
             format='N2+N14')
         """
-        if isinstance(value, str):
-            data = value.encode()
-        elif isinstance(value, bytes):
-            data = value
-        else:
-            raise TypeError(f"Expected str or bytes, got {type(value)}.")
-
         for application_identifier in _GS1_APPLICATION_IDENTIFIERS:
-            if data.startswith(application_identifier.ai.encode()):
+            if value.startswith(application_identifier.ai):
                 return application_identifier
 
         raise ParseError(
