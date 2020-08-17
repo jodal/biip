@@ -46,6 +46,13 @@ def test_parse(value: str, expected_cls: Type) -> None:
     assert isinstance(parse(value), expected_cls)
 
 
+def test_parse_with_separator_char() -> None:
+    result = parse("101313|15210526", separator_char="|")
+
+    assert isinstance(result, GS1Message)
+    assert result.as_hri() == "(10)1313(15)210526"
+
+
 def test_parse_invalid_data() -> None:
     with pytest.raises(ParseError) as exc_info:
         parse("abc")
