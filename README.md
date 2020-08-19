@@ -45,6 +45,7 @@ The library can interpret the following formats:
       - [x] Interpret dates with "00" as the day as the last day of the month
     - [x] Parse variable measurement fields (price/weight) into `Decimal` values
     - [x] Parse discount percentage into `Decimal` values
+    - [x] Parse amounts with currency into `Money` values, if py-moneyed is installed
   - [x] Encode as Human Readable Interpretation (HRI), e.g. with parenthesis
         around the AI numbers
 - GTIN (Global Trade Item Number)

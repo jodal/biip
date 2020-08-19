@@ -209,26 +209,30 @@ def test_extract_amount_payable(value: str, expected: Decimal) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    "value, expected_currency, expected_decimal",
     [
         # Amount payable and ISO currency code (section 3.6.7)
-        ("39127101230", Decimal("12.30")),  # 710=ZAR
-        ("39117101230", Decimal("123.0")),  # 710=ZAR
-        ("391097812301", Decimal("12301")),  # 978=EUR
+        ("39127101230", "ZAR", Decimal("12.30")),
+        ("39117101230", "ZAR", Decimal("123.0")),
+        ("391097812301", "EUR", Decimal("12301")),
         #
         # Amount payable for variable mesure trade item and currency (section 3.6.9)
-        ("39327101230", Decimal("12.30")),  # 710=ZAR
-        ("39317101230", Decimal("123.0")),  # 710=ZAR
-        ("393097812301", Decimal("12301")),  # 978=EUR
+        ("39327101230", "ZAR", Decimal("12.30")),
+        ("39317101230", "ZAR", Decimal("123.0")),
+        ("393097812301", "EUR", Decimal("12301")),
     ],
 )
 def test_extract_amount_payable_and_currency(
-    value: str, expected: Decimal
+    value: str, expected_currency: str, expected_decimal: Decimal
 ) -> None:
-    # The currency is not extracted to its own field for now. If we had a
-    # ISO-4217 mapping and an optional dependency on py-moneyed, we could
-    # create proper Money instances from this.
-    assert GS1ElementString.extract(value).decimal == expected
+    element_string = GS1ElementString.extract(value)
+
+    assert element_string.decimal == expected_decimal
+
+    # Optional: If py-moneyed is installed, create Money instances
+    assert element_string.money is not None
+    assert element_string.money.amount == expected_decimal
+    assert element_string.money.currency.code == expected_currency
 
 
 @pytest.mark.parametrize(

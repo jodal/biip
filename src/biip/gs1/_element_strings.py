@@ -13,6 +13,11 @@ from biip import ParseError
 from biip.gs1 import DEFAULT_SEPARATOR_CHAR, GS1ApplicationIdentifier
 from biip.gtin import Gtin
 
+try:
+    import moneyed
+except ImportError:  # pragma: no cover
+    moneyed = None
+
 
 @dataclass
 class GS1ElementString:
@@ -33,7 +38,7 @@ class GS1ElementString:
         pattern_groups=['07032069804988'], gtin=Gtin(value='07032069804988',
         format=GtinFormat.GTIN_13, prefix=GS1Prefix(value='703', usage='GS1
         Norway'), payload='703206980498', check_digit=8,
-        packaging_level=None), date=None, decimal=None)
+        packaging_level=None), date=None, decimal=None, money=None)
         >>> element_string.as_hri()
         '(01)07032069804988'
     """
@@ -55,6 +60,10 @@ class GS1ElementString:
 
     #: A decimal value created from the element string, if the AI represents a number.
     decimal: Optional[Decimal] = None
+
+    #: A Money value created from the element string, if the AI represents a
+    #: currency and an amount. Only set if py-moneyed is installed.
+    money: Optional["moneyed.Money"] = None
 
     @classmethod
     def extract(
@@ -151,6 +160,10 @@ class GS1ElementString:
             decimals = value[num_units:]
 
             self.decimal = Decimal(f"{units}.{decimals}")
+
+        if amount_payable_with_currency and moneyed is not None:
+            currency = moneyed.get_currency(iso=self.pattern_groups[0])
+            self.money = moneyed.Money(amount=self.decimal, currency=currency)
 
     def __len__(self: GS1ElementString) -> int:
         """Get the length of the element string."""
