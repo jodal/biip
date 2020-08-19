@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import calendar
 import datetime
 import re
 from dataclasses import dataclass
@@ -131,18 +132,42 @@ class GS1ElementString:
 
 
 def _parse_date(value: str) -> datetime.date:
-    # TODO Handle date being zero, ref chapter 3.4.2.
+    year, month, day = int(value[0:2]), int(value[2:4]), int(value[4:6])
+    year += _get_century(year)
+    if day == 0:
+        day = _get_last_day_of_month(year, month)
+    return datetime.date(year, month, day)
 
-    result = datetime.datetime.strptime(value, r"%y%m%d").date()
 
-    # The two-digit year refers to a year in the range between 49 years past
-    # and 50 years into the future. However, Python uses 1969 as the pivot
-    # point when selecting the century, so we must adjust all dates that are
-    # interpreted as more than 49 years ago.
-    #
-    # References: GS1 General Specifications, chapter 7.12.
-    min_year = datetime.date.today().year - 49
-    if result.year < min_year:
-        result = result.replace(year=result.year + 100)
+def _get_century(two_digit_year: int) -> int:
+    """Get century from two-digit year.
 
-    return result
+    The two-digit year refers to a year in the range between 49 years past
+    and 50 years into the future.
+
+    Args:
+        two_digit_year: A two-digit year, e.g. without century specified.
+
+    Returns:
+        The century the year is in.
+
+    References:
+        GS1 General Specifications, chapter 7.12
+    """
+    current_year = datetime.date.today().year
+    current_century = current_year - current_year % 100
+    two_digit_current_year = current_year - current_century
+
+    if 51 <= two_digit_year - two_digit_current_year <= 99:
+        return current_century - 100  # Previous century
+    elif -99 <= two_digit_year - two_digit_current_year <= -50:
+        # Next century
+        # Skipping coverage as this code won't run until year 2051
+        return current_century + 100  # pragma: no cover
+    else:
+        return current_century  # Current century
+
+
+def _get_last_day_of_month(year: int, month: int) -> int:
+    """Get the last day of the given month."""
+    return calendar.monthrange(year, month)[1]
