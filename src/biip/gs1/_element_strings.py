@@ -120,11 +120,21 @@ class GS1ElementString:
             )
 
     def _set_decimal(self: GS1ElementString) -> None:
-        if self.ai.ai[:2] in ("31", "32", "33", "34", "35", "36"):
-            # See GS1 General Specifications, chapter 3.6.2-3.6.4 for details.
+        variable_measure = self.ai.ai[:2] in (
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+        )
+        amount_payable = self.ai.ai[:3] in ("390", "392")
+
+        if variable_measure or amount_payable:
+            # See GS1 General Specifications, chapter 3.6 for details.
 
             num_decimals = int(self.ai.ai[3])
-            num_units = 6 - num_decimals
+            num_units = len(self.value) - num_decimals
 
             units = self.value[:num_units]
             decimals = self.value[num_units:]

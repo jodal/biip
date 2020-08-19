@@ -190,6 +190,25 @@ def test_extract_variable_measures(value: str, expected: Decimal) -> None:
 
 
 @pytest.mark.parametrize(
+    "value, expected",
+    [
+        # Amount payable or coupon value (GS1 General Specifications, section 3.6.6)
+        ("3901123", Decimal("12.3")),
+        ("3901123456", Decimal("12345.6")),
+        ("3903123456789012345", Decimal("123456789012.345")),
+        ("3909123456789012345", Decimal("123456.789012345")),
+        # Amount payable for variable measure trade item (section 3.6.8)
+        ("3921123", Decimal("12.3")),
+        ("3921123456", Decimal("12345.6")),
+        ("3923123456789012345", Decimal("123456789012.345")),
+        ("3929123456789012345", Decimal("123456.789012345")),
+    ],
+)
+def test_extract_amount_payable(value: str, expected: Decimal) -> None:
+    assert GS1ElementString.extract(value).decimal == expected
+
+
+@pytest.mark.parametrize(
     "value, expected", [("0107032069804988", "(01)07032069804988",)],
 )
 def test_as_hri(value: str, expected: str) -> None:
