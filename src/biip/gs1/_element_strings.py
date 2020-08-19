@@ -92,12 +92,12 @@ class GS1ElementString:
         value = "".join(pattern_groups)
 
         element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
-        element._set_Gtin()
+        element._set_gtin()
         element._set_date()
 
         return element
 
-    def _set_Gtin(self: GS1ElementString) -> None:
+    def _set_gtin(self: GS1ElementString) -> None:
         if self.ai.ai not in ("01", "02"):
             return
 
