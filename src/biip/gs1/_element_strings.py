@@ -130,11 +130,17 @@ class GS1ElementString:
         )
         amount_payable = self.ai.ai[:3] in ("390", "392")
         amount_payable_with_currency = self.ai.ai[:3] in ("391", "393")
+        percentage = self.ai.ai[:3] in ("394",)
 
-        if variable_measure or amount_payable or amount_payable_with_currency:
+        if (
+            variable_measure
+            or amount_payable
+            or amount_payable_with_currency
+            or percentage
+        ):
             # See GS1 General Specifications, chapter 3.6 for details.
 
-            # Only group for variable_measure and amount_payable.
+            # Only group for variable_measure, amount_payable, and percentage.
             # Second and last group for amount_payable_with_currency.
             value = self.pattern_groups[-1]
 

@@ -232,6 +232,14 @@ def test_extract_amount_payable_and_currency(
 
 
 @pytest.mark.parametrize(
+    "value, expected",
+    [("39400010", Decimal("10")), ("39410055", Decimal("5.5"))],
+)
+def test_extract_percentage_discount(value: str, expected: Decimal) -> None:
+    assert GS1ElementString.extract(value).decimal == expected
+
+
+@pytest.mark.parametrize(
     "value, expected", [("0107032069804988", "(01)07032069804988",)],
 )
 def test_as_hri(value: str, expected: str) -> None:

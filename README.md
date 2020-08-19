@@ -44,6 +44,7 @@ The library can interpret the following formats:
       - [x] Interpret the year to be within -49/+50 years from today
       - [x] Interpret dates with "00" as the day as the last day of the month
     - [x] Parse variable measurement fields (price/weight) into `Decimal` values
+    - [x] Parse discount percentage into `Decimal` values
   - [x] Encode as Human Readable Interpretation (HRI), e.g. with parenthesis
         around the AI numbers
 - GTIN (Global Trade Item Number)
