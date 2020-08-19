@@ -8,50 +8,6 @@ from biip.gtin import Gtin, GtinFormat
 
 
 @pytest.mark.parametrize(
-    "ai_code, bad_value",
-    [
-        # Too short product number
-        ("01", "01123"),
-        # Too short weight
-        ("3100", "3100123"),
-    ],
-)
-def test_extract_when_not_matching_pattern(
-    ai_code: str, bad_value: str
-) -> None:
-    ai = GS1ApplicationIdentifier.extract(ai_code)
-
-    with pytest.raises(ParseError) as exc_info:
-        GS1ElementString.extract(bad_value)
-
-    assert (
-        str(exc_info.value)
-        == f"Failed to match GS1 AI {ai.ai} pattern {ai.pattern!r} with {bad_value!r}."
-    )
-
-
-@pytest.mark.parametrize(
-    "ai_code, bad_value",
-    [
-        # Bad production date
-        ("11", "131313"),
-        # Bad best before date
-        ("15", "999999"),
-    ],
-)
-def test_extract_with_invalid_date(ai_code: str, bad_value: str) -> None:
-    ai = GS1ApplicationIdentifier.extract(ai_code)
-
-    with pytest.raises(ParseError) as exc_info:
-        GS1ElementString.extract(f"{ai_code}{bad_value}")
-
-    assert (
-        str(exc_info.value)
-        == f"Failed to parse GS1 AI {ai.ai} date from {bad_value!r}."
-    )
-
-
-@pytest.mark.parametrize(
     "value, expected",
     [
         (
@@ -90,6 +46,50 @@ def test_extract_with_invalid_date(ai_code: str, bad_value: str) -> None:
 )
 def test_extract(value: str, expected: GS1ElementString) -> None:
     assert GS1ElementString.extract(value) == expected
+
+
+@pytest.mark.parametrize(
+    "ai_code, bad_value",
+    [
+        # Too short product number
+        ("01", "01123"),
+        # Too short weight
+        ("3100", "3100123"),
+    ],
+)
+def test_extract_fails_when_not_matching_pattern(
+    ai_code: str, bad_value: str
+) -> None:
+    ai = GS1ApplicationIdentifier.extract(ai_code)
+
+    with pytest.raises(ParseError) as exc_info:
+        GS1ElementString.extract(bad_value)
+
+    assert (
+        str(exc_info.value)
+        == f"Failed to match GS1 AI {ai.ai} pattern {ai.pattern!r} with {bad_value!r}."
+    )
+
+
+@pytest.mark.parametrize(
+    "ai_code, bad_value",
+    [
+        # Bad production date
+        ("11", "131313"),
+        # Bad best before date
+        ("15", "999999"),
+    ],
+)
+def test_extract_fails_with_invalid_date(ai_code: str, bad_value: str) -> None:
+    ai = GS1ApplicationIdentifier.extract(ai_code)
+
+    with pytest.raises(ParseError) as exc_info:
+        GS1ElementString.extract(f"{ai_code}{bad_value}")
+
+    assert (
+        str(exc_info.value)
+        == f"Failed to parse GS1 AI {ai.ai} date from {bad_value!r}."
+    )
 
 
 THIS_YEAR = date.today().year
@@ -135,7 +135,7 @@ MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
         ),
     ],
 )
-def test_extract_date_handles_min_and_max_year_correctly(
+def test_extract_handles_min_and_max_year_correctly(
     value: str, expected: GS1ElementString
 ) -> None:
     assert GS1ElementString.extract(value) == expected
@@ -149,7 +149,7 @@ def test_extract_date_handles_min_and_max_year_correctly(
         ("17211200", date(2021, 12, 31)),
     ],
 )
-def test_extract_date_handles_zero_day_as_last_day_of_month(
+def test_extract_handles_zero_day_as_last_day_of_month(
     value: str, expected: date
 ) -> None:
     assert GS1ElementString.extract(value).date == expected
