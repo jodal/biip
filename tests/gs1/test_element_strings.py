@@ -209,6 +209,29 @@ def test_extract_amount_payable(value: str, expected: Decimal) -> None:
 
 
 @pytest.mark.parametrize(
+    "value, expected",
+    [
+        # Amount payable and ISO currency code (section 3.6.7)
+        ("39127101230", Decimal("12.30")),  # 710=ZAR
+        ("39117101230", Decimal("123.0")),  # 710=ZAR
+        ("391097812301", Decimal("12301")),  # 978=EUR
+        #
+        # Amount payable for variable mesure trade item and currency (section 3.6.9)
+        ("39327101230", Decimal("12.30")),  # 710=ZAR
+        ("39317101230", Decimal("123.0")),  # 710=ZAR
+        ("393097812301", Decimal("12301")),  # 978=EUR
+    ],
+)
+def test_extract_amount_payable_and_currency(
+    value: str, expected: Decimal
+) -> None:
+    # The currency is not extracted to its own field for now. If we had a
+    # ISO-4217 mapping and an optional dependency on py-moneyed, we could
+    # create proper Money instances from this.
+    assert GS1ElementString.extract(value).decimal == expected
+
+
+@pytest.mark.parametrize(
     "value, expected", [("0107032069804988", "(01)07032069804988",)],
 )
 def test_as_hri(value: str, expected: str) -> None:

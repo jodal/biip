@@ -129,15 +129,20 @@ class GS1ElementString:
             "36",
         )
         amount_payable = self.ai.ai[:3] in ("390", "392")
+        amount_payable_with_currency = self.ai.ai[:3] in ("391", "393")
 
-        if variable_measure or amount_payable:
+        if variable_measure or amount_payable or amount_payable_with_currency:
             # See GS1 General Specifications, chapter 3.6 for details.
 
-            num_decimals = int(self.ai.ai[3])
-            num_units = len(self.value) - num_decimals
+            # Only group for variable_measure and amount_payable.
+            # Second and last group for amount_payable_with_currency.
+            value = self.pattern_groups[-1]
 
-            units = self.value[:num_units]
-            decimals = self.value[num_units:]
+            num_decimals = int(self.ai.ai[3])
+            num_units = len(value) - num_decimals
+
+            units = value[:num_units]
+            decimals = value[num_units:]
 
             self.decimal = Decimal(f"{units}.{decimals}")
 
