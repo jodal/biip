@@ -5,7 +5,10 @@ Changes
 v0.3.0 (UNRELEASED)
 ===================
 
-- (none)
+:mod:`biip.gtin`
+
+- Raise :exc:`~biip.ParseError` if there is less than 8 or more than 14
+  significant digits in the barcode.
 
 
 v0.2.0 (2020-08-19)
