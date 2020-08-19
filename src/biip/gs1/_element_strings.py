@@ -104,9 +104,7 @@ class GS1ElementString:
         self.gtin = Gtin.parse(self.value)
 
     def _set_date(self: GS1ElementString) -> None:
-        if (
-            "(YYMMDD)" not in self.ai.description
-        ):  # TODO: A more robust condition
+        if self.ai.ai not in ("11", "12", "13", "15", "16", "17"):
             return
 
         try:
