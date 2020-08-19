@@ -2,6 +2,20 @@
 Changes
 =======
 
+v0.3.0 (UNRELEASED)
+===================
+
+:mod:`biip.gs1`
+
+- Add :attr:`~biip.gs1.GS1ElementString.decimal` field which is set for
+  AIs with weight, volume, dimensions, dicount percentages, and amounts
+  payable.
+
+- Add :attr:`~biip.gs1.GS1ElementString.money` field which is set for AIs
+  with both amounts payable and currency. This field is only set if the
+  optional dependency ``py-moneyed`` is installed.
+
+
 v0.2.1 (2020-08-19)
 ===================
 
