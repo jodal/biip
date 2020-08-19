@@ -31,21 +31,6 @@ The library can interpret the following formats:
 - GS1 AI element strings,
   commonly found in GS1-128 barcodes.
 
-## Installation
-
-Biip is available from [PyPI](https://pypi.org/project/biip/):
-
-```
-python3 -m pip install biip
-```
-
-Biip requires Python 3.7 or newer.
-
-## Usage
-
-This project is still in its infancy.
-However, some [documentation](https://biip.readthedocs.io/) already exists.
-
 ## Features
 
 - GS1
@@ -53,8 +38,8 @@ However, some [documentation](https://biip.readthedocs.io/) already exists.
   - [x] Parse variable-length Element Strings
     - [x] Support configuring the separation character
   - Data field enrichment
-    - [ ] Parse (00) as SSCC
-    - [x] Parse (01) and (02) as GTIN
+    - [ ] Parse `(00)` as SSCC
+    - [x] Parse `(01)` and `(02)` as GTIN
     - [x] Parse dates into `datetime` objects
       - [x] Interpret the year to be within -49/+50 years from today
       - [ ] Interpret dates with "00" as the day as the last day of the month
@@ -78,6 +63,7 @@ However, some [documentation](https://biip.readthedocs.io/) already exists.
     - [x] GTIN-8 as GTIN-12/13/14
     - [x] GTIN-12 as GTIN-13/14
     - [x] GTIN-13 as GTIN-14
+    - [ ] GTIN with variable weight part zeroed out, to help looking up the correct trade item
 - SSCC
   - [ ] Validate check digit
   - [ ] Extract GS1 Company Prefix, if possible due to varying field length
@@ -85,6 +71,21 @@ However, some [documentation](https://biip.readthedocs.io/) already exists.
 - Symbol IDs, e.g. `]EO`
   - [ ] Use Symbol IDs when automatically selecting what parser to use
   - [ ] Strip Symbol IDs before parsing the remainder
+
+## Installation
+
+Biip is available from [PyPI](https://pypi.org/project/biip/):
+
+```
+python3 -m pip install biip
+```
+
+Biip requires Python 3.7 or newer.
+
+## Usage
+
+This project is still in its infancy.
+However, some [documentation](https://biip.readthedocs.io/) already exists.
 
 ## License
 
