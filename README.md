@@ -59,7 +59,7 @@ The library can interpret the following formats:
       recommendations. Have to research if there is enough similarity to have
       one rule set or if we need to configure what market rule set to use.
     - Available rule sets include:
-      - [ ] Global recommendations: GS1 General Specifications, chapter 2.1.12.2
+      - [ ] Global recommendations: GS1 General Specifications, section 2.1.12.2
       - [ ] UK: https://www.gs1uk.org/sites/default/files/How_to_calculate_variable_measure_items_0.pdf
       - [ ] Sweden: https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/
       - [ ] Baltics: https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf

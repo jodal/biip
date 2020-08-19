@@ -92,21 +92,19 @@ class GS1ElementString:
         value = "".join(pattern_groups)
 
         element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
-        element._set_Gtin()
+        element._set_gtin()
         element._set_date()
 
         return element
 
-    def _set_Gtin(self: GS1ElementString) -> None:
+    def _set_gtin(self: GS1ElementString) -> None:
         if self.ai.ai not in ("01", "02"):
             return
 
         self.gtin = Gtin.parse(self.value)
 
     def _set_date(self: GS1ElementString) -> None:
-        if (
-            "(YYMMDD)" not in self.ai.description
-        ):  # TODO: A more robust condition
+        if self.ai.ai not in ("11", "12", "13", "15", "16", "17"):
             return
 
         try:
@@ -152,7 +150,7 @@ def _get_century(two_digit_year: int) -> int:
         The century the year is in.
 
     References:
-        GS1 General Specifications, chapter 7.12
+        GS1 General Specifications, section 7.12
     """
     current_year = datetime.date.today().year
     current_century = current_year - current_year % 100
