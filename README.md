@@ -37,15 +37,18 @@ The library can interpret the following formats:
   - [x] Parse fixed-length Element Strings
   - [x] Parse variable-length Element Strings
     - [x] Support configuring the separation character
-  - Data field enrichment
-    - [ ] Parse `(00)` as SSCC
-    - [x] Parse `(01)` and `(02)` as GTIN
-    - [x] Parse dates into `datetime` objects
-      - [x] Interpret the year to be within -49/+50 years from today
-      - [x] Interpret dates with "00" as the day as the last day of the month
-    - [ ] Parse variable measurement fields (price/weight) into `Decimal` values
-  - [x] Encode as Human Readable Interpretation (HRI), e.g. with parenthesis
-        around the AI numbers
+  - [ ] Parse `(00)` as SSCC
+  - [x] Parse `(01)` and `(02)` as GTIN
+  - [x] Parse dates into `datetime.date` values
+    - [x] Interpret the year to be within -49/+50 years from today
+    - [x] Interpret dates with "00" as the day as the last day of the month
+  - [x] Parse variable measurement fields into `Decimal` values
+  - [x] Parse discount percentage into `Decimal` values
+  - [x] Parse amounts into `Decimal` values
+    - [x] Additionally, if py-moneyed is installed,
+          parse amounts with currency into `Money` values
+  - [x] Encode as Human Readable Interpretation (HRI),
+        e.g. with parenthesis around the AI numbers
 - GTIN (Global Trade Item Number)
   - [x] Parse GTIN-8, e.g. from EAN-8 barcodes
   - [x] Parse GTIN-12, e.g. from UPC-A and UPC-E barcodes

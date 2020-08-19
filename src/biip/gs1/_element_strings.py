@@ -6,11 +6,17 @@ import calendar
 import datetime
 import re
 from dataclasses import dataclass
+from decimal import Decimal
 from typing import List, Optional, Type
 
 from biip import ParseError
 from biip.gs1 import DEFAULT_SEPARATOR_CHAR, GS1ApplicationIdentifier
 from biip.gtin import Gtin
+
+try:
+    import moneyed
+except ImportError:  # pragma: no cover
+    moneyed = None
 
 
 @dataclass
@@ -32,7 +38,7 @@ class GS1ElementString:
         pattern_groups=['07032069804988'], gtin=Gtin(value='07032069804988',
         format=GtinFormat.GTIN_13, prefix=GS1Prefix(value='703', usage='GS1
         Norway'), payload='703206980498', check_digit=8,
-        packaging_level=None), date=None)
+        packaging_level=None), date=None, decimal=None, money=None)
         >>> element_string.as_hri()
         '(01)07032069804988'
     """
@@ -51,6 +57,13 @@ class GS1ElementString:
 
     #: A date created from the element string, if the AI represents a date.
     date: Optional[datetime.date] = None
+
+    #: A decimal value created from the element string, if the AI represents a number.
+    decimal: Optional[Decimal] = None
+
+    #: A Money value created from the element string, if the AI represents a
+    #: currency and an amount. Only set if py-moneyed is installed.
+    money: Optional["moneyed.Money"] = None
 
     @classmethod
     def extract(
@@ -94,6 +107,7 @@ class GS1ElementString:
         element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
         element._set_gtin()
         element._set_date()
+        element._set_decimal()
 
         return element
 
@@ -113,6 +127,43 @@ class GS1ElementString:
             raise ParseError(
                 f"Failed to parse GS1 AI {self.ai.ai} date from {self.value!r}."
             )
+
+    def _set_decimal(self: GS1ElementString) -> None:
+        variable_measure = self.ai.ai[:2] in (
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+        )
+        amount_payable = self.ai.ai[:3] in ("390", "392")
+        amount_payable_with_currency = self.ai.ai[:3] in ("391", "393")
+        percentage = self.ai.ai[:3] in ("394",)
+
+        if (
+            variable_measure
+            or amount_payable
+            or amount_payable_with_currency
+            or percentage
+        ):
+            # See GS1 General Specifications, chapter 3.6 for details.
+
+            # Only group for variable_measure, amount_payable, and percentage.
+            # Second and last group for amount_payable_with_currency.
+            value = self.pattern_groups[-1]
+
+            num_decimals = int(self.ai.ai[3])
+            num_units = len(value) - num_decimals
+
+            units = value[:num_units]
+            decimals = value[num_units:]
+
+            self.decimal = Decimal(f"{units}.{decimals}")
+
+        if amount_payable_with_currency and moneyed is not None:
+            currency = moneyed.get_currency(iso=self.pattern_groups[0])
+            self.money = moneyed.Money(amount=self.decimal, currency=currency)
 
     def __len__(self: GS1ElementString) -> int:
         """Get the length of the element string."""

@@ -1,4 +1,5 @@
 from datetime import date
+from decimal import Decimal
 
 import pytest
 
@@ -153,6 +154,93 @@ def test_extract_handles_zero_day_as_last_day_of_month(
     value: str, expected: date
 ) -> None:
     assert GS1ElementString.extract(value).date == expected
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        # Trade measures (GS1 General Specifications, section 3.6.2)
+        ("3105123456", Decimal("1.23456")),  # Net weight (kg)
+        ("3114123456", Decimal("12.3456")),  # First dimension (m)
+        ("3123123456", Decimal("123.456")),  # Second dimension (m)
+        ("3132123456", Decimal("1234.56")),  # Third dimension (m)
+        ("3141123456", Decimal("12345.6")),  # Area (m^2)
+        ("3150123456", Decimal("123456")),  # Net volume (l)
+        ("3161123456", Decimal("12345.6")),  # Net volume (m^3)
+        # ... plus equivalent for imperial units
+        ("3661123456", Decimal("12345.6")),  # Net volume (cubic yards)
+        #
+        # Logistic measures (GS1 General Specifications, section 3.6.3)
+        ("3302023456", Decimal("234.56")),  # Logistic weight (kg)
+        ("3313023456", Decimal("23.456")),  # First dimension (m)
+        ("3324023456", Decimal("2.3456")),  # Second dimension (m)
+        ("3335023456", Decimal("0.23456")),  # Third dimension (m)
+        ("3344023456", Decimal("2.3456")),  # Area (m^2)
+        ("3353023456", Decimal("23.456")),  # Logistic volume (l)
+        ("3362023456", Decimal("234.56")),  # Logistic volume (m^3)
+        # ... plus equivalent for imperial units
+        ("3691123456", Decimal("12345.6")),  # Logistic volume (cubic yards)
+        #
+        # Kilograms per square meter (GS1 General Specifications, section 3.6.4)
+        ("3372123456", Decimal("1234.56")),
+    ],
+)
+def test_extract_variable_measures(value: str, expected: Decimal) -> None:
+    assert GS1ElementString.extract(value).decimal == expected
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        # Amount payable or coupon value (GS1 General Specifications, section 3.6.6)
+        ("3901123", Decimal("12.3")),
+        ("3901123456", Decimal("12345.6")),
+        ("3903123456789012345", Decimal("123456789012.345")),
+        ("3909123456789012345", Decimal("123456.789012345")),
+        # Amount payable for variable measure trade item (section 3.6.8)
+        ("3921123", Decimal("12.3")),
+        ("3921123456", Decimal("12345.6")),
+        ("3923123456789012345", Decimal("123456789012.345")),
+        ("3929123456789012345", Decimal("123456.789012345")),
+    ],
+)
+def test_extract_amount_payable(value: str, expected: Decimal) -> None:
+    assert GS1ElementString.extract(value).decimal == expected
+
+
+@pytest.mark.parametrize(
+    "value, expected_currency, expected_decimal",
+    [
+        # Amount payable and ISO currency code (section 3.6.7)
+        ("39127101230", "ZAR", Decimal("12.30")),
+        ("39117101230", "ZAR", Decimal("123.0")),
+        ("391097812301", "EUR", Decimal("12301")),
+        #
+        # Amount payable for variable mesure trade item and currency (section 3.6.9)
+        ("39327101230", "ZAR", Decimal("12.30")),
+        ("39317101230", "ZAR", Decimal("123.0")),
+        ("393097812301", "EUR", Decimal("12301")),
+    ],
+)
+def test_extract_amount_payable_and_currency(
+    value: str, expected_currency: str, expected_decimal: Decimal
+) -> None:
+    element_string = GS1ElementString.extract(value)
+
+    assert element_string.decimal == expected_decimal
+
+    # Optional: If py-moneyed is installed, create Money instances
+    assert element_string.money is not None
+    assert element_string.money.amount == expected_decimal
+    assert element_string.money.currency.code == expected_currency
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [("39400010", Decimal("10")), ("39410055", Decimal("5.5"))],
+)
+def test_extract_percentage_discount(value: str, expected: Decimal) -> None:
+    assert GS1ElementString.extract(value).decimal == expected
 
 
 @pytest.mark.parametrize(
