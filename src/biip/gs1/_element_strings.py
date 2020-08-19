@@ -6,6 +6,7 @@ import calendar
 import datetime
 import re
 from dataclasses import dataclass
+from decimal import Decimal
 from typing import List, Optional, Type
 
 from biip import ParseError
@@ -32,7 +33,7 @@ class GS1ElementString:
         pattern_groups=['07032069804988'], gtin=Gtin(value='07032069804988',
         format=GtinFormat.GTIN_13, prefix=GS1Prefix(value='703', usage='GS1
         Norway'), payload='703206980498', check_digit=8,
-        packaging_level=None), date=None)
+        packaging_level=None), date=None, decimal=None)
         >>> element_string.as_hri()
         '(01)07032069804988'
     """
@@ -51,6 +52,9 @@ class GS1ElementString:
 
     #: A date created from the element string, if the AI represents a date.
     date: Optional[datetime.date] = None
+
+    #: A decimal value created from the element string, if the AI represents a number.
+    decimal: Optional[Decimal] = None
 
     @classmethod
     def extract(
@@ -94,6 +98,7 @@ class GS1ElementString:
         element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
         element._set_gtin()
         element._set_date()
+        element._set_decimal()
 
         return element
 
@@ -113,6 +118,18 @@ class GS1ElementString:
             raise ParseError(
                 f"Failed to parse GS1 AI {self.ai.ai} date from {self.value!r}."
             )
+
+    def _set_decimal(self: GS1ElementString) -> None:
+        if self.ai.ai[:2] in ("31", "32", "33", "34", "35", "36"):
+            # See GS1 General Specifications, chapter 3.6.2-3.6.4 for details.
+
+            num_decimals = int(self.ai.ai[3])
+            num_units = 6 - num_decimals
+
+            units = self.value[:num_units]
+            decimals = self.value[num_units:]
+
+            self.decimal = Decimal(f"{units}.{decimals}")
 
     def __len__(self: GS1ElementString) -> int:
         """Get the length of the element string."""

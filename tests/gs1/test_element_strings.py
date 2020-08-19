@@ -1,4 +1,5 @@
 from datetime import date
+from decimal import Decimal
 
 import pytest
 
@@ -153,6 +154,39 @@ def test_extract_handles_zero_day_as_last_day_of_month(
     value: str, expected: date
 ) -> None:
     assert GS1ElementString.extract(value).date == expected
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        # Trade measures (GS1 General Specifications, section 3.6.2)
+        ("3105123456", Decimal("1.23456")),  # Net weight (kg)
+        ("3114123456", Decimal("12.3456")),  # First dimension (m)
+        ("3123123456", Decimal("123.456")),  # Second dimension (m)
+        ("3132123456", Decimal("1234.56")),  # Third dimension (m)
+        ("3141123456", Decimal("12345.6")),  # Area (m^2)
+        ("3150123456", Decimal("123456")),  # Net volume (l)
+        ("3161123456", Decimal("12345.6")),  # Net volume (m^3)
+        # ... plus equivalent for imperial units
+        ("3661123456", Decimal("12345.6")),  # Net volume (cubic yards)
+        #
+        # Logistic measures (GS1 General Specifications, section 3.6.3)
+        ("3302023456", Decimal("234.56")),  # Logistic weight (kg)
+        ("3313023456", Decimal("23.456")),  # First dimension (m)
+        ("3324023456", Decimal("2.3456")),  # Second dimension (m)
+        ("3335023456", Decimal("0.23456")),  # Third dimension (m)
+        ("3344023456", Decimal("2.3456")),  # Area (m^2)
+        ("3353023456", Decimal("23.456")),  # Logistic volume (l)
+        ("3362023456", Decimal("234.56")),  # Logistic volume (m^3)
+        # ... plus equivalent for imperial units
+        ("3691123456", Decimal("12345.6")),  # Logistic volume (cubic yards)
+        #
+        # Kilograms per square meter (GS1 General Specifications, section 3.6.4)
+        ("3372123456", Decimal("1234.56")),
+    ],
+)
+def test_extract_variable_measures(value: str, expected: Decimal) -> None:
+    assert GS1ElementString.extract(value).decimal == expected
 
 
 @pytest.mark.parametrize(
