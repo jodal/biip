@@ -46,7 +46,7 @@ from __future__ import annotations
 #: The default separator character is <GS>, ASCII value 29.
 #:
 #: References:
-#:   GS1 General Specifications, chapter 7.8.3.
+#:   GS1 General Specifications, section 7.8.3.
 DEFAULT_SEPARATOR_CHAR = "\x1d"
 
 

@@ -16,7 +16,7 @@ def numeric_check_digit(value: str) -> int:
         ValueError: If the value isn't numeric.
 
     References:
-        GS1 General Specification, chapter 7.9.
+        GS1 General Specification, section 7.9
 
     Example:
         >>> from biip.gs1.checksums import numeric_check_digit
@@ -51,7 +51,7 @@ def price_check_digit(value: str) -> int:
         ValueError: If the value isn't numeric.
 
     References:
-        GS1 General Specification, chapter 7.9.2-7.9.4.
+        GS1 General Specification, section 7.9.2-7.9.4
 
     Example:
         >>> from biip.gs1.checksums import price_check_digit
@@ -90,7 +90,7 @@ def _five_digit_price_check_digit(value: str) -> int:
     return _FIVE_MINUS_WEIGHT_REVERSE[result]
 
 
-# See GS1 General Specification, chapter 7.9.2 for details.
+# See GS1 General Specification, section 7.9.2 for details.
 _TWO_MINUS_WEIGHT = {0: 0, 1: 2, 2: 4, 3: 6, 4: 8, 5: 9, 6: 1, 7: 3, 8: 5, 9: 7}
 _THREE_WEIGHT = {0: 0, 1: 3, 2: 6, 3: 9, 4: 2, 5: 5, 6: 8, 7: 1, 8: 4, 9: 7}
 _FIVE_PLUS_WEIGHT = {0: 0, 1: 5, 2: 1, 3: 6, 4: 2, 5: 7, 6: 3, 7: 8, 8: 4, 9: 9}
@@ -108,7 +108,7 @@ _FIVE_MINUS_WEIGHT = {
 }
 _FIVE_MINUS_WEIGHT_REVERSE = {v: k for k, v in _FIVE_MINUS_WEIGHT.items()}
 
-# See GS1 General Specification, chapter 7.9.3 for details.
+# See GS1 General Specification, section 7.9.3 for details.
 _FOUR_DIGIT_POSITION_WEIGHTS = [
     _TWO_MINUS_WEIGHT,
     _TWO_MINUS_WEIGHT,
@@ -116,7 +116,7 @@ _FOUR_DIGIT_POSITION_WEIGHTS = [
     _FIVE_MINUS_WEIGHT,
 ]
 
-# See GS1 General Specification, chapter 7.9.4 for details.
+# See GS1 General Specification, section 7.9.4 for details.
 _FIVE_DIGIT_POSITION_WEIGHTS = [
     _FIVE_PLUS_WEIGHT,
     _TWO_MINUS_WEIGHT,

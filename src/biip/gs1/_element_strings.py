@@ -152,7 +152,7 @@ def _get_century(two_digit_year: int) -> int:
         The century the year is in.
 
     References:
-        GS1 General Specifications, chapter 7.12
+        GS1 General Specifications, section 7.12
     """
     current_year = datetime.date.today().year
     current_century = current_year - current_year % 100
