@@ -135,8 +135,24 @@ MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
         ),
     ],
 )
-def test_extract_date(value: str, expected: GS1ElementString) -> None:
+def test_extract_date_handles_min_and_max_year_correctly(
+    value: str, expected: GS1ElementString
+) -> None:
     assert GS1ElementString.extract(value) == expected
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        ("15200200", date(2020, 2, 29)),
+        ("15210200", date(2021, 2, 28)),
+        ("17211200", date(2021, 12, 31)),
+    ],
+)
+def test_extract_date_handles_zero_day_as_last_day_of_month(
+    value: str, expected: date
+) -> None:
+    assert GS1ElementString.extract(value).date == expected
 
 
 @pytest.mark.parametrize(
