@@ -13,7 +13,17 @@ def test_parse_value_with_invalid_length() -> None:
 
     assert (
         str(exc_info.value)
-        == "Failed parsing '123' as GTIN: Expected 8, 12, 13, or 14 characters, got 3."
+        == "Failed parsing '123' as GTIN: Expected 8, 12, 13, or 14 digits, got 3."
+    )
+
+
+def test_parse_value_with_invalid_length_when_stripping_zeros() -> None:
+    with pytest.raises(ParseError) as exc_info:
+        Gtin.parse("07038010")
+
+    assert (
+        str(exc_info.value)
+        == "Failed parsing '07038010' as GTIN: Expected 8-14 significant digits, got 7."
     )
 
 

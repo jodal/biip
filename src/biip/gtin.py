@@ -119,7 +119,7 @@ class Gtin:
         if len(value) not in (8, 12, 13, 14):
             raise ParseError(
                 f"Failed parsing {value!r} as GTIN: "
-                f"Expected 8, 12, 13, or 14 characters, got {len(value)}."
+                f"Expected 8, 12, 13, or 14 digits, got {len(value)}."
             )
 
         if not value.isnumeric():
@@ -128,7 +128,16 @@ class Gtin:
             )
 
         stripped_value = _strip_leading_zeros(value)
-        gtin_format = GtinFormat(len(stripped_value))
+
+        num_significant_digits = len(stripped_value)
+        try:
+            gtin_format = GtinFormat(num_significant_digits)
+        except ValueError:
+            raise ParseError(
+                f"Failed parsing {value!r} as GTIN: "
+                f"Expected 8-14 significant digits, got {num_significant_digits}."
+            )
+
         payload = stripped_value[:-1]
         check_digit = int(stripped_value[-1])
 
