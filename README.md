@@ -47,6 +47,10 @@ The library can interpret the following formats:
   - [x] Encode as Human Readable Interpretation (HRI), e.g. with parenthesis
         around the AI numbers
 - GTIN (Global Trade Item Number)
+  - [x] Parse GTIN-8, e.g. from EAN-8 barcodes
+  - [x] Parse GTIN-12, e.g. from UPC-A and UPC-E barcodes
+  - [x] Parse GTIN-13, e.g. from EAN-13 barcodes
+  - [x] Parse GTIN-14, e.g. from ITF-14 barcodes, as well as a data field in GS1 barcodes
   - [x] Extract and validate check digit
   - [x] Extract GS1 Prefix
   - [x] Extract packaging level digit from GTIN-14
