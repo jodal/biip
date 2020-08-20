@@ -21,6 +21,8 @@ v0.3.0 (UNRELEASED)
   with both amounts payable and currency. This field is only set if the
   optional dependency ``py-moneyed`` is installed.
 
+- Strip surrounding whitespace before parsing.
+
 :mod:`biip.gtin`
 
 - Detect Restricted Circulation Numbers (RCN) and return a subclass of
@@ -37,6 +39,8 @@ v0.3.0 (UNRELEASED)
   trade items in a database or similar.
 
 - Add RCN rules for the Baltics, Great Britain, Norway, and Sweden.
+
+- Strip surrounding whitespace before parsing.
 
 - Bug fix: Keep all leading zeros in GTIN-8.
 
