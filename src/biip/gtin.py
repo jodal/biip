@@ -27,16 +27,22 @@ Example:
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from decimal import Decimal
 from enum import IntEnum
-from typing import Optional, Type
+from typing import Optional, Type, Union
 
 from biip import EncodeError, ParseError
 from biip.gs1 import GS1Prefix
 from biip.gs1.checksums import numeric_check_digit
 
+try:
+    import moneyed
+except ImportError:  # pragma: no cover
+    moneyed = None
 
-__all__ = ["Gtin", "GtinFormat"]
+
+__all__ = ["Gtin", "Rcn", "GtinFormat"]
 
 
 class GtinFormat(IntEnum):
@@ -153,7 +159,13 @@ class Gtin:
                 f"Expected {calculated_check_digit!r}, got {check_digit!r}."
             )
 
-        return cls(
+        gtin_type: Type[Union[Gtin, Rcn]]
+        if "Restricted Circulation Number" in prefix.usage:
+            gtin_type = Rcn
+        else:
+            gtin_type = Gtin
+
+        return gtin_type(
             value=value,
             format=gtin_format,
             prefix=prefix,
@@ -184,6 +196,30 @@ class Gtin:
                 f"Failed encoding {self.value!r} as {gtin_format!s}."
             )
         return f"{self.payload}{self.check_digit}".zfill(gtin_format.length)
+
+
+@dataclass
+class Rcn(Gtin):
+    """Restricted Circulation Number (RCN) is a subset of GTIN.
+
+    RCNs with prefix 02 and 20-29 have the same semantics across a geographic
+    region, defined by the local GS1 Member Organization.
+
+    RCNs with prefix 40-49 have semantics that are only defined within a
+    single company.
+    """
+
+    #: A variable weight value extracted from the barcode,
+    #: if indicated by prefix.
+    weight: Optional[Decimal] = field(default=None, init=False)
+
+    #: A variable weight price extracted from the barcode,
+    #: if indicated by prefix.
+    price: Optional[Decimal] = field(default=None, init=False)
+
+    #: A Money value created from the variable weight price.
+    #: Only set if py-moneyed is installed and the currency is known.
+    money: Optional["moneyed.Money"] = field(default=None, init=False)
 
 
 def _strip_leading_zeros(value: str) -> str:

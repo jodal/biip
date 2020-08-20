@@ -4,12 +4,12 @@ from typing import Union
 
 from biip import ParseError
 from biip.gs1 import DEFAULT_SEPARATOR_CHAR, GS1Message
-from biip.gtin import Gtin, GtinFormat
+from biip.gtin import Gtin, GtinFormat, Rcn
 
 
 def parse(
     value: str, *, separator_char: str = DEFAULT_SEPARATOR_CHAR
-) -> Union[Gtin, GS1Message]:
+) -> Union[Gtin, GS1Message, Rcn]:
     """Identify data format and parse data.
 
     The current strategy is:
