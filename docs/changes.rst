@@ -23,7 +23,9 @@ v0.3.0 (UNRELEASED)
 
 :mod:`biip.gtin`
 
-- Keep all leading zeros in GTIN-8.
+- Bug fix: Keep all leading zeros in GTIN-8.
+
+- Bug fix: Convert GTIN-8 to GTIN-12 before extracting GS1 Prefix.
 
 
 v0.2.1 (2020-08-19)
