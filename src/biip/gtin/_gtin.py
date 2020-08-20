@@ -1,48 +1,14 @@
-"""Support for Global Trade Item Number (GTIN).
-
-The :mod:`biip.gtin` module contains biip's support for parsing GTIN formats.
-
-A GTIN is a number that uniquely identifies a trade item.
-
-This class can interpet the following GTIN formats:
-
-- GTIN-8, found in EAN-8 barcodes.
-- GTIN-12, found in UPC-A and UPC-E barcodes.
-- GTIN-13, found in EAN-13 barcodes.
-- GTIN-14, found in ITF-14 barcodes, as well as a data field in GS1 barcodes.
-
-A GTIN can be converted to any other GTIN format, as long as the target
-format is longer.
-
-Example:
-    >>> from biip.gtin import Gtin
-    >>> gtin = Gtin.parse("5901234123457")
-    >>> gtin
-    Gtin(value='5901234123457', format=GtinFormat.GTIN_13,
-    prefix=GS1Prefix(value='590', usage='GS1 Poland'),
-    payload='590123412345', check_digit=7, packaging_level=None)
-    >>> gtin.as_gtin_14()
-    '05901234123457'
-"""
+"""Global Trade Item Number (GTIN)."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from decimal import Decimal
-from enum import Enum, IntEnum
+from dataclasses import dataclass
+from enum import IntEnum
 from typing import Optional, Type, Union
 
 from biip import EncodeError, ParseError
 from biip.gs1 import GS1Prefix
 from biip.gs1.checksums import numeric_check_digit
-
-try:
-    import moneyed
-except ImportError:  # pragma: no cover
-    moneyed = None
-
-
-__all__ = ["Gtin", "GtinFormat", "Rcn", "RcnUsage"]
 
 
 class GtinFormat(IntEnum):
@@ -72,16 +38,6 @@ class GtinFormat(IntEnum):
     def length(self: GtinFormat) -> int:
         """Length of a GTIN of the given format."""
         return int(self)
-
-
-class RcnUsage(Enum):
-    """Enum of RCN usage restrictions."""
-
-    #: Usage of RCN restricted to geopgraphical area.
-    GEOGRAPHICAL = "geo"
-
-    #: Usage of RCN restricted to internally in a company.
-    COMPANY = "company"
 
 
 @dataclass
@@ -171,6 +127,8 @@ class Gtin:
 
         gtin_type: Type[Union[Gtin, Rcn]]
         if "Restricted Circulation Number" in prefix.usage:
+            from biip.gtin import Rcn
+
             gtin_type = Rcn
         else:
             gtin_type = Gtin
@@ -206,44 +164,6 @@ class Gtin:
                 f"Failed encoding {self.value!r} as {gtin_format!s}."
             )
         return f"{self.payload}{self.check_digit}".zfill(gtin_format.length)
-
-
-@dataclass
-class Rcn(Gtin):
-    """Restricted Circulation Number (RCN) is a subset of GTIN.
-
-    RCNs with prefix 02 and 20-29 have the same semantics across a geographic
-    region, defined by the local GS1 Member Organization.
-
-    RCNs with prefix 40-49 have semantics that are only defined within a
-    single company.
-    """
-
-    #: Where the RCN can be circulated,
-    #: in a geographical area or within a company.
-    usage: Optional[RcnUsage] = field(default=None, init=False)
-
-    #: A variable weight value extracted from the barcode,
-    #: if indicated by prefix.
-    weight: Optional[Decimal] = field(default=None, init=False)
-
-    #: A variable weight price extracted from the barcode,
-    #: if indicated by prefix.
-    price: Optional[Decimal] = field(default=None, init=False)
-
-    #: A Money value created from the variable weight price.
-    #: Only set if py-moneyed is installed and the currency is known.
-    money: Optional["moneyed.Money"] = field(default=None, init=False)
-
-    def __post_init__(self: Rcn) -> None:
-        """Initialize derivated fields."""
-        self._set_usage()
-
-    def _set_usage(self: Rcn) -> None:
-        if "within a geographic region" in self.prefix.usage:
-            self.usage = RcnUsage.GEOGRAPHICAL
-        elif "within a company" in self.prefix.usage:
-            self.usage = RcnUsage.COMPANY
 
 
 def _strip_leading_zeros(value: str) -> str:
