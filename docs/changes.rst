@@ -2,6 +2,13 @@
 Changes
 =======
 
+v0.3.1 (UNRELEASED)
+===================
+
+:mod:`biip`
+
+- Strip surrounding whitespace before selecting parser.
+
 v0.3.0 (2020-08-21)
 ===================
 

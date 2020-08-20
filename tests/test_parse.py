@@ -46,6 +46,12 @@ def test_parse(value: str, expected_cls: Type) -> None:
     assert isinstance(parse(value), expected_cls)
 
 
+def test_parse_strips_surrounding_whitespace() -> None:
+    gtin = parse("  \t 5901234123457 \n  ")
+
+    assert gtin.value == "5901234123457"
+
+
 def test_parse_with_separator_char() -> None:
     result = parse("101313|15210526", separator_char="|")
 
