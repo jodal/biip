@@ -8,7 +8,7 @@ v0.3.0 (2020-08-21)
 :mod:`biip.gs1`
 
 - Add :meth:`~biip.gs1.GS1Message.filter` to find all parsed Element Strings
-  that matches the criteria.
+  that match the criteria.
 
 - Add :meth:`~biip.gs1.GS1Message.get` to find first parsed Element String
   that matches the criteria.
@@ -29,11 +29,11 @@ v0.3.0 (2020-08-21)
   :class:`~biip.gtin.Gtin`, :class:`~biip.gtin.Rcn`, with additional fields and
   helpers for working with RCNs.
 
-- Classify a RCN as being restricted to either a geographical region or to a
+- Classify an RCN as being restricted to either a geographical region or to a
   company.
 
 - Support interpreting RCNs according to varying rules depending on the
-  geopgraphical region specified by the user.
+  geographical region specified by the user.
 
 - Support for zeroing out the variable measure part, to help with looking up
   trade items in a database or similar.
@@ -42,9 +42,9 @@ v0.3.0 (2020-08-21)
 
 - Strip surrounding whitespace before parsing.
 
-- Bug fix: Keep all leading zeros in GTIN-8.
+- Bugfix: Keep all leading zeros in GTIN-8.
 
-- Bug fix: Convert GTIN-8 to GTIN-12 before extracting GS1 Prefix.
+- Bugfix: Convert GTIN-8 to GTIN-12 before extracting GS1 Prefix.
 
 
 v0.2.1 (2020-08-19)

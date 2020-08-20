@@ -27,7 +27,7 @@ class Rcn(Gtin):
     single company.
 
     Use :meth:`biip.gtin.Gtin.parse` to parse potential RCNs. This subclass
-    is returned if the GS1 Prefix signifies that the value is a RCN.
+    is returned if the GS1 Prefix signifies that the value is an RCN.
     """
 
     #: Where the RCN can be circulated,
