@@ -3,41 +3,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import IntEnum
 from typing import Optional, Type, Union
 
 from biip import EncodeError, ParseError
 from biip.gs1 import GS1Prefix
 from biip.gs1.checksums import numeric_check_digit
-
-
-class GtinFormat(IntEnum):
-    """Enum of GTIN formats."""
-
-    #: GTIN-8
-    GTIN_8 = 8
-
-    #: GTIN-12
-    GTIN_12 = 12
-
-    #: GTIN-13
-    GTIN_13 = 13
-
-    #: GTIN-14
-    GTIN_14 = 14
-
-    def __str__(self: GtinFormat) -> str:
-        """Pretty string representation of format."""
-        return self.name.replace("_", "-")
-
-    def __repr__(self: GtinFormat) -> str:
-        """Canonical string representation of format."""
-        return f"GtinFormat.{self.name}"
-
-    @property
-    def length(self: GtinFormat) -> int:
-        """Length of a GTIN of the given format."""
-        return int(self)
+from biip.gtin import GtinFormat
 
 
 @dataclass

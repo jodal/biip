@@ -4,25 +4,14 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from decimal import Decimal
-from enum import Enum
 from typing import Optional
 
-from biip.gtin import Gtin
+from biip.gtin import Gtin, RcnUsage
 
 try:
     import moneyed
 except ImportError:  # pragma: no cover
     moneyed = None
-
-
-class RcnUsage(Enum):
-    """Enum of RCN usage restrictions."""
-
-    #: Usage of RCN restricted to geopgraphical area.
-    GEOGRAPHICAL = "geo"
-
-    #: Usage of RCN restricted to internally in a company.
-    COMPANY = "company"
 
 
 @dataclass

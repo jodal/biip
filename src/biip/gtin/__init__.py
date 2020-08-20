@@ -25,7 +25,8 @@ Example:
     '05901234123457'
 """
 
-from biip.gtin._gtin import Gtin, GtinFormat
-from biip.gtin._rcn import Rcn, RcnUsage
+from biip.gtin._enums import GtinFormat, RcnUsage
+from biip.gtin._gtin import Gtin
+from biip.gtin._rcn import Rcn
 
 __all__ = ["Gtin", "GtinFormat", "Rcn", "RcnUsage"]
