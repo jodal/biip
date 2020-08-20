@@ -58,6 +58,38 @@ def test_rcn_without_specified_region() -> None:
     [
         # NOTE: These examples are constructed from a template. This should be
         # extended with actual examples from either specifications or real
+        # Baltic products.
+        ("2311111112345", Decimal("1.234"), None, None),
+        ("2411111112342", Decimal("12.34"), None, None),
+        ("2511111112349", Decimal("123.4"), None, None),
+        ("2911111111111", None, None, None),
+    ],
+)
+def test_region_baltics(
+    value: str,
+    weight: Optional[Decimal],
+    price: Optional[Decimal],
+    money: Optional[Money],
+) -> None:
+    # The three Baltic countries share the same rules and allocation pool.
+    #
+    # References:
+    #   https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf
+
+    rcn = Gtin.parse(value, rcn_region=RcnRegion.BALTICS)
+
+    assert isinstance(rcn, Rcn)
+    assert rcn.region == RcnRegion.BALTICS
+    assert rcn.weight == weight
+    assert rcn.price == price
+    assert rcn.money == money
+
+
+@pytest.mark.parametrize(
+    "value, weight, price, money",
+    [
+        # NOTE: These examples are constructed from a template. This should be
+        # extended with actual examples from either specifications or real
         # British products.
         ("2011122912346", None, Decimal("12.34"), Money("12.34", "GBP")),
         ("2911111111111", None, None, None),

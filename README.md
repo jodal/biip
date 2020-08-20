@@ -53,7 +53,7 @@ The library can interpret the following formats:
     - [x] Parsing of variable measurements (price/weight) into `Decimal`
       values, and optionally `Money` values if py-moneyed is installed, is
       supported for the following geographical regions:
-      - [ ] Baltics: https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf
+      - [x] Baltics
       - [x] Great Britain
       - [x] Norway
       - [x] Sweden

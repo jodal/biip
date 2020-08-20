@@ -48,6 +48,9 @@ class RcnUsage(Enum):
 class RcnRegion(Enum):
     """Enum of geographical regions with custom RCN rules."""
 
+    #: Baltics (Estonia, Latvia, Lithuania)
+    BALTICS = "baltics"
+
     #: Great Britain
     GREAT_BRITAIN = "gb"
 
