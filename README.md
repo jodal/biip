@@ -1,23 +1,11 @@
-<h1 align="center">
-   &#x1F4E6;<br>
-   Biip
-</h1>
+# &#x1F4E6; Biip
 
-<p align="center">
-  <em>Biip interprets the data in barcodes.</em>
-</p>
+*Biip interprets the data in barcodes.*
 
-<p align="center">
-  <a href="https://github.com/jodal/biip/actions?workflow=Tests">
-    <img src="https://github.com/jodal/biip/workflows/Tests/badge.svg" alt="Tests">
-  </a>
-  <a href="https://codecov.io/gh/jodal/biip">
-    <img src="https://codecov.io/gh/jodal/biip/branch/master/graph/badge.svg" alt="Coverage">
-  </a>
-  <a href="https://pypi.org/project/biip/">
-    <img src="https://img.shields.io/pypi/v/biip.svg" alt="PyPI">
-  </a>
-</p>
+[![Tests](https://github.com/jodal/biip/workflows/Tests/badge.svg)](https://github.com/jodal/biip/actions?workflow=Tests)
+[![Coverage](https://codecov.io/gh/jodal/biip/branch/master/graph/badge.svg)](https://codecov.io/gh/jodal/biip)
+[![Docs](https://readthedocs.org/projects/biip/badge/?version=latest)](https://biip.readthedocs.io/en/latest/)
+[![PyPI](https://img.shields.io/pypi/v/biip.svg)](https://pypi.org/project/biip/))
 
 ---
 
