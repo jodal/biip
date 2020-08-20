@@ -70,7 +70,8 @@ class Rcn(Gtin):
             self._parse_using_british_price_rules()
 
         if self.region in (RcnRegion.NORWAY, RcnRegion.SWEDEN):
-            self._parse_using_swedish_rules()
+            self._parse_using_swedish_price_rules()
+            self._parse_using_swedish_weight_rules()
 
         if self.price is not None and moneyed is not None:
             self.money = moneyed.Money(
@@ -98,34 +99,42 @@ class Rcn(Gtin):
         pounds_sterling = Decimal(value)
         self.price = pounds_sterling / 100
 
-    def _parse_using_swedish_rules(self: Rcn) -> None:
+    def _parse_using_swedish_price_rules(self: Rcn) -> None:
         # These rules are used in the following regions:
         # - Norway:
         #   No specification found, but products tested seems to match Swedish rules.
         # - Sweden:
         #   https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/
 
-        price = self.payload[:2] in ("20", "21", "22")
-        weight = self.payload[:2] in ("23", "24", "25")
+        if self.payload[:2] not in ("20", "21", "22"):
+            return
 
-        if price:
-            value = self.payload[-4:]
+        value = self.payload[-4:]
 
-            num_decimals = 2 - int(self.payload[1])
-            num_units = 4 - num_decimals
+        num_decimals = 2 - int(self.payload[1])
+        num_units = 4 - num_decimals
 
-            units = value[:num_units]
-            decimals = value[num_units:]
+        units = value[:num_units]
+        decimals = value[num_units:]
 
-            self.price = Decimal(f"{units}.{decimals}")
+        self.price = Decimal(f"{units}.{decimals}")
 
-        if weight:
-            value = self.payload[-4:]
+    def _parse_using_swedish_weight_rules(self: Rcn) -> None:
+        # These rules are used in the following regions:
+        # - Norway:
+        #   No specification found, but products tested seems to match Swedish rules.
+        # - Sweden:
+        #   https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/
 
-            num_decimals = 6 - int(self.payload[1])
-            num_units = 4 - num_decimals
+        if self.payload[:2] not in ("23", "24", "25"):
+            return
 
-            units = value[:num_units]
-            decimals = value[num_units:]
+        value = self.payload[-4:]
 
-            self.weight = Decimal(f"{units}.{decimals}")
+        num_decimals = 6 - int(self.payload[1])
+        num_units = 4 - num_decimals
+
+        units = value[:num_units]
+        decimals = value[num_units:]
+
+        self.weight = Decimal(f"{units}.{decimals}")
