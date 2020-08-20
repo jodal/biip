@@ -34,6 +34,9 @@ class Rcn(Gtin):
 
     RCNs with prefix 40-49 have semantics that are only defined within a
     single company.
+
+    Use :meth:`biip.gtin.Gtin.parse` to parse potential RCNs. This subclass
+    is returned if the GS1 Prefix signifies that the value is a RCN.
     """
 
     #: Where the RCN can be circulated,
