@@ -29,7 +29,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from decimal import Decimal
-from enum import IntEnum
+from enum import Enum, IntEnum
 from typing import Optional, Type, Union
 
 from biip import EncodeError, ParseError
@@ -42,7 +42,7 @@ except ImportError:  # pragma: no cover
     moneyed = None
 
 
-__all__ = ["Gtin", "Rcn", "GtinFormat"]
+__all__ = ["Gtin", "GtinFormat", "Rcn", "RcnUsage"]
 
 
 class GtinFormat(IntEnum):
@@ -72,6 +72,16 @@ class GtinFormat(IntEnum):
     def length(self: GtinFormat) -> int:
         """Length of a GTIN of the given format."""
         return int(self)
+
+
+class RcnUsage(Enum):
+    """Enum of RCN usage restrictions."""
+
+    #: Usage of RCN restricted to geopgraphical area.
+    GEOGRAPHICAL = "geo"
+
+    #: Usage of RCN restricted to internally in a company.
+    COMPANY = "company"
 
 
 @dataclass
@@ -209,6 +219,10 @@ class Rcn(Gtin):
     single company.
     """
 
+    #: Where the RCN can be circulated,
+    #: in a geographical area or within a company.
+    usage: Optional[RcnUsage] = field(default=None, init=False)
+
     #: A variable weight value extracted from the barcode,
     #: if indicated by prefix.
     weight: Optional[Decimal] = field(default=None, init=False)
@@ -220,6 +234,16 @@ class Rcn(Gtin):
     #: A Money value created from the variable weight price.
     #: Only set if py-moneyed is installed and the currency is known.
     money: Optional["moneyed.Money"] = field(default=None, init=False)
+
+    def __post_init__(self: Rcn) -> None:
+        """Initialize derivated fields."""
+        self._set_usage()
+
+    def _set_usage(self: Rcn) -> None:
+        if "within a geographic region" in self.prefix.usage:
+            self.usage = RcnUsage.GEOGRAPHICAL
+        elif "within a company" in self.prefix.usage:
+            self.usage = RcnUsage.COMPANY
 
 
 def _strip_leading_zeros(value: str) -> str:
