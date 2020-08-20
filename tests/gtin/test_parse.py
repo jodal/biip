@@ -54,7 +54,7 @@ def test_parse_gtin_8(value: str) -> None:
     assert Gtin.parse(value) == Gtin(
         value=value,
         format=GtinFormat.GTIN_8,
-        prefix=GS1Prefix(value="963", usage="Global Office - GTIN-8"),
+        prefix=GS1Prefix(value="00009", usage="GS1 US"),
         payload="9638507",
         check_digit=4,
     )

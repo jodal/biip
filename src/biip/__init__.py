@@ -4,8 +4,8 @@ Example:
     >>> from biip import parse
     >>> parse("96385074")
     Gtin(value='96385074', format=GtinFormat.GTIN_8,
-    prefix=GS1Prefix(value='963', usage='Global Office - GTIN-8'),
-    payload='9638507', check_digit=4, packaging_level=None)
+    prefix=GS1Prefix(value='00009', usage='GS1 US'), payload='9638507',
+    check_digit=4, packaging_level=None)
     >>> parse("15210526")
     GS1Message(value='15210526',
     element_strings=[GS1ElementString(ai=GS1ApplicationIdentifier(ai='15',

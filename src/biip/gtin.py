@@ -136,13 +136,14 @@ class Gtin:
         payload = stripped_value[:-1]
         check_digit = int(stripped_value[-1])
 
-        packaging_level: Optional[int]
+        packaging_level: Optional[int] = None
         if gtin_format == GtinFormat.GTIN_14:
             packaging_level = int(stripped_value[0])
             value_without_packaging_level = stripped_value[1:]
             prefix = GS1Prefix.extract(value_without_packaging_level)
+        elif gtin_format == GtinFormat.GTIN_8:
+            prefix = GS1Prefix.extract(stripped_value.zfill(12))
         else:
-            packaging_level = None
             prefix = GS1Prefix.extract(stripped_value)
 
         calculated_check_digit = numeric_check_digit(payload)
