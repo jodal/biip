@@ -63,3 +63,41 @@ class Rcn(Gtin):
             return
 
         self.region = region
+
+        if self.region == RcnRegion.SWEDEN:
+            self._set_variable_weight_fields()
+
+    def _set_variable_weight_fields(self: Rcn) -> None:
+        # These rules are used in the following regions:
+        # - Sweden:
+        #   https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/
+
+        price = self.payload[:2] in ("20", "21", "22")
+        weight = self.payload[:2] in ("23", "24", "25")
+
+        if price:
+            value = self.payload[-4:]
+
+            num_decimals = 2 - int(self.payload[1])
+            num_units = 4 - num_decimals
+
+            units = value[:num_units]
+            decimals = value[num_units:]
+
+            self.price = Decimal(f"{units}.{decimals}")
+
+            if moneyed is not None:
+                self.money = moneyed.Money(
+                    amount=self.price, currency=self.region.get_currency_code()
+                )
+
+        if weight:
+            value = self.payload[-4:]
+
+            num_decimals = 6 - int(self.payload[1])
+            num_units = 4 - num_decimals
+
+            units = value[:num_units]
+            decimals = value[num_units:]
+
+            self.weight = Decimal(f"{units}.{decimals}")

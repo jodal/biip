@@ -1,3 +1,8 @@
+from decimal import Decimal
+from typing import Optional
+
+from moneyed import Money
+
 import pytest
 
 from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
@@ -45,3 +50,31 @@ def test_rcn_without_specified_region() -> None:
     assert rcn.weight is None
     assert rcn.price is None
     assert rcn.money is None
+
+
+@pytest.mark.parametrize(
+    "value, weight, price, money",
+    [
+        ("2088060112343", None, Decimal("12.34"), Money("12.34", "SEK")),
+        ("2188060112340", None, Decimal("123.4"), Money("123.4", "SEK")),
+        ("2288060112347", None, Decimal("1234"), Money("1234", "SEK")),
+        ("2388060112344", Decimal("1.234"), None, None),
+        ("2488060112341", Decimal("12.34"), None, None),
+        ("2588060112348", Decimal("123.4"), None, None),
+    ],
+)
+def test_region_sweden(
+    value: str,
+    weight: Optional[Decimal],
+    price: Optional[Decimal],
+    money: Optional[Money],
+) -> None:
+    # References: https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/
+
+    rcn = Gtin.parse(value, rcn_region=RcnRegion.SWEDEN)
+
+    assert isinstance(rcn, Rcn)
+    assert rcn.region == RcnRegion.SWEDEN
+    assert rcn.weight == weight
+    assert rcn.price == price
+    assert rcn.money == money
