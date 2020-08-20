@@ -20,13 +20,21 @@ For details on how the barcode data is interpreted, please refer to the
 Installation
 ============
 
+Biip requires Python 3.7 or newer.
+
 Biip is available from `PyPI <https://pypi.org/project/biip/>`_:
 
 .. code-block:: console
 
     $ python3 -m pip install biip
 
-Biip requires Python 3.7 or newer.
+Optionally, with the help of ``py-moneyed``, Biip can convert amounts with
+currency information to :class:`moneyed.Money` objects.
+To install Biip with ``py-moneyed``, run:
+
+.. code-block:: console
+
+    $ python3 -m pip install "biip[money]"
 
 
 .. toctree::

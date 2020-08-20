@@ -72,13 +72,22 @@ The library can interpret the following formats:
 
 ## Installation
 
+Biip requires Python 3.7 or newer.
+
 Biip is available from [PyPI](https://pypi.org/project/biip/):
 
 ```
 python3 -m pip install biip
 ```
 
-Biip requires Python 3.7 or newer.
+Optionally, with the help of `py-moneyed`, Biip can convert amounts with
+currency information to `moneyed.Money` objects.
+To install Biip with `py-moneyed`, run:
+
+```
+python3 -m pip install "biip[money]"
+```
+
 
 ## Usage
 
