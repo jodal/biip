@@ -183,6 +183,12 @@ def test_parse_fails_if_fixed_length_field_ends_with_separator_char() -> None:
     )
 
 
+def test_parse_strips_surrounding_whitespace() -> None:
+    message = GS1Message.parse("  \t 800370713240010220085952 \n  ")
+
+    assert message.value == "800370713240010220085952"
+
+
 @pytest.mark.parametrize(
     "value, expected",
     [

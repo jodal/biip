@@ -66,6 +66,8 @@ class Gtin:
         """
         from biip.gtin import Rcn
 
+        value = value.strip()
+
         if len(value) not in (8, 12, 13, 14):
             raise ParseError(
                 f"Failed parsing {value!r} as GTIN: "

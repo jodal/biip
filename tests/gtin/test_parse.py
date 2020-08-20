@@ -37,6 +37,12 @@ def test_parse_gtin_13_with_invalid_check_digit() -> None:
     )
 
 
+def test_parse_strips_surrounding_whitespace() -> None:
+    gtin = Gtin.parse("  \t 5901234123457 \n  ")
+
+    assert gtin.value == "5901234123457"
+
+
 @pytest.mark.parametrize(
     "value",
     [

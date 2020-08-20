@@ -57,6 +57,7 @@ class GS1Message:
         Raises:
             ParseError: If a fixed-length field ends with a separator character.
         """
+        value = value.strip()
         element_strings = []
         rest = value[:]
 
