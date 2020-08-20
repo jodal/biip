@@ -40,6 +40,8 @@ def parse(
     Raises:
         ParseError: If parsing of the data fails.
     """
+    value = value.strip()
+
     try:
         if len(value) in list(GtinFormat):
             try:
