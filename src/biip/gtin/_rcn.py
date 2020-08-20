@@ -64,11 +64,13 @@ class Rcn(Gtin):
 
         self.region = region
 
-        if self.region == RcnRegion.SWEDEN:
+        if self.region in (RcnRegion.NORWAY, RcnRegion.SWEDEN):
             self._set_variable_weight_fields()
 
     def _set_variable_weight_fields(self: Rcn) -> None:
         # These rules are used in the following regions:
+        # - Norway:
+        #   No specification found, but products tested seems to match Swedish rules.
         # - Sweden:
         #   https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/
 

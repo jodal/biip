@@ -54,6 +54,27 @@ def test_rcn_without_specified_region() -> None:
 
 @pytest.mark.parametrize(
     "value, weight, price, money",
+    [("2302148210869", Decimal("1.086"), None, None)],  # Norvegia 1kg
+)
+def test_region_norway(
+    value: str,
+    weight: Optional[Decimal],
+    price: Optional[Decimal],
+    money: Optional[Money],
+) -> None:
+    # References: TODO: Find specification.
+
+    rcn = Gtin.parse(value, rcn_region=RcnRegion.NORWAY)
+
+    assert isinstance(rcn, Rcn)
+    assert rcn.region == RcnRegion.NORWAY
+    assert rcn.weight == weight
+    assert rcn.price == price
+    assert rcn.money == money
+
+
+@pytest.mark.parametrize(
+    "value, weight, price, money",
     [
         ("2088060112343", None, Decimal("12.34"), Money("12.34", "SEK")),
         ("2188060112340", None, Decimal("123.4"), Money("123.4", "SEK")),
