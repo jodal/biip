@@ -5,7 +5,7 @@ from moneyed import Money
 
 import pytest
 
-from biip import ParseError
+from biip import EncodeError, ParseError
 from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
 
 
@@ -176,3 +176,38 @@ def test_region_sweden(
     assert rcn.weight == weight
     assert rcn.price == price
     assert rcn.money == money
+
+
+@pytest.mark.parametrize(
+    "value, rcn_region, expected",
+    [
+        ("2311111112345", RcnRegion.BALTICS, "2311111100007"),
+        ("2011122912346", RcnRegion.GREAT_BRITAIN, "2011122000005"),
+        ("2302148210869", RcnRegion.NORWAY, "2302148200006"),
+        ("2088060112343", RcnRegion.SWEDEN, "2088060100005"),
+    ],
+)
+def test_without_variable_measure(
+    value: str, rcn_region: RcnRegion, expected: str
+) -> None:
+    original_rcn = Gtin.parse(value, rcn_region=rcn_region)
+    assert isinstance(original_rcn, Rcn)
+
+    stripped_rcn = original_rcn.without_variable_measure()
+
+    assert isinstance(stripped_rcn, Rcn)
+    assert stripped_rcn.value == expected
+    assert stripped_rcn.region == original_rcn.region
+
+
+def test_without_variable_measure_fails_if_rules_are_unknown() -> None:
+    rcn = Gtin.parse("2302148210869", rcn_region=None)
+    assert isinstance(rcn, Rcn)
+
+    with pytest.raises(EncodeError) as exc_info:
+        rcn.without_variable_measure()
+
+    assert str(exc_info.value) == (
+        "Cannot zero out the variable measure part of '2302148210869' "
+        "as the RCN rules for the geographical region None are unknown."
+    )
