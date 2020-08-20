@@ -22,53 +22,54 @@ The library can interpret the following formats:
 ## Features
 
 - GS1 (multiple Element Strings with Application Identifiers)
-  - [x] Parse fixed-length Element Strings
-  - [x] Parse variable-length Element Strings
-    - [x] Support configuring the separation character
-  - [ ] Parse `(00)` as SSCC
-  - [x] Parse `(01)` and `(02)` as GTIN
-  - [x] Parse dates into `datetime.date` values
-    - [x] Interpret the year to be within -49/+50 years from today
-    - [x] Interpret dates with day "00" as the last day of the month
-  - [x] Parse variable measurement fields into `Decimal` values
-  - [x] Parse discount percentage into `Decimal` values
-  - [x] Parse amounts into `Decimal` values
+  - [x] Parse fixed-length Element Strings.
+  - [x] Parse variable-length Element Strings.
+    - [x] Support configuring the separation character.
+  - [ ] Parse AI `00` as SSCC.
+  - [x] Parse AI `01` and `02` as GTIN.
+  - [x] Parse dates into `datetime.date` values.
+    - [x] Interpret the year to be within -49/+50 years from today.
+    - [x] Interpret dates with day "00" as the last day of the month.
+  - [x] Parse variable measurement fields into `Decimal` values.
+  - [x] Parse discount percentage into `Decimal` values.
+  - [x] Parse amounts into `Decimal` values.
     - [x] Additionally, if py-moneyed is installed,
-          parse amounts with currency into `Money` values
+          parse amounts with currency into `Money` values.
   - [x] Encode as Human Readable Interpretation (HRI),
-        e.g. with parenthesis around the AI numbers
+        e.g. with parenthesis around the AI numbers.
   - [x] Easy lookup of parsed Element Strings by:
     - [x] Application Identifier (AI) prefix
     - [x] Part of AI's data title
 - GTIN (Global Trade Item Number)
-  - [x] Parse GTIN-8, e.g. from EAN-8 barcodes
-  - [x] Parse GTIN-12, e.g. from UPC-A and UPC-E barcodes
-  - [x] Parse GTIN-13, e.g. from EAN-13 barcodes
-  - [x] Parse GTIN-14, e.g. from ITF-14 barcodes, as well as a data field in GS1 barcodes
-  - [x] Extract and validate check digit
-  - [x] Extract GS1 Prefix
-  - [x] Extract packaging level digit from GTIN-14
-  - [x] Support for Restricted Circulation Numbers (RCN)
-    - [x] Classification of RCN usage to either a geographical region or a company
+  - [x] Parse GTIN-8, e.g. from EAN-8 barcodes.
+  - [x] Parse GTIN-12, e.g. from UPC-A and UPC-E barcodes.
+  - [x] Parse GTIN-13, e.g. from EAN-13 barcodes.
+  - [x] Parse GTIN-14, e.g. from ITF-14 and GS1-128 barcodes.
+  - [x] Extract and validate check digit.
+  - [x] Extract GS1 Prefix.
+  - [x] Extract packaging level digit from GTIN-14.
+  - [x] Restricted Circulation Numbers (RCN)
+    - [x] Classification of RCN usage to either a geographical region or a company.
     - [x] Parsing of variable measurements (price/weight) into `Decimal`
-      values, and optionally `Money` values if py-moneyed is installed, is
-      supported for the following geographical regions:
-      - [x] Baltics
-      - [x] Great Britain
-      - [x] Norway
-      - [x] Sweden
-  - Encode
-    - [x] GTIN-8 as GTIN-12/13/14
-    - [x] GTIN-12 as GTIN-13/14
-    - [x] GTIN-13 as GTIN-14
-    - [ ] GTIN with variable weight part zeroed out, to help looking up the correct trade item
+          values.
+    - [x] Parsing of price values into `Money` values if `py-moneyed` is
+          installed and the region's RCN parsing rules specifies a currency.
+    - [x] Baltics: Parsing of weight.
+    - [x] Great Britain: Parsing of price, including validation of price check digit.
+    - [x] Norway: Parsing of weight and price.
+    - [x] Sweden: Parsing of weight and price.
+  - [x] Encode GTIN-8 as GTIN-12/13/14.
+  - [x] Encode GTIN-12 as GTIN-13/14.
+  - [x] Encode GTIN-13 as GTIN-14.
+  - [ ] Encode GTIN with variable weight part zeroed out,
+        to help looking up the correct trade item.
 - SSCC (Serial Shipping Container Code)
-  - [ ] Validate check digit
-  - [ ] Extract GS1 Company Prefix, if possible due to varying field length
-  - [ ] Extract serial reference, if possible due to varying field length
+  - [ ] Validate check digit.
+  - [ ] Extract GS1 Company Prefix, if possible due to varying field length.
+  - [ ] Extract serial reference, if possible due to varying field length.
 - Symbol IDs, e.g. `]EO`
-  - [ ] Use Symbol IDs when automatically selecting what parser to use
-  - [ ] Strip Symbol IDs before parsing the remainder
+  - [ ] Use Symbol IDs when automatically selecting what parser to use.
+  - [ ] Strip Symbol IDs before parsing the remainder.
 
 ## Installation
 
