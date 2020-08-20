@@ -67,7 +67,6 @@ def test_parse_gtin_8(value: str) -> None:
         prefix=GS1Prefix(value="963", usage="Global Office - GTIN-8"),
         payload="9638507",
         check_digit=4,
-        packaging_level=None,
     )
 
 
@@ -89,7 +88,6 @@ def test_parse_gtin_12_without_leading_zero(value: str) -> None:
         prefix=GS1Prefix(value="123", usage="GS1 US"),
         payload="12360105707",
         check_digit=2,
-        packaging_level=None,
     )
 
 
@@ -111,7 +109,6 @@ def test_parse_gtin_12_with_1_leading_zero(value: str) -> None:
         prefix=GS1Prefix(value="036", usage="GS1 US"),
         payload="03600029145",
         check_digit=2,
-        packaging_level=None,
     )
 
 
@@ -133,7 +130,6 @@ def test_parse_gtin_12_with_2_leading_zero(value: str) -> None:
         prefix=GS1Prefix(value="006", usage="GS1 US"),
         payload="00600029145",
         check_digit=5,
-        packaging_level=None,
     )
 
 
@@ -155,7 +151,6 @@ def test_parse_gtin_12_with_3_leading_zero(value: str) -> None:
         prefix=GS1Prefix(value="0009", usage="GS1 US"),
         payload="00090291451",
         check_digit=1,
-        packaging_level=None,
     )
 
 
@@ -175,7 +170,6 @@ def test_parse_gtin_13(value: str) -> None:
         prefix=GS1Prefix(value="590", usage="GS1 Poland"),
         payload="590123412345",
         check_digit=7,
-        packaging_level=None,
     )
 
 

@@ -38,9 +38,7 @@ from biip.gtin import Gtin, GtinFormat
                             prefix=GS1Prefix(value="703", usage="GS1 Norway"),
                             payload="703206980498",
                             check_digit=8,
-                            packaging_level=None,
                         ),
-                        date=None,
                     ),
                     GS1ElementString(
                         ai=GS1ApplicationIdentifier(
