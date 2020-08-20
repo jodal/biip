@@ -21,7 +21,7 @@ The library can interpret the following formats:
 
 ## Features
 
-- GS1
+- GS1 (multiple Element Strings with Application Identifiers)
   - [x] Parse fixed-length Element Strings
   - [x] Parse variable-length Element Strings
     - [x] Support configuring the separation character
@@ -29,7 +29,7 @@ The library can interpret the following formats:
   - [x] Parse `(01)` and `(02)` as GTIN
   - [x] Parse dates into `datetime.date` values
     - [x] Interpret the year to be within -49/+50 years from today
-    - [x] Interpret dates with "00" as the day as the last day of the month
+    - [x] Interpret dates with day "00" as the last day of the month
   - [x] Parse variable measurement fields into `Decimal` values
   - [x] Parse discount percentage into `Decimal` values
   - [x] Parse amounts into `Decimal` values
@@ -38,7 +38,7 @@ The library can interpret the following formats:
   - [x] Encode as Human Readable Interpretation (HRI),
         e.g. with parenthesis around the AI numbers
   - [x] Easy lookup of parsed Element Strings by:
-    - [x] AI prefix
+    - [x] Application Identifier (AI) prefix
     - [x] Part of AI's data title
 - GTIN (Global Trade Item Number)
   - [x] Parse GTIN-8, e.g. from EAN-8 barcodes
@@ -62,7 +62,7 @@ The library can interpret the following formats:
     - [x] GTIN-12 as GTIN-13/14
     - [x] GTIN-13 as GTIN-14
     - [ ] GTIN with variable weight part zeroed out, to help looking up the correct trade item
-- SSCC
+- SSCC (Serial Shipping Container Code)
   - [ ] Validate check digit
   - [ ] Extract GS1 Company Prefix, if possible due to varying field length
   - [ ] Extract serial reference, if possible due to varying field length
