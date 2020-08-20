@@ -61,7 +61,7 @@ The library can interpret the following formats:
   - [x] Encode GTIN-8 as GTIN-12/13/14.
   - [x] Encode GTIN-12 as GTIN-13/14.
   - [x] Encode GTIN-13 as GTIN-14.
-  - [ ] Encode GTIN with variable weight part zeroed out,
+  - [x] Encode GTIN/RCN with the variable measure part zeroed out,
         to help looking up the correct trade item.
 - SSCC (Serial Shipping Container Code)
   - [ ] Validate check digit.

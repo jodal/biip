@@ -33,6 +33,9 @@ v0.3.0 (UNRELEASED)
 - Support interpreting RCNs according to varying rules depending on the
   geopgraphical region specified by the user.
 
+- Support for zeroing out the variable measure part, to help with looking up
+  trade items in a database or similar.
+
 - Add RCN rules for the Baltics, Great Britain, Norway, and Sweden.
 
 - Bug fix: Keep all leading zeros in GTIN-8.

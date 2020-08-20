@@ -6,8 +6,8 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import Optional
 
-from biip import ParseError
-from biip.gs1.checksums import price_check_digit
+from biip import EncodeError, ParseError
+from biip.gs1 import checksums
 from biip.gtin import Gtin, RcnRegion, RcnUsage
 
 try:
@@ -91,7 +91,7 @@ class Rcn(Gtin):
         check_digit = int(self.payload[-5])
         value = self.payload[-4:]
 
-        calculated_check_digit = price_check_digit(value)
+        calculated_check_digit = checksums.price_check_digit(value)
         if check_digit != calculated_check_digit:
             raise ParseError(
                 f"Invalid price check digit for price data {value!r} "
@@ -143,3 +143,39 @@ class Rcn(Gtin):
         decimals = value[num_units:]
 
         self.weight = Decimal(f"{units}.{decimals}")
+
+    def without_variable_measure(self: Rcn) -> Gtin:
+        """Create a new RCN where the variable measure is zeroed out.
+
+        This provides us with a number which still includes the item
+        reference, but does not vary with weight/price, and can thus be used
+        to lookup the relevant trade item in a database or similar.
+
+        Returns:
+            A new RCN instance with zeros in the variable measure places.
+
+        Raises:
+            EncodeError: If the rules for variable measures in the region are unknown.
+        """
+        if self.region in (
+            RcnRegion.BALTICS,
+            RcnRegion.NORWAY,
+            RcnRegion.SWEDEN,
+        ):
+            measure = "0000"
+            payload = f"{self.value[:-5]}{measure}"
+            check_digit = checksums.numeric_check_digit(payload)
+            value = f"{payload}{check_digit}"
+            return Gtin.parse(value, rcn_region=self.region)
+        elif self.region in (RcnRegion.GREAT_BRITAIN,):
+            measure = "0000"
+            price_check_digit = checksums.price_check_digit(measure)
+            payload = f"{self.value[:-6]}{price_check_digit}{measure}"
+            check_digit = checksums.numeric_check_digit(payload)
+            value = f"{payload}{check_digit}"
+            return Gtin.parse(value, rcn_region=self.region)
+        else:
+            raise EncodeError(
+                f"Cannot zero out the variable measure part of {self.value!r} as the "
+                f"RCN rules for the geographical region {self.region!r} are unknown."
+            )
