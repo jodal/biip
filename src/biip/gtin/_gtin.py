@@ -8,7 +8,7 @@ from typing import Optional, Type, Union
 from biip import EncodeError, ParseError
 from biip.gs1 import GS1Prefix
 from biip.gs1.checksums import numeric_check_digit
-from biip.gtin import GtinFormat
+from biip.gtin import GtinFormat, RcnRegion
 
 
 @dataclass
@@ -44,13 +44,18 @@ class Gtin:
     packaging_level: Optional[int] = None
 
     @classmethod
-    def parse(cls: Type[Gtin], value: str) -> Gtin:
+    def parse(
+        cls: Type[Gtin], value: str, *, rcn_region: Optional[RcnRegion] = None
+    ) -> Gtin:
         """Parse the given value into a :class:`Gtin` object.
 
         Both GTIN-8, GTIN-12, GTIN-13, and GTIN-14 are supported.
 
         Args:
             value: The value to parse.
+            rcn_region: The geographical region whose rules should be used to
+                interpret Restricted Circulation Numbers (RCN).
+                Needed to extract e.g. variable weight/price from GTIN.
 
         Returns:
             GTIN data structure with the successfully extracted data.
@@ -59,6 +64,8 @@ class Gtin:
         Raises:
             ParseError: If the parsing fails.
         """
+        from biip.gtin import Rcn
+
         if len(value) not in (8, 12, 13, 14):
             raise ParseError(
                 f"Failed parsing {value!r} as GTIN: "
@@ -98,13 +105,11 @@ class Gtin:
 
         gtin_type: Type[Union[Gtin, Rcn]]
         if "Restricted Circulation Number" in prefix.usage:
-            from biip.gtin import Rcn
-
             gtin_type = Rcn
         else:
             gtin_type = Gtin
 
-        return gtin_type(
+        gtin = gtin_type(
             value=value,
             format=gtin_format,
             prefix=prefix,
@@ -112,6 +117,11 @@ class Gtin:
             check_digit=check_digit,
             packaging_level=packaging_level,
         )
+
+        if isinstance(gtin, Rcn) and rcn_region is not None:
+            gtin._parse_with_regional_rules(rcn_region)
+
+        return gtin
 
     def as_gtin_8(self: Gtin) -> str:
         """Format as a GTIN-8."""

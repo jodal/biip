@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import Optional
 
-from biip.gtin import Gtin, RcnUsage
+from biip.gtin import Gtin, RcnRegion, RcnUsage
 
 try:
     import moneyed
@@ -29,8 +29,12 @@ class Rcn(Gtin):
     """
 
     #: Where the RCN can be circulated,
-    #: in a geographical area or within a company.
+    #: in a geographical region or within a company.
     usage: Optional[RcnUsage] = field(default=None, init=False)
+
+    #: The geographical region whose rules are used to interpret the contents
+    #: of  the RCN.
+    region: Optional[RcnRegion] = field(default=None, init=False)
 
     #: A variable weight value extracted from the barcode,
     #: if indicated by prefix.
@@ -51,5 +55,11 @@ class Rcn(Gtin):
     def _set_usage(self: Rcn) -> None:
         if "within a geographic region" in self.prefix.usage:
             self.usage = RcnUsage.GEOGRAPHICAL
-        elif "within a company" in self.prefix.usage:
+        if "within a company" in self.prefix.usage:
             self.usage = RcnUsage.COMPANY
+
+    def _parse_with_regional_rules(self: Rcn, region: RcnRegion) -> None:
+        if self.usage == RcnUsage.COMPANY:
+            return
+
+        self.region = region

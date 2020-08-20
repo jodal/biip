@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from enum import Enum, IntEnum
+from typing import Optional
 
 
 class GtinFormat(IntEnum):
@@ -42,3 +43,14 @@ class RcnUsage(Enum):
 
     #: Usage of RCN restricted to internally in a company.
     COMPANY = "company"
+
+
+class RcnRegion(Enum):
+    """Enum of geographical regions with custom RCN rules."""
+
+    #: Sweden
+    SWEDEN = "se"
+
+    def get_currency_code(self: RcnRegion) -> Optional[str]:
+        """Get the ISO-4217 currency code for the region."""
+        return {RcnRegion.SWEDEN: "SEK"}.get(self)
