@@ -48,20 +48,20 @@ The library can interpret the following formats:
   - [x] Extract and validate check digit.
   - [x] Extract GS1 Prefix.
   - [x] Extract packaging level digit from GTIN-14.
-  - [x] Restricted Circulation Numbers (RCN)
-    - [x] Classification of RCN usage to either a geographical region or a company.
-    - [x] Parsing of variable measurements (price/weight) into `Decimal`
-          values.
-    - [x] Parsing of price values into `Money` values if `py-moneyed` is
-          installed and the region's RCN parsing rules specifies a currency.
-    - [x] Baltics: Parsing of weight.
-    - [x] Great Britain: Parsing of price, including validation of price check digit.
-    - [x] Norway: Parsing of weight and price.
-    - [x] Sweden: Parsing of weight and price.
   - [x] Encode GTIN-8 as GTIN-12/13/14.
   - [x] Encode GTIN-12 as GTIN-13/14.
   - [x] Encode GTIN-13 as GTIN-14.
-  - [x] Encode GTIN/RCN with the variable measure part zeroed out,
+- Restricted Circulation Numbers (RCN), a subset of GTINs
+  - [x] Classification of RCN usage to either a geographical region or a company.
+  - [x] Parsing of variable measurements (price/weight) into `Decimal`
+        values.
+  - [x] Parsing of price values into `Money` values if `py-moneyed` is
+        installed and the region's RCN parsing rules specifies a currency.
+  - [x] Baltics: Parsing of weight.
+  - [x] Great Britain: Parsing of price, including validation of price check digit.
+  - [x] Norway: Parsing of weight and price.
+  - [x] Sweden: Parsing of weight and price.
+  - [x] Encode RCN with the variable measure part zeroed out,
         to help looking up the correct trade item.
 - SSCC (Serial Shipping Container Code)
   - [ ] Validate check digit.
