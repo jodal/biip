@@ -7,6 +7,12 @@ v0.3.0 (UNRELEASED)
 
 :mod:`biip.gs1`
 
+- Add :meth:`~biip.gs1.GS1Message.filter` to find all parsed Element Strings
+  that matches the criteria.
+
+- Add :meth:`~biip.gs1.GS1Message.get` to find first parsed Element String
+  that matches the criteria.
+
 - Add :attr:`~biip.gs1.GS1ElementString.decimal` field which is set for
   AIs with weight, volume, dimensions, dicount percentages, and amounts
   payable.

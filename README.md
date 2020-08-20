@@ -49,6 +49,9 @@ The library can interpret the following formats:
           parse amounts with currency into `Money` values
   - [x] Encode as Human Readable Interpretation (HRI),
         e.g. with parenthesis around the AI numbers
+  - [x] Easy lookup of parsed Element Strings by:
+    - [x] AI prefix
+    - [x] Part of AI's data title
 - GTIN (Global Trade Item Number)
   - [x] Parse GTIN-8, e.g. from EAN-8 barcodes
   - [x] Parse GTIN-12, e.g. from UPC-A and UPC-E barcodes

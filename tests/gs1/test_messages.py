@@ -1,4 +1,5 @@
 from datetime import date
+from typing import List
 
 import pytest
 
@@ -193,3 +194,100 @@ def test_parse_fails_if_fixed_length_field_ends_with_separator_char() -> None:
 )
 def test_as_hri(value: str, expected: str) -> None:
     assert GS1Message.parse(value).as_hri() == expected
+
+
+@pytest.mark.parametrize(
+    "value, ai, expected",
+    [
+        ("010703206980498815210526100329", "01", ["07032069804988"]),
+        ("010703206980498815210526100329", "15", ["210526"]),
+        ("010703206980498815210526100329", "37", []),
+        ("7230EM123\x1d7231EM456\x1d7232EM789", "7231", ["EM456"]),
+        (
+            "7230EM123\x1d7231EM456\x1d7232EM789",
+            "723",
+            ["EM123", "EM456", "EM789"],
+        ),
+    ],
+)
+def test_filter_element_strings_by_ai(
+    value: str, ai: str, expected: List[str]
+) -> None:
+    matches = GS1Message.parse(value).filter(ai=ai)
+
+    assert [element_string.value for element_string in matches] == expected
+
+
+@pytest.mark.parametrize(
+    "value, data_title, expected",
+    [
+        ("010703206980498815210526100329", "GTIN", ["07032069804988"]),
+        ("010703206980498815210526100329", "BEST BY", ["210526"]),
+        ("010703206980498815210526100329", "COUNT", []),
+        (
+            "7230EM123\x1d7231EM456\x1d7232EM789",
+            "CERT",
+            ["EM123", "EM456", "EM789"],
+        ),
+    ],
+)
+def test_filter_element_strings_by_data_title(
+    value: str, data_title: str, expected: List[str]
+) -> None:
+    matches = GS1Message.parse(value).filter(data_title=data_title)
+
+    assert [element_string.value for element_string in matches] == expected
+
+
+@pytest.mark.parametrize(
+    "value, ai, expected",
+    [
+        ("010703206980498815210526100329", "01", "07032069804988"),
+        ("010703206980498815210526100329", "15", "210526"),
+        ("010703206980498815210526100329", "10", "0329"),
+        ("010703206980498815210526100329", "37", None),
+        ("7230EM123\x1d7231EM456\x1d7232EM789", "7231", "EM456"),
+        ("7230EM123\x1d7231EM456\x1d7232EM789", "723", "EM123"),
+    ],
+)
+def test_get_element_string_by_ai(value: str, ai: str, expected: str) -> None:
+    element_string = GS1Message.parse(value).get(ai=ai)
+
+    if expected is None:
+        assert element_string is None
+    else:
+        assert element_string is not None
+        assert element_string.value == expected
+
+
+@pytest.mark.parametrize(
+    "value, data_title, expected",
+    [
+        ("010703206980498815210526100329", "GTIN", "07032069804988"),
+        ("010703206980498815210526100329", "BEST BY", "210526"),
+        ("010703206980498815210526100329", "BATCH", "0329"),
+        ("010703206980498815210526100329", "COUNT", None),
+        ("7230EM123\x1d7231EM456\x1d7232EM789", "CERT #2", "EM456"),
+        ("7230EM123\x1d7231EM456\x1d7232EM789", "CERT", "EM123"),
+    ],
+)
+def test_get_element_string_by_data_title(
+    value: str, data_title: str, expected: str
+) -> None:
+    element_string = GS1Message.parse(value).get(data_title=data_title)
+
+    if expected is None:
+        assert element_string is None
+    else:
+        assert element_string is not None
+        assert element_string.value == expected
+
+
+def test_filter_element_strings_by_ai_instance() -> None:
+    ai = GS1ApplicationIdentifier.extract("01")
+    msg = GS1Message.parse("010703206980498815210526100329")
+
+    element_string = msg.get(ai=ai)
+
+    assert element_string is not None
+    assert element_string.value == "07032069804988"
