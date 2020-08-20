@@ -3,10 +3,14 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Type
+from typing import List, Optional, Type, Union
 
 from biip import ParseError
-from biip.gs1 import DEFAULT_SEPARATOR_CHAR, GS1ElementString
+from biip.gs1 import (
+    DEFAULT_SEPARATOR_CHAR,
+    GS1ApplicationIdentifier,
+    GS1ElementString,
+)
 
 
 @dataclass
@@ -80,3 +84,56 @@ class GS1Message:
             A human-readable string where the AIs are wrapped in parenthesis.
         """
         return "".join(es.as_hri() for es in self.element_strings)
+
+    def filter(
+        self: GS1Message,
+        *,
+        ai: Optional[Union[str, GS1ApplicationIdentifier]] = None,
+        data_title: Optional[str] = None,
+    ) -> List[GS1ElementString]:
+        """Filter Element Strings by AI or data title.
+
+        Args:
+            ai: AI instance or string to match against the start of the
+                Element String's AI.
+            data_title: String to find anywhere in the Element String's AI
+                data title.
+
+        Returns:
+            All matching Element Strings in the message.
+        """
+        if isinstance(ai, GS1ApplicationIdentifier):
+            ai = ai.ai
+
+        result = []
+
+        for element_string in self.element_strings:
+            if ai is not None and element_string.ai.ai.startswith(ai):
+                result.append(element_string)
+            elif (
+                data_title is not None
+                and data_title in element_string.ai.data_title
+            ):
+                result.append(element_string)
+
+        return result
+
+    def get(
+        self: GS1Message,
+        *,
+        ai: Optional[Union[str, GS1ApplicationIdentifier]] = None,
+        data_title: Optional[str] = None,
+    ) -> Optional[GS1ElementString]:
+        """Get Element String by AI or data title.
+
+        Args:
+            ai: AI instance or string to match against the start of the
+                Element String's AI.
+            data_title: String to find anywhere in the Element String's AI
+                data title..
+
+        Returns:
+            The first matching Element String in the message.
+        """
+        matches = self.filter(ai=ai, data_title=data_title)
+        return matches[0] if matches else None
