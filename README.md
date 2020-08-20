@@ -5,7 +5,7 @@
 [![Tests](https://github.com/jodal/biip/workflows/Tests/badge.svg)](https://github.com/jodal/biip/actions?workflow=Tests)
 [![Coverage](https://codecov.io/gh/jodal/biip/branch/master/graph/badge.svg)](https://codecov.io/gh/jodal/biip)
 [![Docs](https://readthedocs.org/projects/biip/badge/?version=latest)](https://biip.readthedocs.io/en/latest/)
-[![PyPI](https://img.shields.io/pypi/v/biip.svg)](https://pypi.org/project/biip/))
+[![PyPI](https://img.shields.io/pypi/v/biip.svg)](https://pypi.org/project/biip/)
 
 ---
 
