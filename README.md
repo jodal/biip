@@ -54,9 +54,9 @@ The library can interpret the following formats:
       values, and optionally `Money` values if py-moneyed is installed, is
       supported for the following geographical regions:
       - [ ] Baltics: https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf
+      - [x] Great Britain
       - [x] Norway
       - [x] Sweden
-      - [ ] UK: https://www.gs1uk.org/sites/default/files/How_to_calculate_variable_measure_items_0.pdf
   - Encode
     - [x] GTIN-8 as GTIN-12/13/14
     - [x] GTIN-12 as GTIN-13/14

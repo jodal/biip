@@ -33,7 +33,7 @@ v0.3.0 (UNRELEASED)
 - Support interpreting RCNs according to varying rules depending on the
   geopgraphical region specified by the user.
 
-- Add RCN rules for Norway and Sweden.
+- Add RCN rules for Great Britain, Norway, and Sweden.
 
 - Bug fix: Keep all leading zeros in GTIN-8.
 

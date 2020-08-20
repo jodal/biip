@@ -5,6 +5,7 @@ from moneyed import Money
 
 import pytest
 
+from biip import ParseError
 from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
 
 
@@ -54,7 +55,50 @@ def test_rcn_without_specified_region() -> None:
 
 @pytest.mark.parametrize(
     "value, weight, price, money",
-    [("2302148210869", Decimal("1.086"), None, None)],  # Norvegia 1kg
+    [
+        # NOTE: These examples are constructed from a template. This should be
+        # extended with actual examples from either specifications or real
+        # British products.
+        ("2011122912346", None, Decimal("12.34"), Money("12.34", "GBP")),
+        ("2911111111111", None, None, None),
+    ],
+)
+def test_region_great_britain(
+    value: str,
+    weight: Optional[Decimal],
+    price: Optional[Decimal],
+    money: Optional[Money],
+) -> None:
+    # References:
+    #   https://www.gs1uk.org/how-to-barcode-variable-measure-items
+
+    rcn = Gtin.parse(value, rcn_region=RcnRegion.GREAT_BRITAIN)
+
+    assert isinstance(rcn, Rcn)
+    assert rcn.region == RcnRegion.GREAT_BRITAIN
+    assert rcn.weight == weight
+    assert rcn.price == price
+    assert rcn.money == money
+
+
+def test_region_great_britain_fails_with_invalid_price_check_digit() -> None:
+    # The digit 8 in the value below is the price check digit. The correct value is 9.
+
+    with pytest.raises(ParseError) as exc_info:
+        Gtin.parse("2011122812349", rcn_region=RcnRegion.GREAT_BRITAIN)
+
+    assert str(exc_info.value) == (
+        "Invalid price check digit for price data '1234' in RCN '2011122812349': "
+        "Expected 9, got 8."
+    )
+
+
+@pytest.mark.parametrize(
+    "value, weight, price, money",
+    [
+        # Norvegia 1kg
+        ("2302148210869", Decimal("1.086"), None, None)
+    ],
 )
 def test_region_norway(
     value: str,
@@ -90,7 +134,8 @@ def test_region_sweden(
     price: Optional[Decimal],
     money: Optional[Money],
 ) -> None:
-    # References: https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/
+    # References:
+    #   https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/
 
     rcn = Gtin.parse(value, rcn_region=RcnRegion.SWEDEN)
 

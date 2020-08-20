@@ -48,6 +48,9 @@ class RcnUsage(Enum):
 class RcnRegion(Enum):
     """Enum of geographical regions with custom RCN rules."""
 
+    #: Great Britain
+    GREAT_BRITAIN = "gb"
+
     #: Norway
     NORWAY = "no"
 
@@ -56,4 +59,8 @@ class RcnRegion(Enum):
 
     def get_currency_code(self: RcnRegion) -> Optional[str]:
         """Get the ISO-4217 currency code for the region."""
-        return {RcnRegion.NORWAY: "NOK", RcnRegion.SWEDEN: "SEK"}.get(self)
+        return {
+            RcnRegion.GREAT_BRITAIN: "GBP",
+            RcnRegion.NORWAY: "NOK",
+            RcnRegion.SWEDEN: "SEK",
+        }.get(self)

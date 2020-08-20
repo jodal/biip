@@ -6,6 +6,8 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import Optional
 
+from biip import ParseError
+from biip.gs1.checksums import price_check_digit
 from biip.gtin import Gtin, RcnRegion, RcnUsage
 
 try:
@@ -64,10 +66,39 @@ class Rcn(Gtin):
 
         self.region = region
 
-        if self.region in (RcnRegion.NORWAY, RcnRegion.SWEDEN):
-            self._set_variable_weight_fields()
+        if self.region in (RcnRegion.GREAT_BRITAIN,):
+            self._parse_using_british_price_rules()
 
-    def _set_variable_weight_fields(self: Rcn) -> None:
+        if self.region in (RcnRegion.NORWAY, RcnRegion.SWEDEN):
+            self._parse_using_swedish_rules()
+
+        if self.price is not None and moneyed is not None:
+            self.money = moneyed.Money(
+                amount=self.price, currency=self.region.get_currency_code()
+            )
+
+    def _parse_using_british_price_rules(self: Rcn) -> None:
+        # References:
+        #   https://www.gs1uk.org/how-to-barcode-variable-measure-items
+
+        if self.payload[:2] not in ("20",):
+            return
+
+        check_digit = int(self.payload[-5])
+        value = self.payload[-4:]
+
+        calculated_check_digit = price_check_digit(value)
+        if check_digit != calculated_check_digit:
+            raise ParseError(
+                f"Invalid price check digit for price data {value!r} "
+                f"in RCN {self.value!r}: "
+                f"Expected {calculated_check_digit!r}, got {check_digit!r}."
+            )
+
+        pounds_sterling = Decimal(value)
+        self.price = pounds_sterling / 100
+
+    def _parse_using_swedish_rules(self: Rcn) -> None:
         # These rules are used in the following regions:
         # - Norway:
         #   No specification found, but products tested seems to match Swedish rules.
@@ -87,11 +118,6 @@ class Rcn(Gtin):
             decimals = value[num_units:]
 
             self.price = Decimal(f"{units}.{decimals}")
-
-            if moneyed is not None:
-                self.money = moneyed.Money(
-                    amount=self.price, currency=self.region.get_currency_code()
-                )
 
         if weight:
             value = self.payload[-4:]
