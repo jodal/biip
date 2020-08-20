@@ -51,7 +51,7 @@ The library can interpret the following formats:
   - [x] Encode GTIN-8 as GTIN-12/13/14.
   - [x] Encode GTIN-12 as GTIN-13/14.
   - [x] Encode GTIN-13 as GTIN-14.
-- Restricted Circulation Numbers (RCN), a subset of GTINs
+- RCN (Restricted Circulation Numbers), a subset of GTINs
   - [x] Classification of RCN usage to either a geographical region or a company.
   - [x] Parsing of variable measurements (price/weight) into `Decimal`
         values.
