@@ -23,6 +23,18 @@ v0.3.0 (UNRELEASED)
 
 :mod:`biip.gtin`
 
+- Detect Restricted Circulation Numbers (RCN) and return a subclass of
+  :class:`~biip.gtin.Gtin`, :class:`~biip.gtin.Rcn`, with additional fields and
+  helpers for working with RCNs.
+
+- Classify a RCN as being restricted to either a geographical region or to a
+  company.
+
+- Support interpreting RCNs according to varying rules depending on the
+  geopgraphical region specified by the user.
+
+- Add RCN rules for the Baltics, Great Britain, Norway, and Sweden.
+
 - Bug fix: Keep all leading zeros in GTIN-8.
 
 - Bug fix: Convert GTIN-8 to GTIN-12 before extracting GS1 Prefix.

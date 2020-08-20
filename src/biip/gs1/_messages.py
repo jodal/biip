@@ -11,6 +11,7 @@ from biip.gs1 import (
     GS1ApplicationIdentifier,
     GS1ElementString,
 )
+from biip.gtin import RcnRegion
 
 
 @dataclass
@@ -34,12 +35,16 @@ class GS1Message:
         cls: Type[GS1Message],
         value: str,
         *,
+        rcn_region: Optional[RcnRegion] = None,
         separator_char: str = DEFAULT_SEPARATOR_CHAR,
     ) -> GS1Message:
         """Parse a string from a barcode scan as a GS1 message with AIs.
 
         Args:
             value: The string to parse.
+            rcn_region: The geographical region whose rules should be used to
+                interpret Restricted Circulation Numbers (RCN).
+                Needed to extract e.g. variable weight/price from GTIN.
             separator_char: Character used in place of the FNC1 symbol.
                 Defaults to `<GS>` (ASCII value 29).
                 If variable-length fields in the middle of the message are
@@ -57,7 +62,7 @@ class GS1Message:
 
         while rest:
             element_string = GS1ElementString.extract(
-                rest, separator_char=separator_char
+                rest, rcn_region=rcn_region, separator_char=separator_char
             )
             element_strings.append(element_string)
 

@@ -11,7 +11,7 @@ from typing import List, Optional, Type
 
 from biip import ParseError
 from biip.gs1 import DEFAULT_SEPARATOR_CHAR, GS1ApplicationIdentifier
-from biip.gtin import Gtin
+from biip.gtin import Gtin, RcnRegion
 
 try:
     import moneyed
@@ -70,6 +70,7 @@ class GS1ElementString:
         cls: Type[GS1ElementString],
         value: str,
         *,
+        rcn_region: Optional[RcnRegion] = None,
         separator_char: str = DEFAULT_SEPARATOR_CHAR,
     ) -> GS1ElementString:
         """Extract the first GS1 Element String from the given value.
@@ -77,6 +78,9 @@ class GS1ElementString:
         Args:
             value: The string to extract an Element String from. May contain
                 more than one Element String.
+            rcn_region: The geographical region whose rules should be used to
+                interpret Restricted Circulation Numbers (RCN).
+                Needed to extract e.g. variable weight/price from GTIN.
             separator_char: Character used in place of the FNC1 symbol.
                 Defaults to `<GS>` (ASCII value 29).
                 If variable-length fields are not terminated with this
@@ -105,17 +109,19 @@ class GS1ElementString:
         value = "".join(pattern_groups)
 
         element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
-        element._set_gtin()
+        element._set_gtin(rcn_region=rcn_region)
         element._set_date()
         element._set_decimal()
 
         return element
 
-    def _set_gtin(self: GS1ElementString) -> None:
+    def _set_gtin(
+        self: GS1ElementString, *, rcn_region: Optional[RcnRegion] = None
+    ) -> None:
         if self.ai.ai not in ("01", "02"):
             return
 
-        self.gtin = Gtin.parse(self.value)
+        self.gtin = Gtin.parse(self.value, rcn_region=rcn_region)
 
     def _set_date(self: GS1ElementString) -> None:
         if self.ai.ai not in ("11", "12", "13", "15", "16", "17"):

@@ -48,15 +48,15 @@ The library can interpret the following formats:
   - [x] Extract and validate check digit
   - [x] Extract GS1 Prefix
   - [x] Extract packaging level digit from GTIN-14
-  - [ ] Parse variable measurements (price/weight) into `Decimal` values
-    - The exact semantics vary from market to market, but GS1 have some global
-      recommendations. Have to research if there is enough similarity to have
-      one rule set or if we need to configure what market rule set to use.
-    - Available rule sets include:
-      - [ ] Global recommendations: GS1 General Specifications, section 2.1.12.2
-      - [ ] UK: https://www.gs1uk.org/sites/default/files/How_to_calculate_variable_measure_items_0.pdf
-      - [ ] Sweden: https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/
-      - [ ] Baltics: https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf
+  - [x] Support for Restricted Circulation Numbers (RCN)
+    - [x] Classification of RCN usage to either a geographical region or a company
+    - [x] Parsing of variable measurements (price/weight) into `Decimal`
+      values, and optionally `Money` values if py-moneyed is installed, is
+      supported for the following geographical regions:
+      - [x] Baltics
+      - [x] Great Britain
+      - [x] Norway
+      - [x] Sweden
   - Encode
     - [x] GTIN-8 as GTIN-12/13/14
     - [x] GTIN-12 as GTIN-13/14

@@ -1,71 +1,14 @@
-"""Support for Global Trade Item Number (GTIN).
-
-The :mod:`biip.gtin` module contains biip's support for parsing GTIN formats.
-
-A GTIN is a number that uniquely identifies a trade item.
-
-This class can interpet the following GTIN formats:
-
-- GTIN-8, found in EAN-8 barcodes.
-- GTIN-12, found in UPC-A and UPC-E barcodes.
-- GTIN-13, found in EAN-13 barcodes.
-- GTIN-14, found in ITF-14 barcodes, as well as a data field in GS1 barcodes.
-
-A GTIN can be converted to any other GTIN format, as long as the target
-format is longer.
-
-Example:
-    >>> from biip.gtin import Gtin
-    >>> gtin = Gtin.parse("5901234123457")
-    >>> gtin
-    Gtin(value='5901234123457', format=GtinFormat.GTIN_13,
-    prefix=GS1Prefix(value='590', usage='GS1 Poland'),
-    payload='590123412345', check_digit=7, packaging_level=None)
-    >>> gtin.as_gtin_14()
-    '05901234123457'
-"""
+"""Global Trade Item Number (GTIN)."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import IntEnum
-from typing import Optional, Type
+from typing import Optional, Type, Union
 
 from biip import EncodeError, ParseError
 from biip.gs1 import GS1Prefix
 from biip.gs1.checksums import numeric_check_digit
-
-
-__all__ = ["Gtin", "GtinFormat"]
-
-
-class GtinFormat(IntEnum):
-    """Enum of GTIN formats."""
-
-    #: GTIN-8
-    GTIN_8 = 8
-
-    #: GTIN-12
-    GTIN_12 = 12
-
-    #: GTIN-13
-    GTIN_13 = 13
-
-    #: GTIN-14
-    GTIN_14 = 14
-
-    def __str__(self: GtinFormat) -> str:
-        """Pretty string representation of format."""
-        return self.name.replace("_", "-")
-
-    def __repr__(self: GtinFormat) -> str:
-        """Canonical string representation of format."""
-        return f"GtinFormat.{self.name}"
-
-    @property
-    def length(self: GtinFormat) -> int:
-        """Length of a GTIN of the given format."""
-        return int(self)
+from biip.gtin import GtinFormat, RcnRegion
 
 
 @dataclass
@@ -101,13 +44,18 @@ class Gtin:
     packaging_level: Optional[int] = None
 
     @classmethod
-    def parse(cls: Type[Gtin], value: str) -> Gtin:
+    def parse(
+        cls: Type[Gtin], value: str, *, rcn_region: Optional[RcnRegion] = None
+    ) -> Gtin:
         """Parse the given value into a :class:`Gtin` object.
 
         Both GTIN-8, GTIN-12, GTIN-13, and GTIN-14 are supported.
 
         Args:
             value: The value to parse.
+            rcn_region: The geographical region whose rules should be used to
+                interpret Restricted Circulation Numbers (RCN).
+                Needed to extract e.g. variable weight/price from GTIN.
 
         Returns:
             GTIN data structure with the successfully extracted data.
@@ -116,6 +64,8 @@ class Gtin:
         Raises:
             ParseError: If the parsing fails.
         """
+        from biip.gtin import Rcn
+
         if len(value) not in (8, 12, 13, 14):
             raise ParseError(
                 f"Failed parsing {value!r} as GTIN: "
@@ -153,7 +103,13 @@ class Gtin:
                 f"Expected {calculated_check_digit!r}, got {check_digit!r}."
             )
 
-        return cls(
+        gtin_type: Type[Union[Gtin, Rcn]]
+        if "Restricted Circulation Number" in prefix.usage:
+            gtin_type = Rcn
+        else:
+            gtin_type = Gtin
+
+        gtin = gtin_type(
             value=value,
             format=gtin_format,
             prefix=prefix,
@@ -161,6 +117,11 @@ class Gtin:
             check_digit=check_digit,
             packaging_level=packaging_level,
         )
+
+        if isinstance(gtin, Rcn) and rcn_region is not None:
+            gtin._parse_with_regional_rules(rcn_region)
+
+        return gtin
 
     def as_gtin_8(self: Gtin) -> str:
         """Format as a GTIN-8."""
