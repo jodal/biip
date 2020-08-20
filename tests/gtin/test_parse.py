@@ -17,16 +17,6 @@ def test_parse_value_with_invalid_length() -> None:
     )
 
 
-def test_parse_value_with_invalid_length_when_stripping_zeros() -> None:
-    with pytest.raises(ParseError) as exc_info:
-        Gtin.parse("07038010")
-
-    assert (
-        str(exc_info.value)
-        == "Failed parsing '07038010' as GTIN: Expected 8-14 significant digits, got 7."
-    )
-
-
 def test_parse_nonnumeric_value() -> None:
     with pytest.raises(ParseError) as exc_info:
         Gtin.parse("0123456789abc")
@@ -68,6 +58,24 @@ def test_parse_gtin_8(value: str) -> None:
         payload="9638507",
         check_digit=4,
     )
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        "00000017",
+        "00000123",
+        "00001236",
+        "00012348",
+        "00123457",
+        "01234565",
+        "07038013",
+    ],
+)
+def test_parse_gtin_8_with_leading_zeros(value: str) -> None:
+    gtin = Gtin.parse(value)
+    assert gtin.value == value
+    assert gtin.format == GtinFormat.GTIN_8
 
 
 @pytest.mark.parametrize(

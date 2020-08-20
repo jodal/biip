@@ -21,6 +21,10 @@ v0.3.0 (UNRELEASED)
   with both amounts payable and currency. This field is only set if the
   optional dependency ``py-moneyed`` is installed.
 
+:mod:`biip.gtin`
+
+- Keep all leading zeros in GTIN-8.
+
 
 v0.2.1 (2020-08-19)
 ===================

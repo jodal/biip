@@ -128,15 +128,10 @@ class Gtin:
             )
 
         stripped_value = _strip_leading_zeros(value)
+        assert len(stripped_value) in (8, 12, 13, 14)
 
         num_significant_digits = len(stripped_value)
-        try:
-            gtin_format = GtinFormat(num_significant_digits)
-        except ValueError:
-            raise ParseError(
-                f"Failed parsing {value!r} as GTIN: "
-                f"Expected 8-14 significant digits, got {num_significant_digits}."
-            )
+        gtin_format = GtinFormat(num_significant_digits)
 
         payload = stripped_value[:-1]
         check_digit = int(stripped_value[-1])
@@ -195,5 +190,10 @@ def _strip_leading_zeros(value: str) -> str:
         # Keep up to three leading zeros in GTIN-12
         num_zeros_before_gtin_12 = len(value) - 12
         return value[num_zeros_before_gtin_12:]
+
+    if len(value) >= 8 and len(value.lstrip("0")) <= 8:
+        # Keep all leading zeros in GTIN-8
+        num_zeros_before_gtin_8 = len(value) - 8
+        return value[num_zeros_before_gtin_8:]
 
     return value.lstrip("0")
