@@ -25,7 +25,7 @@ The library can interpret the following formats:
   - [x] Parse fixed-length Element Strings.
   - [x] Parse variable-length Element Strings.
     - [x] Support configuring the separation character.
-  - [ ] Parse AI `00` as SSCC.
+  - [x] Parse AI `00` as SSCC.
   - [x] Parse AI `01` and `02` as GTIN.
   - [x] Parse dates into `datetime.date` values.
     - [x] Interpret the year to be within -49/+50 years from today.
