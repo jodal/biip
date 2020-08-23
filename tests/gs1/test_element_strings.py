@@ -6,11 +6,27 @@ import pytest
 from biip import ParseError
 from biip.gs1 import GS1ApplicationIdentifier, GS1ElementString, GS1Prefix
 from biip.gtin import Gtin, GtinFormat
+from biip.sscc import Sscc
 
 
 @pytest.mark.parametrize(
     "value, expected",
     [
+        (
+            "00373400306809981733",
+            GS1ElementString(
+                ai=GS1ApplicationIdentifier.extract("00"),
+                value="373400306809981733",
+                pattern_groups=["373400306809981733"],
+                sscc=Sscc(
+                    value="373400306809981733",
+                    prefix=GS1Prefix(value="734", usage="GS1 Sweden"),
+                    extension_digit=3,
+                    payload="37340030680998173",
+                    check_digit=3,
+                ),
+            ),
+        ),
         (
             "0107032069804988",
             GS1ElementString(

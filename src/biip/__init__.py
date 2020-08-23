@@ -11,7 +11,7 @@ Example:
     element_strings=[GS1ElementString(ai=GS1ApplicationIdentifier(ai='15',
     description='Best before date (YYMMDD)', data_title='BEST BEFORE or BEST BY',
     fnc1_required=False, format='N2+N6'), value='210526',
-    pattern_groups=['210526'], gtin=None, date=datetime.date(2021, 5, 26),
+    pattern_groups=['210526'], gtin=None, sscc=None, date=datetime.date(2021, 5, 26),
     decimal=None, money=None)])
     >>> parse("123")
     Traceback (most recent call last):

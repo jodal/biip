@@ -12,6 +12,7 @@ from typing import List, Optional, Type
 from biip import ParseError
 from biip.gs1 import DEFAULT_SEPARATOR_CHAR, GS1ApplicationIdentifier
 from biip.gtin import Gtin, RcnRegion
+from biip.sscc import Sscc
 
 try:
     import moneyed
@@ -38,7 +39,7 @@ class GS1ElementString:
         pattern_groups=['07032069804988'], gtin=Gtin(value='07032069804988',
         format=GtinFormat.GTIN_13, prefix=GS1Prefix(value='703', usage='GS1
         Norway'), payload='703206980498', check_digit=8,
-        packaging_level=None), date=None, decimal=None, money=None)
+        packaging_level=None), sscc=None, date=None, decimal=None, money=None)
         >>> element_string.as_hri()
         '(01)07032069804988'
     """
@@ -54,6 +55,9 @@ class GS1ElementString:
 
     #: A GTIN created from the element string, if the AI represents a GTIN.
     gtin: Optional[Gtin] = None
+
+    #: An SSCC created from the element string, if the AI represents a SSCC.
+    sscc: Optional[Sscc] = None
 
     #: A date created from the element string, if the AI represents a date.
     date: Optional[datetime.date] = None
@@ -110,6 +114,7 @@ class GS1ElementString:
 
         element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
         element._set_gtin(rcn_region=rcn_region)
+        element._set_sscc()
         element._set_date()
         element._set_decimal()
 
@@ -122,6 +127,12 @@ class GS1ElementString:
             return
 
         self.gtin = Gtin.parse(self.value, rcn_region=rcn_region)
+
+    def _set_sscc(self: GS1ElementString) -> None:
+        if self.ai.ai != "00":
+            return
+
+        self.sscc = Sscc.parse(self.value)
 
     def _set_date(self: GS1ElementString) -> None:
         if self.ai.ai not in ("11", "12", "13", "15", "16", "17"):
