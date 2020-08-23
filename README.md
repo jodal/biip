@@ -64,9 +64,8 @@ The library can interpret the following formats:
   - [x] Encode RCN with the variable measure part zeroed out,
         to help looking up the correct trade item.
 - SSCC (Serial Shipping Container Code)
-  - [ ] Validate check digit.
-  - [ ] Extract GS1 Company Prefix, if possible due to varying field length.
-  - [ ] Extract serial reference, if possible due to varying field length.
+  - [x] Validate check digit.
+  - [x] Encode for human consumption, with the logical groups separated by whitespace.
 - Symbol IDs, e.g. `]EO`
   - [ ] Use Symbol IDs when automatically selecting what parser to use.
   - [ ] Strip Symbol IDs before parsing the remainder.

@@ -34,3 +34,10 @@ biip.gtin
 
 .. automodule:: biip.gtin
     :members:
+
+
+biip.sscc
+=========
+
+.. automodule:: biip.sscc
+    :members:
