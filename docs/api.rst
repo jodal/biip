@@ -41,3 +41,10 @@ biip.sscc
 
 .. automodule:: biip.sscc
     :members:
+
+
+biip.symbology
+==============
+
+.. automodule:: biip.symbology
+    :members:

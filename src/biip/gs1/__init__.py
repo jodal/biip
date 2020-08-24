@@ -51,6 +51,7 @@ from __future__ import annotations
 DEFAULT_SEPARATOR_CHAR = "\x1d"
 
 
+from biip.gs1._symbology import GS1Symbology  # noqa
 from biip.gs1._application_identifiers import GS1ApplicationIdentifier  # noqa
 from biip.gs1._prefixes import GS1Prefix  # noqa
 from biip.gs1._element_strings import GS1ElementString  # noqa
@@ -62,5 +63,6 @@ __all__ = [
     "GS1ElementString",
     "GS1ApplicationIdentifier",
     "GS1Prefix",
+    "GS1Symbology",
     "DEFAULT_SEPARATOR_CHAR",
 ]

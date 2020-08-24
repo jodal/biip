@@ -22,6 +22,8 @@ The library can interpret the following formats:
 ## Features
 
 - GS1 (multiple Element Strings with Application Identifiers)
+  - [x] Recognize all specified Application Identifiers.
+  - [x] Recognize allocating GS1 Member Organization from the GS1 Company Prefix.
   - [x] Parse fixed-length Element Strings.
   - [x] Parse variable-length Element Strings.
     - [x] Support configuring the separation character.
@@ -66,9 +68,10 @@ The library can interpret the following formats:
 - SSCC (Serial Shipping Container Code)
   - [x] Validate check digit.
   - [x] Encode for human consumption, with the logical groups separated by whitespace.
-- Symbol IDs, e.g. `]EO`
-  - [ ] Use Symbol IDs when automatically selecting what parser to use.
+- Symbol Identifers, e.g. `]EO`
+  - [x] Recognize all specified Symbol Identifier code characters.
   - [ ] Strip Symbol IDs before parsing the remainder.
+  - [ ] Use Symbol IDs when automatically selecting what parser to use.
 
 ## Installation
 
