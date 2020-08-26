@@ -107,7 +107,7 @@ class GS1ElementString:
         matches = re.match(pattern, value)
         if not matches:
             raise ParseError(
-                f"Failed to match GS1 AI {ai.ai} pattern {ai.pattern!r} with {value!r}."
+                f"Failed to match {value!r} with GS1 AI {ai} pattern '{ai.pattern}'."
             )
         pattern_groups = list(matches.groups())
         value = "".join(pattern_groups)
@@ -142,7 +142,7 @@ class GS1ElementString:
             self.date = _parse_date(self.value)
         except ValueError:
             raise ParseError(
-                f"Failed to parse GS1 AI {self.ai.ai} date from {self.value!r}."
+                f"Failed to parse GS1 AI {self.ai} date from {self.value!r}."
             )
 
     def _set_decimal(self: GS1ElementString) -> None:
@@ -194,7 +194,7 @@ class GS1ElementString:
         Returns:
             A human-readable string where the AI is wrapped in parenthesis.
         """
-        return f"({self.ai.ai}){self.value}"
+        return f"{self.ai}{self.value}"
 
 
 def _parse_date(value: str) -> datetime.date:

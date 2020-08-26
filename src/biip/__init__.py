@@ -1,4 +1,4 @@
-"""Biip interprets the data in barcodes.
+r"""Biip interprets the data in barcodes.
 
 Example:
     >>> from biip import parse
@@ -16,7 +16,9 @@ Example:
     >>> parse("123")
     Traceback (most recent call last):
         ...
-    biip._exceptions.ParseError: Failed to parse '123'.
+    biip._exceptions.ParseError: Failed parsing '123':
+    - Failed parsing '123' as GTIN: Expected 8, 12, 13, or 14 digits, got 3.
+    - Failed to match '123' with GS1 AI (12) pattern '^12(\d{6})$'.
 """
 
 from __future__ import annotations
