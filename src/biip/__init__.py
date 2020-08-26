@@ -18,7 +18,7 @@ Example:
         ...
     biip._exceptions.ParseError: Failed parsing '123':
     - Failed parsing '123' as GTIN: Expected 8, 12, 13, or 14 digits, got 3.
-    - Failed to match GS1 AI 12 pattern '^12(\\d{6})$' with '123'.
+    - Failed to match '123' with GS1 AI (12) pattern '^12(\d{6})$'.
 """
 
 from __future__ import annotations

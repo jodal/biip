@@ -88,6 +88,10 @@ class GS1ApplicationIdentifier:
         """Get the length of the Application Identifier code."""
         return len(self.ai)
 
+    def __str__(self: GS1ApplicationIdentifier) -> str:
+        """Get the string representation of the Application Identifier."""
+        return f"({self.ai})"
+
 
 _GS1_APPLICATION_IDENTIFIERS_FILE = (
     pathlib.Path(__file__).parent / "_application_identifiers.json"

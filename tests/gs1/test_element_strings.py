@@ -83,7 +83,7 @@ def test_extract_fails_when_not_matching_pattern(
 
     assert (
         str(exc_info.value)
-        == f"Failed to match GS1 AI {ai.ai} pattern {ai.pattern!r} with {bad_value!r}."
+        == f"Failed to match {bad_value!r} with GS1 AI {ai} pattern '{ai.pattern}'."
     )
 
 
@@ -104,7 +104,7 @@ def test_extract_fails_with_invalid_date(ai_code: str, bad_value: str) -> None:
 
     assert (
         str(exc_info.value)
-        == f"Failed to parse GS1 AI {ai.ai} date from {bad_value!r}."
+        == f"Failed to parse GS1 AI {ai} date from {bad_value!r}."
     )
 
 
