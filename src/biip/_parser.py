@@ -1,10 +1,14 @@
 """The top-level Biip parser."""
 
-from typing import Optional, Union
+from typing import Callable, List, Optional, Union
 
 from biip import ParseError
-from biip.gs1 import DEFAULT_SEPARATOR_CHAR, GS1Message
-from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion
+from biip.gs1 import DEFAULT_SEPARATOR_CHAR, GS1Message, GS1Symbology
+from biip.gtin import Gtin, Rcn, RcnRegion
+from biip.symbology import SymbologyIdentifier
+
+
+ParseResult = Union[Gtin, GS1Message, Rcn]
 
 
 def parse(
@@ -12,7 +16,7 @@ def parse(
     *,
     rcn_region: Optional[RcnRegion] = None,
     separator_char: str = DEFAULT_SEPARATOR_CHAR,
-) -> Union[Gtin, GS1Message, Rcn]:
+) -> ParseResult:
     """Identify data format and parse data.
 
     The current strategy is:
@@ -42,17 +46,58 @@ def parse(
     """
     value = value.strip()
 
-    try:
-        if len(value) in list(GtinFormat):
-            try:
-                return Gtin.parse(value, rcn_region=rcn_region)
-            except ParseError:
-                pass  # Try the next parser
+    symbology_identifier: Optional[SymbologyIdentifier]
+    if value.startswith("]"):
+        symbology_identifier = SymbologyIdentifier.extract(value)
+        value = value[len(symbology_identifier) :]
+    else:
+        symbology_identifier = None
 
-        return GS1Message.parse(
-            value, rcn_region=rcn_region, separator_char=separator_char
-        )
-    except ParseError:
-        raise ParseError(
-            f"Failed to parse {value!r} as GTIN or GS1 Element String."
-        )
+    parsers = _select_parsers(
+        value=value,
+        symbology_identifier=symbology_identifier,
+        rcn_region=rcn_region,
+        separator_char=separator_char,
+    )
+
+    for parser in parsers:
+        try:
+            return parser(value)
+        except ParseError:
+            pass  # Try the next parser
+
+    raise ParseError(f"Failed to parse {value!r}.")
+
+
+def _select_parsers(
+    *,
+    value: str,
+    symbology_identifier: Optional[SymbologyIdentifier],
+    rcn_region: Optional[RcnRegion],
+    separator_char: str,
+) -> List[Callable[[str], ParseResult]]:
+    parsers: List[Callable[[str], ParseResult]] = []
+
+    # XXX: The following lambdas are just here to ensure the parsers have the
+    # same API. Another way to implement this would be to pass the same
+    # configuration object to each parser.
+    gtin_parse = lambda value: Gtin.parse(value, rcn_region=rcn_region)  # noqa
+    gs1_parse = lambda value: GS1Message.parse(  # noqa
+        value, rcn_region=rcn_region, separator_char=separator_char
+    )
+
+    if symbology_identifier is not None:
+        if symbology_identifier.gs1_symbology in GS1Symbology.with_gtin():
+            parsers.append(gtin_parse)
+
+        if (
+            symbology_identifier.gs1_symbology
+            in GS1Symbology.with_ai_element_strings()
+        ):
+            parsers.append(gs1_parse)
+
+    if not parsers:
+        # Default set of parsers, if we're not able to select a subset..
+        parsers = [gtin_parse, gs1_parse]
+
+    return parsers

@@ -26,8 +26,18 @@ from biip.gtin import Gtin
             Gtin,
         ),
         (
+            # GTIN-13 with Symbology Identifier
+            "]E05901234123457",
+            Gtin,
+        ),
+        (
             # GTIN-14
             "05901234123457",
+            Gtin,
+        ),
+        (
+            # GTIN-14 with Symbology Identifier
+            "]I105901234123457",
             Gtin,
         ),
         (
@@ -40,6 +50,11 @@ from biip.gtin import Gtin
             "15210526",
             GS1Message,
         ),
+        (
+            # GS1 AI with Symbology Identifier
+            "]C1010590123412345715210526",
+            GS1Message,
+        ),
     ],
 )
 def test_parse(value: str, expected_cls: Type) -> None:
@@ -48,6 +63,12 @@ def test_parse(value: str, expected_cls: Type) -> None:
 
 def test_parse_strips_surrounding_whitespace() -> None:
     gtin = parse("  \t 5901234123457 \n  ")
+
+    assert gtin.value == "5901234123457"
+
+
+def test_parse_strips_symbology_identifier() -> None:
+    gtin = parse("]E05901234123457")
 
     assert gtin.value == "5901234123457"
 
@@ -63,7 +84,4 @@ def test_parse_invalid_data() -> None:
     with pytest.raises(ParseError) as exc_info:
         parse("abc")
 
-    assert (
-        str(exc_info.value)
-        == "Failed to parse 'abc' as GTIN or GS1 Element String."
-    )
+    assert str(exc_info.value) == "Failed to parse 'abc'."
