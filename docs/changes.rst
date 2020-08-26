@@ -5,10 +5,20 @@ Changes
 v0.4.0 (UNRELEASED)
 ===================
 
+:mod:`biip`
+
+- If present, select parser based on Symbology Identifiers.
+
+- Improved parsing error messages.
+
 :mod:`biip.sscc`
 
 - Add :class:`~biip.sscc.Sscc` class to parse, validate, and format Serial
   Shipping Container Codes (SSCC).
+
+:mod:`biip.symbology`
+
+- Add support for parsing and stripping Symbology Identifiers.
 
 v0.3.1 (2020-08-21)
 ===================
