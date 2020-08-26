@@ -68,10 +68,10 @@ The library can interpret the following formats:
 - SSCC (Serial Shipping Container Code)
   - [x] Validate check digit.
   - [x] Encode for human consumption, with the logical groups separated by whitespace.
-- Symbol Identifers, e.g. `]EO`
-  - [x] Recognize all specified Symbol Identifier code characters.
-  - [x] Strip Symbol Identifers before parsing the remainder.
-  - [ ] Use Symbol Identifers when automatically selecting what parser to use.
+- Symbology Identifers, e.g. `]EO`
+  - [x] Recognize all specified Symbology Identifier code characters.
+  - [x] Strip Symbology Identifers before parsing the remainder.
+  - [x] Use Symbology Identifers when automatically selecting what parser to use.
 
 ## Installation
 

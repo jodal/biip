@@ -16,7 +16,7 @@ Example:
     >>> parse("123")
     Traceback (most recent call last):
         ...
-    biip._exceptions.ParseError: Failed to parse '123' as GTIN or GS1 Element String.
+    biip._exceptions.ParseError: Failed to parse '123'.
 """
 
 from __future__ import annotations
