@@ -259,7 +259,7 @@ def test_extract_percentage_discount(value: str, expected: Decimal) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected", [("0107032069804988", "(01)07032069804988",)],
+    "value, expected", [("0107032069804988", "(01)07032069804988")]
 )
 def test_as_hri(value: str, expected: str) -> None:
     assert GS1ElementString.extract(value).as_hri() == expected

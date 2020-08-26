@@ -22,7 +22,7 @@ def test_invalid_gs1_prefix(bad_value: str) -> None:
         (
             "0000001999",
             GS1Prefix(
-                value="0000001", usage="Unused to avoid collision with GTIN-8",
+                value="0000001", usage="Unused to avoid collision with GTIN-8"
             ),
         ),
         ("060999", GS1Prefix(value="060", usage="GS1 US")),
