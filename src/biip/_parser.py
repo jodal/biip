@@ -5,6 +5,7 @@ from typing import Optional, Union
 from biip import ParseError
 from biip.gs1 import DEFAULT_SEPARATOR_CHAR, GS1Message
 from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion
+from biip.symbology import SymbologyIdentifier
 
 
 def parse(
@@ -41,6 +42,13 @@ def parse(
         ParseError: If parsing of the data fails.
     """
     value = value.strip()
+
+    symbology_identifier: Optional[SymbologyIdentifier]
+    if value.startswith("]"):
+        symbology_identifier = SymbologyIdentifier.extract(value)
+        value = value[len(symbology_identifier) :]
+    else:
+        symbology_identifier = None
 
     try:
         if len(value) in list(GtinFormat):

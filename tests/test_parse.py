@@ -52,6 +52,12 @@ def test_parse_strips_surrounding_whitespace() -> None:
     assert gtin.value == "5901234123457"
 
 
+def test_parse_strips_symbology_identifier() -> None:
+    gtin = parse("]E05901234123457")
+
+    assert gtin.value == "5901234123457"
+
+
 def test_parse_with_separator_char() -> None:
     result = parse("101313|15210526", separator_char="|")
 

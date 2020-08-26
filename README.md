@@ -70,8 +70,8 @@ The library can interpret the following formats:
   - [x] Encode for human consumption, with the logical groups separated by whitespace.
 - Symbol Identifers, e.g. `]EO`
   - [x] Recognize all specified Symbol Identifier code characters.
-  - [ ] Strip Symbol IDs before parsing the remainder.
-  - [ ] Use Symbol IDs when automatically selecting what parser to use.
+  - [x] Strip Symbol Identifers before parsing the remainder.
+  - [ ] Use Symbol Identifers when automatically selecting what parser to use.
 
 ## Installation
 
