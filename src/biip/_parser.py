@@ -60,13 +60,16 @@ def parse(
         separator_char=separator_char,
     )
 
+    errors: List[ParseError] = []
+
     for parser in parsers:
         try:
             return parser(value)
-        except ParseError:
-            pass  # Try the next parser
+        except ParseError as exc:
+            errors.append(exc)
 
-    raise ParseError(f"Failed to parse {value!r}.")
+    error_messages = "\n".join("- " + str(error) for error in errors)
+    raise ParseError(f"Failed parsing {value!r}:\n{error_messages}")
 
 
 def _select_parsers(
