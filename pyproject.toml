@@ -20,7 +20,7 @@ money = ["py-moneyed"]
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.0"
-black = {version = "^19.10b0", allow-prereleases = true}
+black = {version = "^20.8b1", allow-prereleases = true}
 coverage = {extras = ["toml"], version = "^5.1"}
 pytest-cov = "^2.8.1"
 flake8 = "^3.8.1"
