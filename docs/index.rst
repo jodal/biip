@@ -41,6 +41,7 @@ To install Biip with ``py-moneyed``, run:
     :maxdepth: 2
     :caption: Usage
 
+    quickstart
     api
 
 

@@ -6,6 +6,8 @@ API reference
     :local:
     :backlinks: none
 
+See :doc:`quickstart` for an introduction to how to use the API.
+
 
 
 biip
