@@ -44,6 +44,10 @@ class RcnUsage(Enum):
     #: Usage of RCN restricted to internally in a company.
     COMPANY = "company"
 
+    def __repr__(self: RcnUsage) -> str:
+        """Canonical string representation of format."""
+        return f"RcnUsage.{self.name}"
+
 
 class RcnRegion(Enum):
     """Enum of geographical regions with custom RCN rules."""
@@ -59,6 +63,10 @@ class RcnRegion(Enum):
 
     #: Sweden
     SWEDEN = "se"
+
+    def __repr__(self: RcnRegion) -> str:
+        """Canonical string representation of format."""
+        return f"RcnRegion.{self.name}"
 
     def get_currency_code(self: RcnRegion) -> Optional[str]:
         """Get the ISO-4217 currency code for the region."""
