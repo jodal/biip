@@ -1,14 +1,18 @@
 """The top-level Biip parser."""
 
-from typing import Callable, List, Optional, Union
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import List, Optional, Type, Union
 
 from biip import ParseError
 from biip.gs1 import DEFAULT_SEPARATOR_CHAR, GS1Message, GS1Symbology
-from biip.gtin import Gtin, Rcn, RcnRegion
+from biip.gtin import Gtin, RcnRegion
+from biip.sscc import Sscc
 from biip.symbology import SymbologyIdentifier
 
 
-ParseResult = Union[Gtin, GS1Message, Rcn]
+ParserType = Union[Type[GS1Message], Type[Gtin], Type[Sscc]]
 
 
 def parse(
@@ -21,11 +25,9 @@ def parse(
 
     The current strategy is:
 
-    1. If length matches a GTIN, attempt to parse and validate check digit.
-    2. If that fails, attempt to parse as GS1 Element Strings.
-
-    If you know what type of data you are parsing, consider using
-    :meth:`biip.gtin.Gtin.parse` or :meth:`biip.gs1.GS1Message.parse`.
+    1. If Symbology Identifier prefix indicates a GTIN or GS1 Message,
+       attempt to parse and validate as that.
+    2. Else, if not Symbology Identifier, attempt to parse with all parsers.
 
     Args:
         value: The data to classify and parse.
@@ -45,62 +47,116 @@ def parse(
         ParseError: If parsing of the data fails.
     """
     value = value.strip()
+    result = ParseResult(value=value)
 
-    symbology_identifier: Optional[SymbologyIdentifier]
+    # Extract Symbology Identifier
     if value.startswith("]"):
-        symbology_identifier = SymbologyIdentifier.extract(value)
-        value = value[len(symbology_identifier) :]
-    else:
-        symbology_identifier = None
+        result.symbology_identifier = SymbologyIdentifier.extract(value)
+        value = value[len(result.symbology_identifier) :]
 
-    parsers = _select_parsers(
-        value=value,
-        symbology_identifier=symbology_identifier,
-        rcn_region=rcn_region,
-        separator_char=separator_char,
-    )
-
-    errors: List[ParseError] = []
-
-    for parser in parsers:
-        try:
-            return parser(value)
-        except ParseError as exc:
-            errors.append(exc)
-
-    error_messages = "\n".join("- " + str(error) for error in errors)
-    raise ParseError(f"Failed parsing {value!r}:\n{error_messages}")
-
-
-def _select_parsers(
-    *,
-    value: str,
-    symbology_identifier: Optional[SymbologyIdentifier],
-    rcn_region: Optional[RcnRegion],
-    separator_char: str,
-) -> List[Callable[[str], ParseResult]]:
-    parsers: List[Callable[[str], ParseResult]] = []
-
-    # XXX: The following lambdas are just here to ensure the parsers have the
-    # same API. Another way to implement this would be to pass the same
-    # configuration object to each parser.
-    gtin_parse = lambda value: Gtin.parse(value, rcn_region=rcn_region)  # noqa
-    gs1_parse = lambda value: GS1Message.parse(  # noqa
-        value, rcn_region=rcn_region, separator_char=separator_char
-    )
-
-    if symbology_identifier is not None:
-        if symbology_identifier.gs1_symbology in GS1Symbology.with_gtin():
-            parsers.append(gtin_parse)
-
+    # Select parsers
+    parsers: List[ParserType] = []
+    if result.symbology_identifier is not None:
         if (
-            symbology_identifier.gs1_symbology
+            result.symbology_identifier.gs1_symbology
+            in GS1Symbology.with_gtin()
+        ):
+            parsers.append(Gtin)
+        if (
+            result.symbology_identifier.gs1_symbology
             in GS1Symbology.with_ai_element_strings()
         ):
-            parsers.append(gs1_parse)
-
+            parsers.append(GS1Message)
     if not parsers:
-        # Default set of parsers, if we're not able to select a subset..
-        parsers = [gtin_parse, gs1_parse]
+        # If we're not able to select a subset based on Symbology Identifiers,
+        # run all parsers in the default order.
+        parsers = [Gtin, Sscc, GS1Message]
 
-    return parsers
+    # Run all parsers in order
+    for parser in parsers:
+        if parser == Gtin:
+            try:
+                result.gtin = Gtin.parse(value, rcn_region=rcn_region)
+            except ParseError as exc:
+                result.gtin_error = str(exc)
+
+        if parser == Sscc:
+            try:
+                result.sscc = Sscc.parse(value)
+            except ParseError as exc:
+                result.sscc_error = str(exc)
+
+        if parser == GS1Message:
+            try:
+                result.gs1_message = GS1Message.parse(
+                    value, rcn_region=rcn_region, separator_char=separator_char
+                )
+            except ParseError as exc:
+                result.gs1_message_error = str(exc)
+            else:
+                ai_00 = result.gs1_message.get(ai="00")
+                if ai_00 is not None:
+                    # GS1 Message contains an SSCC
+                    result.sscc = ai_00.sscc
+                    # Clear error from parsing full value a SSCC.
+                    result.sscc_error = None
+
+                ai_01 = result.gs1_message.get(ai="01")
+                if ai_01 is not None:
+                    # GS1 Message contains a GTIN.
+                    result.gtin = ai_01.gtin
+                    # Clear error from parsing full value as GTIN.
+                    result.gtin_error = None
+
+    if result._has_result():
+        return result
+    else:
+        raise ParseError(
+            f"Failed parsing {value!r}:\n{result._get_errors_list()}"
+        )
+
+
+@dataclass
+class ParseResult:
+    """Results from a successful barcode parsing."""
+
+    #: The raw value. Only stripped of surrounding whitespace.
+    value: str
+
+    #: The Symbology Identifier, if any.
+    symbology_identifier: Optional[SymbologyIdentifier] = None
+
+    #: The extracted GTIN, if any.
+    #: Is also set if a GS1 Message containing a GTIN was successfully parsed.
+    gtin: Optional[Gtin] = None
+
+    #: The GTIN parse error, if parsing as a GTIN was attempted and failed.
+    gtin_error: Optional[str] = None
+
+    #: The extracted SSCC, if any.
+    #: Is also set if a GS1 Message containing an SSCC was successfully parsed.
+    sscc: Optional[Sscc] = None
+
+    #: The SSCC parse error, if parsing as an SSCC was attempted and failed.
+    sscc_error: Optional[str] = None
+
+    #: The extracted GS1 Message, if any.
+    gs1_message: Optional[GS1Message] = None
+
+    #: The GS1 Message parse error,
+    #: if parsing as a GS1 Message was attempted and failed.
+    gs1_message_error: Optional[str] = None
+
+    def _has_result(self: ParseResult) -> bool:
+        return any([self.gtin, self.sscc, self.gs1_message])
+
+    def _get_errors_list(self: ParseResult) -> str:
+        return "\n".join(
+            f"- {error}"
+            for error in [
+                self.gtin_error,
+                self.sscc_error,
+                self.gs1_message_error,
+            ]
+            if error is not None
+        )

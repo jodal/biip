@@ -7,7 +7,10 @@ v0.4.0 (UNRELEASED)
 
 :mod:`biip`
 
-- If present, select parser based on Symbology Identifiers.
+- **Breaking change:** Change return value of :meth:`~biip.parse` from
+  ``Union[Gtin, GS1Message]`` to :class:`~biip.ParseResult`.
+
+- If a Symbology Identifier is present, select parser based on it.
 
 - Improved parsing error messages.
 
