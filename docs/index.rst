@@ -57,3 +57,11 @@ License
 Biip is copyright 2020 Stein Magnus Jodal and contributors.
 Biip is licensed under the
 `Apache License, Version 2.0 <https://www.apache.org/licenses/LICENSE-2.0>`_.
+
+
+Project resources
+=================
+
+- `Documentation <https://biip.readthedocs.io/>`_
+- `Source code <https://github.com/jodal/biip>`_
+- `Issue tracker <https://github.com/jodal/biip/issues>`_
