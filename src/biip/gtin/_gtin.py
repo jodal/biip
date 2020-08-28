@@ -70,13 +70,13 @@ class Gtin:
 
         if len(value) not in (8, 12, 13, 14):
             raise ParseError(
-                f"Failed parsing {value!r} as GTIN: "
+                f"Failed to parse {value!r} as GTIN: "
                 f"Expected 8, 12, 13, or 14 digits, got {len(value)}."
             )
 
         if not value.isnumeric():
             raise ParseError(
-                f"Failed parsing {value!r} as GTIN: Expected a numerical value."
+                f"Failed to parse {value!r} as GTIN: Expected a numerical value."
             )
 
         stripped_value = _strip_leading_zeros(value)

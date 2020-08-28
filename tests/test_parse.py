@@ -41,7 +41,7 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     ],
                 ),
                 sscc_error=(
-                    "Failed parsing '96385074' as SSCC: Expected 18 digits, got 8."
+                    "Failed to parse '96385074' as SSCC: Expected 18 digits, got 8."
                 ),
             ),
         ),
@@ -61,7 +61,8 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     "Failed to get GS1 Application Identifier from '7072'."
                 ),
                 sscc_error=(
-                    "Failed parsing '123601057072' as SSCC: Expected 18 digits, got 12."
+                    "Failed to parse '123601057072' as SSCC: "
+                    "Expected 18 digits, got 12."
                 ),
             ),
         ),
@@ -81,7 +82,7 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     "Failed to get GS1 Application Identifier from '5901234123457'."
                 ),
                 sscc_error=(
-                    "Failed parsing '5901234123457' as SSCC: "
+                    "Failed to parse '5901234123457' as SSCC: "
                     "Expected 18 digits, got 13."
                 ),
             ),
@@ -122,7 +123,7 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     "Failed to get GS1 Application Identifier from '05901234123457'."
                 ),
                 sscc_error=(
-                    "Failed parsing '05901234123457' as SSCC: "
+                    "Failed to parse '05901234123457' as SSCC: "
                     "Expected 18 digits, got 14."
                 ),
             ),
@@ -156,7 +157,7 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     "Failed to get GS1 Application Identifier from '09103420'."
                 ),
                 gtin_error=(
-                    "Failed parsing '376130321109103420' as GTIN: "
+                    "Failed to parse '376130321109103420' as GTIN: "
                     "Expected 8, 12, 13, or 14 digits, got 18."
                 ),
                 sscc=Sscc(
@@ -176,7 +177,7 @@ from biip.symbology import Symbology, SymbologyIdentifier
             ParseResult(
                 value="00376130321109103420",
                 gtin_error=(
-                    "Failed parsing '00376130321109103420' as GTIN: "
+                    "Failed to parse '00376130321109103420' as GTIN: "
                     "Expected 8, 12, 13, or 14 digits, got 20."
                 ),
                 gs1_message=GS1Message(
@@ -242,7 +243,7 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     ],
                 ),
                 sscc_error=(
-                    "Failed parsing '0105901234123457' as SSCC: "
+                    "Failed to parse '0105901234123457' as SSCC: "
                     "Expected 18 digits, got 16."
                 ),
             ),
@@ -267,7 +268,7 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     ],
                 ),
                 sscc_error=(
-                    "Failed parsing '15210526' as SSCC: Expected 18 digits, got 8."
+                    "Failed to parse '15210526' as SSCC: Expected 18 digits, got 8."
                 ),
             ),
         ),
@@ -352,8 +353,8 @@ def test_parse_invalid_data() -> None:
         parse("abc")
 
     assert str(exc_info.value) == (
-        "Failed parsing 'abc':\n"
-        "- Failed parsing 'abc' as GTIN: Expected 8, 12, 13, or 14 digits, got 3.\n"
-        "- Failed parsing 'abc' as SSCC: Expected 18 digits, got 3.\n"
+        "Failed to parse 'abc':\n"
+        "- Failed to parse 'abc' as GTIN: Expected 8, 12, 13, or 14 digits, got 3.\n"
+        "- Failed to parse 'abc' as SSCC: Expected 18 digits, got 3.\n"
         "- Failed to get GS1 Application Identifier from 'abc'."
     )

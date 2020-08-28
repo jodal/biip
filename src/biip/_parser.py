@@ -112,7 +112,7 @@ def parse(
         return result
     else:
         raise ParseError(
-            f"Failed parsing {value!r}:\n{result._get_errors_list()}"
+            f"Failed to parse {value!r}:\n{result._get_errors_list()}"
         )
 
 

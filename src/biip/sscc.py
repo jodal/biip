@@ -53,13 +53,13 @@ class Sscc:
 
         if len(value) != 18:
             raise ParseError(
-                f"Failed parsing {value!r} as SSCC: "
+                f"Failed to parse {value!r} as SSCC: "
                 f"Expected 18 digits, got {len(value)}."
             )
 
         if not value.isnumeric():
             raise ParseError(
-                f"Failed parsing {value!r} as SSCC: Expected a numerical value."
+                f"Failed to parse {value!r} as SSCC: Expected a numerical value."
             )
 
         value_without_extension_digit = value[1:]

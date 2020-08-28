@@ -27,7 +27,7 @@ def test_parse_value_with_invalid_length() -> None:
 
     assert (
         str(exc_info.value)
-        == "Failed parsing '123' as SSCC: Expected 18 digits, got 3."
+        == "Failed to parse '123' as SSCC: Expected 18 digits, got 3."
     )
 
 
@@ -37,7 +37,7 @@ def test_parse_nonnumeric_value() -> None:
 
     assert (
         str(exc_info.value)
-        == "Failed parsing '012345678901234abc' as SSCC: Expected a numerical value."
+        == "Failed to parse '012345678901234abc' as SSCC: Expected a numerical value."
     )
 
 
