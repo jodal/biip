@@ -211,3 +211,11 @@ def test_without_variable_measure_fails_if_rules_are_unknown() -> None:
         "Cannot zero out the variable measure part of '2302148210869' "
         "as the RCN rules for the geographical region None are unknown."
     )
+
+
+def test_rcn_usage_repr() -> None:
+    assert repr(RcnUsage.COMPANY) == "RcnUsage.COMPANY"
+
+
+def test_rcn_region_repr() -> None:
+    assert repr(RcnRegion.BALTICS) == "RcnRegion.BALTICS"
