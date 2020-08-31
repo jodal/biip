@@ -1,10 +1,10 @@
 # &#x1F4E6; Biip
 
-*Biip interprets the data in barcodes.*
+_Biip interprets the data in barcodes._
 
 [![Tests](https://img.shields.io/github/workflow/status/jodal/biip/Tests)](https://github.com/jodal/biip/actions?workflow=Tests)
-[![Coverage](https://img.shields.io/codecov/c/gh/jodal/biip)](https://codecov.io/gh/jodal/biip)
 [![Docs](https://img.shields.io/readthedocs/biip)](https://biip.readthedocs.io/en/latest/)
+[![Coverage](https://img.shields.io/codecov/c/gh/jodal/biip)](https://codecov.io/gh/jodal/biip)
 [![PyPI](https://img.shields.io/pypi/v/biip)](https://pypi.org/project/biip/)
 
 ---
@@ -18,6 +18,35 @@ The library can interpret the following formats:
 
 - GS1 AI element strings,
   commonly found in GS1-128 barcodes.
+
+For a quickstart guide and a complete API reference,
+see the [documentation](https://biip.readthedocs.io/).
+
+## Installation
+
+Biip requires Python 3.7 or newer.
+
+Biip is available from [PyPI](https://pypi.org/project/biip/):
+
+```
+python3 -m pip install biip
+```
+
+Optionally, with the help of `py-moneyed`, Biip can convert amounts with
+currency information to `moneyed.Money` objects.
+To install Biip with `py-moneyed`, run:
+
+```
+python3 -m pip install "biip[money]"
+```
+
+## Development status
+
+All planned features have been implemented.
+When the library has seen some extended production usage,
+we should be ready to make a 1.0 release.
+
+Please open an issue if you have and barcode parsing related needs that are not covered.
 
 ## Features
 
@@ -72,30 +101,6 @@ The library can interpret the following formats:
   - [x] Recognize all specified Symbology Identifier code characters.
   - [x] Strip Symbology Identifers before parsing the remainder.
   - [x] Use Symbology Identifers when automatically selecting what parser to use.
-
-## Installation
-
-Biip requires Python 3.7 or newer.
-
-Biip is available from [PyPI](https://pypi.org/project/biip/):
-
-```
-python3 -m pip install biip
-```
-
-Optionally, with the help of `py-moneyed`, Biip can convert amounts with
-currency information to `moneyed.Money` objects.
-To install Biip with `py-moneyed`, run:
-
-```
-python3 -m pip install "biip[money]"
-```
-
-
-## Usage
-
-This project is still in its infancy.
-However, some [documentation](https://biip.readthedocs.io/) already exists.
 
 ## License
 

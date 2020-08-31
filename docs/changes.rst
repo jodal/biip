@@ -5,6 +5,8 @@ Changes
 v0.4.0 (UNRELEASED)
 ===================
 
+- Add :doc:`quickstart` guide.
+
 :mod:`biip`
 
 - **Breaking change:** Change return value of :meth:`~biip.parse` from
