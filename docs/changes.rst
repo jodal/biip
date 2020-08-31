@@ -2,7 +2,7 @@
 Changes
 =======
 
-v0.4.0 (UNRELEASED)
+v0.4.0 (2020-08-31)
 ===================
 
 - Add :doc:`quickstart` guide.
