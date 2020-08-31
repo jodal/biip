@@ -2,6 +2,18 @@
 
 SSCCs are used to identify logistic units, e.g. a pallet shipped between two
 parties.
+
+Example:
+    >>> from biip.sscc import Sscc
+    >>> sscc = Sscc.parse("376130321109103420")
+    >>> sscc
+    Sscc(value='376130321109103420', prefix=GS1Prefix(value='761',
+    usage='GS1 Schweiz, Suisse, Svizzera'), extension_digit=3,
+    payload='37613032110910342', check_digit=0)
+    >>> sscc.as_hri()
+    '3 761 3032110910342 0'
+    >>> sscc.as_hri(company_prefix_length=8)
+    '3 761 30321 10910342 0'
 """
 
 from __future__ import annotations
