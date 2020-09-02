@@ -2,7 +2,7 @@
 Changes
 =======
 
-v0.5.1 (UNRELEASED)
+v0.5.1 (2020-09-03)
 ===================
 
 - Bugfix: :meth:`biip.gtin.Rcn.without_variable_measure` returns the instance
