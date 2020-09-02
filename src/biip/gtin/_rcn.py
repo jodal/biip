@@ -151,12 +151,18 @@ class Rcn(Gtin):
         reference, but does not vary with weight/price, and can thus be used
         to lookup the relevant trade item in a database or similar.
 
+        This has no effect on RCNs intended for use within a company, as
+        the semantics of those numbers vary from company to company.
+
         Returns:
             A new RCN instance with zeros in the variable measure places.
 
         Raises:
             EncodeError: If the rules for variable measures in the region are unknown.
         """
+        if self.usage == RcnUsage.COMPANY:
+            return self
+
         if self.region in (
             RcnRegion.BALTICS,
             RcnRegion.NORWAY,

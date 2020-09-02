@@ -181,10 +181,14 @@ def test_region_sweden(
 @pytest.mark.parametrize(
     "value, rcn_region, expected",
     [
+        # Geopgraphical RCNs: Strip variable measure if we know how.
         ("2311111112345", RcnRegion.BALTICS, "2311111100007"),
         ("2011122912346", RcnRegion.GREAT_BRITAIN, "2011122000005"),
         ("2302148210869", RcnRegion.NORWAY, "2302148200006"),
         ("2088060112343", RcnRegion.SWEDEN, "2088060100005"),
+        # Company RCNs: Return as is, as the data is opaque.
+        ("00012348", RcnRegion.NORWAY, "00012348"),
+        ("0041234567891", RcnRegion.NORWAY, "0041234567891"),
     ],
 )
 def test_without_variable_measure(
