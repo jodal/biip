@@ -457,7 +457,7 @@ as this character cannot legally be a part of the payload in Element Strings.
 If we configure the barcode scanner to use an alternative separator character,
 we also need to tell Biip what character to expect::
 
-    >>> result = biip.parse("0107032069804988100329|15210525", separator_char="|")
+    >>> result = biip.parse("0107032069804988100329|15210525", separator_chars=["|"])
     >>> result.gs1_message.as_hri()
     '(01)07032069804988(10)0329(15)210525'
 

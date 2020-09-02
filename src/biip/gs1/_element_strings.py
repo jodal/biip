@@ -7,10 +7,10 @@ import datetime
 import re
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import List, Optional, Type
+from typing import Iterable, List, Optional, Type
 
 from biip import ParseError
-from biip.gs1 import DEFAULT_SEPARATOR_CHAR, GS1ApplicationIdentifier
+from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1ApplicationIdentifier
 from biip.gtin import Gtin, RcnRegion
 from biip.sscc import Sscc
 
@@ -75,7 +75,7 @@ class GS1ElementString:
         value: str,
         *,
         rcn_region: Optional[RcnRegion] = None,
-        separator_char: str = DEFAULT_SEPARATOR_CHAR,
+        separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
     ) -> GS1ElementString:
         """Extract the first GS1 Element String from the given value.
 
@@ -85,9 +85,9 @@ class GS1ElementString:
             rcn_region: The geographical region whose rules should be used to
                 interpret Restricted Circulation Numbers (RCN).
                 Needed to extract e.g. variable weight/price from GTIN.
-            separator_char: Character used in place of the FNC1 symbol.
+            separator_chars: Characters used in place of the FNC1 symbol.
                 Defaults to `<GS>` (ASCII value 29).
-                If variable-length fields are not terminated with this
+                If variable-length fields are not terminated with a separator
                 character, the parser might greedily consume later fields.
 
         Returns:
@@ -97,11 +97,16 @@ class GS1ElementString:
             ValueError: If the ``separator_char`` isn't exactly 1 character long.
             ParseError: If the parsing fails.
         """
-        if len(separator_char) != 1:
-            raise ValueError("separator_char must be exactly 1 character long.")
+        if any(len(char) != 1 for char in separator_chars):
+            raise ValueError(
+                "All separator characters must be exactly 1 character long, "
+                f"got {list(separator_chars)!r}."
+            )
 
         ai = GS1ApplicationIdentifier.extract(value)
-        value = value.split(separator_char, maxsplit=1)[0]
+
+        for separator_char in separator_chars:
+            value = value.split(separator_char, maxsplit=1)[0]
 
         pattern = ai.pattern[:-1] if ai.pattern.endswith("$") else ai.pattern
         matches = re.match(pattern, value)

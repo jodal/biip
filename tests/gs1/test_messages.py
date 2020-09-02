@@ -1,11 +1,11 @@
 from datetime import date
-from typing import List
+from typing import Iterable, List
 
 import pytest
 
 from biip import ParseError
 from biip.gs1 import (
-    DEFAULT_SEPARATOR_CHAR,
+    DEFAULT_SEPARATOR_CHARS,
     GS1ApplicationIdentifier,
     GS1ElementString,
     GS1Message,
@@ -102,53 +102,60 @@ def test_parse(value: str, expected: GS1Message) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, separator_char, expected_hri",
+    "value, separator_chars, expected_hri",
     [
         (
             # Variable-length lot number field last, all OK.
             "010703206980498815210526100329",
-            DEFAULT_SEPARATOR_CHAR,
+            DEFAULT_SEPARATOR_CHARS,
             "(01)07032069804988(15)210526(10)0329",
         ),
         (
             # Variable-length lot number field in the middle, consuming the
             # best before date field at the end.
             "010703206980498810032915210526",
-            DEFAULT_SEPARATOR_CHAR,
+            DEFAULT_SEPARATOR_CHARS,
             "(01)07032069804988(10)032915210526",
         ),
         (
             # Variable-length lot number field in the middle, end marked with
             # default separator character.
             "0107032069804988100329\x1d15210526",
-            DEFAULT_SEPARATOR_CHAR,
+            DEFAULT_SEPARATOR_CHARS,
             "(01)07032069804988(10)0329(15)210526",
         ),
         (
             # Variable-length lot number field in the middle, end marked with
             # custom separator character.
             "0107032069804988100329|15210526",
-            "|",
+            ["|"],
             "(01)07032069804988(10)0329(15)210526",
+        ),
+        (
+            # Unrealistic corner case just to exercise the code:
+            # Two variable-length fields marked with different separators
+            "0107032069804988100329|2112345\x1d15210526",
+            ["|"] + list(DEFAULT_SEPARATOR_CHARS),
+            "(01)07032069804988(10)0329(21)12345(15)210526",
         ),
     ],
 )
 def test_parse_with_separator_char(
-    value: str, separator_char: str, expected_hri: str
+    value: str, separator_chars: Iterable[str], expected_hri: str
 ) -> None:
     assert (
-        GS1Message.parse(value, separator_char=separator_char).as_hri()
+        GS1Message.parse(value, separator_chars=separator_chars).as_hri()
         == expected_hri
     )
 
 
 def test_parse_with_too_long_separator_char_fails() -> None:
     with pytest.raises(ValueError) as exc_info:
-        GS1Message.parse("10222--15210526", separator_char="--")
+        GS1Message.parse("10222--15210526", separator_chars=["--"])
 
     assert (
         str(exc_info.value)
-        == "separator_char must be exactly 1 character long."
+        == "All separator characters must be exactly 1 character long, got ['--']."
     )
 
 
