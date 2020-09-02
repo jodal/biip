@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Optional, Type, Union
+from typing import Iterable, List, Optional, Type, Union
 
 from biip import ParseError
-from biip.gs1 import DEFAULT_SEPARATOR_CHAR, GS1Message, GS1Symbology
+from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1Message, GS1Symbology
 from biip.gtin import Gtin, RcnRegion
 from biip.sscc import Sscc
 from biip.symbology import SymbologyIdentifier
@@ -19,7 +19,7 @@ def parse(
     value: str,
     *,
     rcn_region: Optional[RcnRegion] = None,
-    separator_char: str = DEFAULT_SEPARATOR_CHAR,
+    separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
 ) -> ParseResult:
     """Identify data format and parse data.
 
@@ -34,11 +34,11 @@ def parse(
         rcn_region: The geographical region whose rules should be used to
             interpret Restricted Circulation Numbers (RCN).
             Needed to extract e.g. variable weight/price from GTIN.
-        separator_char: Character used in place of the FNC1 symbol.
+        separator_chars: Characters used in place of the FNC1 symbol.
             Defaults to `<GS>` (ASCII value 29).
             If variable-length fields in the middle of the message are
-            not terminated with this character, the parser might greedily
-            consume the rest of the message.
+            not terminated with a separator character, the parser might
+            greedily consume the rest of the message.
 
     Returns:
         A data class depending upon what type of data is parsed.
@@ -89,7 +89,9 @@ def parse(
         if parser == GS1Message:
             try:
                 result.gs1_message = GS1Message.parse(
-                    value, rcn_region=rcn_region, separator_char=separator_char
+                    value,
+                    rcn_region=rcn_region,
+                    separator_chars=separator_chars,
                 )
             except ParseError as exc:
                 result.gs1_message_error = str(exc)

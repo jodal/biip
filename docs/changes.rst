@@ -2,6 +2,12 @@
 Changes
 =======
 
+v0.5.0 (UNRELEASED)
+===================
+
+- **Breaking change:** Change argument `separator_char` to `separator_chars` in
+  plural, accepting an iterable of multiple characters.
+
 v0.4.0 (2020-08-31)
 ===================
 

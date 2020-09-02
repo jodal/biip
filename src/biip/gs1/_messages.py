@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Optional, Type, Union
+from typing import Iterable, List, Optional, Type, Union
 
 from biip import ParseError
 from biip.gs1 import (
-    DEFAULT_SEPARATOR_CHAR,
+    DEFAULT_SEPARATOR_CHARS,
     GS1ApplicationIdentifier,
     GS1ElementString,
 )
@@ -36,7 +36,7 @@ class GS1Message:
         value: str,
         *,
         rcn_region: Optional[RcnRegion] = None,
-        separator_char: str = DEFAULT_SEPARATOR_CHAR,
+        separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
     ) -> GS1Message:
         """Parse a string from a barcode scan as a GS1 message with AIs.
 
@@ -45,11 +45,11 @@ class GS1Message:
             rcn_region: The geographical region whose rules should be used to
                 interpret Restricted Circulation Numbers (RCN).
                 Needed to extract e.g. variable weight/price from GTIN.
-            separator_char: Character used in place of the FNC1 symbol.
+            separator_chars: Characters used in place of the FNC1 symbol.
                 Defaults to `<GS>` (ASCII value 29).
                 If variable-length fields in the middle of the message are
-                not terminated with this character, the parser might greedily
-                consume the rest of the message.
+                not terminated with a separator character, the parser might
+                greedily consume the rest of the message.
 
         Returns:
             A message object with one or more element strings.
@@ -63,16 +63,17 @@ class GS1Message:
 
         while rest:
             element_string = GS1ElementString.extract(
-                rest, rcn_region=rcn_region, separator_char=separator_char
+                rest, rcn_region=rcn_region, separator_chars=separator_chars
             )
             element_strings.append(element_string)
 
             rest = rest[len(element_string) :]
 
-            if rest.startswith(separator_char):
+            if rest.startswith(tuple(separator_chars)):
                 if element_string.ai.fnc1_required:
                     rest = rest[1:]
                 else:
+                    separator_char = rest[0]
                     raise ParseError(
                         f"Element String {element_string.as_hri()!r} has fixed length "
                         "and should not end with a separator character. "

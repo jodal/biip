@@ -342,7 +342,7 @@ def test_parse_strips_symbology_identifier() -> None:
 
 
 def test_parse_with_separator_char() -> None:
-    result = parse("101313|15210526", separator_char="|")
+    result = parse("101313|15210526", separator_chars=["|"])
 
     assert result.gs1_message is not None
     assert result.gs1_message.as_hri() == "(10)1313(15)210526"

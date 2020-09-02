@@ -43,12 +43,14 @@ Example:
 
 from __future__ import annotations
 
+from typing import Tuple
+
 
 #: The default separator character is <GS>, ASCII value 29.
 #:
 #: References:
 #:   GS1 General Specifications, section 7.8.3.
-DEFAULT_SEPARATOR_CHAR = "\x1d"
+DEFAULT_SEPARATOR_CHARS: Tuple[str] = ("\x1d",)
 
 
 from biip.gs1._symbology import GS1Symbology  # noqa
