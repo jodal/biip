@@ -2,6 +2,13 @@
 Changes
 =======
 
+v0.5.1 (UNRELEASED)
+===================
+
+- Bugfix: :meth:`biip.gtin.Rcn.without_variable_measure` returns the instance
+  unchanged for RCNs intended for usage within a company. Previously, this
+  crashed as :attr:`~biip.gtin.Rcn.region` was unset for company RCNs.
+
 v0.5.0 (2020-09-03)
 ===================
 
