@@ -2,7 +2,7 @@
 Changes
 =======
 
-v0.5.0 (UNRELEASED)
+v0.5.0 (2020-09-03)
 ===================
 
 - **Breaking change:** Change argument `separator_char` to `separator_chars` in
