@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 
 import requests
 
-from biip.gs1_ai import GS1ApplicationIdentifier
+from biip.gs1 import GS1ApplicationIdentifier
 
 
 AI_URL = "https://www.gs1.org/standards/barcodes/application-identifiers"
