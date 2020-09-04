@@ -93,6 +93,9 @@ class Gtin:
             packaging_level = int(stripped_value[0])
             value_without_packaging_level = stripped_value[1:]
             prefix = GS1Prefix.extract(value_without_packaging_level)
+        elif gtin_format == GtinFormat.GTIN_12:
+            # Add a zero to convert U.P.C. Company Prefix to GS1 Company Prefix
+            prefix = GS1Prefix.extract(stripped_value.zfill(13))
         elif gtin_format == GtinFormat.GTIN_8:
             prefix = GS1Prefix.extract(stripped_value.zfill(12))
         else:

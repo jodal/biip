@@ -88,20 +88,20 @@ def test_parse_gtin_8_with_leading_zeros(value: str) -> None:
     "value",
     [
         # GTIN-12
-        "123601057072",
+        "614141000036",
         # 0-padded to GTIN-13
-        "0123601057072",
+        "0614141000036",
         # 0-padded to GTIN-14
-        "00123601057072",
+        "00614141000036",
     ],
 )
 def test_parse_gtin_12_without_leading_zero(value: str) -> None:
     assert Gtin.parse(value) == Gtin(
         value=value,
         format=GtinFormat.GTIN_12,
-        prefix=GS1Prefix(value="123", usage="GS1 US"),
-        payload="12360105707",
-        check_digit=2,
+        prefix=GS1Prefix(value="061", usage="GS1 US"),
+        payload="61414100003",
+        check_digit=6,
     )
 
 
@@ -120,7 +120,7 @@ def test_parse_gtin_12_with_1_leading_zero(value: str) -> None:
     assert Gtin.parse(value) == Gtin(
         value=value,
         format=GtinFormat.GTIN_12,
-        prefix=GS1Prefix(value="036", usage="GS1 US"),
+        prefix=GS1Prefix(value="003", usage="GS1 US"),
         payload="03600029145",
         check_digit=2,
     )
@@ -141,7 +141,7 @@ def test_parse_gtin_12_with_2_leading_zero(value: str) -> None:
     assert Gtin.parse(value) == Gtin(
         value=value,
         format=GtinFormat.GTIN_12,
-        prefix=GS1Prefix(value="006", usage="GS1 US"),
+        prefix=GS1Prefix(value="0006", usage="GS1 US"),
         payload="00600029145",
         check_digit=5,
     )
@@ -162,7 +162,7 @@ def test_parse_gtin_12_with_3_leading_zero(value: str) -> None:
     assert Gtin.parse(value) == Gtin(
         value=value,
         format=GtinFormat.GTIN_12,
-        prefix=GS1Prefix(value="0009", usage="GS1 US"),
+        prefix=GS1Prefix(value="00009", usage="GS1 US"),
         payload="00090291451",
         check_digit=1,
     )

@@ -16,12 +16,10 @@ from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
         ("00011112", GtinFormat.GTIN_8, RcnUsage.COMPANY),
         ("00099998", GtinFormat.GTIN_8, RcnUsage.COMPANY),
         # RCN-12
-        ("020111111112", GtinFormat.GTIN_12, RcnUsage.GEOGRAPHICAL),
-        ("029111111115", GtinFormat.GTIN_12, RcnUsage.GEOGRAPHICAL),
-        ("040111111110", GtinFormat.GTIN_12, RcnUsage.COMPANY),
-        ("049111111113", GtinFormat.GTIN_12, RcnUsage.COMPANY),
-        ("200111111118", GtinFormat.GTIN_12, RcnUsage.GEOGRAPHICAL),
-        ("299111111112", GtinFormat.GTIN_12, RcnUsage.GEOGRAPHICAL),
+        ("201111111115", GtinFormat.GTIN_12, RcnUsage.GEOGRAPHICAL),
+        ("291111111116", GtinFormat.GTIN_12, RcnUsage.GEOGRAPHICAL),
+        ("401111111119", GtinFormat.GTIN_12, RcnUsage.COMPANY),
+        ("491111111110", GtinFormat.GTIN_12, RcnUsage.COMPANY),
         # RCN-13
         ("2001111111119", GtinFormat.GTIN_13, RcnUsage.GEOGRAPHICAL),
         ("2991111111113", GtinFormat.GTIN_13, RcnUsage.GEOGRAPHICAL),
@@ -188,7 +186,7 @@ def test_region_sweden(
         ("2088060112343", RcnRegion.SWEDEN, "2088060100005"),
         # Company RCNs: Return as is, as the data is opaque.
         ("00012348", RcnRegion.NORWAY, "00012348"),
-        ("0041234567891", RcnRegion.NORWAY, "0041234567891"),
+        ("0412345678903", RcnRegion.NORWAY, "0412345678903"),
     ],
 )
 def test_without_variable_measure(
