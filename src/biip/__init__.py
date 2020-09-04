@@ -33,9 +33,9 @@ Example:
     Traceback (most recent call last):
         ...
     biip._exceptions.ParseError: Failed to parse '123':
-    - Failed to parse '123' as GTIN: Expected 8, 12, 13, or 14 digits, got 3.
-    - Failed to parse '123' as SSCC: Expected 18 digits, got 3.
-    - Failed to match '123' with GS1 AI (12) pattern '^12(\d{6})$'.
+    - GTIN: Failed to parse '123' as GTIN: Expected 8, 12, 13, or 14 digits, got 3.
+    - SSCC: Failed to parse '123' as SSCC: Expected 18 digits, got 3.
+    - GS1: Failed to match '123' with GS1 AI (12) pattern '^12(\d{6})$'.
 """
 
 from __future__ import annotations

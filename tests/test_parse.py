@@ -354,7 +354,8 @@ def test_parse_invalid_data() -> None:
 
     assert str(exc_info.value) == (
         "Failed to parse 'abc':\n"
-        "- Failed to parse 'abc' as GTIN: Expected 8, 12, 13, or 14 digits, got 3.\n"
-        "- Failed to parse 'abc' as SSCC: Expected 18 digits, got 3.\n"
-        "- Failed to get GS1 Application Identifier from 'abc'."
+        "- GTIN: Failed to parse 'abc' as GTIN: "
+        "Expected 8, 12, 13, or 14 digits, got 3.\n"
+        "- SSCC: Failed to parse 'abc' as SSCC: Expected 18 digits, got 3.\n"
+        "- GS1: Failed to get GS1 Application Identifier from 'abc'."
     )

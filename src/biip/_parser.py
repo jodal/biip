@@ -154,11 +154,11 @@ class ParseResult:
 
     def _get_errors_list(self: ParseResult) -> str:
         return "\n".join(
-            f"- {error}"
-            for error in [
-                self.gtin_error,
-                self.sscc_error,
-                self.gs1_message_error,
+            f"- {parser_name}: {error}"
+            for parser_name, error in [
+                ("GTIN", self.gtin_error),
+                ("SSCC", self.sscc_error),
+                ("GS1", self.gs1_message_error),
             ]
             if error is not None
         )
