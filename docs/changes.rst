@@ -2,6 +2,13 @@
 Changes
 =======
 
+v0.5.2 (UNRELEASED)
+===================
+
+- Bugfix: Add zero in front of GTIN-12 before extracting GS1 Prefix.
+  GTIN-12s start with U.P.C. Company Prefixes, which have to be padded with a
+  zero in front to convert them to valid GS1 Company Prefixes.
+
 v0.5.1 (2020-09-03)
 ===================
 

@@ -53,7 +53,7 @@ from biip.symbology import Symbology, SymbologyIdentifier
                 gtin=Gtin(
                     value="123601057072",
                     format=GtinFormat.GTIN_12,
-                    prefix=GS1Prefix(value="123", usage="GS1 US"),
+                    prefix=GS1Prefix(value="012", usage="GS1 US"),
                     payload="12360105707",
                     check_digit=2,
                 ),
