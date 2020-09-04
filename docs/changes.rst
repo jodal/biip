@@ -9,6 +9,9 @@ v0.5.2 (UNRELEASED)
   GTIN-12s start with U.P.C. Company Prefixes, which have to be padded with a
   zero in front to convert them to valid GS1 Company Prefixes.
 
+- Change the error message in the top level parser's :class:`~biip.ParseError`
+  to include the name of data type we failed to parse.
+
 v0.5.1 (2020-09-03)
 ===================
 
