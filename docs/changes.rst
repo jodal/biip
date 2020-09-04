@@ -2,7 +2,7 @@
 Changes
 =======
 
-v0.5.2 (UNRELEASED)
+v0.5.2 (2020-09-04)
 ===================
 
 - Bugfix: Add zero in front of GTIN-12 before extracting GS1 Prefix.
