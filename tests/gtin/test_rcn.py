@@ -127,7 +127,9 @@ def test_region_great_britain_fails_with_invalid_price_check_digit() -> None:
     "value, weight, price, money",
     [
         # Norvegia 1kg
-        ("2302148210869", Decimal("1.086"), None, None)
+        ("2302148210869", Decimal("1.086"), None, None),
+        # Stange kyllingbryst
+        ("2368091402263", Decimal("0.226"), None, None),
     ],
 )
 def test_region_norway(
