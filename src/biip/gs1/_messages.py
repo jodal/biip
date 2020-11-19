@@ -137,7 +137,7 @@ class GS1Message:
             ai: AI instance or string to match against the start of the
                 Element String's AI.
             data_title: String to find anywhere in the Element String's AI
-                data title..
+                data title.
 
         Returns:
             The first matching Element String in the message.
