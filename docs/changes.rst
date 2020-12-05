@@ -2,6 +2,11 @@
 Changes
 =======
 
+v0.5.3 (UNRELEASED)
+===================
+
+- Add Python 3.9 to the test matrix.
+
 v0.5.2 (2020-09-04)
 ===================
 

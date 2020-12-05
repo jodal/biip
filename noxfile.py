@@ -7,7 +7,7 @@ package = "biip"
 locations = ["src", "tests", "noxfile.py", "docs/conf.py"]
 
 
-@nox.session(python=["3.7", "3.8"])
+@nox.session(python=["3.7", "3.8", "3.9"])
 def tests(session):
     """Run the test suite."""
     args = session.posargs or ["--cov"]
@@ -15,7 +15,7 @@ def tests(session):
     session.run("pytest", *args)
 
 
-@nox.session(python=["3.7", "3.8"])
+@nox.session(python=["3.7", "3.8", "3.9"])
 def flake8(session):
     """Lint using flake8."""
     args = session.posargs or locations
@@ -31,7 +31,7 @@ def flake8(session):
     session.run("flake8", *args)
 
 
-@nox.session(python=["3.7", "3.8"])
+@nox.session(python=["3.7", "3.8", "3.9"])
 def mypy(session):
     """Type-check using mypy."""
     args = session.posargs or locations
@@ -39,7 +39,7 @@ def mypy(session):
     session.run("mypy", *args)
 
 
-@nox.session(python="3.8")
+@nox.session(python="3.9")
 def docs(session):
     """Build the documentation."""
     session.run("poetry", "install", "--no-dev", external=True)
@@ -47,7 +47,7 @@ def docs(session):
     session.run("sphinx-build", "docs", "docs/_build")
 
 
-@nox.session(python="3.8")
+@nox.session(python="3.9")
 def coverage(session):
     """Upload test coverage data."""
     session.install("coverage[toml]", "codecov")
