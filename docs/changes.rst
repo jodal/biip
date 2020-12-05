@@ -2,7 +2,7 @@
 Changes
 =======
 
-v0.6.0 (UNRELEASED)
+v0.6.0 (2020-12-06)
 ===================
 
 - Add Python 3.6 support, using the ``dataclasses`` backport for Python 3.6.
