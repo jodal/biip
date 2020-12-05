@@ -11,7 +11,8 @@ documentation = "https://biip.readthedocs.io"
 keywords = ["barcodes", "ean", "isbn", "gs1", "gtin", "upc"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.6.1"
+dataclasses = {version = "^0.8", python = ">=3.6,<3.7"}
 importlib_metadata = {version = ">=1.6,<4.0", python = "<3.8"}
 py-moneyed = {version = "^0.8.0", optional = true}
 
@@ -41,7 +42,7 @@ codecov = "^2.1.8"
 py-moneyed = "^0.8.0"
 
 [tool.black]
-target-version = ["py37", "py38"]
+target-version = ["py36", "py37", "py38"]
 line-length = 80
 
 [tool.coverage.paths]

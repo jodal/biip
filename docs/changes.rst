@@ -2,8 +2,10 @@
 Changes
 =======
 
-v0.5.3 (UNRELEASED)
+v0.6.0 (UNRELEASED)
 ===================
+
+- Add Python 3.6 support, using the ``dataclasses`` backport for Python 3.6.
 
 - Add Python 3.9 to the test matrix.
 
