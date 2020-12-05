@@ -16,8 +16,6 @@ Example:
     '3 761 30321 10910342 0'
 """
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 from typing import Optional, Type
 
@@ -48,7 +46,7 @@ class Sscc:
     check_digit: int
 
     @classmethod
-    def parse(cls: Type[Sscc], value: str) -> Sscc:
+    def parse(cls: Type["Sscc"], value: str) -> "Sscc":
         """Parse the given value into a :class:`Sscc` object.
 
         Args:
@@ -96,7 +94,7 @@ class Sscc:
         )
 
     def as_hri(
-        self: Sscc, *, company_prefix_length: Optional[int] = None
+        self: "Sscc", *, company_prefix_length: Optional[int] = None
     ) -> str:
         """Render as a human readable interpretation (HRI).
 

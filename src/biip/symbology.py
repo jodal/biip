@@ -22,8 +22,6 @@ References:
     ISO/IEC 15424:2008.
 """
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 from enum import Enum
 from typing import Optional, Type
@@ -135,7 +133,7 @@ class Symbology(Enum):
     #: Aztec Code
     AZTEC_CODE = "z"
 
-    def __repr__(self: Symbology) -> str:
+    def __repr__(self: "Symbology") -> str:
         """Canonical string representation of format."""
         return f"Symbology.{self.name}"
 
@@ -160,8 +158,8 @@ class SymbologyIdentifier:
 
     @classmethod
     def extract(
-        cls: Type[SymbologyIdentifier], value: str
-    ) -> SymbologyIdentifier:
+        cls: Type["SymbologyIdentifier"], value: str
+    ) -> "SymbologyIdentifier":
         """Extract the Symbology Identifier from the given value.
 
         Args:
@@ -209,10 +207,10 @@ class SymbologyIdentifier:
             gs1_symbology=gs1_symbology,
         )
 
-    def __len__(self: SymbologyIdentifier) -> int:
+    def __len__(self: "SymbologyIdentifier") -> int:
         """Get the length of the Symbology Identfier."""
         return len(self.value)
 
-    def __str__(self: SymbologyIdentifier) -> str:
+    def __str__(self: "SymbologyIdentifier") -> str:
         """Get the string representation of the Symbology Identifier."""
         return self.value
