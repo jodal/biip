@@ -1,7 +1,5 @@
 """Barcode prefixes allocated by GS1."""
 
-from __future__ import annotations
-
 import json
 import pathlib
 from dataclasses import dataclass
@@ -36,7 +34,7 @@ class GS1Prefix:
     usage: str
 
     @classmethod
-    def extract(cls: Type[GS1Prefix], value: str) -> GS1Prefix:
+    def extract(cls: Type["GS1Prefix"], value: str) -> "GS1Prefix":
         """Extract the GS1 Prefix from the given value.
 
         Args:

@@ -1,7 +1,5 @@
 """GS1 Element Strings."""
 
-from __future__ import annotations
-
 import calendar
 import datetime
 import re
@@ -71,12 +69,12 @@ class GS1ElementString:
 
     @classmethod
     def extract(
-        cls: Type[GS1ElementString],
+        cls: Type["GS1ElementString"],
         value: str,
         *,
         rcn_region: Optional[RcnRegion] = None,
         separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
-    ) -> GS1ElementString:
+    ) -> "GS1ElementString":
         """Extract the first GS1 Element String from the given value.
 
         Args:
@@ -126,20 +124,20 @@ class GS1ElementString:
         return element
 
     def _set_gtin(
-        self: GS1ElementString, *, rcn_region: Optional[RcnRegion] = None
+        self: "GS1ElementString", *, rcn_region: Optional[RcnRegion] = None
     ) -> None:
         if self.ai.ai not in ("01", "02"):
             return
 
         self.gtin = Gtin.parse(self.value, rcn_region=rcn_region)
 
-    def _set_sscc(self: GS1ElementString) -> None:
+    def _set_sscc(self: "GS1ElementString") -> None:
         if self.ai.ai != "00":
             return
 
         self.sscc = Sscc.parse(self.value)
 
-    def _set_date(self: GS1ElementString) -> None:
+    def _set_date(self: "GS1ElementString") -> None:
         if self.ai.ai not in ("11", "12", "13", "15", "16", "17"):
             return
 
@@ -150,7 +148,7 @@ class GS1ElementString:
                 f"Failed to parse GS1 AI {self.ai} date from {self.value!r}."
             )
 
-    def _set_decimal(self: GS1ElementString) -> None:
+    def _set_decimal(self: "GS1ElementString") -> None:
         variable_measure = self.ai.ai[:2] in (
             "31",
             "32",
@@ -187,11 +185,11 @@ class GS1ElementString:
             currency = moneyed.get_currency(iso=self.pattern_groups[0])
             self.money = moneyed.Money(amount=self.decimal, currency=currency)
 
-    def __len__(self: GS1ElementString) -> int:
+    def __len__(self: "GS1ElementString") -> int:
         """Get the length of the element string."""
         return len(self.ai) + len(self.value)
 
-    def as_hri(self: GS1ElementString) -> str:
+    def as_hri(self: "GS1ElementString") -> str:
         """Render as a human readable interpretation (HRI).
 
         The HRI is often printed directly below the barcode.

@@ -1,7 +1,5 @@
 """The top-level Biip parser."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 from typing import Iterable, List, Optional, Type, Union
 
@@ -20,7 +18,7 @@ def parse(
     *,
     rcn_region: Optional[RcnRegion] = None,
     separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
-) -> ParseResult:
+) -> "ParseResult":
     """Identify data format and parse data.
 
     The current strategy is:
@@ -149,10 +147,10 @@ class ParseResult:
     #: if parsing as a GS1 Message was attempted and failed.
     gs1_message_error: Optional[str] = None
 
-    def _has_result(self: ParseResult) -> bool:
+    def _has_result(self: "ParseResult") -> bool:
         return any([self.gtin, self.sscc, self.gs1_message])
 
-    def _get_errors_list(self: ParseResult) -> str:
+    def _get_errors_list(self: "ParseResult") -> str:
         return "\n".join(
             f"- {parser_name}: {error}"
             for parser_name, error in [

@@ -1,7 +1,5 @@
 """GS1 messages."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 from typing import Iterable, List, Optional, Type, Union
 
@@ -32,12 +30,12 @@ class GS1Message:
 
     @classmethod
     def parse(
-        cls: Type[GS1Message],
+        cls: Type["GS1Message"],
         value: str,
         *,
         rcn_region: Optional[RcnRegion] = None,
         separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
-    ) -> GS1Message:
+    ) -> "GS1Message":
         """Parse a string from a barcode scan as a GS1 message with AIs.
 
         Args:
@@ -82,7 +80,7 @@ class GS1Message:
 
         return cls(value=value, element_strings=element_strings)
 
-    def as_hri(self: GS1Message) -> str:
+    def as_hri(self: "GS1Message") -> str:
         """Render as a human readable interpretation (HRI).
 
         The HRI is often printed directly below barcodes.
@@ -93,7 +91,7 @@ class GS1Message:
         return "".join(es.as_hri() for es in self.element_strings)
 
     def filter(
-        self: GS1Message,
+        self: "GS1Message",
         *,
         ai: Optional[Union[str, GS1ApplicationIdentifier]] = None,
         data_title: Optional[str] = None,
@@ -126,7 +124,7 @@ class GS1Message:
         return result
 
     def get(
-        self: GS1Message,
+        self: "GS1Message",
         *,
         ai: Optional[Union[str, GS1ApplicationIdentifier]] = None,
         data_title: Optional[str] = None,

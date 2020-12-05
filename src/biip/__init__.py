@@ -38,9 +38,6 @@ Example:
     - GS1: Failed to match '123' with GS1 AI (12) pattern '^12(\d{6})$'.
 """
 
-from __future__ import annotations
-
-
 try:
     from importlib.metadata import version, PackageNotFoundError  # type: ignore
 except ImportError:  # pragma: no cover
