@@ -2,6 +2,13 @@
 Changes
 =======
 
+v0.6.1 (2020-12-07)
+===================
+
+- Fix documentation build.
+
+- Fix ``__all__`` export of :attr:`biip.DEFAULT_SEPARATOR_CHARS``.
+
 v0.6.0 (2020-12-06)
 ===================
 
