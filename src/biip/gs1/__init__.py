@@ -64,5 +64,5 @@ __all__ = [
     "GS1ApplicationIdentifier",
     "GS1Prefix",
     "GS1Symbology",
-    "DEFAULT_SEPARATOR_CHAR",
+    "DEFAULT_SEPARATOR_CHARS",
 ]
