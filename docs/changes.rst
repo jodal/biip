@@ -2,6 +2,11 @@
 Changes
 =======
 
+v0.6.2 (UNRELEASED)
+===================
+
+- Add ``py.typed`` marker file, as specified in PEP561, as Biip is fully typed.
+
 v0.6.1 (2020-12-07)
 ===================
 
