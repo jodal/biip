@@ -104,6 +104,6 @@ Please open an issue if you have and barcode parsing related needs that are not 
 
 ## License
 
-Biip is copyright 2020 Stein Magnus Jodal and contributors.
+Biip is copyright 2020-2021 Stein Magnus Jodal and contributors.
 Biip is licensed under the
 [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).
