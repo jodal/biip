@@ -217,6 +217,37 @@ def test_without_variable_measure_fails_if_rules_are_unknown() -> None:
     )
 
 
+@pytest.mark.parametrize(
+    "value, rcn_region",
+    [
+        ("baltics", RcnRegion.BALTICS),
+        ("gb", RcnRegion.GREAT_BRITAIN),
+        ("no", RcnRegion.NORWAY),
+        ("se", RcnRegion.SWEDEN),
+    ],
+)
+def test_rcn_region_can_be_specified_as_string(
+    value: str, rcn_region: RcnRegion
+) -> None:
+    rcn = Gtin.parse(
+        "2311111112345",
+        rcn_region=value,  # type: ignore
+    )
+
+    assert isinstance(rcn, Rcn)
+    assert rcn.region == rcn_region
+
+
+def test_fails_when_rcn_region_is_unknown_string() -> None:
+    with pytest.raises(ValueError) as exc_info:
+        Gtin.parse(
+            "2311111112345",
+            rcn_region="foo",  # type: ignore
+        )
+
+    assert str(exc_info.value) == "'foo' is not a valid RcnRegion"
+
+
 def test_rcn_usage_repr() -> None:
     assert repr(RcnUsage.COMPANY) == "RcnUsage.COMPANY"
 
