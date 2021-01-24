@@ -62,6 +62,9 @@ class Rcn(Gtin):
         if self.usage == RcnUsage.COMPANY:
             return
 
+        if not isinstance(region, RcnRegion):
+            region = RcnRegion(region)
+
         self.region = region
 
         if self.region in (RcnRegion.BALTICS,):

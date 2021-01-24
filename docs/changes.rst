@@ -2,6 +2,15 @@
 Changes
 =======
 
+v0.7.0 (UNRELEASED)
+===================
+
+- Support specifying `rcn_region` as a string, e.g. `"no"`, instead of
+  `RcnRegion.NORWAY`. The type annotations still expect an `RcnRegion`
+  instance, and this is the recommended way to use the API. By supporting
+  strings instead of `RcnRegion` instances, the API is a bit easier to use
+  interactively in a REPL.
+
 v0.6.2 (2021-01-19)
 ===================
 
