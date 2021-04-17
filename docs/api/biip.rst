@@ -1,0 +1,6 @@
+====
+biip
+====
+
+.. automodule:: biip
+    :members:

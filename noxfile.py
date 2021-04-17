@@ -2,7 +2,6 @@
 
 import nox
 
-
 package = "biip"
 locations = ["src", "tests", "noxfile.py", "docs/conf.py"]
 
@@ -26,7 +25,7 @@ def flake8(session):
         "flake8-black",
         "flake8-bugbear",
         "flake8-docstrings",
-        "flake8-import-order",
+        "flake8-isort",
     )
     session.run("flake8", *args)
 

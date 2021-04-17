@@ -1,9 +1,6 @@
 import pytest
 
-from biip.gs1.checksums import (
-    numeric_check_digit,
-    price_check_digit,
-)
+from biip.gs1.checksums import numeric_check_digit, price_check_digit
 
 
 def test_numeric_check_digit_with_nonnumeric_value() -> None:
@@ -52,10 +49,7 @@ def test_price_check_digit_on_values_with_wrong_length(value: str) -> None:
     with pytest.raises(ValueError) as exc_info:
         price_check_digit(value)
 
-    assert (
-        str(exc_info.value)
-        == f"Expected input of length 4 or 5, got {value!r}."
-    )
+    assert str(exc_info.value) == f"Expected input of length 4 or 5, got {value!r}."
 
 
 @pytest.mark.parametrize(

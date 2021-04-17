@@ -80,8 +80,7 @@ def test_as_hri_with_too_low_company_prefix_length() -> None:
         sscc.as_hri(company_prefix_length=6)
 
     assert (
-        str(exc_info.value)
-        == "Expected company prefix length between 7 and 10, got 6."
+        str(exc_info.value) == "Expected company prefix length between 7 and 10, got 6."
     )
 
 

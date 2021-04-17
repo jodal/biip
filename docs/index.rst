@@ -37,19 +37,32 @@ To install Biip with ``py-moneyed``, run:
     $ python3 -m pip install "biip[money]"
 
 
+Project resources
+=================
+
+- `Documentation <https://biip.readthedocs.io/>`_
+- `Source code <https://github.com/jodal/biip>`_
+- `Releases <https://github.com/jodal/biip/releases>`_
+- `Issue tracker <https://github.com/jodal/biip/issues>`_
+- `Contributors <https://github.com/jodal/biip/graphs/contributors>`_
+
+
 .. toctree::
     :maxdepth: 2
     :caption: Usage
 
     quickstart
-    api
-
 
 .. toctree::
     :maxdepth: 2
-    :caption: About
+    :caption: Reference
 
-    changes
+    api/biip
+    api/gs1
+    api/gs1-checksums
+    api/gtin
+    api/sscc
+    api/symbology
 
 
 License
@@ -58,11 +71,3 @@ License
 Biip is copyright 2020-2021 Stein Magnus Jodal and contributors.
 Biip is licensed under the
 `Apache License, Version 2.0 <https://www.apache.org/licenses/LICENSE-2.0>`_.
-
-
-Project resources
-=================
-
-- `Documentation <https://biip.readthedocs.io/>`_
-- `Source code <https://github.com/jodal/biip>`_
-- `Issue tracker <https://github.com/jodal/biip/issues>`_

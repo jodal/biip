@@ -1,9 +1,8 @@
 from decimal import Decimal
 from typing import Optional
 
-from moneyed import Money
-
 import pytest
+from moneyed import Money
 
 from biip import EncodeError, ParseError
 from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage

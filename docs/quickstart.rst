@@ -4,7 +4,7 @@ Quickstart
 
 The following examples should get you started with parsing barcode data using Biip.
 
-See the :doc:`api` for details on the API and data fields used in the examples below.
+See the API reference for details on the API and data fields used in the examples below.
 
 
 Parsing barcode data

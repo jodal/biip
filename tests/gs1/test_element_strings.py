@@ -73,9 +73,7 @@ def test_extract(value: str, expected: GS1ElementString) -> None:
         ("3100", "3100123"),
     ],
 )
-def test_extract_fails_when_not_matching_pattern(
-    ai_code: str, bad_value: str
-) -> None:
+def test_extract_fails_when_not_matching_pattern(ai_code: str, bad_value: str) -> None:
     ai = GS1ApplicationIdentifier.extract(ai_code)
 
     with pytest.raises(ParseError) as exc_info:
@@ -103,8 +101,7 @@ def test_extract_fails_with_invalid_date(ai_code: str, bad_value: str) -> None:
         GS1ElementString.extract(f"{ai_code}{bad_value}")
 
     assert (
-        str(exc_info.value)
-        == f"Failed to parse GS1 AI {ai} date from {bad_value!r}."
+        str(exc_info.value) == f"Failed to parse GS1 AI {ai} date from {bad_value!r}."
     )
 
 

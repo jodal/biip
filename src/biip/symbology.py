@@ -29,7 +29,6 @@ from typing import Optional, Type
 from biip import ParseError
 from biip.gs1 import GS1Symbology
 
-
 __all__ = [
     "SymbologyIdentifier",
     "Symbology",
@@ -157,9 +156,7 @@ class SymbologyIdentifier:
     gs1_symbology: Optional[GS1Symbology] = None
 
     @classmethod
-    def extract(
-        cls: Type["SymbologyIdentifier"], value: str
-    ) -> "SymbologyIdentifier":
+    def extract(cls: Type["SymbologyIdentifier"], value: str) -> "SymbologyIdentifier":
         """Extract the Symbology Identifier from the given value.
 
         Args:

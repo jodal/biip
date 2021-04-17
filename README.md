@@ -40,6 +40,14 @@ To install Biip with `py-moneyed`, run:
 python3 -m pip install "biip[money]"
 ```
 
+# Project resources
+
+- [Documentation](https://biip.readthedocs.io/)
+- [Source code](https://github.com/jodal/biip)
+- [Releases](https://github.com/jodal/biip/releases)
+- [Issue tracker](https://github.com/jodal/biip/issues)
+- [Contributors](https://github.com/jodal/biip/graphs/contributors)
+
 ## Development status
 
 All planned features have been implemented.
