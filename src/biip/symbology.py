@@ -156,9 +156,7 @@ class SymbologyIdentifier:
     gs1_symbology: Optional[GS1Symbology] = None
 
     @classmethod
-    def extract(
-        cls: Type["SymbologyIdentifier"], value: str
-    ) -> "SymbologyIdentifier":
+    def extract(cls: Type["SymbologyIdentifier"], value: str) -> "SymbologyIdentifier":
         """Extract the Symbology Identifier from the given value.
 
         Args:

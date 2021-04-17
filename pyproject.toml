@@ -55,7 +55,6 @@ xdoctest = "^0.15.0"
 
 [tool.black]
 target-version = ["py36", "py37", "py38"]
-line-length = 80
 
 [tool.coverage.paths]
 source = ["src"]

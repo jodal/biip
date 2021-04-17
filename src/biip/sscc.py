@@ -93,9 +93,7 @@ class Sscc:
             check_digit=check_digit,
         )
 
-    def as_hri(
-        self: "Sscc", *, company_prefix_length: Optional[int] = None
-    ) -> str:
+    def as_hri(self: "Sscc", *, company_prefix_length: Optional[int] = None) -> str:
         """Render as a human readable interpretation (HRI).
 
         The HRI is often printed directly below barcodes.
@@ -116,9 +114,7 @@ class Sscc:
 
         if company_prefix_length is None:
             data = value[len(gs1_prefix) :]
-            return (
-                f"{self.extension_digit} {gs1_prefix} {data} {self.check_digit}"
-            )
+            return f"{self.extension_digit} {gs1_prefix} {data} {self.check_digit}"
 
         if not (7 <= company_prefix_length <= 10):
             raise ValueError(

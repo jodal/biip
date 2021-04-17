@@ -144,9 +144,7 @@ class Gtin:
 
     def _as_format(self: "Gtin", gtin_format: GtinFormat) -> str:
         if self.format.length > gtin_format.length:
-            raise EncodeError(
-                f"Failed encoding {self.value!r} as {gtin_format!s}."
-            )
+            raise EncodeError(f"Failed encoding {self.value!r} as {gtin_format!s}.")
         return f"{self.payload}{self.check_digit}".zfill(gtin_format.length)
 
 

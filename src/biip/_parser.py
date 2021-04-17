@@ -54,10 +54,7 @@ def parse(
     # Select parsers
     parsers: List[ParserType] = []
     if result.symbology_identifier is not None:
-        if (
-            result.symbology_identifier.gs1_symbology
-            in GS1Symbology.with_gtin()
-        ):
+        if result.symbology_identifier.gs1_symbology in GS1Symbology.with_gtin():
             parsers.append(Gtin)
         if (
             result.symbology_identifier.gs1_symbology
@@ -110,9 +107,7 @@ def parse(
     if result._has_result():
         return result
     else:
-        raise ParseError(
-            f"Failed to parse {value!r}:\n{result._get_errors_list()}"
-        )
+        raise ParseError(f"Failed to parse {value!r}:\n{result._get_errors_list()}")
 
 
 @dataclass

@@ -4,11 +4,7 @@ from dataclasses import dataclass
 from typing import Iterable, List, Optional, Type, Union
 
 from biip import ParseError
-from biip.gs1 import (
-    DEFAULT_SEPARATOR_CHARS,
-    GS1ApplicationIdentifier,
-    GS1ElementString,
-)
+from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1ApplicationIdentifier, GS1ElementString
 from biip.gtin import RcnRegion
 
 
@@ -115,10 +111,7 @@ class GS1Message:
         for element_string in self.element_strings:
             if ai is not None and element_string.ai.ai.startswith(ai):
                 result.append(element_string)
-            elif (
-                data_title is not None
-                and data_title in element_string.ai.data_title
-            ):
+            elif data_title is not None and data_title in element_string.ai.data_title:
                 result.append(element_string)
 
         return result

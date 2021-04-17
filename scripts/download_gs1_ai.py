@@ -51,9 +51,7 @@ def parse(html_content: str) -> List[GS1ApplicationIdentifier]:
 def output(application_identifiers: List[GS1ApplicationIdentifier]) -> None:
     """Output the GS1ApplicationIdentifier objects as JSON to stdout."""
     print(
-        json.dumps(
-            [dataclasses.asdict(ai) for ai in application_identifiers], indent=2
-        )
+        json.dumps([dataclasses.asdict(ai) for ai in application_identifiers], indent=2)
     )
 
 

@@ -11,9 +11,7 @@ def test_invalid_gs1_prefix(bad_value: str) -> None:
     with pytest.raises(ParseError) as exc_info:
         GS1Prefix.extract(bad_value)
 
-    assert (
-        str(exc_info.value) == f"Failed to get GS1 Prefix from {bad_value!r}."
-    )
+    assert str(exc_info.value) == f"Failed to get GS1 Prefix from {bad_value!r}."
 
 
 @pytest.mark.parametrize(
@@ -21,9 +19,7 @@ def test_invalid_gs1_prefix(bad_value: str) -> None:
     [
         (
             "0000001999",
-            GS1Prefix(
-                value="0000001", usage="Unused to avoid collision with GTIN-8"
-            ),
+            GS1Prefix(value="0000001", usage="Unused to avoid collision with GTIN-8"),
         ),
         ("060999", GS1Prefix(value="060", usage="GS1 US")),
         ("139999", GS1Prefix(value="139", usage="GS1 US")),

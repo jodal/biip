@@ -168,10 +168,7 @@ def test_parse_fails_if_unparsed_data_left() -> None:
     with pytest.raises(ParseError) as exc_info:
         GS1Message.parse(value)
 
-    assert (
-        str(exc_info.value)
-        == "Failed to get GS1 Application Identifier from 'aaa'."
-    )
+    assert str(exc_info.value) == "Failed to get GS1 Application Identifier from 'aaa'."
 
 
 def test_parse_fails_if_fixed_length_field_ends_with_separator_char() -> None:
@@ -223,9 +220,7 @@ def test_as_hri(value: str, expected: str) -> None:
         ),
     ],
 )
-def test_filter_element_strings_by_ai(
-    value: str, ai: str, expected: List[str]
-) -> None:
+def test_filter_element_strings_by_ai(value: str, ai: str, expected: List[str]) -> None:
     matches = GS1Message.parse(value).filter(ai=ai)
 
     assert [element_string.value for element_string in matches] == expected

@@ -233,9 +233,7 @@ from biip.symbology import Symbology, SymbologyIdentifier
                             gtin=Gtin(
                                 value="05901234123457",
                                 format=GtinFormat.GTIN_13,
-                                prefix=GS1Prefix(
-                                    value="590", usage="GS1 Poland"
-                                ),
+                                prefix=GS1Prefix(value="590", usage="GS1 Poland"),
                                 payload="590123412345",
                                 check_digit=7,
                             ),
@@ -300,9 +298,7 @@ from biip.symbology import Symbology, SymbologyIdentifier
                             gtin=Gtin(
                                 value="05901234123457",
                                 format=GtinFormat.GTIN_13,
-                                prefix=GS1Prefix(
-                                    value="590", usage="GS1 Poland"
-                                ),
+                                prefix=GS1Prefix(value="590", usage="GS1 Poland"),
                                 payload="590123412345",
                                 check_digit=7,
                             ),
