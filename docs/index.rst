@@ -64,12 +64,6 @@ Project resources
     api/sscc
     api/symbology
 
-.. toctree::
-    :maxdepth: 2
-    :caption: About
-
-    changes
-
 
 License
 =======
