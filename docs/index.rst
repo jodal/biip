@@ -42,8 +42,17 @@ To install Biip with ``py-moneyed``, run:
     :caption: Usage
 
     quickstart
-    api
 
+.. toctree::
+    :maxdepth: 2
+    :caption: Reference
+
+    api/biip
+    api/gs1
+    api/gs1-checksums
+    api/gtin
+    api/sscc
+    api/symbology
 
 .. toctree::
     :maxdepth: 2
