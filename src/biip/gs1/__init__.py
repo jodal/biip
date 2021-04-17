@@ -43,20 +43,22 @@ Example:
 
 from typing import Tuple
 
-
 #: The default separator character is <GS>, ASCII value 29.
 #:
 #: References:
 #:   GS1 General Specifications, section 7.8.3.
 DEFAULT_SEPARATOR_CHARS: Tuple[str] = ("\x1d",)
 
-
-from biip.gs1._symbology import GS1Symbology  # noqa
-from biip.gs1._application_identifiers import GS1ApplicationIdentifier  # noqa
-from biip.gs1._prefixes import GS1Prefix  # noqa
-from biip.gs1._element_strings import GS1ElementString  # noqa
-from biip.gs1._messages import GS1Message  # noqa
-
+# The following must be imported in this specific order.
+from biip.gs1._symbology import GS1Symbology  # isort:skip  # noqa: E402
+from biip.gs1._application_identifiers import (  # isort:skip  # noqa: E402
+    GS1ApplicationIdentifier,
+)
+from biip.gs1._prefixes import GS1Prefix  # isort:skip  # noqa: E402
+from biip.gs1._element_strings import (  # isort:skip  # noqa: E402
+    GS1ElementString,
+)
+from biip.gs1._messages import GS1Message  # isort:skip  # noqa: E402
 
 __all__ = [
     "GS1Message",

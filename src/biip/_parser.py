@@ -9,7 +9,6 @@ from biip.gtin import Gtin, RcnRegion
 from biip.sscc import Sscc
 from biip.symbology import SymbologyIdentifier
 
-
 ParserType = Union[Type[GS1Message], Type[Gtin], Type[Sscc]]
 
 

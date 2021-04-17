@@ -29,7 +29,6 @@ from typing import Optional, Type
 from biip import ParseError
 from biip.gs1 import GS1Symbology
 
-
 __all__ = [
     "SymbologyIdentifier",
     "Symbology",

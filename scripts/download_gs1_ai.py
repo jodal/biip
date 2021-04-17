@@ -4,12 +4,10 @@ import dataclasses
 import json
 from typing import List
 
+import requests
 from bs4 import BeautifulSoup
 
-import requests
-
 from biip.gs1 import GS1ApplicationIdentifier
-
 
 AI_URL = "https://www.gs1.org/standards/barcodes/application-identifiers"
 

@@ -1,9 +1,6 @@
 import pytest
 
-from biip.gs1.checksums import (
-    numeric_check_digit,
-    price_check_digit,
-)
+from biip.gs1.checksums import numeric_check_digit, price_check_digit
 
 
 def test_numeric_check_digit_with_nonnumeric_value() -> None:
