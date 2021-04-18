@@ -19,12 +19,12 @@ def main() -> None:
     output(application_identifiers)
 
 
-def download(url: str) -> str:
+def download(url: str) -> bytes:
     """Download the data from GS1."""
     return requests.get(url).content
 
 
-def parse(html_content: str) -> List[GS1ApplicationIdentifier]:
+def parse(html_content: bytes) -> List[GS1ApplicationIdentifier]:
     """Parse the data from HTML to GS1ApplicationIdentifier objects."""
     result = []
 
