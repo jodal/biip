@@ -45,6 +45,7 @@ Project resources
 - `Releases <https://github.com/jodal/biip/releases>`_
 - `Issue tracker <https://github.com/jodal/biip/issues>`_
 - `Contributors <https://github.com/jodal/biip/graphs/contributors>`_
+- `Users <https://github.com/jodal/biip/wiki/Users>`_
 
 
 .. toctree::

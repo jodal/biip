@@ -47,6 +47,7 @@ python3 -m pip install "biip[money]"
 - [Releases](https://github.com/jodal/biip/releases)
 - [Issue tracker](https://github.com/jodal/biip/issues)
 - [Contributors](https://github.com/jodal/biip/graphs/contributors)
+- [Users](https://github.com/jodal/biip/wiki/Users)
 
 ## Development status
 
