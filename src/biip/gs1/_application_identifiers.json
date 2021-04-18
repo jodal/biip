@@ -17,7 +17,7 @@
   },
   {
     "ai": "02",
-    "description": "GTIN of contained trade items",
+    "description": "Global Trade Item Number (GTIN) of contained trade items",
     "data_title": "CONTENT",
     "fnc1_required": false,
     "format": "N2+N14",
@@ -169,7 +169,7 @@
   },
   {
     "ai": "254",
-    "description": "GLN extension component",
+    "description": "Global Location Number (GLN) extension component",
     "data_title": "GLN EXTENSION COMPONENT",
     "fnc1_required": true,
     "format": "N3+X..20",
@@ -3096,6 +3096,86 @@
     "pattern": "^3943(\\d{4})$"
   },
   {
+    "ai": "3950",
+    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
+    "data_title": "PRICE/UoM",
+    "fnc1_required": true,
+    "format": "N4+N6",
+    "pattern": "^3950(\\d{0,6})$"
+  },
+  {
+    "ai": "3951",
+    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
+    "data_title": "PRICE/UoM",
+    "fnc1_required": true,
+    "format": "N4+N6",
+    "pattern": "^3951(\\d{0,6})$"
+  },
+  {
+    "ai": "3952",
+    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
+    "data_title": "PRICE/UoM",
+    "fnc1_required": true,
+    "format": "N4+N6",
+    "pattern": "^3952(\\d{0,6})$"
+  },
+  {
+    "ai": "3953",
+    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
+    "data_title": "PRICE/UoM",
+    "fnc1_required": true,
+    "format": "N4+N6",
+    "pattern": "^3953(\\d{0,6})$"
+  },
+  {
+    "ai": "3954",
+    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
+    "data_title": "PRICE/UoM",
+    "fnc1_required": true,
+    "format": "N4+N6",
+    "pattern": "^3954(\\d{0,6})$"
+  },
+  {
+    "ai": "3955",
+    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
+    "data_title": "PRICE/UoM",
+    "fnc1_required": true,
+    "format": "N4+N6",
+    "pattern": "^3955(\\d{0,6})$"
+  },
+  {
+    "ai": "3956",
+    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
+    "data_title": "PRICE/UoM",
+    "fnc1_required": true,
+    "format": "N4+N6",
+    "pattern": "^3956(\\d{0,6})$"
+  },
+  {
+    "ai": "3957",
+    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
+    "data_title": "PRICE/UoM",
+    "fnc1_required": true,
+    "format": "N4+N6",
+    "pattern": "^3957(\\d{0,6})$"
+  },
+  {
+    "ai": "3958",
+    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
+    "data_title": "PRICE/UoM",
+    "fnc1_required": true,
+    "format": "N4+N6",
+    "pattern": "^3958(\\d{0,6})$"
+  },
+  {
+    "ai": "3959",
+    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
+    "data_title": "PRICE/UoM",
+    "fnc1_required": true,
+    "format": "N4+N6",
+    "pattern": "^3959(\\d{0,6})$"
+  },
+  {
     "ai": "400",
     "description": "Customers purchase order number",
     "data_title": "ORDER NUMBER",
@@ -3129,7 +3209,7 @@
   },
   {
     "ai": "410",
-    "description": "Ship to - Deliver to Global Location Number",
+    "description": "Ship to / Deliver to Global Location Number (GLN)",
     "data_title": "SHIP TO LOC",
     "fnc1_required": false,
     "format": "N3+N13",
@@ -3137,7 +3217,7 @@
   },
   {
     "ai": "411",
-    "description": "Bill to - Invoice to Global Location Number",
+    "description": "Bill to / Invoice to Global Location Number (GLN)",
     "data_title": "BILL TO",
     "fnc1_required": false,
     "format": "N3+N13",
@@ -3145,7 +3225,7 @@
   },
   {
     "ai": "412",
-    "description": "Purchased from Global Location Number",
+    "description": "Purchased from Global Location Number (GLN)",
     "data_title": "PURCHASE FROM",
     "fnc1_required": false,
     "format": "N3+N13",
@@ -3153,7 +3233,7 @@
   },
   {
     "ai": "413",
-    "description": "Ship for - Deliver for - Forward to Global Location Number",
+    "description": "Ship for / Deliver for - Forward to Global Location Number (GLN)",
     "data_title": "SHIP FOR LOC",
     "fnc1_required": false,
     "format": "N3+N13",
@@ -3161,7 +3241,7 @@
   },
   {
     "ai": "414",
-    "description": "Identification of a physical location - Global Location Number",
+    "description": "Identification of a physical location - Global Location Number (GLN)",
     "data_title": "LOC No",
     "fnc1_required": false,
     "format": "N3+N13",
@@ -3169,7 +3249,7 @@
   },
   {
     "ai": "415",
-    "description": "Global Location Number of the invoicing party",
+    "description": "Global Location Number (GLN) of the invoicing party",
     "data_title": "PAY TO",
     "fnc1_required": false,
     "format": "N3+N13",
@@ -3177,7 +3257,7 @@
   },
   {
     "ai": "416",
-    "description": "GLN of the production or service location",
+    "description": "Global Location Number (GLN) of the production or service location",
     "data_title": "PROD/SERV LOC",
     "fnc1_required": false,
     "format": "N3+N13",
@@ -3185,7 +3265,7 @@
   },
   {
     "ai": "417",
-    "description": "Party GLN",
+    "description": "Party Global Location Number (GLN)",
     "data_title": "PARTY",
     "fnc1_required": false,
     "format": "N3+N13",
@@ -3193,7 +3273,7 @@
   },
   {
     "ai": "420",
-    "description": "Ship to - Deliver to postal code within a single postal authority",
+    "description": "Ship to / Deliver to postal code within a single postal authority",
     "data_title": "SHIP TO POST",
     "fnc1_required": true,
     "format": "N3+X..20",
@@ -3201,7 +3281,7 @@
   },
   {
     "ai": "421",
-    "description": "Ship to - Deliver to postal code with ISO country code",
+    "description": "Ship to / Deliver to postal code with ISO country code",
     "data_title": "SHIP TO POST",
     "fnc1_required": true,
     "format": "N3+N3+X..9",
@@ -3254,6 +3334,214 @@
     "fnc1_required": true,
     "format": "N3+X..3",
     "pattern": "^427([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,3})$"
+  },
+  {
+    "ai": "4300",
+    "description": "Ship-to / Deliver-to company name",
+    "data_title": "SHIP TO COMP",
+    "fnc1_required": true,
+    "format": "N4+X..35",
+    "pattern": "^4300([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,35})$"
+  },
+  {
+    "ai": "4301",
+    "description": "Ship-to / Deliver-to contact",
+    "data_title": "SHIP TO NAME",
+    "fnc1_required": true,
+    "format": "N4+X..35",
+    "pattern": "^4301([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,35})$"
+  },
+  {
+    "ai": "4302",
+    "description": "Ship-to / Deliver-to address line 1",
+    "data_title": "SHIP TO ADD1",
+    "fnc1_required": true,
+    "format": "N4+X..70",
+    "pattern": "^4302([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+  },
+  {
+    "ai": "4303",
+    "description": "Ship-to / Deliver-to address line 2",
+    "data_title": "SHIP TO ADD2",
+    "fnc1_required": true,
+    "format": "N4+X..70",
+    "pattern": "^4303([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+  },
+  {
+    "ai": "4304",
+    "description": "Ship-to / Deliver-to suburb",
+    "data_title": "SHIP TO SUB",
+    "fnc1_required": true,
+    "format": "N4+X..70",
+    "pattern": "^4304([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+  },
+  {
+    "ai": "4305",
+    "description": "Ship-to / Deliver-to locality",
+    "data_title": "SHIP TO LOC",
+    "fnc1_required": true,
+    "format": "N4+X..70",
+    "pattern": "^4305([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+  },
+  {
+    "ai": "4306",
+    "description": "Ship-to / Deliver-to region",
+    "data_title": "SHIP TO REG",
+    "fnc1_required": true,
+    "format": "N4+X..70",
+    "pattern": "^4306([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+  },
+  {
+    "ai": "4307",
+    "description": "Ship-to / Deliver-to country code",
+    "data_title": "SHIP TO COUNTRY",
+    "fnc1_required": true,
+    "format": "N4+X2",
+    "pattern": "^4307([A-Z]{2})$"
+  },
+  {
+    "ai": "4308",
+    "description": "Ship-to / Deliver-to telephone number",
+    "data_title": "SHIP TO PHONE",
+    "fnc1_required": true,
+    "format": "N4+X..30",
+    "pattern": "^4308([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+  },
+  {
+    "ai": "4310",
+    "description": "Return-to company name",
+    "data_title": "RTN TO COMP",
+    "fnc1_required": true,
+    "format": "N4+X..35",
+    "pattern": "^4310([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,35})$"
+  },
+  {
+    "ai": "4311",
+    "description": "Return-to contact",
+    "data_title": "RTN TO NAME",
+    "fnc1_required": true,
+    "format": "N4+X..35",
+    "pattern": "^4311([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,35})$"
+  },
+  {
+    "ai": "4312",
+    "description": "Return-to address line 1",
+    "data_title": "RTN TO ADD1",
+    "fnc1_required": true,
+    "format": "N4+X..70",
+    "pattern": "^4312([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+  },
+  {
+    "ai": "4313",
+    "description": "Return-to address line 2",
+    "data_title": "RTN TO ADD2",
+    "fnc1_required": true,
+    "format": "N4+X..70",
+    "pattern": "^4313([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+  },
+  {
+    "ai": "4314",
+    "description": "Return-to suburb",
+    "data_title": "RTN TO SUB",
+    "fnc1_required": true,
+    "format": "N4+X..70",
+    "pattern": "^4314([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+  },
+  {
+    "ai": "4315",
+    "description": "Return-to locality",
+    "data_title": "RTN TO LOC",
+    "fnc1_required": true,
+    "format": "N4+X..70",
+    "pattern": "^4315([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+  },
+  {
+    "ai": "4316",
+    "description": "Return-to region",
+    "data_title": "RTN TO REG",
+    "fnc1_required": true,
+    "format": "N4+X..70",
+    "pattern": "^4316([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+  },
+  {
+    "ai": "4317",
+    "description": "Return-to country code",
+    "data_title": "RTN TO COUNTRY",
+    "fnc1_required": true,
+    "format": "N4+X2",
+    "pattern": "^4317([A-Z]{2})$"
+  },
+  {
+    "ai": "4318",
+    "description": "Return-to postal code",
+    "data_title": "RTN TO POST",
+    "fnc1_required": true,
+    "format": "N4+X..20",
+    "pattern": "^4318([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+  },
+  {
+    "ai": "4319",
+    "description": "Return-to telephone number",
+    "data_title": "RTN TO PHONE",
+    "fnc1_required": true,
+    "format": "N4+X..30",
+    "pattern": "^4319([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+  },
+  {
+    "ai": "4320",
+    "description": "Service code description",
+    "data_title": "SRV DESCRIPTION",
+    "fnc1_required": true,
+    "format": "N4+X..35",
+    "pattern": "^4320([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,35})$"
+  },
+  {
+    "ai": "4321",
+    "description": "Dangerous goods flag",
+    "data_title": "DANGEROUS GOODS",
+    "fnc1_required": true,
+    "format": "N4+N1",
+    "pattern": "^4321([01])$"
+  },
+  {
+    "ai": "4322",
+    "description": "Authority to leave",
+    "data_title": "AUTH TO LEAVE",
+    "fnc1_required": true,
+    "format": "N4+N1",
+    "pattern": "^4322([01])$"
+  },
+  {
+    "ai": "4323",
+    "description": "Signature required flag",
+    "data_title": "SIG REQUIRED",
+    "fnc1_required": true,
+    "format": "N4+N1",
+    "pattern": "^4323([01])$"
+  },
+  {
+    "ai": "4324",
+    "description": "Not before delivery date time",
+    "data_title": "NOT BEF DEL DT",
+    "fnc1_required": true,
+    "format": "N4+N10",
+    "pattern": "^4324(\\d{10})$"
+  },
+  {
+    "ai": "4325",
+    "description": "Not after delivery date time",
+    "data_title": "NOT AFT DEL DT",
+    "fnc1_required": true,
+    "format": "N4+N10",
+    "pattern": "^4325(\\d{10})$"
+  },
+  {
+    "ai": "4326",
+    "description": "Release date",
+    "data_title": "REL DATE",
+    "fnc1_required": true,
+    "format": "N4+N6",
+    "pattern": "^4326(\\d{6})$"
   },
   {
     "ai": "7001",
@@ -3625,7 +3913,7 @@
   },
   {
     "ai": "8006",
-    "description": "Identification of an individual trade item piece",
+    "description": "Identification of an individual trade item piece (ITIP)",
     "data_title": "ITIP",
     "fnc1_required": true,
     "format": "N4+N14+N2+N2",
@@ -3689,7 +3977,7 @@
   },
   {
     "ai": "8017",
-    "description": "Global Service Relation Number to identify the relationship between an organisation offering services and the provider of services",
+    "description": "Global Service Relation Number (GSRN) to identify the relationship between an organisation offering services and the provider of services",
     "data_title": "GSRN - PROVIDER",
     "fnc1_required": true,
     "format": "N4+N18",
@@ -3697,7 +3985,7 @@
   },
   {
     "ai": "8018",
-    "description": "Global Service Relation Number to identify the relationship between an organisation offering services and the recipient of services",
+    "description": "Global Service Relation Number (GSRN) to identify the relationship between an organisation offering services and the recipient of services",
     "data_title": "GSRN - RECIPIENT",
     "fnc1_required": true,
     "format": "N4+N18",
