@@ -1,6 +1,6 @@
 """Support for Global Trade Item Number (GTIN).
 
-The :mod:`biip.gtin` module contains biip's support for parsing GTIN formats.
+The :mod:`biip.gtin` module contains Biip's support for parsing GTIN formats.
 
 A GTIN is a number that uniquely identifies a trade item.
 

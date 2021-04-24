@@ -1,6 +1,6 @@
 """Support for barcode data with GS1 element strings.
 
-The :mod:`biip.gs1` module contains biip's support for parsing data
+The :mod:`biip.gs1` module contains Biip's support for parsing data
 consisting of GS1 Element Strings. Each Element String is identified by a GS1
 Application Identifier (AI) prefix.
 
