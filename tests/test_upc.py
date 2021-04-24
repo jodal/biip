@@ -28,7 +28,7 @@ def test_parse_upc_a() -> None:
                 format=UpcFormat.UPC_E,
                 payload="0425261",
                 number_system_digit=0,
-                check_digit=0,
+                check_digit=4,
             ),
         ),
         (
@@ -38,17 +38,17 @@ def test_parse_upc_a() -> None:
                 format=UpcFormat.UPC_E,
                 payload="1425261",
                 number_system_digit=1,
-                check_digit=7,
+                check_digit=1,
             ),
         ),
         (
-            "14252617",  # Length is 8: Explicit number system 1 and check digit.
+            "14252611",  # Length is 8: Explicit number system 1 and check digit.
             Upc(
-                value="14252617",
+                value="14252611",
                 format=UpcFormat.UPC_E,
                 payload="1425261",
                 number_system_digit=1,
-                check_digit=7,
+                check_digit=1,
             ),
         ),
     ],
@@ -84,6 +84,16 @@ def test_parse_upc_a_with_invalid_check_digit() -> None:
     assert (
         str(exc_info.value)
         == "Invalid UPC-A check digit for '042100005263': Expected 4, got 3."
+    )
+
+
+def test_parse_upc_e_with_invalid_check_digit() -> None:
+    with pytest.raises(ParseError) as exc_info:
+        Upc.parse("04252613")
+
+    assert (
+        str(exc_info.value)
+        == "Invalid UPC-E check digit for '04252613': Expected 4, got 3."
     )
 
 
@@ -127,15 +137,15 @@ def test_as_upc_a(value: str, expected: str) -> None:
     [
         (  # 6-digit UPC-E, implicit number system 0, no check digit.
             "425261",
-            "04252610",
+            "04252614",
         ),
         (  # 7-digit UPC-E, explicit number system 1, no check digit.
             "1425261",
-            "14252617",
+            "14252611",
         ),
         (  # 8-digit UPC-E, explicit number system 1, with check digit.
-            "14252617",
-            "14252617",
+            "14252611",
+            "14252611",
         ),
         (  # UPC-A suppression, condition A
             "023456000073",

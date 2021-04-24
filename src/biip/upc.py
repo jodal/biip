@@ -104,25 +104,28 @@ class Upc:
             # Implicit number system 0, no check digit.
             number_system_digit = 0
             payload = f"{number_system_digit}{value}"
-            check_digit = numeric_check_digit(payload)
+            upc_a_payload = _upc_e_to_upc_a_expansion(f"{payload}0")[:-1]
+            check_digit = numeric_check_digit(upc_a_payload)
         elif length == 7:
             # Explicit number system, no check digit.
             number_system_digit = int(value[0])
             payload = value
-            check_digit = numeric_check_digit(payload)
+            upc_a_payload = _upc_e_to_upc_a_expansion(f"{payload}0")[:-1]
+            check_digit = numeric_check_digit(upc_a_payload)
         elif length == 8:
             # Explicit number system and check digit.
             number_system_digit = int(value[0])
             payload = value[:-1]
             check_digit = int(value[-1])
 
-            # TODO: Expand UPC-E to UPC-A before calculating check digit
-            # calculated_check_digit = numeric_check_digit(payload)
-            # if check_digit != calculated_check_digit:
-            #     raise ParseError(
-            #         f"Invalid UPC-E check digit for {value!r}: "
-            #         f"Expected {calculated_check_digit!r}, got {check_digit!r}."
-            #     )
+            # Control that check digit is correct.
+            upc_a_payload = _upc_e_to_upc_a_expansion(value)[:-1]
+            calculated_check_digit = numeric_check_digit(upc_a_payload)
+            if check_digit != calculated_check_digit:
+                raise ParseError(
+                    f"Invalid UPC-E check digit for {value!r}: "
+                    f"Expected {calculated_check_digit!r}, got {check_digit!r}."
+                )
         else:
             raise Exception(  # pragma: no cover
                 "Unhandled UPC-E length. This is a bug."
