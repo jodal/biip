@@ -96,6 +96,35 @@ def test_parse_strips_surrounding_whitespace() -> None:
 @pytest.mark.parametrize(
     "value, expected",
     [
+        (  # UPC-A to UPC-A
+            "123456789012",
+            "123456789012",
+        ),
+        (  # Reverse of UPC-A suppression, condition A
+            "02345673",
+            "023456000073",
+        ),
+        (  # Reverse of UPC-A suppression, condition B
+            "02345147",
+            "023450000017",
+        ),
+        (  # Reverse of UPC-A suppression, condition C
+            "06397126",
+            "063200009716",
+        ),
+        (  # Reverse of UPC-A suppression, condition D
+            "08679339",
+            "086700000939",
+        ),
+    ],
+)
+def test_as_upc_a(value: str, expected: str) -> None:
+    assert Upc.parse(value).as_upc_a() == expected
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
         (  # 6-digit UPC-E, implicit number system 0, no check digit.
             "425261",
             "04252610",

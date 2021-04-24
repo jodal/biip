@@ -136,6 +136,25 @@ class Upc:
             check_digit=check_digit,
         )
 
+    def as_upc_a(self: "Upc") -> str:
+        """Format as UPC-A.
+
+        Returns:
+            A string with the UPC encoded as UPC-A.
+
+        References:
+            https://www.barcodefaq.com/barcode-properties/symbologies/upc-e/
+        """
+        if self.format == UpcFormat.UPC_A:
+            return f"{self.payload}{self.check_digit}"
+
+        if self.format == UpcFormat.UPC_E:
+            return self._upc_e_to_upc_a_expansion()
+
+        raise Exception(  # pragma: no cover
+            "Unhandled case while formatting as UPC-E. This is a bug."
+        )
+
     def as_upc_e(self: "Upc") -> str:
         """Format as UPC-E.
 
@@ -156,6 +175,30 @@ class Upc:
 
         raise Exception(  # pragma: no cover
             "Unhandled case while formatting as UPC-E. This is a bug."
+        )
+
+    def _upc_e_to_upc_a_expansion(self: "Upc") -> str:
+        assert self.format == UpcFormat.UPC_E
+
+        last_digit = int(self.payload[6])
+
+        if last_digit in (0, 1, 2):
+            return (
+                f"{self.payload[:3]}{last_digit}0000"
+                f"{self.payload[3:6]}{self.check_digit}"
+            )
+
+        if last_digit == 3:
+            return f"{self.payload[:4]}00000{self.payload[4:6]}{self.check_digit}"
+
+        if last_digit == 4:
+            return f"{self.payload[:5]}00000{self.payload[5]}{self.check_digit}"
+
+        if last_digit in (5, 6, 7, 8, 9):
+            return f"{self.payload[:6]}0000{last_digit}{self.check_digit}"
+
+        raise Exception(  # pragma: no cover
+            "Unhandled case while expanding UPC-E to UPC-A. This is a bug."
         )
 
     def _upc_a_to_upc_e_suppression(self: "Upc") -> str:
