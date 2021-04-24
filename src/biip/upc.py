@@ -149,7 +149,7 @@ class Upc:
             return f"{self.payload}{self.check_digit}"
 
         if self.format == UpcFormat.UPC_E:
-            return self._upc_e_to_upc_a_expansion()
+            return _upc_e_to_upc_a_expansion(f"{self.payload}{self.check_digit}")
 
         raise Exception(  # pragma: no cover
             "Unhandled case while formatting as UPC-E. This is a bug."
@@ -168,7 +168,7 @@ class Upc:
             https://www.barcodefaq.com/barcode-properties/symbologies/upc-e/
         """
         if self.format == UpcFormat.UPC_A:
-            return self._upc_a_to_upc_e_suppression()
+            return _upc_a_to_upc_e_suppression(f"{self.payload}{self.check_digit}")
 
         if self.format == UpcFormat.UPC_E:
             return f"{self.payload}{self.check_digit}"
@@ -177,54 +177,51 @@ class Upc:
             "Unhandled case while formatting as UPC-E. This is a bug."
         )
 
-    def _upc_e_to_upc_a_expansion(self: "Upc") -> str:
-        assert self.format == UpcFormat.UPC_E
 
-        last_digit = int(self.payload[6])
+def _upc_e_to_upc_a_expansion(value: str) -> str:
+    assert len(value) == 8
+    assert value.isnumeric()
 
-        if last_digit in (0, 1, 2):
-            return (
-                f"{self.payload[:3]}{last_digit}0000"
-                f"{self.payload[3:6]}{self.check_digit}"
-            )
+    last_digit = int(value[6])
+    check_digit = int(value[7])
 
-        if last_digit == 3:
-            return f"{self.payload[:4]}00000{self.payload[4:6]}{self.check_digit}"
+    if last_digit in (0, 1, 2):
+        return f"{value[:3]}{last_digit}0000" f"{value[3:6]}{check_digit}"
 
-        if last_digit == 4:
-            return f"{self.payload[:5]}00000{self.payload[5]}{self.check_digit}"
+    if last_digit == 3:
+        return f"{value[:4]}00000{value[4:6]}{check_digit}"
 
-        if last_digit in (5, 6, 7, 8, 9):
-            return f"{self.payload[:6]}0000{last_digit}{self.check_digit}"
+    if last_digit == 4:
+        return f"{value[:5]}00000{value[5]}{check_digit}"
 
-        raise Exception(  # pragma: no cover
-            "Unhandled case while expanding UPC-E to UPC-A. This is a bug."
-        )
+    if last_digit in (5, 6, 7, 8, 9):
+        return f"{value[:6]}0000{last_digit}{check_digit}"
 
-    def _upc_a_to_upc_e_suppression(self: "Upc") -> str:
-        assert self.format == UpcFormat.UPC_A
+    raise Exception(  # pragma: no cover
+        "Unhandled case while expanding UPC-E to UPC-A. This is a bug."
+    )
 
-        if (
-            int(self.payload[10]) in (5, 6, 7, 8, 9)
-            and self.payload[6:10] == "0000"
-            and self.payload[5] != "0"
-        ):
-            # UPC-E suppression, condition A
-            return f"{self.payload[:6]}{self.payload[10]}{self.check_digit}"
 
-        if self.payload[5:10] == "00000" and self.payload[4] != "0":
-            # UPC-E suppression, condition B
-            return f"{self.payload[:5]}{self.payload[10]}4{self.check_digit}"
+def _upc_a_to_upc_e_suppression(value: str) -> str:
+    assert len(value) == 12
+    assert value.isnumeric()
 
-        if self.payload[4:8] == "0000" and int(self.payload[3]) in (0, 1, 2):
-            # UPC-E suppression, condition C
-            return (
-                f"{self.payload[:3]}{self.payload[8:11]}"
-                f"{self.payload[3]}{self.check_digit}"
-            )
+    check_digit = int(value[11])
 
-        if self.payload[4:9] == "00000" and int(self.payload[3]) in range(3, 10):
-            # UPC-E suppression, condition D
-            return f"{self.payload[:4]}{self.payload[9:11]}3{self.check_digit}"
+    if int(value[10]) in (5, 6, 7, 8, 9) and value[6:10] == "0000" and value[5] != "0":
+        # UPC-E suppression, condition A
+        return f"{value[:6]}{value[10]}{check_digit}"
 
-        raise EncodeError(f"UPC-A {self.value!r} cannot be represented as UPC-E.")
+    if value[5:10] == "00000" and value[4] != "0":
+        # UPC-E suppression, condition B
+        return f"{value[:5]}{value[10]}4{check_digit}"
+
+    if value[4:8] == "0000" and int(value[3]) in (0, 1, 2):
+        # UPC-E suppression, condition C
+        return f"{value[:3]}{value[8:11]}" f"{value[3]}{check_digit}"
+
+    if value[4:9] == "00000" and int(value[3]) in range(3, 10):
+        # UPC-E suppression, condition D
+        return f"{value[:4]}{value[9:11]}3{check_digit}"
+
+    raise EncodeError(f"UPC-A {value!r} cannot be represented as UPC-E.")
