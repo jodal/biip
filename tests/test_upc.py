@@ -13,19 +13,48 @@ def test_parse_upc_a() -> None:
         value="042100005264",
         format=UpcFormat.UPC_A,
         payload="04210000526",
+        number_system_digit=0,
         check_digit=4,
     )
 
 
-def test_parse_upc_e() -> None:
-    upc = Upc.parse("425261")
-
-    assert upc == Upc(
-        value="425261",
-        format=UpcFormat.UPC_E,
-        payload="425261",
-        check_digit=None,
-    )
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        (
+            "425261",  # Length is 6: Implicit number system 0, no check digit.
+            Upc(
+                value="425261",
+                format=UpcFormat.UPC_E,
+                payload="0425261",
+                number_system_digit=0,
+                check_digit=0,
+            ),
+        ),
+        (
+            "1425261",  # Length is 7: Explicit number system 1, no check digit.
+            Upc(
+                value="1425261",
+                format=UpcFormat.UPC_E,
+                payload="1425261",
+                number_system_digit=1,
+                check_digit=7,
+            ),
+        ),
+        (
+            "14252617",  # Length is 8: Explicit number system 1 and check digit.
+            Upc(
+                value="14252617",
+                format=UpcFormat.UPC_E,
+                payload="1425261",
+                number_system_digit=1,
+                check_digit=7,
+            ),
+        ),
+    ],
+)
+def test_parse_upc_e(value: str, expected: Upc) -> None:
+    assert Upc.parse(value) == expected
 
 
 def test_parse_value_with_invalid_length() -> None:
@@ -34,7 +63,7 @@ def test_parse_value_with_invalid_length() -> None:
 
     assert (
         str(exc_info.value)
-        == "Failed to parse '123' as UPC: Expected 6 or 12 digits, got 3."
+        == "Failed to parse '123' as UPC: Expected 6, 7, 8, or 12 digits, got 3."
     )
 
 
