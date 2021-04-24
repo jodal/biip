@@ -1,4 +1,41 @@
-"""Universal Product Code (UPC)."""
+"""Universal Product Code (UPC).
+
+The :mod:`biip.upc` module contains Biip's support for parsing UPC formats.
+
+UPC is a subset of the later GTIN standard: An UPC-A value is also a valid GTIN-12 value.
+
+This class can interpret the following UPC formats:
+
+- UPC-A, 12 digits.
+- UPC-E, 6 digits, with implicit number system 0 and no check digit.
+- UPC-E, 7 digits, with explicit number system and no check digit.
+- UPC-E, 8 digits, with explicit number system and a check digit.
+
+
+Example:
+    >>> from biip.upc import Upc
+    >>> upc_a = Upc.parse("042100005264")
+    >>> upc_a
+    Upc(value='042100005264', format=UpcFormat.UPC_A, payload='04210000526',
+    number_system_digit=0, check_digit=4)
+
+A subset of the UPC-A values can be converted to a shorter UPC-E format by
+suppressing zeros.
+
+Example:
+    >>> upc_a.as_upc_e()
+    '04252614'
+
+All UPC-E values can be expanded to an UPC-A.
+
+Example:
+    >>> upc_e = Upc.parse("04252614")
+    >>> upc_e
+    Upc(value='04252614', format=UpcFormat.UPC_E, payload='0425261',
+    number_system_digit=0, check_digit=4)
+    >>> upc_e.as_upc_a()
+    '042100005264'
+"""
 
 from dataclasses import dataclass
 from enum import Enum
@@ -13,6 +50,10 @@ class UpcFormat(Enum):
 
     UPC_A = "upc_a"
     UPC_E = "upc_e"
+
+    def __repr__(self: "UpcFormat") -> str:
+        """Canonical string representation of format."""
+        return f"UpcFormat.{self.name}"
 
 
 @dataclass
