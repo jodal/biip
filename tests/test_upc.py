@@ -2,7 +2,7 @@
 
 import pytest
 
-from biip import ParseError
+from biip import EncodeError, ParseError
 from biip.upc import Upc, UpcFormat
 
 
@@ -108,7 +108,30 @@ def test_parse_strips_surrounding_whitespace() -> None:
             "14252617",
             "14252617",
         ),
+        (  # UPC-A suppression, condition A
+            "023456000073",
+            "02345673",
+        ),
+        (  # UPC-A suppression, condition B
+            "023450000017",
+            "02345147",
+        ),
+        (  # UPC-A suppression, condition C
+            "063200009716",
+            "06397126",
+        ),
+        (  # UPC-A suppression, condition D
+            "086700000939",
+            "08679339",
+        ),
     ],
 )
 def test_as_upc_e(value: str, expected: str) -> None:
     assert Upc.parse(value).as_upc_e() == expected
+
+
+def test_as_upc_e_when_suppression_is_not_possible() -> None:
+    with pytest.raises(EncodeError) as exc_info:
+        Upc.parse("123456789012").as_upc_e()
+
+    assert str(exc_info.value) == "UPC-A '123456789012' cannot be represented as UPC-E."

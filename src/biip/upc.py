@@ -144,8 +144,44 @@ class Upc:
 
         Raises:
             EncodeError: If encoding as UPC-E fails.
+
+        References:
+            https://www.barcodefaq.com/barcode-properties/symbologies/upc-e/
         """
+        if self.format == UpcFormat.UPC_A:
+            return self._upc_a_to_upc_e_suppression()
+
         if self.format == UpcFormat.UPC_E:
             return f"{self.payload}{self.check_digit}"
 
-        raise EncodeError(f"Failed encoding UPC format {self.format!r} as UPC-E.")
+        raise Exception(  # pragma: no cover
+            "Unhandled case while formatting as UPC-E. This is a bug."
+        )
+
+    def _upc_a_to_upc_e_suppression(self: "Upc") -> str:
+        assert self.format == UpcFormat.UPC_A
+
+        if (
+            int(self.payload[10]) in (5, 6, 7, 8, 9)
+            and self.payload[6:10] == "0000"
+            and self.payload[5] != "0"
+        ):
+            # UPC-E suppression, condition A
+            return f"{self.payload[:6]}{self.payload[10]}{self.check_digit}"
+
+        if self.payload[5:10] == "00000" and self.payload[4] != "0":
+            # UPC-E suppression, condition B
+            return f"{self.payload[:5]}{self.payload[10]}4{self.check_digit}"
+
+        if self.payload[4:8] == "0000" and int(self.payload[3]) in (0, 1, 2):
+            # UPC-E suppression, condition C
+            return (
+                f"{self.payload[:3]}{self.payload[8:11]}"
+                f"{self.payload[3]}{self.check_digit}"
+            )
+
+        if self.payload[4:9] == "00000" and int(self.payload[3]) in range(3, 10):
+            # UPC-E suppression, condition D
+            return f"{self.payload[:4]}{self.payload[9:11]}3{self.check_digit}"
+
+        raise EncodeError(f"UPC-A {self.value!r} cannot be represented as UPC-E.")
