@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Optional, Type
 
-from biip import ParseError
+from biip import EncodeError, ParseError
 from biip.gs1.checksums import numeric_check_digit
 
 
@@ -135,3 +135,17 @@ class Upc:
             number_system_digit=number_system_digit,
             check_digit=check_digit,
         )
+
+    def as_upc_e(self: "Upc") -> str:
+        """Format as UPC-E.
+
+        Returns:
+            A string with the UPC encoded as UPC-E, if possible.
+
+        Raises:
+            EncodeError: If encoding as UPC-E fails.
+        """
+        if self.format == UpcFormat.UPC_E:
+            return f"{self.payload}{self.check_digit}"
+
+        raise EncodeError(f"Failed encoding UPC format {self.format!r} as UPC-E.")

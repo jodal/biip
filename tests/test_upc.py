@@ -91,3 +91,24 @@ def test_parse_strips_surrounding_whitespace() -> None:
     upc = Upc.parse("  \t 042100005264 \n  ")
 
     assert upc.value == "042100005264"
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        (  # 6-digit UPC-E, implicit number system 0, no check digit.
+            "425261",
+            "04252610",
+        ),
+        (  # 7-digit UPC-E, explicit number system 1, no check digit.
+            "1425261",
+            "14252617",
+        ),
+        (  # 8-digit UPC-E, explicit number system 1, with check digit.
+            "14252617",
+            "14252617",
+        ),
+    ],
+)
+def test_as_upc_e(value: str, expected: str) -> None:
+    assert Upc.parse(value).as_upc_e() == expected
