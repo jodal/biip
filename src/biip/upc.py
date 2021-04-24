@@ -2,15 +2,12 @@
 
 The :mod:`biip.upc` module contains Biip's support for parsing UPC formats.
 
-UPC is a subset of the later GTIN standard: An UPC-A value is also a valid GTIN-12 value.
-
 This class can interpret the following UPC formats:
 
 - UPC-A, 12 digits.
 - UPC-E, 6 digits, with implicit number system 0 and no check digit.
 - UPC-E, 7 digits, with explicit number system and no check digit.
 - UPC-E, 8 digits, with explicit number system and a check digit.
-
 
 Example:
     >>> from biip.upc import Upc
@@ -35,6 +32,18 @@ Example:
     number_system_digit=0, check_digit=4)
     >>> upc_e.as_upc_a()
     '042100005264'
+
+UPC is a subset of the later GTIN standard: An UPC-A value is also a valid GTIN-12 value.
+
+Example:
+    >>> upc_e.as_gtin_12()
+    '042100005264'
+
+The canonical format for persisting UPCs to e.g. a database is GTIN-14.
+
+Example:
+    >>> upc_e.as_gtin_14()
+    '00042100005264'
 """
 
 from dataclasses import dataclass
@@ -220,6 +229,24 @@ class Upc:
         raise Exception(  # pragma: no cover
             "Unhandled case while formatting as UPC-E. This is a bug."
         )
+
+    def as_gtin_12(self: "Upc") -> str:
+        """Format as GTIN-12."""
+        from biip.gtin import Gtin
+
+        return Gtin.parse(self.as_upc_a()).as_gtin_12()
+
+    def as_gtin_13(self: "Upc") -> str:
+        """Format as GTIN-13."""
+        from biip.gtin import Gtin
+
+        return Gtin.parse(self.as_upc_a()).as_gtin_13()
+
+    def as_gtin_14(self: "Upc") -> str:
+        """Format as GTIN-14."""
+        from biip.gtin import Gtin
+
+        return Gtin.parse(self.as_upc_a()).as_gtin_14()
 
 
 def _upc_e_to_upc_a_expansion(value: str) -> str:
