@@ -65,59 +65,27 @@ def parse(
     if not parsers:
         # If we're not able to select a subset based on Symbology Identifiers,
         # run all parsers in the default order.
-        parsers = [Upc, Gtin, Sscc, GS1Message]
+        parsers = [
+            Upc,
+            Gtin,  # Can override Upc result.
+            Sscc,
+            GS1Message,  # Can override Sscc and Gtin result, and thus Upc result.
+        ]
 
     # Run all parsers in order
     for parser in parsers:
         if parser == GS1Message:
-            try:
-                result.gs1_message = GS1Message.parse(
-                    value,
-                    rcn_region=rcn_region,
-                    separator_chars=separator_chars,
-                )
-            except ParseError as exc:
-                result.gs1_message_error = str(exc)
-            else:
-                ai_00 = result.gs1_message.get(ai="00")
-                if ai_00 is not None:
-                    # GS1 Message contains an SSCC
-                    result.sscc = ai_00.sscc
-                    # Clear error from parsing full value a SSCC.
-                    result.sscc_error = None
-
-                ai_01 = result.gs1_message.get(ai="01")
-                if ai_01 is not None:
-                    # GS1 Message contains a GTIN.
-                    result.gtin = ai_01.gtin
-                    # Clear error from parsing full value as GTIN.
-                    result.gtin_error = None
-
-                    # If contained GTIN is a GTIN-12, also parse it as UPC.
-                    if ai_01.gtin and ai_01.gtin.format == GtinFormat.GTIN_12:
-                        try:
-                            result.upc = Upc.parse(ai_01.gtin.as_gtin_12())
-                            result.upc_error = None
-                        except ParseError as exc:
-                            result.upc_error = str(exc)
-
+            result._parse_gs1_message(
+                value,
+                rcn_region=rcn_region,
+                separator_chars=separator_chars,
+            )
         if parser == Gtin:
-            try:
-                result.gtin = Gtin.parse(value, rcn_region=rcn_region)
-            except ParseError as exc:
-                result.gtin_error = str(exc)
-
+            result._parse_gtin(value, rcn_region=rcn_region)
         if parser == Sscc:
-            try:
-                result.sscc = Sscc.parse(value)
-            except ParseError as exc:
-                result.sscc_error = str(exc)
-
+            result._parse_sscc(value)
         if parser == Upc:
-            try:
-                result.upc = Upc.parse(value)
-            except ParseError as exc:
-                result.upc_error = str(exc)
+            result._parse_upc(value)
 
     if result._has_result():
         return result
@@ -161,6 +129,67 @@ class ParseResult:
     #: The GS1 Message parse error,
     #: if parsing as a GS1 Message was attempted and failed.
     gs1_message_error: Optional[str] = None
+
+    def _parse_gtin(
+        self: "ParseResult",
+        value: str,
+        *,
+        rcn_region: Optional[RcnRegion] = None,
+    ) -> None:
+        try:
+            self.gtin = Gtin.parse(value, rcn_region=rcn_region)
+            self.gtin_error = None
+        except ParseError as exc:
+            self.gtin = None
+            self.gtin_error = str(exc)
+        else:
+            # If GTIN is a GTIN-12, set UPC on the top-level result.
+            if self.gtin.format == GtinFormat.GTIN_12:
+                self._parse_upc(self.gtin.as_gtin_12())
+
+    def _parse_upc(self: "ParseResult", value: str) -> None:
+        try:
+            self.upc = Upc.parse(value)
+            self.upc_error = None
+        except ParseError as exc:
+            self.upc = None
+            self.upc_error = str(exc)
+
+    def _parse_sscc(self: "ParseResult", value: str) -> None:
+        try:
+            self.sscc = Sscc.parse(value)
+            self.sscc_error = None
+        except ParseError as exc:
+            self.sscc = None
+            self.sscc_error = str(exc)
+
+    def _parse_gs1_message(
+        self: "ParseResult",
+        value: str,
+        *,
+        rcn_region: Optional[RcnRegion] = None,
+        separator_chars: Iterable[str],
+    ) -> None:
+        try:
+            self.gs1_message = GS1Message.parse(
+                value,
+                rcn_region=rcn_region,
+                separator_chars=separator_chars,
+            )
+            self.gs1_message_error = None
+        except ParseError as exc:
+            self.gs1_message = None
+            self.gs1_message_error = str(exc)
+        else:
+            # If the GS1 Message contains an SSCC, set SSCC on the top-level result.
+            ai_00 = self.gs1_message.get(ai="00")
+            if ai_00 is not None and ai_00.sscc is not None:
+                self._parse_sscc(ai_00.sscc.value)
+
+            # If the GS1 Message contains an GTIN, set GTIN on the top-level result.
+            ai_01 = self.gs1_message.get(ai="01")
+            if ai_01 is not None and ai_01.gtin is not None:
+                self._parse_gtin(ai_01.gtin.value, rcn_region=rcn_region)
 
     def _has_result(self: "ParseResult") -> bool:
         return any([self.gtin, self.upc, self.sscc, self.gs1_message])
