@@ -66,10 +66,10 @@ def parse(
         # If we're not able to select a subset based on Symbology Identifiers,
         # run all parsers in the default order.
         parsers = [
-            Upc,
-            Gtin,  # Can override Upc result.
+            Upc,  # Can set Gtin result if unset.
+            Gtin,  # Can set Upc result if unset.
             Sscc,
-            GS1Message,  # Can override Sscc and Gtin result, and thus Upc result.
+            GS1Message,  # Can set Gtin, Sscc, and Upc result if unset.
         ]
 
     # Run all parsers in order
@@ -136,6 +136,9 @@ class ParseResult:
         *,
         rcn_region: Optional[RcnRegion] = None,
     ) -> None:
+        if self.gtin is not None:
+            return  # pragma: no cover
+
         try:
             self.gtin = Gtin.parse(value, rcn_region=rcn_region)
             self.gtin_error = None
@@ -144,18 +147,28 @@ class ParseResult:
             self.gtin_error = str(exc)
         else:
             # If GTIN is a GTIN-12, set UPC on the top-level result.
-            if self.gtin.format == GtinFormat.GTIN_12:
+            if self.gtin.format == GtinFormat.GTIN_12 and self.upc is None:
                 self._parse_upc(self.gtin.as_gtin_12())
 
     def _parse_upc(self: "ParseResult", value: str) -> None:
+        if self.upc is not None:
+            return  # pragma: no cover
+
         try:
             self.upc = Upc.parse(value)
             self.upc_error = None
         except ParseError as exc:
             self.upc = None
             self.upc_error = str(exc)
+        else:
+            # If UPC, expand and set GTIN on the top-level result.
+            if self.gtin is None:
+                self._parse_gtin(self.upc.as_upc_a())
 
     def _parse_sscc(self: "ParseResult", value: str) -> None:
+        if self.sscc is not None:
+            return  # pragma: no cover
+
         try:
             self.sscc = Sscc.parse(value)
             self.sscc_error = None
@@ -170,6 +183,9 @@ class ParseResult:
         rcn_region: Optional[RcnRegion] = None,
         separator_chars: Iterable[str],
     ) -> None:
+        if self.gs1_message is not None:
+            return  # pragma: no cover
+
         try:
             self.gs1_message = GS1Message.parse(
                 value,

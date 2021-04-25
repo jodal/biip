@@ -169,6 +169,45 @@ from biip.upc import Upc, UpcFormat
             ),
         ),
         (
+            # UPC-E. UPC-E is expanded to UPC-A and exposed as GTIN too.
+            # Coincidentally it is also a valid GS1 Message.
+            "425261",
+            ParseResult(
+                value="425261",
+                gtin=Gtin(
+                    value="042100005264",
+                    format=GtinFormat.GTIN_12,
+                    prefix=GS1Prefix(value="004", usage="GS1 US"),
+                    payload="04210000526",
+                    check_digit=4,
+                    packaging_level=None,
+                ),
+                upc=Upc(
+                    value="425261",
+                    format=UpcFormat.UPC_E,
+                    number_system_digit=0,
+                    payload="0425261",
+                    check_digit=4,
+                ),
+                sscc_error="Failed to parse '425261' as SSCC: Expected 18 digits, got 6.",
+                gs1_message=GS1Message(
+                    value="425261",
+                    element_strings=[
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("425"),
+                            value="261",
+                            pattern_groups=["261", ""],
+                            gtin=None,
+                            sscc=None,
+                            date=None,
+                            decimal=None,
+                            money=None,
+                        )
+                    ],
+                ),
+            ),
+        ),
+        (
             # SSCC
             "376130321109103420",
             ParseResult(
@@ -323,31 +362,23 @@ from biip.upc import Upc, UpcFormat
             ),
         ),
         (
-            # GS1 AI: best before date. Coincidentally also a valid UPC-E.
-            "15210526",
+            # GS1 AI: best before date
+            "15210527",
             ParseResult(
-                value="15210526",
-                gtin_error=(
-                    "Invalid GTIN check digit for '15210526': Expected 4, got 6."
-                ),
-                upc=Upc(
-                    value="15210526",
-                    format=UpcFormat.UPC_E,
-                    number_system_digit=1,
-                    payload="1521052",
-                    check_digit=6,
-                ),
+                value="15210527",
+                gtin_error="Invalid GTIN check digit for '15210527': Expected 4, got 7.",
+                upc_error="Invalid UPC-E check digit for '15210527': Expected 6, got 7.",
                 sscc_error=(
-                    "Failed to parse '15210526' as SSCC: Expected 18 digits, got 8."
+                    "Failed to parse '15210527' as SSCC: Expected 18 digits, got 8."
                 ),
                 gs1_message=GS1Message(
-                    value="15210526",
+                    value="15210527",
                     element_strings=[
                         GS1ElementString(
                             ai=GS1ApplicationIdentifier.extract("15"),
-                            value="210526",
-                            pattern_groups=["210526"],
-                            date=date(2021, 5, 26),
+                            value="210527",
+                            pattern_groups=["210527"],
+                            date=date(2021, 5, 27),
                         )
                     ],
                 ),

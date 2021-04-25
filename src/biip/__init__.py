@@ -16,18 +16,18 @@ Example:
     pattern_groups=['385074'], gtin=None, sscc=None, date=None, decimal=None,
     money=None)])
     >>> # Value that is only valid as a GS1 Message:
-    >>> result = biip.parse("15210526")
+    >>> result = biip.parse("15210527")
     >>> result.gtin
     None
     >>> result.gtin_error
-    "Invalid GTIN check digit for '15210526': Expected 4, got 6."
+    "Invalid GTIN check digit for '15210527': Expected 4, got 7."
     >>> result.gs1_message
-    GS1Message(value='15210526',
+    GS1Message(value='15210527',
     element_strings=[GS1ElementString(ai=GS1ApplicationIdentifier(ai='15',
     description='Best before date (YYMMDD)', data_title='BEST BEFORE or BEST
-    BY', fnc1_required=False, format='N2+N6'), value='210526',
-    pattern_groups=['210526'], gtin=None, sscc=None, date=datetime.date(2021,
-    5, 26), decimal=None, money=None)])
+    BY', fnc1_required=False, format='N2+N6'), value='210527',
+    pattern_groups=['210527'], gtin=None, sscc=None, date=datetime.date(2021,
+    5, 27), decimal=None, money=None)])
     >>> # Value that cannot be interpreted as any supported format:
     >>> biip.parse("123")
     Traceback (most recent call last):
