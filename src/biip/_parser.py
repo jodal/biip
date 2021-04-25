@@ -10,7 +10,7 @@ from biip.sscc import Sscc
 from biip.symbology import SymbologyIdentifier
 from biip.upc import Upc
 
-ParserType = Union[Type[GS1Message], Type[Gtin], Type[Sscc]]
+ParserType = Union[Type[GS1Message], Type[Gtin], Type[Sscc], Type[Upc]]
 
 
 def parse(
@@ -65,7 +65,7 @@ def parse(
     if not parsers:
         # If we're not able to select a subset based on Symbology Identifiers,
         # run all parsers in the default order.
-        parsers = [Gtin, Sscc, GS1Message]
+        parsers = [Upc, Gtin, Sscc, GS1Message]
 
     # Run all parsers in order
     for parser in parsers:
@@ -104,6 +104,12 @@ def parse(
                 result.sscc = Sscc.parse(value)
             except ParseError as exc:
                 result.sscc_error = str(exc)
+
+        if parser == Upc:
+            try:
+                result.upc = Upc.parse(value)
+            except ParseError as exc:
+                result.upc_error = str(exc)
 
     if result._has_result():
         return result

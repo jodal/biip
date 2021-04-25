@@ -13,6 +13,7 @@ from biip.gs1 import (
 from biip.gtin import Gtin, GtinFormat
 from biip.sscc import Sscc
 from biip.symbology import Symbology, SymbologyIdentifier
+from biip.upc import Upc, UpcFormat
 
 
 @pytest.mark.parametrize(
@@ -30,6 +31,10 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     payload="9638507",
                     check_digit=4,
                 ),
+                upc_error=(
+                    "Invalid UPC-E number system for '96385074': "
+                    "Expected 0 or 1, got 9."
+                ),
                 sscc_error=(
                     "Failed to parse '96385074' as SSCC: Expected 18 digits, got 8."
                 ),
@@ -46,7 +51,7 @@ from biip.symbology import Symbology, SymbologyIdentifier
             ),
         ),
         (
-            # GTIN-12
+            # GTIN-12. GTIN-12 is also valid as UPC-A.
             "123601057072",
             ParseResult(
                 value="123601057072",
@@ -54,6 +59,13 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     value="123601057072",
                     format=GtinFormat.GTIN_12,
                     prefix=GS1Prefix(value="012", usage="GS1 US"),
+                    payload="12360105707",
+                    check_digit=2,
+                ),
+                upc=Upc(
+                    value="123601057072",
+                    format=UpcFormat.UPC_A,
+                    number_system_digit=1,
                     payload="12360105707",
                     check_digit=2,
                 ),
@@ -77,6 +89,10 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     prefix=GS1Prefix(value="590", usage="GS1 Poland"),
                     payload="590123412345",
                     check_digit=7,
+                ),
+                upc_error=(
+                    "Failed to parse '5901234123457' as UPC: "
+                    "Expected 6, 7, 8, or 12 digits, got 13."
                 ),
                 sscc_error=(
                     "Failed to parse '5901234123457' as SSCC: "
@@ -119,6 +135,10 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     payload="590123412345",
                     check_digit=7,
                 ),
+                upc_error=(
+                    "Failed to parse '05901234123457' as UPC: "
+                    "Expected 6, 7, 8, or 12 digits, got 14."
+                ),
                 sscc_error=(
                     "Failed to parse '05901234123457' as SSCC: "
                     "Expected 18 digits, got 14."
@@ -157,6 +177,10 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     "Failed to parse '376130321109103420' as GTIN: "
                     "Expected 8, 12, 13, or 14 digits, got 18."
                 ),
+                upc_error=(
+                    "Failed to parse '376130321109103420' as UPC: "
+                    "Expected 6, 7, 8, or 12 digits, got 18."
+                ),
                 sscc=Sscc(
                     value="376130321109103420",
                     prefix=GS1Prefix(
@@ -179,6 +203,10 @@ from biip.symbology import Symbology, SymbologyIdentifier
                 gtin_error=(
                     "Failed to parse '00376130321109103420' as GTIN: "
                     "Expected 8, 12, 13, or 14 digits, got 20."
+                ),
+                upc_error=(
+                    "Failed to parse '00376130321109103420' as UPC: "
+                    "Expected 6, 7, 8, or 12 digits, got 20."
                 ),
                 sscc=Sscc(
                     value="376130321109103420",
@@ -212,7 +240,7 @@ from biip.symbology import Symbology, SymbologyIdentifier
             ),
         ),
         (
-            # GS1 AI: GTIN
+            # GS1 AI: GTIN-13
             "0105901234123457",
             ParseResult(
                 value="0105901234123457",
@@ -222,6 +250,10 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     prefix=GS1Prefix(value="590", usage="GS1 Poland"),
                     payload="590123412345",
                     check_digit=7,
+                ),
+                upc_error=(
+                    "Failed to parse '0105901234123457' as UPC: "
+                    "Expected 6, 7, 8, or 12 digits, got 16."
                 ),
                 sscc_error=(
                     "Failed to parse '0105901234123457' as SSCC: "
@@ -247,12 +279,19 @@ from biip.symbology import Symbology, SymbologyIdentifier
             ),
         ),
         (
-            # GS1 AI: best before date
+            # GS1 AI: best before date. Coincidentally also a valid UPC-E.
             "15210526",
             ParseResult(
                 value="15210526",
                 gtin_error=(
                     "Invalid GTIN check digit for '15210526': Expected 4, got 6."
+                ),
+                upc=Upc(
+                    value="15210526",
+                    format=UpcFormat.UPC_E,
+                    number_system_digit=1,
+                    payload="1521052",
+                    check_digit=6,
                 ),
                 sscc_error=(
                     "Failed to parse '15210526' as SSCC: Expected 18 digits, got 8."
@@ -352,6 +391,8 @@ def test_parse_invalid_data() -> None:
         "Failed to parse 'abc':\n"
         "- GTIN: Failed to parse 'abc' as GTIN: "
         "Expected 8, 12, 13, or 14 digits, got 3.\n"
+        "- UPC: Failed to parse 'abc' as UPC: "
+        "Expected 6, 7, 8, or 12 digits, got 3.\n"
         "- SSCC: Failed to parse 'abc' as SSCC: Expected 18 digits, got 3.\n"
         "- GS1: Failed to get GS1 Application Identifier from 'abc'."
     )
