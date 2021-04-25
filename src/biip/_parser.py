@@ -81,13 +81,13 @@ def parse(
     while queue:
         (parser, val) = queue.pop(0)
         if parser == GS1Message:
-            result._parse_gs1_message(val, config=config, queue=queue)
+            _parse_gs1_message(val, config=config, queue=queue, result=result)
         if parser == Gtin:
-            result._parse_gtin(val, config=config, queue=queue)
+            _parse_gtin(val, config=config, queue=queue, result=result)
         if parser == Sscc:
-            result._parse_sscc(val, config=config, queue=queue)
+            _parse_sscc(val, config=config, queue=queue, result=result)
         if parser == Upc:
-            result._parse_upc(val, config=config, queue=queue)
+            _parse_upc(val, config=config, queue=queue, result=result)
 
     if result._has_result():
         return result
@@ -140,96 +140,6 @@ class ParseResult:
     #: if parsing as a GS1 Message was attempted and failed.
     gs1_message_error: Optional[str] = None
 
-    def _parse_gtin(
-        self: "ParseResult",
-        value: str,
-        *,
-        config: ParseConfig,
-        queue: List[Tuple[ParserType, str]],
-    ) -> None:
-        if self.gtin is not None:
-            return  # pragma: no cover
-
-        try:
-            self.gtin = Gtin.parse(value, rcn_region=config.rcn_region)
-            self.gtin_error = None
-        except ParseError as exc:
-            self.gtin = None
-            self.gtin_error = str(exc)
-        else:
-            # If GTIN is a GTIN-12, set UPC on the top-level result.
-            if self.gtin.format == GtinFormat.GTIN_12 and self.upc is None:
-                queue.append((Upc, self.gtin.as_gtin_12()))
-
-    def _parse_upc(
-        self: "ParseResult",
-        value: str,
-        *,
-        config: ParseConfig,
-        queue: List[Tuple[ParserType, str]],
-    ) -> None:
-        if self.upc is not None:
-            return  # pragma: no cover
-
-        try:
-            self.upc = Upc.parse(value)
-            self.upc_error = None
-        except ParseError as exc:
-            self.upc = None
-            self.upc_error = str(exc)
-        else:
-            # If UPC, expand and set GTIN on the top-level result.
-            if self.gtin is None:
-                queue.append((Gtin, self.upc.as_upc_a()))
-
-    def _parse_sscc(
-        self: "ParseResult",
-        value: str,
-        *,
-        config: ParseConfig,
-        queue: List[Tuple[ParserType, str]],
-    ) -> None:
-        if self.sscc is not None:
-            return  # pragma: no cover
-
-        try:
-            self.sscc = Sscc.parse(value)
-            self.sscc_error = None
-        except ParseError as exc:
-            self.sscc = None
-            self.sscc_error = str(exc)
-
-    def _parse_gs1_message(
-        self: "ParseResult",
-        value: str,
-        *,
-        config: ParseConfig,
-        queue: List[Tuple[ParserType, str]],
-    ) -> None:
-        if self.gs1_message is not None:
-            return  # pragma: no cover
-
-        try:
-            self.gs1_message = GS1Message.parse(
-                value,
-                rcn_region=config.rcn_region,
-                separator_chars=config.separator_chars,
-            )
-            self.gs1_message_error = None
-        except ParseError as exc:
-            self.gs1_message = None
-            self.gs1_message_error = str(exc)
-        else:
-            # If the GS1 Message contains an SSCC, set SSCC on the top-level result.
-            ai_00 = self.gs1_message.get(ai="00")
-            if ai_00 is not None and ai_00.sscc is not None:
-                queue.append((Sscc, ai_00.sscc.value))
-
-            # If the GS1 Message contains an GTIN, set GTIN on the top-level result.
-            ai_01 = self.gs1_message.get(ai="01")
-            if ai_01 is not None and ai_01.gtin is not None:
-                queue.append((Gtin, ai_01.gtin.value))
-
     def _has_result(self: "ParseResult") -> bool:
         return any([self.gtin, self.upc, self.sscc, self.gs1_message])
 
@@ -244,3 +154,96 @@ class ParseResult:
             ]
             if error is not None
         )
+
+
+def _parse_gtin(
+    value: str,
+    *,
+    config: ParseConfig,
+    queue: List[Tuple[ParserType, str]],
+    result: ParseResult,
+) -> None:
+    if result.gtin is not None:
+        return  # pragma: no cover
+
+    try:
+        result.gtin = Gtin.parse(value, rcn_region=config.rcn_region)
+        result.gtin_error = None
+    except ParseError as exc:
+        result.gtin = None
+        result.gtin_error = str(exc)
+    else:
+        # If GTIN is a GTIN-12, set UPC on the top-level result.
+        if result.gtin.format == GtinFormat.GTIN_12:
+            queue.append((Upc, result.gtin.as_gtin_12()))
+
+
+def _parse_upc(
+    value: str,
+    *,
+    config: ParseConfig,
+    queue: List[Tuple[ParserType, str]],
+    result: ParseResult,
+) -> None:
+    if result.upc is not None:
+        return  # pragma: no cover
+
+    try:
+        result.upc = Upc.parse(value)
+        result.upc_error = None
+    except ParseError as exc:
+        result.upc = None
+        result.upc_error = str(exc)
+    else:
+        # If UPC, expand and set GTIN on the top-level result.
+        queue.append((Gtin, result.upc.as_upc_a()))
+
+
+def _parse_sscc(
+    value: str,
+    *,
+    config: ParseConfig,
+    queue: List[Tuple[ParserType, str]],
+    result: ParseResult,
+) -> None:
+    if result.sscc is not None:
+        return  # pragma: no cover
+
+    try:
+        result.sscc = Sscc.parse(value)
+        result.sscc_error = None
+    except ParseError as exc:
+        result.sscc = None
+        result.sscc_error = str(exc)
+
+
+def _parse_gs1_message(
+    value: str,
+    *,
+    config: ParseConfig,
+    queue: List[Tuple[ParserType, str]],
+    result: ParseResult,
+) -> None:
+    if result.gs1_message is not None:
+        return  # pragma: no cover
+
+    try:
+        result.gs1_message = GS1Message.parse(
+            value,
+            rcn_region=config.rcn_region,
+            separator_chars=config.separator_chars,
+        )
+        result.gs1_message_error = None
+    except ParseError as exc:
+        result.gs1_message = None
+        result.gs1_message_error = str(exc)
+    else:
+        # If the GS1 Message contains an SSCC, set SSCC on the top-level result.
+        ai_00 = result.gs1_message.get(ai="00")
+        if ai_00 is not None and ai_00.sscc is not None:
+            queue.append((Sscc, ai_00.sscc.value))
+
+        # If the GS1 Message contains an GTIN, set GTIN on the top-level result.
+        ai_01 = result.gs1_message.get(ai="01")
+        if ai_01 is not None and ai_01.gtin is not None:
+            queue.append((Gtin, ai_01.gtin.value))
