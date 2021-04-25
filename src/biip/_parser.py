@@ -1,7 +1,7 @@
 """The top-level Biip parser."""
 
 from dataclasses import dataclass
-from typing import Iterable, List, Optional, Tuple, Type, Union
+from typing import Callable, Iterable, List, Optional, Tuple
 
 from biip import ParseError
 from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1Message, GS1Symbology
@@ -10,7 +10,7 @@ from biip.sscc import Sscc
 from biip.symbology import SymbologyIdentifier
 from biip.upc import Upc
 
-ParserType = Union[Type[GS1Message], Type[Gtin], Type[Sscc], Type[Upc]]
+ParseQueue = List[Tuple[Callable, str]]
 
 
 def parse(
@@ -57,37 +57,30 @@ def parse(
         value = value[len(result.symbology_identifier) :]
 
     # Select parsers
-    queue: List[Tuple[ParserType, str]] = []
+    queue: ParseQueue = []
     if result.symbology_identifier is not None:
         if result.symbology_identifier.gs1_symbology in GS1Symbology.with_gtin():
-            queue.append((Gtin, value))
+            queue.append((_parse_gtin, value))
         if (
             result.symbology_identifier.gs1_symbology
             in GS1Symbology.with_ai_element_strings()
         ):
-            queue.append((GS1Message, value))
+            queue.append((_parse_gs1_message, value))
     if not queue:
         # If we're not able to select a subset based on Symbology Identifiers,
         # run all parsers on the full value.
         queue = [
-            (GS1Message, value),
-            (Gtin, value),
-            (Sscc, value),
-            (Upc, value),
+            (_parse_gs1_message, value),
+            (_parse_gtin, value),
+            (_parse_sscc, value),
+            (_parse_upc, value),
         ]
 
     # Work through queue of parsers and the values to run them on. Any parser may
     # add additional work to the queue. Only the first result for a field is kept.
     while queue:
-        (parser, val) = queue.pop(0)
-        if parser == GS1Message:
-            _parse_gs1_message(val, config=config, queue=queue, result=result)
-        if parser == Gtin:
-            _parse_gtin(val, config=config, queue=queue, result=result)
-        if parser == Sscc:
-            _parse_sscc(val, config=config, queue=queue, result=result)
-        if parser == Upc:
-            _parse_upc(val, config=config, queue=queue, result=result)
+        (parse_func, val) = queue.pop(0)
+        parse_func(val, config=config, queue=queue, result=result)
 
     if result._has_result():
         return result
@@ -160,7 +153,7 @@ def _parse_gtin(
     value: str,
     *,
     config: ParseConfig,
-    queue: List[Tuple[ParserType, str]],
+    queue: ParseQueue,
     result: ParseResult,
 ) -> None:
     if result.gtin is not None:
@@ -175,14 +168,14 @@ def _parse_gtin(
     else:
         # If GTIN is a GTIN-12, set UPC on the top-level result.
         if result.gtin.format == GtinFormat.GTIN_12:
-            queue.append((Upc, result.gtin.as_gtin_12()))
+            queue.append((_parse_upc, result.gtin.as_gtin_12()))
 
 
 def _parse_upc(
     value: str,
     *,
     config: ParseConfig,
-    queue: List[Tuple[ParserType, str]],
+    queue: ParseQueue,
     result: ParseResult,
 ) -> None:
     if result.upc is not None:
@@ -196,14 +189,14 @@ def _parse_upc(
         result.upc_error = str(exc)
     else:
         # If UPC, expand and set GTIN on the top-level result.
-        queue.append((Gtin, result.upc.as_upc_a()))
+        queue.append((_parse_gtin, result.upc.as_upc_a()))
 
 
 def _parse_sscc(
     value: str,
     *,
     config: ParseConfig,
-    queue: List[Tuple[ParserType, str]],
+    queue: ParseQueue,
     result: ParseResult,
 ) -> None:
     if result.sscc is not None:
@@ -221,7 +214,7 @@ def _parse_gs1_message(
     value: str,
     *,
     config: ParseConfig,
-    queue: List[Tuple[ParserType, str]],
+    queue: ParseQueue,
     result: ParseResult,
 ) -> None:
     if result.gs1_message is not None:
@@ -241,9 +234,9 @@ def _parse_gs1_message(
         # If the GS1 Message contains an SSCC, set SSCC on the top-level result.
         ai_00 = result.gs1_message.get(ai="00")
         if ai_00 is not None and ai_00.sscc is not None:
-            queue.append((Sscc, ai_00.sscc.value))
+            queue.append((_parse_sscc, ai_00.sscc.value))
 
         # If the GS1 Message contains an GTIN, set GTIN on the top-level result.
         ai_01 = result.gs1_message.get(ai="01")
         if ai_01 is not None and ai_01.gtin is not None:
-            queue.append((Gtin, ai_01.gtin.value))
+            queue.append((_parse_gtin, ai_01.gtin.value))
