@@ -51,6 +51,26 @@ from biip.upc import Upc, UpcFormat
             ),
         ),
         (
+            # GTIN-8 with Symbology Identifier
+            "]E496385074",
+            ParseResult(
+                value="]E496385074",
+                symbology_identifier=SymbologyIdentifier(
+                    value="]E4",
+                    symbology=Symbology.EAN_UPC,
+                    modifiers="4",
+                    gs1_symbology=GS1Symbology.EAN_8,
+                ),
+                gtin=Gtin(
+                    value="96385074",
+                    format=GtinFormat.GTIN_8,
+                    prefix=GS1Prefix(value="00009", usage="GS1 US"),
+                    payload="9638507",
+                    check_digit=4,
+                ),
+            ),
+        ),
+        (
             # GTIN-12. GTIN-12 is also valid as UPC-A.
             "123601057072",
             ParseResult(
