@@ -97,6 +97,17 @@ def test_parse_upc_e_with_invalid_check_digit() -> None:
     )
 
 
+@pytest.mark.parametrize("number_system", range(2, 10))
+def test_parse_upc_e_with_invalid_number_system(number_system: int) -> None:
+    with pytest.raises(ParseError) as exc_info:
+        Upc.parse(f"{number_system}425261")
+
+    assert str(exc_info.value) == (
+        f"Invalid UPC-E number system for '{number_system}425261': "
+        f"Expected 0 or 1, got {number_system}."
+    )
+
+
 def test_parse_strips_surrounding_whitespace() -> None:
     upc = Upc.parse("  \t 042100005264 \n  ")
 

@@ -167,18 +167,25 @@ class Upc:
             number_system_digit = int(value[0])
             payload = value[:-1]
             check_digit = int(value[-1])
-
-            # Control that check digit is correct.
-            upc_a_payload = _upc_e_to_upc_a_expansion(value)[:-1]
-            calculated_check_digit = numeric_check_digit(upc_a_payload)
-            if check_digit != calculated_check_digit:
-                raise ParseError(
-                    f"Invalid UPC-E check digit for {value!r}: "
-                    f"Expected {calculated_check_digit!r}, got {check_digit!r}."
-                )
         else:
             raise Exception(  # pragma: no cover
                 "Unhandled UPC-E length. This is a bug."
+            )
+
+        # Control that the number system digit is correct.
+        if number_system_digit not in (0, 1):
+            raise ParseError(
+                f"Invalid UPC-E number system for {value!r}: "
+                f"Expected 0 or 1, got {number_system_digit!r}."
+            )
+
+        # Control that check digit is correct.
+        upc_a_payload = _upc_e_to_upc_a_expansion(f"{payload}{check_digit}")[:-1]
+        calculated_check_digit = numeric_check_digit(upc_a_payload)
+        if check_digit != calculated_check_digit:
+            raise ParseError(
+                f"Invalid UPC-E check digit for {value!r}: "
+                f"Expected {calculated_check_digit!r}, got {check_digit!r}."
             )
 
         return cls(
