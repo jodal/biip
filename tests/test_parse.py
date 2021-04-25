@@ -30,6 +30,9 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     payload="9638507",
                     check_digit=4,
                 ),
+                sscc_error=(
+                    "Failed to parse '96385074' as SSCC: Expected 18 digits, got 8."
+                ),
                 gs1_message=GS1Message(
                     value="96385074",
                     element_strings=[
@@ -39,9 +42,6 @@ from biip.symbology import Symbology, SymbologyIdentifier
                             pattern_groups=["385074"],
                         )
                     ],
-                ),
-                sscc_error=(
-                    "Failed to parse '96385074' as SSCC: Expected 18 digits, got 8."
                 ),
             ),
         ),
@@ -57,12 +57,12 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     payload="12360105707",
                     check_digit=2,
                 ),
-                gs1_message_error=(
-                    "Failed to get GS1 Application Identifier from '7072'."
-                ),
                 sscc_error=(
                     "Failed to parse '123601057072' as SSCC: "
                     "Expected 18 digits, got 12."
+                ),
+                gs1_message_error=(
+                    "Failed to get GS1 Application Identifier from '7072'."
                 ),
             ),
         ),
@@ -78,12 +78,12 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     payload="590123412345",
                     check_digit=7,
                 ),
-                gs1_message_error=(
-                    "Failed to get GS1 Application Identifier from '5901234123457'."
-                ),
                 sscc_error=(
                     "Failed to parse '5901234123457' as SSCC: "
                     "Expected 18 digits, got 13."
+                ),
+                gs1_message_error=(
+                    "Failed to get GS1 Application Identifier from '5901234123457'."
                 ),
             ),
         ),
@@ -119,12 +119,12 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     payload="590123412345",
                     check_digit=7,
                 ),
-                gs1_message_error=(
-                    "Failed to get GS1 Application Identifier from '05901234123457'."
-                ),
                 sscc_error=(
                     "Failed to parse '05901234123457' as SSCC: "
                     "Expected 18 digits, got 14."
+                ),
+                gs1_message_error=(
+                    "Failed to get GS1 Application Identifier from '05901234123457'."
                 ),
             ),
         ),
@@ -153,9 +153,6 @@ from biip.symbology import Symbology, SymbologyIdentifier
             "376130321109103420",
             ParseResult(
                 value="376130321109103420",
-                gs1_message_error=(
-                    "Failed to get GS1 Application Identifier from '09103420'."
-                ),
                 gtin_error=(
                     "Failed to parse '376130321109103420' as GTIN: "
                     "Expected 8, 12, 13, or 14 digits, got 18."
@@ -169,6 +166,9 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     payload="37613032110910342",
                     check_digit=0,
                 ),
+                gs1_message_error=(
+                    "Failed to get GS1 Application Identifier from '09103420'."
+                ),
             ),
         ),
         (
@@ -179,6 +179,15 @@ from biip.symbology import Symbology, SymbologyIdentifier
                 gtin_error=(
                     "Failed to parse '00376130321109103420' as GTIN: "
                     "Expected 8, 12, 13, or 14 digits, got 20."
+                ),
+                sscc=Sscc(
+                    value="376130321109103420",
+                    prefix=GS1Prefix(
+                        value="761", usage="GS1 Schweiz, Suisse, Svizzera"
+                    ),
+                    extension_digit=3,
+                    payload="37613032110910342",
+                    check_digit=0,
                 ),
                 gs1_message=GS1Message(
                     value="00376130321109103420",
@@ -200,15 +209,6 @@ from biip.symbology import Symbology, SymbologyIdentifier
                         )
                     ],
                 ),
-                sscc=Sscc(
-                    value="376130321109103420",
-                    prefix=GS1Prefix(
-                        value="761", usage="GS1 Schweiz, Suisse, Svizzera"
-                    ),
-                    extension_digit=3,
-                    payload="37613032110910342",
-                    check_digit=0,
-                ),
             ),
         ),
         (
@@ -222,6 +222,10 @@ from biip.symbology import Symbology, SymbologyIdentifier
                     prefix=GS1Prefix(value="590", usage="GS1 Poland"),
                     payload="590123412345",
                     check_digit=7,
+                ),
+                sscc_error=(
+                    "Failed to parse '0105901234123457' as SSCC: "
+                    "Expected 18 digits, got 16."
                 ),
                 gs1_message=GS1Message(
                     value="0105901234123457",
@@ -240,10 +244,6 @@ from biip.symbology import Symbology, SymbologyIdentifier
                         )
                     ],
                 ),
-                sscc_error=(
-                    "Failed to parse '0105901234123457' as SSCC: "
-                    "Expected 18 digits, got 16."
-                ),
             ),
         ),
         (
@@ -253,6 +253,9 @@ from biip.symbology import Symbology, SymbologyIdentifier
                 value="15210526",
                 gtin_error=(
                     "Invalid GTIN check digit for '15210526': Expected 4, got 6."
+                ),
+                sscc_error=(
+                    "Failed to parse '15210526' as SSCC: Expected 18 digits, got 8."
                 ),
                 gs1_message=GS1Message(
                     value="15210526",
@@ -264,9 +267,6 @@ from biip.symbology import Symbology, SymbologyIdentifier
                             date=date(2021, 5, 26),
                         )
                     ],
-                ),
-                sscc_error=(
-                    "Failed to parse '15210526' as SSCC: Expected 18 digits, got 8."
                 ),
             ),
         ),
