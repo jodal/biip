@@ -432,7 +432,7 @@ from biip.upc import Upc, UpcFormat
             ),
         ),
         (
-            # GS1 AI with Symbology Identifier
+            # GS1 AI with GS1-128 Symbology Identifier
             "]C1010590123412345715210526",
             ParseResult(
                 value="]C1010590123412345715210526",
@@ -470,6 +470,50 @@ from biip.upc import Upc, UpcFormat
                             pattern_groups=["210526"],
                             date=date(2021, 5, 26),
                         ),
+                    ],
+                ),
+            ),
+        ),
+        (
+            # GS1 AI with GS1 DataBar Symbology Identifier
+            "]e00100123456789012",
+            ParseResult(
+                value="]e00100123456789012",
+                symbology_identifier=SymbologyIdentifier(
+                    value="]e0",
+                    symbology=Symbology.RSS_EAN_UCC_COMPOSITE,
+                    modifiers="0",
+                    gs1_symbology=GS1Symbology.GS1_DATABAR,
+                ),
+                gtin=Gtin(
+                    value="00123456789012",
+                    format=GtinFormat.GTIN_12,
+                    prefix=GS1Prefix(value="012", usage="GS1 US"),
+                    payload="12345678901",
+                    check_digit=2,
+                ),
+                upc=Upc(
+                    value="123456789012",
+                    format=UpcFormat.UPC_A,
+                    number_system_digit=1,
+                    payload="12345678901",
+                    check_digit=2,
+                ),
+                gs1_message=GS1Message(
+                    value="0100123456789012",
+                    element_strings=[
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("01"),
+                            value="00123456789012",
+                            pattern_groups=["00123456789012"],
+                            gtin=Gtin(
+                                value="00123456789012",
+                                format=GtinFormat.GTIN_12,
+                                prefix=GS1Prefix(value="012", usage="GS1 US"),
+                                payload="12345678901",
+                                check_digit=2,
+                            ),
+                        )
                     ],
                 ),
             ),
