@@ -13,8 +13,8 @@ Example:
     >>> from biip.upc import Upc
     >>> upc_a = Upc.parse("042100005264")
     >>> upc_a
-    Upc(value='042100005264', format=UpcFormat.UPC_A, payload='04210000526',
-    number_system_digit=0, check_digit=4)
+    Upc(value='042100005264', format=UpcFormat.UPC_A, number_system_digit=0,
+    payload='04210000526', check_digit=4)
 
 A subset of the UPC-A values can be converted to a shorter UPC-E format by
 suppressing zeros.
@@ -28,8 +28,8 @@ All UPC-E values can be expanded to an UPC-A.
 Example:
     >>> upc_e = Upc.parse("04252614")
     >>> upc_e
-    Upc(value='04252614', format=UpcFormat.UPC_E, payload='0425261',
-    number_system_digit=0, check_digit=4)
+    Upc(value='04252614', format=UpcFormat.UPC_E, number_system_digit=0,
+    payload='0425261', check_digit=4)
     >>> upc_e.as_upc_a()
     '042100005264'
 
@@ -75,12 +75,12 @@ class Upc:
     #: UPC format, either UPC-A or UPC-E.
     format: UpcFormat
 
+    #: Number system digit.
+    number_system_digit: int
+
     #: The actual payload, including number system digit, manufacturer code,
     #: and product code. Excludes the check digit.
     payload: str
-
-    #: Number system digit.
-    number_system_digit: int
 
     #: Check digit used to check if the UPC-A as a whole is valid.
     #:

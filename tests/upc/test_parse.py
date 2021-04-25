@@ -12,8 +12,8 @@ def test_parse_upc_a() -> None:
     assert upc == Upc(
         value="042100005264",
         format=UpcFormat.UPC_A,
-        payload="04210000526",
         number_system_digit=0,
+        payload="04210000526",
         check_digit=4,
     )
 
@@ -26,8 +26,8 @@ def test_parse_upc_a() -> None:
             Upc(
                 value="425261",
                 format=UpcFormat.UPC_E,
-                payload="0425261",
                 number_system_digit=0,
+                payload="0425261",
                 check_digit=4,
             ),
         ),
@@ -36,8 +36,8 @@ def test_parse_upc_a() -> None:
             Upc(
                 value="1425261",
                 format=UpcFormat.UPC_E,
-                payload="1425261",
                 number_system_digit=1,
+                payload="1425261",
                 check_digit=1,
             ),
         ),
@@ -46,8 +46,8 @@ def test_parse_upc_a() -> None:
             Upc(
                 value="14252611",
                 format=UpcFormat.UPC_E,
-                payload="1425261",
                 number_system_digit=1,
+                payload="1425261",
                 check_digit=1,
             ),
         ),
