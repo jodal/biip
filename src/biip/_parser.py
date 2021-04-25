@@ -8,6 +8,7 @@ from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1Message, GS1Symbology
 from biip.gtin import Gtin, RcnRegion
 from biip.sscc import Sscc
 from biip.symbology import SymbologyIdentifier
+from biip.upc import Upc
 
 ParserType = Union[Type[GS1Message], Type[Gtin], Type[Sscc]]
 
@@ -127,6 +128,12 @@ class ParseResult:
     #: The GTIN parse error, if parsing as a GTIN was attempted and failed.
     gtin_error: Optional[str] = None
 
+    #: The extracted UPC, if any.
+    upc: Optional[Upc] = None
+
+    #: The UPC parse error, if parsing as an UPC was attempted and failed.
+    upc_error: Optional[str] = None
+
     #: The extracted SSCC, if any.
     #: Is also set if a GS1 Message containing an SSCC was successfully parsed.
     sscc: Optional[Sscc] = None
@@ -142,13 +149,14 @@ class ParseResult:
     gs1_message_error: Optional[str] = None
 
     def _has_result(self: "ParseResult") -> bool:
-        return any([self.gtin, self.sscc, self.gs1_message])
+        return any([self.gtin, self.upc, self.sscc, self.gs1_message])
 
     def _get_errors_list(self: "ParseResult") -> str:
         return "\n".join(
             f"- {parser_name}: {error}"
             for parser_name, error in [
                 ("GTIN", self.gtin_error),
+                ("UPC", self.upc_error),
                 ("SSCC", self.sscc_error),
                 ("GS1", self.gs1_message_error),
             ]
