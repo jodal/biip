@@ -68,18 +68,6 @@ def parse(
 
     # Run all parsers in order
     for parser in parsers:
-        if parser == Gtin:
-            try:
-                result.gtin = Gtin.parse(value, rcn_region=rcn_region)
-            except ParseError as exc:
-                result.gtin_error = str(exc)
-
-        if parser == Sscc:
-            try:
-                result.sscc = Sscc.parse(value)
-            except ParseError as exc:
-                result.sscc_error = str(exc)
-
         if parser == GS1Message:
             try:
                 result.gs1_message = GS1Message.parse(
@@ -103,6 +91,18 @@ def parse(
                     result.gtin = ai_01.gtin
                     # Clear error from parsing full value as GTIN.
                     result.gtin_error = None
+
+        if parser == Gtin:
+            try:
+                result.gtin = Gtin.parse(value, rcn_region=rcn_region)
+            except ParseError as exc:
+                result.gtin_error = str(exc)
+
+        if parser == Sscc:
+            try:
+                result.sscc = Sscc.parse(value)
+            except ParseError as exc:
+                result.sscc_error = str(exc)
 
     if result._has_result():
         return result
