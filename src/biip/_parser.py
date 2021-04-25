@@ -5,7 +5,7 @@ from typing import Iterable, List, Optional, Type, Union
 
 from biip import ParseError
 from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1Message, GS1Symbology
-from biip.gtin import Gtin, RcnRegion
+from biip.gtin import Gtin, GtinFormat, RcnRegion
 from biip.sscc import Sscc
 from biip.symbology import SymbologyIdentifier
 from biip.upc import Upc
@@ -92,6 +92,14 @@ def parse(
                     result.gtin = ai_01.gtin
                     # Clear error from parsing full value as GTIN.
                     result.gtin_error = None
+
+                    # If contained GTIN is a GTIN-12, also parse it as UPC.
+                    if ai_01.gtin and ai_01.gtin.format == GtinFormat.GTIN_12:
+                        try:
+                            result.upc = Upc.parse(ai_01.gtin.as_gtin_12())
+                            result.upc_error = None
+                        except ParseError as exc:
+                            result.upc_error = str(exc)
 
         if parser == Gtin:
             try:

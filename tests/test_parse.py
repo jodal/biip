@@ -240,6 +240,50 @@ from biip.upc import Upc, UpcFormat
             ),
         ),
         (
+            # GS1 AI: GTIN-12. GTIN-12 is also valid as UPC-A.
+            "0100123601057072",
+            ParseResult(
+                value="0100123601057072",
+                gtin=Gtin(
+                    value="00123601057072",
+                    format=GtinFormat.GTIN_12,
+                    prefix=GS1Prefix(value="012", usage="GS1 US"),
+                    payload="12360105707",
+                    check_digit=2,
+                    packaging_level=None,
+                ),
+                upc=Upc(
+                    value="123601057072",
+                    format=UpcFormat.UPC_A,
+                    number_system_digit=1,
+                    payload="12360105707",
+                    check_digit=2,
+                ),
+                sscc_error=(
+                    "Failed to parse '0100123601057072' as SSCC: "
+                    "Expected 18 digits, got 16."
+                ),
+                gs1_message=GS1Message(
+                    value="0100123601057072",
+                    element_strings=[
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("01"),
+                            value="00123601057072",
+                            pattern_groups=["00123601057072"],
+                            gtin=Gtin(
+                                value="00123601057072",
+                                format=GtinFormat.GTIN_12,
+                                prefix=GS1Prefix(value="012", usage="GS1 US"),
+                                payload="12360105707",
+                                check_digit=2,
+                                packaging_level=None,
+                            ),
+                        )
+                    ],
+                ),
+            ),
+        ),
+        (
             # GS1 AI: GTIN-13
             "0105901234123457",
             ParseResult(
