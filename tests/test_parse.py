@@ -71,6 +71,30 @@ from biip.upc import Upc, UpcFormat
             ),
         ),
         (
+            # Both a valid GTIN-8 and a valid UPC-E. GTIN result should be the
+            # GTIN-8, not the UPC-E expanded to UPC-A/GTIN-12.
+            "12345670",
+            ParseResult(
+                value="12345670",
+                gtin=Gtin(
+                    value="12345670",
+                    format=GtinFormat.GTIN_8,
+                    prefix=GS1Prefix(value="00001", usage="GS1 US"),
+                    payload="1234567",
+                    check_digit=0,
+                ),
+                upc=Upc(
+                    value="12345670",
+                    format=UpcFormat.UPC_E,
+                    number_system_digit=1,
+                    payload="1234567",
+                    check_digit=0,
+                ),
+                sscc_error="Failed to parse '12345670' as SSCC: Expected 18 digits, got 8.",
+                gs1_message_error="Failed to parse GS1 AI (12) date from '345670'.",
+            ),
+        ),
+        (
             # GTIN-12. GTIN-12 is also valid as UPC-A.
             "123601057072",
             ParseResult(
