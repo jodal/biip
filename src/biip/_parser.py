@@ -45,6 +45,10 @@ def parse(
         ParseError: If parsing of the data fails.
     """
     value = value.strip()
+    config = ParseConfig(
+        rcn_region=rcn_region,
+        separator_chars=separator_chars,
+    )
     result = ParseResult(value=value)
 
     # Extract Symbology Identifier
@@ -77,23 +81,26 @@ def parse(
     while queue:
         (parser, val) = queue.pop(0)
         if parser == GS1Message:
-            result._parse_gs1_message(
-                val,
-                queue=queue,
-                rcn_region=rcn_region,
-                separator_chars=separator_chars,
-            )
+            result._parse_gs1_message(val, config=config, queue=queue)
         if parser == Gtin:
-            result._parse_gtin(val, queue=queue, rcn_region=rcn_region)
+            result._parse_gtin(val, config=config, queue=queue)
         if parser == Sscc:
-            result._parse_sscc(val, queue=queue)
+            result._parse_sscc(val, config=config, queue=queue)
         if parser == Upc:
-            result._parse_upc(val, queue=queue)
+            result._parse_upc(val, config=config, queue=queue)
 
     if result._has_result():
         return result
     else:
         raise ParseError(f"Failed to parse {value!r}:\n{result._get_errors_list()}")
+
+
+@dataclass
+class ParseConfig:
+    """Configuration options for parsers."""
+
+    rcn_region: Optional[RcnRegion]
+    separator_chars: Iterable[str]
 
 
 @dataclass
@@ -137,14 +144,14 @@ class ParseResult:
         self: "ParseResult",
         value: str,
         *,
+        config: ParseConfig,
         queue: List[Tuple[ParserType, str]],
-        rcn_region: Optional[RcnRegion] = None,
     ) -> None:
         if self.gtin is not None:
             return  # pragma: no cover
 
         try:
-            self.gtin = Gtin.parse(value, rcn_region=rcn_region)
+            self.gtin = Gtin.parse(value, rcn_region=config.rcn_region)
             self.gtin_error = None
         except ParseError as exc:
             self.gtin = None
@@ -158,6 +165,7 @@ class ParseResult:
         self: "ParseResult",
         value: str,
         *,
+        config: ParseConfig,
         queue: List[Tuple[ParserType, str]],
     ) -> None:
         if self.upc is not None:
@@ -178,6 +186,7 @@ class ParseResult:
         self: "ParseResult",
         value: str,
         *,
+        config: ParseConfig,
         queue: List[Tuple[ParserType, str]],
     ) -> None:
         if self.sscc is not None:
@@ -194,9 +203,8 @@ class ParseResult:
         self: "ParseResult",
         value: str,
         *,
+        config: ParseConfig,
         queue: List[Tuple[ParserType, str]],
-        rcn_region: Optional[RcnRegion] = None,
-        separator_chars: Iterable[str],
     ) -> None:
         if self.gs1_message is not None:
             return  # pragma: no cover
@@ -204,8 +212,8 @@ class ParseResult:
         try:
             self.gs1_message = GS1Message.parse(
                 value,
-                rcn_region=rcn_region,
-                separator_chars=separator_chars,
+                rcn_region=config.rcn_region,
+                separator_chars=config.separator_chars,
             )
             self.gs1_message_error = None
         except ParseError as exc:
