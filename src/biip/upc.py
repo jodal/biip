@@ -203,7 +203,7 @@ class Upc:
             A string with the UPC encoded as UPC-A.
 
         References:
-            https://www.barcodefaq.com/barcode-properties/symbologies/upc-e/
+            GS1 General Specifications, section 5.2.2.4.2
         """
         if self.format == UpcFormat.UPC_A:
             return f"{self.payload}{self.check_digit}"
@@ -225,7 +225,7 @@ class Upc:
             EncodeError: If encoding as UPC-E fails.
 
         References:
-            https://www.barcodefaq.com/barcode-properties/symbologies/upc-e/
+            GS1 General Specifications, section 5.2.2.4.1
         """
         if self.format == UpcFormat.UPC_A:
             return _upc_a_to_upc_e_suppression(f"{self.payload}{self.check_digit}")

@@ -39,7 +39,7 @@ class Symbology(Enum):
     """Enum of barcode symbologies that are supported by Symbology Identifers.
 
     References:
-        ISO/IEC 15424:2008, Table 1.
+        ISO/IEC 15424:2008, table 1.
     """
 
     #: Code 39
