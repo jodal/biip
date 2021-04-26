@@ -64,6 +64,7 @@ Project resources
     api/gtin
     api/sscc
     api/symbology
+    api/upc
 
 
 License
