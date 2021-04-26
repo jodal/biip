@@ -11,15 +11,31 @@ Data of this format is found in the following types of barcodes:
 - GS1 DataMatrix
 - GS1 QR Code
 
-Example:
+If you only want to parse GS1 Messages, you can import the GS1 Message parser
+directly instead of using :func:`biip.parse`.
+
     >>> from biip.gs1 import GS1Message
+
+If the parsing succeeds, it returns a :class:`GS1Message` object.
+
     >>> msg = GS1Message.parse("010703206980498815210526100329")
+
+The has a raw value as well as an HRI, short for "human readable
+interpretation". The HRI is the text usually printed below or next to the
+barcode.
+
     >>> msg.value
     '010703206980498815210526100329'
     >>> msg.as_hri()
     '(01)07032069804988(15)210526(10)0329'
+
+A message can contain multiple element strings.
+
     >>> len(msg.element_strings)
     3
+
+In this example, the first element string is a GTIN.
+
     >>> msg.element_strings[0]
     GS1ElementString(ai=GS1ApplicationIdentifier(ai='01', description='Global
     Trade Item Number (GTIN)', data_title='GTIN', fnc1_required=False,
@@ -28,6 +44,11 @@ Example:
     format=GtinFormat.GTIN_13, prefix=GS1Prefix(value='703', usage='GS1
     Norway'), payload='703206980498', check_digit=8, packaging_level=None),
     sscc=None, date=None, decimal=None, money=None)
+
+The message object has :meth:`~GS1Message.get` and :meth:`~GS1Message.filter`
+methods to lookup element strings either by the Application Identifier's
+"data title" or its AI number.
+
     >>> msg.get(data_title='BEST BY')
     GS1ElementString(ai=GS1ApplicationIdentifier(ai='15', description='Best
     before date (YYMMDD)', data_title='BEST BEFORE or BEST BY',

@@ -9,8 +9,13 @@ This class can interpret the following UPC formats:
 - UPC-E, 7 digits, with explicit number system and no check digit.
 - UPC-E, 8 digits, with explicit number system and a check digit.
 
-Example:
+If you only want to parse SSCCs, you can import the SSCC parser directly
+instead of using :func:`biip.parse`
+
     >>> from biip.upc import Upc
+
+If parsing succeds, it returns a :class:`Upc` object.
+
     >>> upc_a = Upc.parse("042100005264")
     >>> upc_a
     Upc(value='042100005264', format=UpcFormat.UPC_A, number_system_digit=0,
@@ -19,13 +24,11 @@ Example:
 A subset of the UPC-A values can be converted to a shorter UPC-E format by
 suppressing zeros.
 
-Example:
     >>> upc_a.as_upc_e()
     '04252614'
 
 All UPC-E values can be expanded to an UPC-A.
 
-Example:
     >>> upc_e = Upc.parse("04252614")
     >>> upc_e
     Upc(value='04252614', format=UpcFormat.UPC_E, number_system_digit=0,
@@ -35,13 +38,11 @@ Example:
 
 UPC is a subset of the later GTIN standard: An UPC-A value is also a valid GTIN-12 value.
 
-Example:
     >>> upc_e.as_gtin_12()
     '042100005264'
 
 The canonical format for persisting UPCs to e.g. a database is GTIN-14.
 
-Example:
     >>> upc_e.as_gtin_14()
     '00042100005264'
 """
