@@ -104,7 +104,7 @@ Please open an issue if you have and barcode parsing related needs that are not 
   - Validate check digit.
   - Encode for human consumption, with the logical groups separated by whitespace.
 - UPC (Universal Product Code)
-  - Parse 12-digit UPC-A,
+  - Parse 12-digit UPC-A.
   - Parse 6-digit UPC-E, with implicit number system 0 and no check digit.
   - Parse 7-digit UPC-E, with explicit number system and no check digit.
   - Parse 8-digit UPC-E, with explicit number system and a check digit.
