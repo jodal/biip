@@ -8,7 +8,7 @@ class GS1Symbology(Enum):
     """Enum of Symbology Identifiers used in the GS1 system.
 
     References:
-        GS1 General Specifications, Figure 5.1.2-2.
+        GS1 General Specifications, figure 5.1.2-2.
         ISO/IEC 15424:2008.
     """
 

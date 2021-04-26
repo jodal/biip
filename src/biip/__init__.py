@@ -1,8 +1,10 @@
 r"""Biip interprets the data in barcodes.
 
-Example:
     >>> import biip
-    >>> # Ambiguous value that can be interpreted both as a GTIN and a GS1 Message:
+
+An ambiguous value may be interpreted as different formats. In the following
+example, the value can be interpreted as either a GTIN or a GS1 Message.
+
     >>> result = biip.parse("96385074")
     >>> result.gtin
     Gtin(value='96385074', format=GtinFormat.GTIN_8,
@@ -15,7 +17,12 @@ Example:
     fnc1_required=True, format='N2+X..90'), value='385074',
     pattern_groups=['385074'], gtin=None, sscc=None, date=None, decimal=None,
     money=None)])
-    >>> # Value that is only valid as a GS1 Message:
+
+In the next example, the value is only valid as a GS1 Message and the GTIN
+parser returns an error explaining why the value cannot be interpreted as a
+GTIN. If a format includes check digits, Biip always control them and fail if
+the check digits are incorrect.
+
     >>> result = biip.parse("15210527")
     >>> result.gtin
     None
@@ -28,7 +35,10 @@ Example:
     BY', fnc1_required=False, format='N2+N6'), value='210527',
     pattern_groups=['210527'], gtin=None, sscc=None, date=datetime.date(2021,
     5, 27), decimal=None, money=None)])
-    >>> # Value that cannot be interpreted as any supported format:
+
+If a value cannot be interpreted as any supported format, an exception is
+raised with a reason from each parser.
+
     >>> biip.parse("123")
     Traceback (most recent call last):
         ...

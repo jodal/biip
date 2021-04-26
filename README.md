@@ -14,10 +14,12 @@ Biip is a Python library for making sense of the data in barcodes.
 The library can interpret the following formats:
 
 - GTIN-8, GTIN-12, GTIN-13, and GTIN-14 numbers,
-  commonly found in EAN-8, EAN-13, UPC-A, UPC-E, and ITF-14 barcodes.
+  commonly found in EAN-8, EAN-13, and ITF-14 barcodes.
 
 - GS1 AI element strings,
   commonly found in GS1-128 barcodes.
+
+- UPC-A and UPC-E numbers, as found in UPC-A and UPC-E barcodes.
 
 For a quickstart guide and a complete API reference,
 see the [documentation](https://biip.readthedocs.io/).
@@ -104,7 +106,7 @@ Please open an issue if you have and barcode parsing related needs that are not 
   - Validate check digit.
   - Encode for human consumption, with the logical groups separated by whitespace.
 - UPC (Universal Product Code)
-  - Parse 12-digit UPC-A,
+  - Parse 12-digit UPC-A.
   - Parse 6-digit UPC-E, with implicit number system 0 and no check digit.
   - Parse 7-digit UPC-E, with explicit number system and no check digit.
   - Parse 8-digit UPC-E, with explicit number system and a check digit.
