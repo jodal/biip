@@ -48,17 +48,17 @@ class Rcn(Gtin):
     #: Only set if py-moneyed is installed and the currency is known.
     money: Optional["moneyed.Money"] = field(default=None, init=False)
 
-    def __post_init__(self: "Rcn") -> None:
+    def __post_init__(self) -> None:
         """Initialize derivated fields."""
         self._set_usage()
 
-    def _set_usage(self: "Rcn") -> None:
+    def _set_usage(self) -> None:
         if "within a geographic region" in self.prefix.usage:
             self.usage = RcnUsage.GEOGRAPHICAL
         if "within a company" in self.prefix.usage:
             self.usage = RcnUsage.COMPANY
 
-    def _parse_with_regional_rules(self: "Rcn", region: RcnRegion) -> None:
+    def _parse_with_regional_rules(self, region: RcnRegion) -> None:
         if self.usage == RcnUsage.COMPANY:
             return
 
@@ -82,7 +82,7 @@ class Rcn(Gtin):
                 amount=self.price, currency=self.region.get_currency_code()
             )
 
-    def _parse_using_british_price_rules(self: "Rcn") -> None:
+    def _parse_using_british_price_rules(self) -> None:
         # References:
         #   https://www.gs1uk.org/how-to-barcode-variable-measure-items
 
@@ -103,7 +103,7 @@ class Rcn(Gtin):
         pounds_sterling = Decimal(value)
         self.price = pounds_sterling / 100
 
-    def _parse_using_swedish_price_rules(self: "Rcn") -> None:
+    def _parse_using_swedish_price_rules(self) -> None:
         # These rules are used in the following regions:
         # - Norway:
         #   No specification found, but products tested seems to match Swedish rules.
@@ -123,7 +123,7 @@ class Rcn(Gtin):
 
         self.price = Decimal(f"{units}.{decimals}")
 
-    def _parse_using_swedish_weight_rules(self: "Rcn") -> None:
+    def _parse_using_swedish_weight_rules(self) -> None:
         # These rules are used in the following regions:
         # - Baltics:
         #   https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf
@@ -145,7 +145,7 @@ class Rcn(Gtin):
 
         self.weight = Decimal(f"{units}.{decimals}")
 
-    def without_variable_measure(self: "Rcn") -> Gtin:
+    def without_variable_measure(self) -> Gtin:
         """Create a new RCN where the variable measure is zeroed out.
 
         This provides us with a number which still includes the item

@@ -19,16 +19,16 @@ class GtinFormat(IntEnum):
     #: GTIN-14
     GTIN_14 = 14
 
-    def __str__(self: "GtinFormat") -> str:
+    def __str__(self) -> str:
         """Pretty string representation of format."""
         return self.name.replace("_", "-")
 
-    def __repr__(self: "GtinFormat") -> str:
+    def __repr__(self) -> str:
         """Canonical string representation of format."""
         return f"GtinFormat.{self.name}"
 
     @property
-    def length(self: "GtinFormat") -> int:
+    def length(self) -> int:
         """Length of a GTIN of the given format."""
         return int(self)
 
@@ -42,7 +42,7 @@ class RcnUsage(Enum):
     #: Usage of RCN restricted to internally in a company.
     COMPANY = "company"
 
-    def __repr__(self: "RcnUsage") -> str:
+    def __repr__(self) -> str:
         """Canonical string representation of format."""
         return f"RcnUsage.{self.name}"
 
@@ -62,11 +62,11 @@ class RcnRegion(Enum):
     #: Sweden
     SWEDEN = "se"
 
-    def __repr__(self: "RcnRegion") -> str:
+    def __repr__(self) -> str:
         """Canonical string representation of format."""
         return f"RcnRegion.{self.name}"
 
-    def get_currency_code(self: "RcnRegion") -> Optional[str]:
+    def get_currency_code(self) -> Optional[str]:
         """Get the ISO-4217 currency code for the region."""
         return {
             RcnRegion.GREAT_BRITAIN: "GBP",

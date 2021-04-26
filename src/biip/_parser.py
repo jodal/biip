@@ -133,10 +133,10 @@ class ParseResult:
     #: if parsing as a GS1 Message was attempted and failed.
     gs1_message_error: Optional[str] = None
 
-    def _has_result(self: "ParseResult") -> bool:
+    def _has_result(self) -> bool:
         return any([self.gtin, self.upc, self.sscc, self.gs1_message])
 
-    def _get_errors_list(self: "ParseResult") -> str:
+    def _get_errors_list(self) -> str:
         return "\n".join(
             f"- {parser_name}: {error}"
             for parser_name, error in [

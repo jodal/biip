@@ -3,7 +3,6 @@
 import json
 import pathlib
 from dataclasses import dataclass
-from typing import Type
 
 from biip import ParseError
 
@@ -34,7 +33,7 @@ class GS1Prefix:
     usage: str
 
     @classmethod
-    def extract(cls: Type["GS1Prefix"], value: str) -> "GS1Prefix":
+    def extract(cls, value: str) -> "GS1Prefix":
         """Extract the GS1 Prefix from the given value.
 
         Args:

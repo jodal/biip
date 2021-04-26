@@ -25,7 +25,7 @@ Biip can format the SSCC in HRI format for printing on a label.
 """
 
 from dataclasses import dataclass
-from typing import Optional, Type
+from typing import Optional
 
 from biip import ParseError
 from biip.gs1 import GS1Prefix
@@ -54,7 +54,7 @@ class Sscc:
     check_digit: int
 
     @classmethod
-    def parse(cls: Type["Sscc"], value: str) -> "Sscc":
+    def parse(cls, value: str) -> "Sscc":
         """Parse the given value into a :class:`Sscc` object.
 
         Args:
@@ -101,7 +101,7 @@ class Sscc:
             check_digit=check_digit,
         )
 
-    def as_hri(self: "Sscc", *, company_prefix_length: Optional[int] = None) -> str:
+    def as_hri(self, *, company_prefix_length: Optional[int] = None) -> str:
         """Render as a human readable interpretation (HRI).
 
         The HRI is often printed directly below barcodes.

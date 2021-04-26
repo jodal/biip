@@ -24,7 +24,7 @@ References:
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional, Type
+from typing import Optional
 
 from biip import ParseError
 from biip.gs1 import GS1Symbology
@@ -132,7 +132,7 @@ class Symbology(Enum):
     #: Aztec Code
     AZTEC_CODE = "z"
 
-    def __repr__(self: "Symbology") -> str:
+    def __repr__(self) -> str:
         """Canonical string representation of format."""
         return f"Symbology.{self.name}"
 
@@ -156,7 +156,7 @@ class SymbologyIdentifier:
     gs1_symbology: Optional[GS1Symbology] = None
 
     @classmethod
-    def extract(cls: Type["SymbologyIdentifier"], value: str) -> "SymbologyIdentifier":
+    def extract(cls, value: str) -> "SymbologyIdentifier":
         """Extract the Symbology Identifier from the given value.
 
         Args:
@@ -204,10 +204,10 @@ class SymbologyIdentifier:
             gs1_symbology=gs1_symbology,
         )
 
-    def __len__(self: "SymbologyIdentifier") -> int:
+    def __len__(self) -> int:
         """Get the length of the Symbology Identfier."""
         return len(self.value)
 
-    def __str__(self: "SymbologyIdentifier") -> str:
+    def __str__(self) -> str:
         """Get the string representation of the Symbology Identifier."""
         return self.value

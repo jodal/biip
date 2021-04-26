@@ -5,7 +5,7 @@ import datetime
 import re
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import Iterable, List, Optional, Type
+from typing import Iterable, List, Optional
 
 from biip import ParseError
 from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1ApplicationIdentifier
@@ -69,7 +69,7 @@ class GS1ElementString:
 
     @classmethod
     def extract(
-        cls: Type["GS1ElementString"],
+        cls,
         value: str,
         *,
         rcn_region: Optional[RcnRegion] = None,
@@ -123,21 +123,19 @@ class GS1ElementString:
 
         return element
 
-    def _set_gtin(
-        self: "GS1ElementString", *, rcn_region: Optional[RcnRegion] = None
-    ) -> None:
+    def _set_gtin(self, *, rcn_region: Optional[RcnRegion] = None) -> None:
         if self.ai.ai not in ("01", "02"):
             return
 
         self.gtin = Gtin.parse(self.value, rcn_region=rcn_region)
 
-    def _set_sscc(self: "GS1ElementString") -> None:
+    def _set_sscc(self) -> None:
         if self.ai.ai != "00":
             return
 
         self.sscc = Sscc.parse(self.value)
 
-    def _set_date(self: "GS1ElementString") -> None:
+    def _set_date(self) -> None:
         if self.ai.ai not in ("11", "12", "13", "15", "16", "17"):
             return
 
@@ -148,7 +146,7 @@ class GS1ElementString:
                 f"Failed to parse GS1 AI {self.ai} date from {self.value!r}."
             )
 
-    def _set_decimal(self: "GS1ElementString") -> None:
+    def _set_decimal(self) -> None:
         variable_measure = self.ai.ai[:2] in (
             "31",
             "32",
@@ -185,11 +183,11 @@ class GS1ElementString:
             currency = moneyed.get_currency(iso=self.pattern_groups[0])
             self.money = moneyed.Money(amount=self.decimal, currency=currency)
 
-    def __len__(self: "GS1ElementString") -> int:
+    def __len__(self) -> int:
         """Get the length of the element string."""
         return len(self.ai) + len(self.value)
 
-    def as_hri(self: "GS1ElementString") -> str:
+    def as_hri(self) -> str:
         """Render as a human readable interpretation (HRI).
 
         The HRI is often printed directly below the barcode.

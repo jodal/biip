@@ -49,7 +49,7 @@ The canonical format for persisting UPCs to e.g. a database is GTIN-14.
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional, Type
+from typing import Optional
 
 from biip import EncodeError, ParseError
 from biip.gs1.checksums import numeric_check_digit
@@ -61,7 +61,7 @@ class UpcFormat(Enum):
     UPC_A = "upc_a"
     UPC_E = "upc_e"
 
-    def __repr__(self: "UpcFormat") -> str:
+    def __repr__(self) -> str:
         """Canonical string representation of format."""
         return f"UpcFormat.{self.name}"
 
@@ -89,7 +89,7 @@ class Upc:
     check_digit: Optional[int] = None
 
     @classmethod
-    def parse(cls: Type["Upc"], value: str) -> "Upc":
+    def parse(cls, value: str) -> "Upc":
         """Parse the given value into a :class:`Upc` object.
 
         Args:
@@ -124,7 +124,7 @@ class Upc:
         raise Exception("Unhandled UPC length. This is a bug.")  # pragma: no cover
 
     @classmethod
-    def _parse_upc_a(cls: Type["Upc"], value: str) -> "Upc":
+    def _parse_upc_a(cls, value: str) -> "Upc":
         assert len(value) == 12
 
         payload = value[:-1]
@@ -147,7 +147,7 @@ class Upc:
         )
 
     @classmethod
-    def _parse_upc_e(cls: Type["Upc"], value: str) -> "Upc":
+    def _parse_upc_e(cls, value: str) -> "Upc":
         length = len(value)
         assert length in (6, 7, 8)
 
@@ -197,7 +197,7 @@ class Upc:
             check_digit=check_digit,
         )
 
-    def as_upc_a(self: "Upc") -> str:
+    def as_upc_a(self) -> str:
         """Format as UPC-A.
 
         Returns:
@@ -216,7 +216,7 @@ class Upc:
             "Unhandled case while formatting as UPC-E. This is a bug."
         )
 
-    def as_upc_e(self: "Upc") -> str:
+    def as_upc_e(self) -> str:
         """Format as UPC-E.
 
         Returns:
@@ -238,19 +238,19 @@ class Upc:
             "Unhandled case while formatting as UPC-E. This is a bug."
         )
 
-    def as_gtin_12(self: "Upc") -> str:
+    def as_gtin_12(self) -> str:
         """Format as GTIN-12."""
         from biip.gtin import Gtin
 
         return Gtin.parse(self.as_upc_a()).as_gtin_12()
 
-    def as_gtin_13(self: "Upc") -> str:
+    def as_gtin_13(self) -> str:
         """Format as GTIN-13."""
         from biip.gtin import Gtin
 
         return Gtin.parse(self.as_upc_a()).as_gtin_13()
 
-    def as_gtin_14(self: "Upc") -> str:
+    def as_gtin_14(self) -> str:
         """Format as GTIN-14."""
         from biip.gtin import Gtin
 

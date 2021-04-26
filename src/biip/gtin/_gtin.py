@@ -42,9 +42,7 @@ class Gtin:
     packaging_level: Optional[int] = None
 
     @classmethod
-    def parse(
-        cls: Type["Gtin"], value: str, *, rcn_region: Optional[RcnRegion] = None
-    ) -> "Gtin":
+    def parse(cls, value: str, *, rcn_region: Optional[RcnRegion] = None) -> "Gtin":
         """Parse the given value into a :class:`Gtin` object.
 
         Both GTIN-8, GTIN-12, GTIN-13, and GTIN-14 are supported.
@@ -126,23 +124,23 @@ class Gtin:
 
         return gtin
 
-    def as_gtin_8(self: "Gtin") -> str:
+    def as_gtin_8(self) -> str:
         """Format as a GTIN-8."""
         return self._as_format(GtinFormat.GTIN_8)
 
-    def as_gtin_12(self: "Gtin") -> str:
+    def as_gtin_12(self) -> str:
         """Format as a GTIN-12."""
         return self._as_format(GtinFormat.GTIN_12)
 
-    def as_gtin_13(self: "Gtin") -> str:
+    def as_gtin_13(self) -> str:
         """Format as a GTIN-13."""
         return self._as_format(GtinFormat.GTIN_13)
 
-    def as_gtin_14(self: "Gtin") -> str:
+    def as_gtin_14(self) -> str:
         """Format as a GTIN-14."""
         return self._as_format(GtinFormat.GTIN_14)
 
-    def _as_format(self: "Gtin", gtin_format: GtinFormat) -> str:
+    def _as_format(self, gtin_format: GtinFormat) -> str:
         if self.format.length > gtin_format.length:
             raise EncodeError(f"Failed encoding {self.value!r} as {gtin_format!s}.")
         return f"{self.payload}{self.check_digit}".zfill(gtin_format.length)
