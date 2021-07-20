@@ -4,7 +4,7 @@ import dataclasses
 import json
 from typing import List
 
-import requests
+import httpx
 from bs4 import BeautifulSoup
 
 from biip.gs1 import GS1ApplicationIdentifier
@@ -21,7 +21,7 @@ def main() -> None:
 
 def download(url: str) -> bytes:
     """Download the data from GS1."""
-    return requests.get(url).content
+    return httpx.get(url).content
 
 
 def parse(html_content: bytes) -> List[GS1ApplicationIdentifier]:
