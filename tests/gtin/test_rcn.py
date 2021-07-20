@@ -51,18 +51,31 @@ def test_rcn_without_specified_region() -> None:
 
 
 @pytest.mark.parametrize(
-    "value, weight, price, money",
+    "rcn_region, value, weight, price, money",
     [
         # NOTE: These examples are constructed from a template. This should be
         # extended with actual examples from either specifications or real
         # Baltic products.
-        ("2311111112345", Decimal("1.234"), None, None),
-        ("2411111112342", Decimal("12.34"), None, None),
-        ("2511111112349", Decimal("123.4"), None, None),
-        ("2911111111111", None, None, None),
+        #
+        # Estonia
+        (RcnRegion.ESTONIA, "2311111112345", Decimal("1.234"), None, None),
+        (RcnRegion.ESTONIA, "2411111112342", Decimal("12.34"), None, None),
+        (RcnRegion.ESTONIA, "2511111112349", Decimal("123.4"), None, None),
+        (RcnRegion.ESTONIA, "2911111111111", None, None, None),
+        # Latvia
+        (RcnRegion.LATVIA, "2311111112345", Decimal("1.234"), None, None),
+        (RcnRegion.LATVIA, "2411111112342", Decimal("12.34"), None, None),
+        (RcnRegion.LATVIA, "2511111112349", Decimal("123.4"), None, None),
+        (RcnRegion.LATVIA, "2911111111111", None, None, None),
+        # Lithuania
+        (RcnRegion.LITHUANIA, "2311111112345", Decimal("1.234"), None, None),
+        (RcnRegion.LITHUANIA, "2411111112342", Decimal("12.34"), None, None),
+        (RcnRegion.LITHUANIA, "2511111112349", Decimal("123.4"), None, None),
+        (RcnRegion.LITHUANIA, "2911111111111", None, None, None),
     ],
 )
 def test_region_baltics(
+    rcn_region: RcnRegion,
     value: str,
     weight: Optional[Decimal],
     price: Optional[Decimal],
@@ -73,10 +86,10 @@ def test_region_baltics(
     # References:
     #   https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf
 
-    rcn = Gtin.parse(value, rcn_region=RcnRegion.BALTICS)
+    rcn = Gtin.parse(value, rcn_region=rcn_region)
 
     assert isinstance(rcn, Rcn)
-    assert rcn.region == RcnRegion.BALTICS
+    assert rcn.region == rcn_region
     assert rcn.weight == weight
     assert rcn.price == price
     assert rcn.money == money
@@ -178,20 +191,22 @@ def test_region_sweden(
 
 
 @pytest.mark.parametrize(
-    "value, rcn_region, expected",
+    "rcn_region, value, expected",
     [
         # Geopgraphical RCNs: Strip variable measure if we know how.
-        ("2311111112345", RcnRegion.BALTICS, "2311111100007"),
-        ("2011122912346", RcnRegion.GREAT_BRITAIN, "2011122000005"),
-        ("2302148210869", RcnRegion.NORWAY, "2302148200006"),
-        ("2088060112343", RcnRegion.SWEDEN, "2088060100005"),
+        (RcnRegion.ESTONIA, "2311111112345", "2311111100007"),
+        (RcnRegion.GREAT_BRITAIN, "2011122912346", "2011122000005"),
+        (RcnRegion.LATVIA, "2311111112345", "2311111100007"),
+        (RcnRegion.LITHUANIA, "2311111112345", "2311111100007"),
+        (RcnRegion.NORWAY, "2302148210869", "2302148200006"),
+        (RcnRegion.SWEDEN, "2088060112343", "2088060100005"),
         # Company RCNs: Return as is, as the data is opaque.
-        ("00012348", RcnRegion.NORWAY, "00012348"),
-        ("0412345678903", RcnRegion.NORWAY, "0412345678903"),
+        (RcnRegion.NORWAY, "00012348", "00012348"),
+        (RcnRegion.NORWAY, "0412345678903", "0412345678903"),
     ],
 )
 def test_without_variable_measure(
-    value: str, rcn_region: RcnRegion, expected: str
+    rcn_region: RcnRegion, value: str, expected: str
 ) -> None:
     original_rcn = Gtin.parse(value, rcn_region=rcn_region)
     assert isinstance(original_rcn, Rcn)
@@ -219,8 +234,10 @@ def test_without_variable_measure_fails_if_rules_are_unknown() -> None:
 @pytest.mark.parametrize(
     "value, rcn_region",
     [
-        ("baltics", RcnRegion.BALTICS),
+        ("ee", RcnRegion.ESTONIA),
         ("gb", RcnRegion.GREAT_BRITAIN),
+        ("lv", RcnRegion.LATVIA),
+        ("lt", RcnRegion.LITHUANIA),
         ("no", RcnRegion.NORWAY),
         ("se", RcnRegion.SWEDEN),
     ],
@@ -252,4 +269,4 @@ def test_rcn_usage_repr() -> None:
 
 
 def test_rcn_region_repr() -> None:
-    assert repr(RcnRegion.BALTICS) == "RcnRegion.BALTICS"
+    assert repr(RcnRegion.ESTONIA) == "RcnRegion.ESTONIA"

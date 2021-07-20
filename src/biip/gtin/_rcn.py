@@ -67,7 +67,12 @@ class Rcn(Gtin):
 
         self.region = region
 
-        if self.region in (RcnRegion.BALTICS,):
+        if self.region in (
+            RcnRegion.BALTICS,
+            RcnRegion.ESTONIA,
+            RcnRegion.LATVIA,
+            RcnRegion.LITHUANIA,
+        ):
             self._parse_using_swedish_weight_rules()
 
         if self.region in (RcnRegion.GREAT_BRITAIN,):
@@ -125,7 +130,7 @@ class Rcn(Gtin):
 
     def _parse_using_swedish_weight_rules(self) -> None:
         # These rules are used in the following regions:
-        # - Baltics:
+        # - Estonia, Latvia, and Lithuania:
         #   https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf
         # - Norway:
         #   No specification found, but products tested seems to match Swedish rules.
@@ -166,6 +171,9 @@ class Rcn(Gtin):
 
         if self.region in (
             RcnRegion.BALTICS,
+            RcnRegion.ESTONIA,
+            RcnRegion.LATVIA,
+            RcnRegion.LITHUANIA,
             RcnRegion.NORWAY,
             RcnRegion.SWEDEN,
         ):
