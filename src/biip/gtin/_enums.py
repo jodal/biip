@@ -1,7 +1,7 @@
 """Enums used when parsing GTINs."""
 
 from enum import Enum, IntEnum
-from typing import Optional
+from typing import Optional, Union
 
 
 class GtinFormat(IntEnum):
@@ -76,6 +76,27 @@ class RcnRegion(Enum):
 
     #: Sweden
     SWEDEN = "se"
+
+    @classmethod
+    def from_iso_3166_1_numeric_code(
+        cls, code: Union[int, str]
+    ) -> Optional["RcnRegion"]:
+        """Get the region from an ISO 3166-1 numeric code."""
+        code = str(code).zfill(3)
+
+        if len(code) != 3 or not code.isnumeric():
+            raise ValueError(
+                f"Expected ISO 3166-1 numeric code to be 3 digits, got {code!r}."
+            )
+
+        return {
+            "233": RcnRegion.ESTONIA,
+            "826": RcnRegion.GREAT_BRITAIN,
+            "428": RcnRegion.LATVIA,
+            "440": RcnRegion.LITHUANIA,
+            "578": RcnRegion.NORWAY,
+            "752": RcnRegion.SWEDEN,
+        }.get(code)
 
     def __repr__(self) -> str:
         """Canonical string representation of format."""
