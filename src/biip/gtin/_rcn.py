@@ -11,7 +11,7 @@ from biip.gtin import Gtin, RcnRegion, RcnUsage
 try:
     import moneyed
 except ImportError:  # pragma: no cover
-    moneyed = None
+    moneyed = None  # type: ignore
 
 
 @dataclass

@@ -15,7 +15,7 @@ from biip.sscc import Sscc
 try:
     import moneyed
 except ImportError:  # pragma: no cover
-    moneyed = None
+    moneyed = None  # type: ignore
 
 
 @dataclass
