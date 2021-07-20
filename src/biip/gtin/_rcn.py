@@ -11,7 +11,7 @@ from biip.gtin import Gtin, RcnRegion, RcnUsage
 try:
     import moneyed
 except ImportError:  # pragma: no cover
-    moneyed = None
+    moneyed = None  # type: ignore
 
 
 @dataclass
@@ -82,10 +82,9 @@ class Rcn(Gtin):
             self._parse_using_swedish_price_rules()
             self._parse_using_swedish_weight_rules()
 
-        if self.price is not None and moneyed is not None:
-            self.money = moneyed.Money(
-                amount=self.price, currency=self.region.get_currency_code()
-            )
+        currency_code = self.region.get_currency_code()
+        if self.price is not None and moneyed is not None and currency_code is not None:
+            self.money = moneyed.Money(amount=self.price, currency=currency_code)
 
     def _parse_using_british_price_rules(self) -> None:
         # References:
