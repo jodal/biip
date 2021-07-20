@@ -3972,8 +3972,8 @@
     "description": "Global Model Number (GMN)",
     "data_title": "GMN (for medical devices, the default, global data title is BUDI-DI)",
     "fnc1_required": true,
-    "format": "N4+X..30",
-    "pattern": "^8013([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+    "format": "N4+X..25",
+    "pattern": "^8013([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,25})$"
   },
   {
     "ai": "8017",
