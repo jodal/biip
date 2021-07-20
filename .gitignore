@@ -1,5 +1,6 @@
 *.egg-info/
 /.coverage
+/.dmypy.json
 /.mypy_cache/
 /.nox/
 /.python-version
