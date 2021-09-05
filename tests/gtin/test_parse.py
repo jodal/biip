@@ -196,3 +196,13 @@ def test_parse_gtin_14() -> None:
         check_digit=3,
         packaging_level=9,
     )
+
+
+def test_parse_gtin_with_unknown_gs1_prefix() -> None:
+    assert Gtin.parse("6712670000276") == Gtin(
+        value="6712670000276",
+        format=GtinFormat.GTIN_13,
+        prefix=None,
+        payload="671267000027",
+        check_digit=6,
+    )

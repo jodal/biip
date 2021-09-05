@@ -53,6 +53,10 @@ class Rcn(Gtin):
         self._set_usage()
 
     def _set_usage(self) -> None:
+        # Classification as RCN depends on the prefix being known, so we won't
+        # get here unless it is known.
+        assert self.prefix is not None
+
         if "within a geographic region" in self.prefix.usage:
             self.usage = RcnUsage.GEOGRAPHICAL
         if "within a company" in self.prefix.usage:

@@ -41,7 +41,7 @@ class Sscc:
 
     #: The GS1 prefix, indicating what GS1 country organization that assigned
     #: code range.
-    prefix: GS1Prefix
+    prefix: Optional[GS1Prefix]
 
     #: Extension digit used to increase the capacity of the serial reference.
     extension_digit: int
@@ -118,6 +118,10 @@ class Sscc:
             A human-readable string where the logic parts are separated by whitespace.
         """
         value = self.payload[1:]  # Strip extension digit
+
+        if self.prefix is None:
+            return f"{self.extension_digit} {value} {self.check_digit}"
+
         gs1_prefix = self.prefix.value
 
         if company_prefix_length is None:

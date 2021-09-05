@@ -25,7 +25,7 @@ class Gtin:
 
     #: The GS1 prefix, indicating what GS1 country organization that assigned
     #: code range.
-    prefix: GS1Prefix
+    prefix: Optional[GS1Prefix]
 
     #: The actual payload, including packaging level if any, company prefix,
     #: and item reference. Excludes the check digit.
@@ -105,7 +105,7 @@ class Gtin:
             )
 
         gtin_type: Type[Union[Gtin, Rcn]]
-        if "Restricted Circulation Number" in prefix.usage:
+        if prefix is not None and "Restricted Circulation Number" in prefix.usage:
             gtin_type = Rcn
         else:
             gtin_type = Gtin
