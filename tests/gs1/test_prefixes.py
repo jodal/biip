@@ -6,7 +6,7 @@ from biip import ParseError
 from biip.gs1 import GS1Prefix
 
 
-@pytest.mark.parametrize("bad_value", ["abcdef", "199999"])
+@pytest.mark.parametrize("bad_value", ["abcdef", "1a2b3c"])
 def test_invalid_gs1_prefix(bad_value: str) -> None:
     with pytest.raises(ParseError) as exc_info:
         GS1Prefix.extract(bad_value)
@@ -23,6 +23,7 @@ def test_invalid_gs1_prefix(bad_value: str) -> None:
         ),
         ("060999", GS1Prefix(value="060", usage="GS1 US")),
         ("139999", GS1Prefix(value="139", usage="GS1 US")),
+        ("6712670000276", None),  # Unassigned prefix
         ("701999", GS1Prefix(value="701", usage="GS1 Norway")),
         ("978-1-492-05374-3", GS1Prefix(value="978", usage="Bookland (ISBN)")),
     ],

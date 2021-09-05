@@ -3,6 +3,7 @@
 import json
 import pathlib
 from dataclasses import dataclass
+from typing import Optional
 
 from biip import ParseError
 
@@ -33,14 +34,14 @@ class GS1Prefix:
     usage: str
 
     @classmethod
-    def extract(cls, value: str) -> "GS1Prefix":
+    def extract(cls, value: str) -> Optional["GS1Prefix"]:
         """Extract the GS1 Prefix from the given value.
 
         Args:
             value: The string to extract a GS1 Prefix from.
 
         Returns:
-            Metadata about the extracted prefix.
+            Metadata about the extracted prefix, or `None` if the prefix is unknown.
 
         Raises:
             ParseError: If the parsing fails.
@@ -55,7 +56,12 @@ class GS1Prefix:
             if prefix_range.min_value <= number <= prefix_range.max_value:
                 return cls(value=prefix, usage=prefix_range.usage)
 
-        raise ParseError(f"Failed to get GS1 Prefix from {value!r}.")
+        if not prefix.isnumeric():
+            # `prefix` is now the shortest prefix possible, and should be
+            # numeric even if the prefix assignment is unknown.
+            raise ParseError(f"Failed to get GS1 Prefix from {value!r}.")
+
+        return None
 
 
 @dataclass(frozen=True)
