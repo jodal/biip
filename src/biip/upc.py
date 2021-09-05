@@ -265,7 +265,7 @@ def _upc_e_to_upc_a_expansion(value: str) -> str:
     check_digit = int(value[7])
 
     if last_digit in (0, 1, 2):
-        return f"{value[:3]}{last_digit}0000" f"{value[3:6]}{check_digit}"
+        return f"{value[:3]}{last_digit}0000{value[3:6]}{check_digit}"
 
     if last_digit == 3:
         return f"{value[:4]}00000{value[4:6]}{check_digit}"
@@ -297,7 +297,7 @@ def _upc_a_to_upc_e_suppression(value: str) -> str:
 
     if value[4:8] == "0000" and int(value[3]) in (0, 1, 2):
         # UPC-E suppression, condition C
-        return f"{value[:3]}{value[8:11]}" f"{value[3]}{check_digit}"
+        return f"{value[:3]}{value[8:11]}{value[3]}{check_digit}"
 
     if value[4:9] == "00000" and int(value[3]) in range(3, 10):
         # UPC-E suppression, condition D
