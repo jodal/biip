@@ -73,6 +73,13 @@ def test_as_hri(prefix_length: Optional[int], expected: str) -> None:
     assert sscc.as_hri(company_prefix_length=prefix_length) == expected
 
 
+def test_as_hri_with_unknown_gs1_prefix() -> None:
+    # GS1 prefix 671 is currently unassigned.
+    sscc = Sscc.parse("367130321109103428")
+
+    assert sscc.as_hri() == "3 6713032110910342 8"
+
+
 def test_as_hri_with_too_low_company_prefix_length() -> None:
     sscc = Sscc.parse("376130321109103420")
 
