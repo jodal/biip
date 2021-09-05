@@ -213,7 +213,7 @@ class Upc:
             return _upc_e_to_upc_a_expansion(f"{self.payload}{self.check_digit}")
 
         raise Exception(  # pragma: no cover
-            "Unhandled case while formatting as UPC-E. This is a bug."
+            "Unhandled case while formatting as UPC-A. This is a bug."
         )
 
     def as_upc_e(self) -> str:
