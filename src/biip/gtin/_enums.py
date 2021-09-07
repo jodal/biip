@@ -62,6 +62,9 @@ class RcnRegion(Enum):
     #: Estonia
     ESTONIA = "ee"
 
+    #: Finland
+    FINLAND = "fi"
+
     #: Great Britain
     GREAT_BRITAIN = "gb"
 
@@ -91,6 +94,7 @@ class RcnRegion(Enum):
 
         return {
             "233": RcnRegion.ESTONIA,
+            "246": RcnRegion.FINLAND,
             "826": RcnRegion.GREAT_BRITAIN,
             "428": RcnRegion.LATVIA,
             "440": RcnRegion.LITHUANIA,

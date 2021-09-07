@@ -74,6 +74,7 @@ class Rcn(Gtin):
         if self.region in (
             RcnRegion.BALTICS,
             RcnRegion.ESTONIA,
+            RcnRegion.FINLAND,
             RcnRegion.LATVIA,
             RcnRegion.LITHUANIA,
         ):
@@ -116,7 +117,7 @@ class Rcn(Gtin):
         # - Norway:
         #   No specification found, but products tested seems to match Swedish rules.
         # - Sweden:
-        #   https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/
+        #   https://gs1.se/en/support/how-do-i-create-my-variable-weight-numbers/
 
         if self.payload[:2] not in ("20", "21", "22"):
             return
@@ -135,10 +136,12 @@ class Rcn(Gtin):
         # These rules are used in the following regions:
         # - Estonia, Latvia, and Lithuania:
         #   https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf
+        # - Finland:
+        #   https://gs1.fi/en/instructions/gs1-company-prefix/how-identify-product-gtin
         # - Norway:
         #   No specification found, but products tested seems to match Swedish rules.
         # - Sweden:
-        #   https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/
+        #   https://gs1.se/en/support/how-do-i-create-my-variable-weight-numbers/
 
         if self.payload[:2] not in ("23", "24", "25"):
             return
@@ -175,6 +178,7 @@ class Rcn(Gtin):
         if self.region in (
             RcnRegion.BALTICS,
             RcnRegion.ESTONIA,
+            RcnRegion.FINLAND,
             RcnRegion.LATVIA,
             RcnRegion.LITHUANIA,
             RcnRegion.NORWAY,
