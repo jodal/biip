@@ -74,6 +74,7 @@ class Rcn(Gtin):
         if self.region in (
             RcnRegion.BALTICS,
             RcnRegion.ESTONIA,
+            RcnRegion.FINLAND,
             RcnRegion.LATVIA,
             RcnRegion.LITHUANIA,
         ):
@@ -135,6 +136,8 @@ class Rcn(Gtin):
         # These rules are used in the following regions:
         # - Estonia, Latvia, and Lithuania:
         #   https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf
+        # - Finland:
+        #   https://gs1.fi/en/instructions/gs1-company-prefix/how-identify-product-gtin
         # - Norway:
         #   No specification found, but products tested seems to match Swedish rules.
         # - Sweden:
@@ -175,6 +178,7 @@ class Rcn(Gtin):
         if self.region in (
             RcnRegion.BALTICS,
             RcnRegion.ESTONIA,
+            RcnRegion.FINLAND,
             RcnRegion.LATVIA,
             RcnRegion.LITHUANIA,
             RcnRegion.NORWAY,

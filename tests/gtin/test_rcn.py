@@ -138,6 +138,32 @@ def test_region_great_britain_fails_with_invalid_price_check_digit() -> None:
 @pytest.mark.parametrize(
     "value, weight, price, money",
     [
+        ("2388060112344", Decimal("1.234"), None, None),
+        ("2488060112341", Decimal("12.34"), None, None),
+        ("2588060112348", Decimal("123.4"), None, None),
+    ],
+)
+def test_region_finland(
+    value: str,
+    weight: Optional[Decimal],
+    price: Optional[Decimal],
+    money: Optional[Money],
+) -> None:
+    # References:
+    #   https://gs1.fi/en/instructions/gs1-company-prefix/how-identify-product-gtin
+
+    rcn = Gtin.parse(value, rcn_region=RcnRegion.FINLAND)
+
+    assert isinstance(rcn, Rcn)
+    assert rcn.region == RcnRegion.FINLAND
+    assert rcn.weight == weight
+    assert rcn.price == price
+    assert rcn.money == money
+
+
+@pytest.mark.parametrize(
+    "value, weight, price, money",
+    [
         # Norvegia 1kg
         ("2302148210869", Decimal("1.086"), None, None),
         # Stange kyllingbryst
@@ -195,6 +221,7 @@ def test_region_sweden(
     [
         # Geographical RCNs: Strip variable measure if we know how.
         (RcnRegion.ESTONIA, "2311111112345", "2311111100007"),
+        (RcnRegion.FINLAND, "2311111112345", "2311111100007"),
         (RcnRegion.GREAT_BRITAIN, "2011122912346", "2011122000005"),
         (RcnRegion.LATVIA, "2311111112345", "2311111100007"),
         (RcnRegion.LITHUANIA, "2311111112345", "2311111100007"),
@@ -235,6 +262,7 @@ def test_without_variable_measure_fails_if_rules_are_unknown() -> None:
     "value, rcn_region",
     [
         ("ee", RcnRegion.ESTONIA),
+        ("fi", RcnRegion.FINLAND),
         ("gb", RcnRegion.GREAT_BRITAIN),
         ("lv", RcnRegion.LATVIA),
         ("lt", RcnRegion.LITHUANIA),
@@ -268,6 +296,7 @@ def test_fails_when_rcn_region_is_unknown_string() -> None:
     "value, rcn_region",
     [
         ("233", RcnRegion.ESTONIA),
+        ("246", RcnRegion.FINLAND),
         ("826", RcnRegion.GREAT_BRITAIN),
         ("428", RcnRegion.LATVIA),
         ("440", RcnRegion.LITHUANIA),
