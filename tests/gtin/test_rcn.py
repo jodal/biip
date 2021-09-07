@@ -1,10 +1,11 @@
 from decimal import Decimal
-from typing import Optional, Union
+from typing import List, Optional, Union
 
 import pytest
 from moneyed import Money
 
 from biip import EncodeError, ParseError
+from biip.gs1.checksums import numeric_check_digit
 from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
 
 
@@ -249,6 +250,55 @@ def test_without_variable_measure_strips_variable_parts(
     assert isinstance(stripped_rcn, Rcn)
     assert stripped_rcn.value == expected
     assert stripped_rcn.region == original_rcn.region
+
+
+@pytest.mark.parametrize(
+    "rcn_region, nonvariable_prefixes",
+    [
+        (
+            RcnRegion.ESTONIA,
+            ["02", "20", "21", "22", "26", "27", "28", "29"],
+        ),
+        (
+            RcnRegion.FINLAND,
+            ["02", "20", "21", "22", "26", "27", "28", "29"],
+        ),
+        (
+            RcnRegion.GREAT_BRITAIN,
+            ["21", "22", "23", "24", "25", "26", "27", "28", "29"],
+        ),
+        (
+            RcnRegion.LATVIA,
+            ["02", "20", "21", "22", "26", "27", "28", "29"],
+        ),
+        (
+            RcnRegion.LITHUANIA,
+            ["02", "20", "21", "22", "26", "27", "28", "29"],
+        ),
+        (
+            RcnRegion.NORWAY,
+            ["02", "26", "27", "28", "29"],
+        ),
+        (
+            RcnRegion.SWEDEN,
+            ["02", "26", "27", "28", "29"],
+        ),
+    ],
+)
+def test_without_variable_measure_keeps_nonvariable_rcn_unchanged(
+    rcn_region: RcnRegion, nonvariable_prefixes: List[str]
+) -> None:
+    for prefix in nonvariable_prefixes:
+        payload = f"{prefix}1111111111"
+        value = f"{payload}{numeric_check_digit(payload)}"
+        original_rcn = Gtin.parse(value, rcn_region=rcn_region)
+        assert isinstance(original_rcn, Rcn)
+
+        stripped_rcn = original_rcn.without_variable_measure()
+
+        assert isinstance(stripped_rcn, Rcn)
+        assert stripped_rcn.value == original_rcn.value
+        assert stripped_rcn.region == original_rcn.region
 
 
 @pytest.mark.parametrize(

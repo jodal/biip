@@ -181,18 +181,32 @@ class Rcn(Gtin):
         if self.usage == RcnUsage.COMPANY:
             return self
 
+        prefix = self.as_gtin_13()[:2]
+
         if self.region in (
             RcnRegion.BALTICS,
             RcnRegion.ESTONIA,
             RcnRegion.FINLAND,
             RcnRegion.LATVIA,
             RcnRegion.LITHUANIA,
+        ):
+            if prefix in ("23", "24", "25"):
+                return self._normalized_using_swedish_rules()
+            else:
+                return self
+        elif self.region in (
             RcnRegion.NORWAY,
             RcnRegion.SWEDEN,
         ):
-            return self._normalized_using_swedish_rules()
+            if prefix in ("20", "21", "22", "23", "24", "25"):
+                return self._normalized_using_swedish_rules()
+            else:
+                return self
         elif self.region in (RcnRegion.GREAT_BRITAIN,):
-            return self._normalized_using_british_rules()
+            if prefix in ("20",):
+                return self._normalized_using_british_rules()
+            else:
+                return self
         else:
             raise EncodeError(
                 f"Cannot zero out the variable measure part of {self.value!r} as the "
