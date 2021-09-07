@@ -50,6 +50,15 @@ def test_rcn_without_specified_region() -> None:
     assert rcn.money is None
 
 
+def test_gtin_14_with_rcn_prefix_is_not_an_rcn() -> None:
+    # The value below is a GTIN-14 composed of packaging level 1 and a valid RCN-13.
+    gtin = Gtin.parse("12991111111110", rcn_region=None)
+
+    assert isinstance(gtin, Gtin)
+    assert not isinstance(gtin, Rcn)
+    assert gtin.format == GtinFormat.GTIN_14
+
+
 @pytest.mark.parametrize(
     "rcn_region, value, weight, price, money",
     [

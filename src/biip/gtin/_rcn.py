@@ -18,14 +18,20 @@ except ImportError:  # pragma: no cover
 class Rcn(Gtin):
     """Restricted Circulation Number (RCN) is a subset of GTIN.
 
-    RCNs with prefix 02 and 20-29 have the same semantics across a geographic
+    Both RCN-8, RCN-12, and RCN-13 are supported. There is no 14 digit version
+    of RCN.
+
+    RCNs with GS1 Prefix 02 or 20-29 have the same semantics across a geographic
     region, defined by the local GS1 Member Organization.
 
-    RCNs with prefix 40-49 have semantics that are only defined within a
-    single company.
+    RCNs with GS1 Prefix 04 or 40-49 have semantics that are only defined within
+    a single company.
 
     Use :meth:`biip.gtin.Gtin.parse` to parse potential RCNs. This subclass
     is returned if the GS1 Prefix signifies that the value is an RCN.
+
+    References:
+        GS1 General Specifications, section 2.1.11-2.1.12
     """
 
     #: Where the RCN can be circulated,
