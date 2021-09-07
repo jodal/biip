@@ -229,7 +229,6 @@ def test_region_sweden(
 @pytest.mark.parametrize(
     "rcn_region, value, expected",
     [
-        # Geographical RCNs: Strip variable measure if we know how.
         (RcnRegion.ESTONIA, "2311111112345", "2311111100007"),
         (RcnRegion.FINLAND, "2311111112345", "2311111100007"),
         (RcnRegion.GREAT_BRITAIN, "2011122912346", "2011122000005"),
@@ -237,12 +236,9 @@ def test_region_sweden(
         (RcnRegion.LITHUANIA, "2311111112345", "2311111100007"),
         (RcnRegion.NORWAY, "2302148210869", "2302148200006"),
         (RcnRegion.SWEDEN, "2088060112343", "2088060100005"),
-        # Company RCNs: Return as is, as the data is opaque.
-        (RcnRegion.NORWAY, "00012348", "00012348"),
-        (RcnRegion.NORWAY, "0412345678903", "0412345678903"),
     ],
 )
-def test_without_variable_measure(
+def test_without_variable_measure_strips_variable_parts(
     rcn_region: RcnRegion, value: str, expected: str
 ) -> None:
     original_rcn = Gtin.parse(value, rcn_region=rcn_region)
@@ -252,6 +248,26 @@ def test_without_variable_measure(
 
     assert isinstance(stripped_rcn, Rcn)
     assert stripped_rcn.value == expected
+    assert stripped_rcn.region == original_rcn.region
+
+
+@pytest.mark.parametrize(
+    "rcn_region, value",
+    [
+        (RcnRegion.NORWAY, "00012348"),
+        (RcnRegion.NORWAY, "0412345678903"),
+    ],
+)
+def test_without_variable_measure_keeps_company_rcn_unchanged(
+    rcn_region: RcnRegion, value: str
+) -> None:
+    original_rcn = Gtin.parse(value, rcn_region=rcn_region)
+    assert isinstance(original_rcn, Rcn)
+
+    stripped_rcn = original_rcn.without_variable_measure()
+
+    assert isinstance(stripped_rcn, Rcn)
+    assert stripped_rcn.value == original_rcn.value
     assert stripped_rcn.region == original_rcn.region
 
 
