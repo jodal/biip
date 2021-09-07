@@ -116,7 +116,7 @@ class Rcn(Gtin):
         # - Norway:
         #   No specification found, but products tested seems to match Swedish rules.
         # - Sweden:
-        #   https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/
+        #   https://gs1.se/en/support/how-do-i-create-my-variable-weight-numbers/
 
         if self.payload[:2] not in ("20", "21", "22"):
             return
@@ -138,7 +138,7 @@ class Rcn(Gtin):
         # - Norway:
         #   No specification found, but products tested seems to match Swedish rules.
         # - Sweden:
-        #   https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/
+        #   https://gs1.se/en/support/how-do-i-create-my-variable-weight-numbers/
 
         if self.payload[:2] not in ("23", "24", "25"):
             return
