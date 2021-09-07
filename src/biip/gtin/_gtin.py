@@ -105,7 +105,11 @@ class Gtin:
             )
 
         gtin_type: Type[Union[Gtin, Rcn]]
-        if prefix is not None and "Restricted Circulation Number" in prefix.usage:
+        if (
+            gtin_format <= GtinFormat.GTIN_13
+            and prefix is not None
+            and "Restricted Circulation Number" in prefix.usage
+        ):
             gtin_type = Rcn
         else:
             gtin_type = Gtin
