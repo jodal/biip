@@ -193,7 +193,7 @@ def test_region_sweden(
 @pytest.mark.parametrize(
     "rcn_region, value, expected",
     [
-        # Geopgraphical RCNs: Strip variable measure if we know how.
+        # Geographical RCNs: Strip variable measure if we know how.
         (RcnRegion.ESTONIA, "2311111112345", "2311111100007"),
         (RcnRegion.GREAT_BRITAIN, "2011122912346", "2011122000005"),
         (RcnRegion.LATVIA, "2311111112345", "2311111100007"),
