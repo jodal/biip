@@ -150,6 +150,7 @@ def test_region_great_britain_fails_with_invalid_price_check_digit() -> None:
         ("2388060112344", Decimal("1.234"), None, None),
         ("2488060112341", Decimal("12.34"), None, None),
         ("2588060112348", Decimal("123.4"), None, None),
+        ("2911111111111", None, None, None),
     ],
 )
 def test_region_finland(
@@ -173,10 +174,9 @@ def test_region_finland(
 @pytest.mark.parametrize(
     "value, weight, price, money",
     [
-        # Norvegia 1kg
-        ("2302148210869", Decimal("1.086"), None, None),
-        # Stange kyllingbryst
-        ("2368091402263", Decimal("0.226"), None, None),
+        ("2302148210869", Decimal("1.086"), None, None),  # Norvegia 1kg
+        ("2368091402263", Decimal("0.226"), None, None),  # Stange kyllingbryst
+        ("2911111111111", None, None, None),
     ],
 )
 def test_region_norway(
@@ -205,6 +205,7 @@ def test_region_norway(
         ("2388060112344", Decimal("1.234"), None, None),
         ("2488060112341", Decimal("12.34"), None, None),
         ("2588060112348", Decimal("123.4"), None, None),
+        ("2911111111111", None, None, None),
     ],
 )
 def test_region_sweden(
