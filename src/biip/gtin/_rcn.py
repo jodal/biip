@@ -79,7 +79,10 @@ class Rcn(Gtin):
             region = RcnRegion(region)
         self.region = region
 
-        prefix = self.as_gtin_13()[:2]
+        # Classification as RCN depends on the prefix being known, so we won't
+        # get here unless it is known.
+        assert self.prefix is not None
+        rcn_prefix = self.prefix.value[:2]
 
         rules = _RCN_RULES.get(self.region)
         if rules is None:
@@ -87,7 +90,7 @@ class Rcn(Gtin):
                 "RCN region defined without defining rules. This is a bug."
             )
 
-        strategy = rules.get(prefix)
+        strategy = rules.get(rcn_prefix)
         if strategy is None:
             # Without a strategy, we cannot extract anything.
             return
@@ -129,7 +132,10 @@ class Rcn(Gtin):
                 f"RCN rules for the geographical region {self.region!r} are unknown."
             )
 
-        prefix = self.as_gtin_13()[:2]
+        # Classification as RCN depends on the prefix being known, so we won't
+        # get here unless it is known.
+        assert self.prefix is not None
+        rcn_prefix = self.prefix.value[:2]
 
         rules = _RCN_RULES.get(self.region)
         if rules is None:
@@ -137,7 +143,7 @@ class Rcn(Gtin):
                 "RCN region defined without defining rules. This is a bug."
             )
 
-        strategy = rules.get(prefix)
+        strategy = rules.get(rcn_prefix)
         if strategy is None or strategy.without_variable_measure is None:
             # This prefix has no rules for removing variable parts.
             return self
