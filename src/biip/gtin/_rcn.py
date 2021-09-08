@@ -21,11 +21,12 @@ class Rcn(Gtin):
     Both RCN-8, RCN-12, and RCN-13 are supported. There is no 14 digit version
     of RCN.
 
-    RCNs with GS1 Prefix 02 or 20-29 have the same semantics across a geographic
-    region, defined by the local GS1 Member Organization.
+    RCN-12 with prefix 2 and RCN-13 with prefix 02 or 20-29 have the same
+    semantics across a geographic region, defined by the local GS1 Member
+    Organization.
 
-    RCNs with GS1 Prefix 04 or 40-49 have semantics that are only defined within
-    a single company.
+    RCN-8 with prefix 0 or 2, RCN-12 with prefix 4, and RCN-13 with prefix 04 or
+    40-49 have semantics that are only defined within a single company.
 
     Use :meth:`biip.gtin.Gtin.parse` to parse potential RCNs. This subclass
     is returned if the GS1 Prefix signifies that the value is an RCN.
