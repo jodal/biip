@@ -21,11 +21,12 @@ class Rcn(Gtin):
     Both RCN-8, RCN-12, and RCN-13 are supported. There is no 14 digit version
     of RCN.
 
-    RCNs with GS1 Prefix 02 or 20-29 have the same semantics across a geographic
-    region, defined by the local GS1 Member Organization.
+    RCN-12 with prefix 2 and RCN-13 with prefix 02 or 20-29 have the same
+    semantics across a geographic region, defined by the local GS1 Member
+    Organization.
 
-    RCNs with GS1 Prefix 04 or 40-49 have semantics that are only defined within
-    a single company.
+    RCN-8 with prefix 0 or 2, RCN-12 with prefix 4, and RCN-13 with prefix 04 or
+    40-49 have semantics that are only defined within a single company.
 
     Use :meth:`biip.gtin.Gtin.parse` to parse potential RCNs. This subclass
     is returned if the GS1 Prefix signifies that the value is an RCN.
@@ -181,29 +182,49 @@ class Rcn(Gtin):
         if self.usage == RcnUsage.COMPANY:
             return self
 
+        prefix = self.as_gtin_13()[:2]
+
         if self.region in (
             RcnRegion.BALTICS,
             RcnRegion.ESTONIA,
             RcnRegion.FINLAND,
             RcnRegion.LATVIA,
             RcnRegion.LITHUANIA,
+        ):
+            if prefix in ("23", "24", "25"):
+                return self._normalized_using_swedish_rules()
+            else:
+                return self
+        elif self.region in (
             RcnRegion.NORWAY,
             RcnRegion.SWEDEN,
         ):
-            measure = "0000"
-            payload = f"{self.value[:-5]}{measure}"
-            check_digit = checksums.numeric_check_digit(payload)
-            value = f"{payload}{check_digit}"
-            return Gtin.parse(value, rcn_region=self.region)
+            if prefix in ("20", "21", "22", "23", "24", "25"):
+                return self._normalized_using_swedish_rules()
+            else:
+                return self
         elif self.region in (RcnRegion.GREAT_BRITAIN,):
-            measure = "0000"
-            price_check_digit = checksums.price_check_digit(measure)
-            payload = f"{self.value[:-6]}{price_check_digit}{measure}"
-            check_digit = checksums.numeric_check_digit(payload)
-            value = f"{payload}{check_digit}"
-            return Gtin.parse(value, rcn_region=self.region)
+            if prefix in ("20",):
+                return self._normalized_using_british_rules()
+            else:
+                return self
         else:
             raise EncodeError(
                 f"Cannot zero out the variable measure part of {self.value!r} as the "
                 f"RCN rules for the geographical region {self.region!r} are unknown."
             )
+
+    def _normalized_using_swedish_rules(self) -> Gtin:
+        measure = "0000"
+        payload = f"{self.value[:-5]}{measure}"
+        check_digit = checksums.numeric_check_digit(payload)
+        value = f"{payload}{check_digit}"
+        return Gtin.parse(value, rcn_region=self.region)
+
+    def _normalized_using_british_rules(self) -> Gtin:
+        measure = "0000"
+        price_check_digit = checksums.price_check_digit(measure)
+        payload = f"{self.value[:-6]}{price_check_digit}{measure}"
+        check_digit = checksums.numeric_check_digit(payload)
+        value = f"{payload}{check_digit}"
+        return Gtin.parse(value, rcn_region=self.region)
