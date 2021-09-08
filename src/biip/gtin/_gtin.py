@@ -149,6 +149,20 @@ class Gtin:
             raise EncodeError(f"Failed encoding {self.value!r} as {gtin_format!s}.")
         return f"{self.payload}{self.check_digit}".zfill(gtin_format.length)
 
+    def without_variable_measure(self) -> "Gtin":
+        """Create a new GTIN where the variable measure is zeroed out.
+
+        This method is a no-op for proper GTINs. For RCNs, see the method on the
+        `Rcn` subclass.
+
+        Returns:
+            A GTIN instance with zeros in the variable measure places.
+
+        Raises:
+            EncodeError: If the rules for variable measures in the region are unknown.
+        """
+        return self
+
 
 def _strip_leading_zeros(value: str) -> str:
     if len(value) in (12, 13, 14) and len(value.lstrip("0")) in (9, 10, 11, 12):

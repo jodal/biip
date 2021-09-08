@@ -101,6 +101,27 @@ def test_without_variable_measure_keeps_company_rcn_unchanged(
     assert stripped_rcn.region == original_rcn.region
 
 
+@pytest.mark.parametrize(
+    "value",
+    [
+        "96385074",  # GTIN-8
+        "614141000036",  # GTIN-12
+        "5901234123457",  # GTIN-13
+        "98765432109213",  # GTIN-14
+    ],
+)
+def test_without_variable_measure_keeps_gtin_unchanged(value: str) -> None:
+    original_gtin = Gtin.parse(value)
+    assert isinstance(original_gtin, Gtin)
+    assert not isinstance(original_gtin, Rcn)
+
+    stripped_gtin = original_gtin.without_variable_measure()
+
+    assert isinstance(stripped_gtin, Gtin)
+    assert not isinstance(stripped_gtin, Rcn)
+    assert stripped_gtin.value == original_gtin.value
+
+
 def test_without_variable_measure_fails_if_rules_are_unknown() -> None:
     rcn = Gtin.parse("2302148210869", rcn_region=None)
     assert isinstance(rcn, Rcn)
