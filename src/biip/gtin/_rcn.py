@@ -113,7 +113,7 @@ class Rcn(Gtin):
         the semantics of those numbers vary from company to company.
 
         Returns:
-            A new RCN instance with zeros in the variable measure places.
+            A RCN instance with zeros in the variable measure places.
 
         Raises:
             EncodeError: If the rules for variable measures in the region are unknown.
