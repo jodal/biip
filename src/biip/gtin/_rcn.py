@@ -256,11 +256,6 @@ _weight_from_pppp = _RcnStrategy(
 )
 
 _RCN_RULES: Dict[RcnRegion, Dict[str, _RcnStrategy]] = {
-    RcnRegion.BALTICS: {
-        "23": _weight_from_pppp,
-        "24": _weight_from_pppp,
-        "25": _weight_from_pppp,
-    },
     RcnRegion.ESTONIA: {
         "23": _weight_from_pppp,
         "24": _weight_from_pppp,

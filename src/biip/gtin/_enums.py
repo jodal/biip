@@ -53,12 +53,6 @@ class RcnRegion(Enum):
     The value of the enum is the lowercase ISO 3166-1 Alpha-2 code.
     """
 
-    #: Baltics (Estonia, Latvia, Lithuania)
-    #:
-    #: Deprecated:
-    #:   Use `ESTONIA`, `LATVIA`, or `LITHUANIA` instead.
-    BALTICS = "baltics"
-
     #: Estonia
     ESTONIA = "ee"
 
