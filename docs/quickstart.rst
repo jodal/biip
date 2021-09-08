@@ -35,6 +35,8 @@ which can be parsed by Biip::
             packaging_level=None,
         ),
         gtin_error=None,
+        upc=None,
+        upc_error="Failed to parse '5901234123457' as UPC: Expected 6, 7, 8, or 12 digits, got 13.",
         sscc=None,
         sscc_error="Failed to parse '5901234123457' as SSCC: Expected 18 digits, got 13.",
         gs1_message=None,
@@ -61,6 +63,7 @@ explaining why each parser failed to interpret the provided data::
         ...
     biip._exceptions.ParseError: Failed to parse '12345678':
     - Invalid GTIN check digit for '12345678': Expected 0, got 8.
+    - UPC: Invalid UPC-E check digit for '12345678': Expected 0, got 8.
     - Failed to parse '12345678' as SSCC: Expected 18 digits, got 8.
     - Failed to parse GS1 AI (12) date from '345678'.
 
@@ -96,6 +99,8 @@ Biip will detect it and only try the relevant parsers::
             packaging_level=None,
         ),
         gtin_error=None,
+        upc=None,
+        upc_error=None,
         sscc=None,
         sscc_error=None,
         gs1_message=None,
@@ -125,7 +130,7 @@ Let's use the GTIN-12 ``123601057072`` as another example::
     Gtin(
         value='123601057072',
         format=GtinFormat.GTIN_12,
-        prefix=GS1Prefix(value='123', usage='GS1 US'),
+        prefix=GS1Prefix(value='012', usage='GS1 US'),
         payload='12360105707',
         check_digit=2,
         packaging_level=None,
@@ -207,7 +212,7 @@ for Biip to be able to extract price and weight from the RCN::
         region=RcnRegion.GREAT_BRITAIN,
         weight=None,
         price=Decimal('12.34'),
-        money=<Money: 12.34 GBP>,
+        money=Money('12.34', 'GBP'),
     )
 
 The ``price`` and ``money`` fields contain the same data.
