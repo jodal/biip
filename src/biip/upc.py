@@ -9,7 +9,7 @@ This class can interpret the following UPC formats:
 - UPC-E, 7 digits, with explicit number system and no check digit.
 - UPC-E, 8 digits, with explicit number system and a check digit.
 
-If you only want to parse SSCCs, you can import the SSCC parser directly
+If you only want to parse UPCs, you can import the UPC parser directly
 instead of using :func:`biip.parse`
 
     >>> from biip.upc import Upc
