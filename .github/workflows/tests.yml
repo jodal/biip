@@ -23,4 +23,4 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: pip install poetry==1.1.10
       - run: pip install nox==2021.6.12
-      - run: nox
+      - run: nox --python ${{ matrix.python-version }}

@@ -17,6 +17,6 @@ jobs:
           python-version: "3.9"
       - run: pip install poetry==1.1.10
       - run: pip install nox==2021.6.12
-      - run: nox --sessions tests-3.9 coverage
+      - run: nox --python 3.9 --sessions tests coverage
         env:
           CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
