@@ -54,7 +54,7 @@ python3 -m pip install "biip[money]"
 ## Development status
 
 All planned features have been implemented.
-Please open an issue if you have and barcode parsing related needs that are not covered.
+Please open an issue if you have any barcode parsing related needs that are not covered.
 
 ## Features
 
