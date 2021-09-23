@@ -115,10 +115,10 @@ Please open an issue if you have any barcode parsing related needs that are not 
   - Parse 8-digit UPC-E, with explicit number system and a check digit.
   - Expand UPC-E to UPC-A.
   - Suppress UPC-A to UPC-E, for the values where it is supported.
-- Symbology Identifers, e.g. `]EO`
+- Symbology Identifiers, e.g. `]EO`
   - Recognize all specified Symbology Identifier code characters.
-  - Strip Symbology Identifers before parsing the remainder.
-  - Use Symbology Identifers when automatically selecting what parser to use.
+  - Strip Symbology Identifiers before parsing the remainder.
+  - Use Symbology Identifiers when automatically selecting what parser to use.
 
 ## License
 
