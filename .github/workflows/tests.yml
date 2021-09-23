@@ -21,6 +21,6 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install poetry==1.1.6
+      - run: pip install poetry==1.1.10
       - run: pip install nox==2020.12.31
       - run: nox
