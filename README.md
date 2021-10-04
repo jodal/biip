@@ -79,6 +79,10 @@ Please open an issue if you have any barcode parsing related needs that are not 
   - Easy lookup of parsed Element Strings by:
     - Application Identifier (AI) prefix
     - Part of AI's data title
+- GLN (Global Location Number)
+  - Parse.
+  - Extract and validate check digit.
+  - Extract GS1 Prefix.
 - GTIN (Global Trade Item Number)
   - Parse GTIN-8, e.g. from EAN-8 barcodes.
   - Parse GTIN-12, e.g. from UPC-A and UPC-E barcodes.

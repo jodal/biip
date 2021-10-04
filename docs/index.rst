@@ -61,6 +61,7 @@ Project resources
     :caption: Reference
 
     api/biip
+    api/gln
     api/gs1
     api/gs1-checksums
     api/gtin
