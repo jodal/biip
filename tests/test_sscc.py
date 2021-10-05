@@ -21,6 +21,12 @@ def test_parse() -> None:
     )
 
 
+def test_parse_strips_surrounding_whitespace() -> None:
+    sscc = Sscc.parse("  \t 376130321109103420 \n  ")
+
+    assert sscc.value == "376130321109103420"
+
+
 def test_parse_value_with_invalid_length() -> None:
     with pytest.raises(ParseError) as exc_info:
         Sscc.parse("123")
@@ -49,12 +55,6 @@ def test_parse_with_invalid_check_digit() -> None:
         str(exc_info.value)
         == "Invalid SSCC check digit for '376130321109103421': Expected 0, got 1."
     )
-
-
-def test_parse_strips_surrounding_whitespace() -> None:
-    sscc = Sscc.parse("  \t 376130321109103420 \n  ")
-
-    assert sscc.value == "376130321109103420"
 
 
 @pytest.mark.parametrize(
