@@ -263,6 +263,7 @@ we might get the data string ``00376130321109103420``:
                 ),
                 value='376130321109103420',
                 pattern_groups=['376130321109103420'],
+                gln=None,
                 gtin=None,
                 sscc=Sscc(
                     value='376130321109103420',
@@ -336,6 +337,7 @@ we can see that the data contains three Element Strings::
             ),
             value='07032069804988',
             pattern_groups=['07032069804988'],
+            gln=None,
             gtin=Gtin(
                 value='07032069804988',
                 format=GtinFormat.GTIN_13,
@@ -359,6 +361,7 @@ we can see that the data contains three Element Strings::
             ),
             value='210526',
             pattern_groups=['210526'],
+            gln=None,
             gtin=None,
             sscc=None,
             date=datetime.date(2021, 5, 26),
@@ -375,6 +378,7 @@ we can see that the data contains three Element Strings::
             ),
             value='0329',
             pattern_groups=['0329'],
+            gln=None,
             gtin=None,
             sscc=None,
             date=None,
