@@ -52,3 +52,9 @@ def test_parse_with_invalid_check_digit() -> None:
         str(exc_info.value)
         == "Invalid GLN check digit for '1234567890127': Expected 8, got 7."
     )
+
+
+def test_as_gln() -> None:
+    gln = Gln.parse("  \t 1234567890128 \n  ")
+
+    assert gln.as_gln() == "1234567890128"

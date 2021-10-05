@@ -95,3 +95,7 @@ class Gln:
             payload=payload,
             check_digit=check_digit,
         )
+
+    def as_gln(self) -> str:
+        """Format as a GLN."""
+        return self.value
