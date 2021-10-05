@@ -66,6 +66,7 @@ Please open an issue if you have any barcode parsing related needs that are not 
     - Support configuring the separation character.
   - Parse AI `00` as SSCC.
   - Parse AI `01` and `02` as GTIN.
+  - Parse AI `410`-`417` as GLN.
   - Parse dates into `datetime.date` values.
     - Interpret the year to be within -49/+50 years from today.
     - Interpret dates with day "00" as the last day of the month.

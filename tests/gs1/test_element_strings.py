@@ -4,6 +4,7 @@ from decimal import Decimal
 import pytest
 
 from biip import ParseError
+from biip.gln import Gln
 from biip.gs1 import GS1ApplicationIdentifier, GS1ElementString, GS1Prefix
 from biip.gtin import Gtin, GtinFormat
 from biip.sscc import Sscc
@@ -48,6 +49,20 @@ from biip.sscc import Sscc
                 ai=GS1ApplicationIdentifier.extract("10"),
                 value="0329",
                 pattern_groups=["0329"],
+            ),
+        ),
+        (
+            "4101234567890128",
+            GS1ElementString(
+                ai=GS1ApplicationIdentifier.extract("410"),
+                value="1234567890128",
+                pattern_groups=["1234567890128"],
+                gln=Gln(
+                    value="1234567890128",
+                    prefix=GS1Prefix(value="123", usage="GS1 US"),
+                    payload="123456789012",
+                    check_digit=8,
+                ),
             ),
         ),
         (

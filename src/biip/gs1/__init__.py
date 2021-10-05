@@ -40,10 +40,11 @@ In this example, the first element string is a GTIN.
     GS1ElementString(ai=GS1ApplicationIdentifier(ai='01', description='Global
     Trade Item Number (GTIN)', data_title='GTIN', fnc1_required=False,
     format='N2+N14'), value='07032069804988',
-    pattern_groups=['07032069804988'], gtin=Gtin(value='07032069804988',
-    format=GtinFormat.GTIN_13, prefix=GS1Prefix(value='703', usage='GS1
-    Norway'), payload='703206980498', check_digit=8, packaging_level=None),
-    sscc=None, date=None, decimal=None, money=None)
+    pattern_groups=['07032069804988'], gln=None,
+    gtin=Gtin(value='07032069804988', format=GtinFormat.GTIN_13,
+    prefix=GS1Prefix(value='703', usage='GS1 Norway'), payload='703206980498',
+    check_digit=8, packaging_level=None), sscc=None, date=None, decimal=None,
+    money=None)
 
 The message object has :meth:`~GS1Message.get` and :meth:`~GS1Message.filter`
 methods to lookup element strings either by the Application Identifier's
@@ -53,13 +54,13 @@ methods to lookup element strings either by the Application Identifier's
     GS1ElementString(ai=GS1ApplicationIdentifier(ai='15', description='Best
     before date (YYMMDD)', data_title='BEST BEFORE or BEST BY',
     fnc1_required=False, format='N2+N6'), value='210526',
-    pattern_groups=['210526'], gtin=None, sscc=None, date=datetime.date(2021, 5, 26),
-    decimal=None, money=None)
+    pattern_groups=['210526'], gln=None, gtin=None, sscc=None,
+    date=datetime.date(2021, 5, 26), decimal=None, money=None)
     >>> msg.get(ai="10")
     GS1ElementString(ai=GS1ApplicationIdentifier(ai='10', description='Batch
     or lot number', data_title='BATCH/LOT', fnc1_required=True,
-    format='N2+X..20'), value='0329', pattern_groups=['0329'], gtin=None,
-    sscc=None, date=None, decimal=None, money=None)
+    format='N2+X..20'), value='0329', pattern_groups=['0329'], gln=None,
+    gtin=None, sscc=None, date=None, decimal=None, money=None)
 """
 
 from typing import Tuple

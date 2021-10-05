@@ -13,6 +13,16 @@ If parsing succeeds, it returns a :class:`Gln` object.
     >>> gln
     Gln(value='1234567890128', prefix=GS1Prefix(value='123',
     usage='GS1 US'), payload='123456789012', check_digit=8)
+
+As GLNs do not appear independently in barcodes, the GLN parser is not a part of
+the top-level parser :func:`biip.parse`. However, if you are parsing a barcode
+with GS1 element strings including a GLN, the GLN will be parsed and validated
+using the :class:`Gln` class.
+
+   >>> import biip
+   >>> biip.parse("4101234567890128").gs1_message.get(data_title="SHIP TO").gln
+   Gln(value='1234567890128', prefix=GS1Prefix(value='123',
+   usage='GS1 US'), payload='123456789012', check_digit=8)
 """
 
 from dataclasses import dataclass

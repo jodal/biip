@@ -8,6 +8,7 @@ from decimal import Decimal
 from typing import Iterable, List, Optional
 
 from biip import ParseError
+from biip.gln import Gln
 from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1ApplicationIdentifier
 from biip.gtin import Gtin, RcnRegion
 from biip.sscc import Sscc
@@ -34,10 +35,11 @@ class GS1ElementString:
         GS1ElementString(ai=GS1ApplicationIdentifier(ai='01',
         description='Global Trade Item Number (GTIN)', data_title='GTIN',
         fnc1_required=False, format='N2+N14'), value='07032069804988',
-        pattern_groups=['07032069804988'], gtin=Gtin(value='07032069804988',
-        format=GtinFormat.GTIN_13, prefix=GS1Prefix(value='703', usage='GS1
-        Norway'), payload='703206980498', check_digit=8,
-        packaging_level=None), sscc=None, date=None, decimal=None, money=None)
+        pattern_groups=['07032069804988'], gln=None,
+        gtin=Gtin(value='07032069804988', format=GtinFormat.GTIN_13,
+        prefix=GS1Prefix(value='703', usage='GS1 Norway'),
+        payload='703206980498', check_digit=8, packaging_level=None), sscc=None,
+        date=None, decimal=None, money=None)
         >>> element_string.as_hri()
         '(01)07032069804988'
     """
@@ -50,6 +52,9 @@ class GS1ElementString:
 
     #: List of pattern groups extracted from the Element String.
     pattern_groups: List[str]
+
+    #: A GLN created from the element string, if the AI represents a GLN.
+    gln: Optional[Gln] = None
 
     #: A GTIN created from the element string, if the AI represents a GTIN.
     gtin: Optional[Gtin] = None
@@ -116,12 +121,19 @@ class GS1ElementString:
         value = "".join(pattern_groups)
 
         element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
+        element._set_gln()
         element._set_gtin(rcn_region=rcn_region)
         element._set_sscc()
         element._set_date()
         element._set_decimal()
 
         return element
+
+    def _set_gln(self) -> None:
+        if self.ai.ai[:2] != "41":
+            return
+
+        self.gln = Gln.parse(self.value)
 
     def _set_gtin(self, *, rcn_region: Optional[RcnRegion] = None) -> None:
         if self.ai.ai not in ("01", "02"):
