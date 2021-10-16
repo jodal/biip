@@ -21,7 +21,7 @@ def main() -> None:
 
 def download(url: str) -> bytes:
     """Download the data from GS1."""
-    return httpx.get(url).content
+    return httpx.get(url, timeout=30).content
 
 
 def parse(html_content: bytes) -> List[GS1ApplicationIdentifier]:
