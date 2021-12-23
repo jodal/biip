@@ -1,5 +1,7 @@
 """The top-level Biip parser."""
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 from typing import Callable, Iterable, List, Optional, Tuple
 
@@ -18,7 +20,7 @@ def parse(
     *,
     rcn_region: Optional[RcnRegion] = None,
     separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
-) -> "ParseResult":
+) -> ParseResult:
     """Identify data format and parse data.
 
     The current strategy is:

@@ -1,5 +1,7 @@
 """Enums used when parsing GTINs."""
 
+from __future__ import annotations
+
 from enum import Enum, IntEnum
 from typing import Optional, Union
 
@@ -75,9 +77,7 @@ class RcnRegion(Enum):
     SWEDEN = "se"
 
     @classmethod
-    def from_iso_3166_1_numeric_code(
-        cls, code: Union[int, str]
-    ) -> Optional["RcnRegion"]:
+    def from_iso_3166_1_numeric_code(cls, code: Union[int, str]) -> Optional[RcnRegion]:
         """Get the region from an ISO 3166-1 numeric code."""
         code = str(code).zfill(3)
 

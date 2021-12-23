@@ -1,5 +1,7 @@
 """GS1 Application Identifiers."""
 
+from __future__ import annotations
+
 import json
 import pathlib
 from dataclasses import dataclass, field
@@ -52,7 +54,7 @@ class GS1ApplicationIdentifier:
     pattern: str = field(repr=False)
 
     @classmethod
-    def extract(cls, value: str) -> "GS1ApplicationIdentifier":
+    def extract(cls, value: str) -> GS1ApplicationIdentifier:
         """Extract the GS1 Application Identifier (AI) from the given value.
 
         Args:
