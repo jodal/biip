@@ -1,5 +1,7 @@
 """GS1 messages."""
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 from typing import Iterable, List, Optional, Union
 
@@ -31,7 +33,7 @@ class GS1Message:
         *,
         rcn_region: Optional[RcnRegion] = None,
         separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
-    ) -> "GS1Message":
+    ) -> GS1Message:
         """Parse a string from a barcode scan as a GS1 message with AIs.
 
         Args:

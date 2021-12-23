@@ -1,5 +1,7 @@
 """Symbology Identifiers relevant to the GS1 system."""
 
+from __future__ import annotations
+
 from enum import Enum
 from typing import Set
 
@@ -52,7 +54,7 @@ class GS1Symbology(Enum):
     GS1_DOTCODE = "J1"
 
     @classmethod
-    def with_ai_element_strings(cls) -> Set["GS1Symbology"]:
+    def with_ai_element_strings(cls) -> Set[GS1Symbology]:
         """Symbologies that may contain AI Element Strings."""
         return {
             cls.GS1_128,
@@ -63,7 +65,7 @@ class GS1Symbology(Enum):
         }
 
     @classmethod
-    def with_gtin(cls) -> Set["GS1Symbology"]:
+    def with_gtin(cls) -> Set[GS1Symbology]:
         """Symbologies that may contain GTINs."""
         return {cls.EAN_13, cls.EAN_13_WITH_ADD_ON, cls.EAN_8, cls.ITF_14}
 

@@ -25,6 +25,8 @@ using the :class:`Gln` class.
    usage='GS1 US'), payload='123456789012', check_digit=8)
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 from typing import Optional
 
@@ -52,7 +54,7 @@ class Gln:
     check_digit: int
 
     @classmethod
-    def parse(cls, value: str) -> "Gln":
+    def parse(cls, value: str) -> Gln:
         """Parse the given value into a :class:`Gln` object.
 
         Args:

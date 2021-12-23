@@ -24,6 +24,8 @@ Biip can format the SSCC in HRI format for printing on a label.
     '3 761 30321 10910342 0'
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 from typing import Optional
 
@@ -54,7 +56,7 @@ class Sscc:
     check_digit: int
 
     @classmethod
-    def parse(cls, value: str) -> "Sscc":
+    def parse(cls, value: str) -> Sscc:
         """Parse the given value into a :class:`Sscc` object.
 
         Args:

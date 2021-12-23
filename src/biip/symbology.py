@@ -22,6 +22,8 @@ References:
     ISO/IEC 15424:2008.
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
@@ -156,7 +158,7 @@ class SymbologyIdentifier:
     gs1_symbology: Optional[GS1Symbology] = None
 
     @classmethod
-    def extract(cls, value: str) -> "SymbologyIdentifier":
+    def extract(cls, value: str) -> SymbologyIdentifier:
         """Extract the Symbology Identifier from the given value.
 
         Args:

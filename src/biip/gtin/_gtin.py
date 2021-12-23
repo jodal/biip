@@ -1,5 +1,7 @@
 """Global Trade Item Number (GTIN)."""
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 from typing import Optional, Type, Union
 
@@ -42,7 +44,7 @@ class Gtin:
     packaging_level: Optional[int] = None
 
     @classmethod
-    def parse(cls, value: str, *, rcn_region: Optional[RcnRegion] = None) -> "Gtin":
+    def parse(cls, value: str, *, rcn_region: Optional[RcnRegion] = None) -> Gtin:
         """Parse the given value into a :class:`Gtin` object.
 
         Both GTIN-8, GTIN-12, GTIN-13, and GTIN-14 are supported.
@@ -149,7 +151,7 @@ class Gtin:
             raise EncodeError(f"Failed encoding {self.value!r} as {gtin_format!s}.")
         return f"{self.payload}{self.check_digit}".zfill(gtin_format.length)
 
-    def without_variable_measure(self) -> "Gtin":
+    def without_variable_measure(self) -> Gtin:
         """Create a new GTIN where the variable measure is zeroed out.
 
         This method is a no-op for proper GTINs. For RCNs, see the method on the

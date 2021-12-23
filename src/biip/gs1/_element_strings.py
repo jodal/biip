@@ -1,5 +1,7 @@
 """GS1 Element Strings."""
 
+from __future__ import annotations
+
 import calendar
 import datetime
 import re
@@ -79,7 +81,7 @@ class GS1ElementString:
         *,
         rcn_region: Optional[RcnRegion] = None,
         separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
-    ) -> "GS1ElementString":
+    ) -> GS1ElementString:
         """Extract the first GS1 Element String from the given value.
 
         Args:

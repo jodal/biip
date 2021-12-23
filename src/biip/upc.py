@@ -47,6 +47,8 @@ The canonical format for persisting UPCs to e.g. a database is GTIN-14.
     '00042100005264'
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
@@ -89,7 +91,7 @@ class Upc:
     check_digit: Optional[int] = None
 
     @classmethod
-    def parse(cls, value: str) -> "Upc":
+    def parse(cls, value: str) -> Upc:
         """Parse the given value into a :class:`Upc` object.
 
         Args:
@@ -124,7 +126,7 @@ class Upc:
         raise Exception("Unhandled UPC length. This is a bug.")  # pragma: no cover
 
     @classmethod
-    def _parse_upc_a(cls, value: str) -> "Upc":
+    def _parse_upc_a(cls, value: str) -> Upc:
         assert len(value) == 12
 
         payload = value[:-1]
@@ -147,7 +149,7 @@ class Upc:
         )
 
     @classmethod
-    def _parse_upc_e(cls, value: str) -> "Upc":
+    def _parse_upc_e(cls, value: str) -> Upc:
         length = len(value)
         assert length in (6, 7, 8)
 
