@@ -59,12 +59,13 @@ def test_gtin_14_with_rcn_prefix_is_not_an_rcn() -> None:
 @pytest.mark.parametrize(
     "value, rcn_region",
     [
+        ("de", RcnRegion.GERMANY),
         ("dk", RcnRegion.DENMARK),
         ("ee", RcnRegion.ESTONIA),
         ("fi", RcnRegion.FINLAND),
         ("gb", RcnRegion.GREAT_BRITAIN),
-        ("lv", RcnRegion.LATVIA),
         ("lt", RcnRegion.LITHUANIA),
+        ("lv", RcnRegion.LATVIA),
         ("no", RcnRegion.NORWAY),
         ("se", RcnRegion.SWEDEN),
     ],
@@ -73,7 +74,7 @@ def test_rcn_region_can_be_specified_as_string(
     value: str, rcn_region: RcnRegion
 ) -> None:
     rcn = Gtin.parse(
-        "2311111112345",
+        "0211111111114",
         rcn_region=value,  # type: ignore
     )
 
@@ -97,6 +98,7 @@ def test_fails_when_rcn_region_is_unknown_string() -> None:
         ("208", RcnRegion.DENMARK),
         ("233", RcnRegion.ESTONIA),
         ("246", RcnRegion.FINLAND),
+        ("276", RcnRegion.GERMANY),
         ("826", RcnRegion.GREAT_BRITAIN),
         ("428", RcnRegion.LATVIA),
         ("440", RcnRegion.LITHUANIA),

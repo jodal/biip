@@ -64,6 +64,9 @@ class RcnRegion(Enum):
     #: Finland
     FINLAND = "fi"
 
+    #: Germany
+    GERMANY = "de"
+
     #: Great Britain
     GREAT_BRITAIN = "gb"
 
@@ -93,6 +96,7 @@ class RcnRegion(Enum):
             "208": RcnRegion.DENMARK,
             "233": RcnRegion.ESTONIA,
             "246": RcnRegion.FINLAND,
+            "276": RcnRegion.GERMANY,
             "826": RcnRegion.GREAT_BRITAIN,
             "428": RcnRegion.LATVIA,
             "440": RcnRegion.LITHUANIA,
@@ -108,6 +112,7 @@ class RcnRegion(Enum):
         """Get the ISO-4217 currency code for the region."""
         return {
             RcnRegion.DENMARK: "DKK",
+            RcnRegion.GERMANY: "EUR",
             RcnRegion.GREAT_BRITAIN: "GBP",
             RcnRegion.NORWAY: "NOK",
             RcnRegion.SWEDEN: "SEK",

@@ -49,6 +49,10 @@ def test_without_variable_measure_strips_variable_parts(
             ["02", "20", "21", "22", "26", "27", "28", "29"],
         ),
         (
+            RcnRegion.GERMANY,
+            ["02", "20", "21", "24", "27"],
+        ),
+        (
             RcnRegion.GREAT_BRITAIN,
             ["21", "22", "23", "24", "25", "26", "27", "28", "29"],
         ),

@@ -46,12 +46,13 @@ class Rcn(Gtin):
     #: of  the RCN.
     region: Optional[RcnRegion] = field(default=None, init=False)
 
-    #: A variable weight value extracted from the barcode,
-    #: if indicated by prefix.
+    #: A variable weight value extracted from the GTIN.
     weight: Optional[Decimal] = field(default=None, init=False)
 
-    #: A variable weight price extracted from the barcode,
-    #: if indicated by prefix.
+    #: A variable count extracted from the GTIN.
+    count: Optional[int] = field(default=None, init=False)
+
+    #: A variable weight price extracted from the GTIN.
     price: Optional[Decimal] = field(default=None, init=False)
 
     #: A Money value created from the variable weight price.
@@ -91,6 +92,9 @@ class Rcn(Gtin):
 
         if strategy.measure_type == _MeasureType.WEIGHT:
             self.weight = strategy.get_variable_measure(self)
+
+        if strategy.measure_type == _MeasureType.COUNT:
+            self.count = int(strategy.get_variable_measure(self))
 
         if strategy.measure_type == _MeasureType.PRICE:
             self.price = strategy.get_variable_measure(self)
@@ -135,7 +139,7 @@ class Rcn(Gtin):
 
 
 class _MeasureType(str, Enum):
-    PIECES = "pieces"
+    COUNT = "count"
     PRICE = "price"
     WEIGHT = "weight"
 
@@ -252,6 +256,14 @@ _RCN_RULES: Dict[RcnRegion, Dict[str, _Strategy]] = {
         "23": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=3),
         "24": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=2),
         "25": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=1),
+    },
+    RcnRegion.GERMANY: {
+        "22": _Strategy(_MeasureType.PRICE, "PPPPPPCVVVVV", num_decimals=2),
+        "23": _Strategy(_MeasureType.PRICE, "PPPPPPCVVVVV", num_decimals=2),
+        "25": _Strategy(_MeasureType.COUNT, "PPPPPPCVVVVV", num_decimals=0),
+        "26": _Strategy(_MeasureType.COUNT, "PPPPPPCVVVVV", num_decimals=0),
+        "28": _Strategy(_MeasureType.WEIGHT, "PPPPPPCVVVVV", num_decimals=3),
+        "29": _Strategy(_MeasureType.WEIGHT, "PPPPPPCVVVVV", num_decimals=3),
     },
     RcnRegion.GREAT_BRITAIN: {
         # References:

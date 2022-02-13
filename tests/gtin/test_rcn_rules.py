@@ -113,6 +113,41 @@ def test_region_finland(
 
 
 @pytest.mark.parametrize(
+    "value, weight, count, price, money",
+    [
+        # Money
+        ("2211114002394", None, None, Decimal("2.39"), Money("2.39", "EUR")),
+        ("2330714002396", None, None, Decimal("2.39"), Money("2.39", "EUR")),
+        # Count
+        ("2511119000129", None, 12, None, None),
+        ("2630719000121", None, 12, None, None),
+        # Weight
+        ("2811111068708", Decimal("6.870"), None, None, None),
+        ("2930711068700", Decimal("6.870"), None, None, None),
+    ],
+)
+def test_region_germany(
+    value: str,
+    weight: Optional[Decimal],
+    count: Optional[int],
+    price: Optional[Decimal],
+    money: Optional[Money],
+) -> None:
+    # References:
+    #   https://www.gs1-germany.de/fileadmin/gs1/fachpublikationen/globale-artikelnummer-gtin-in-der-anwendung.pdf
+    #   https://san.gs1-germany.de/SAN-4-Konzept
+
+    rcn = Gtin.parse(value, rcn_region=RcnRegion.GERMANY)
+
+    assert isinstance(rcn, Rcn)
+    assert rcn.region == RcnRegion.GERMANY
+    assert rcn.weight == weight
+    assert rcn.count == count
+    assert rcn.price == price
+    assert rcn.money == money
+
+
+@pytest.mark.parametrize(
     "value, weight, price, money",
     [
         # NOTE: These examples are constructed from a template. This should be
