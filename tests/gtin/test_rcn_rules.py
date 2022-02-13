@@ -147,7 +147,7 @@ def test_region_great_britain_fails_with_invalid_price_check_digit() -> None:
         Gtin.parse("2011122812349", rcn_region=RcnRegion.GREAT_BRITAIN)
 
     assert str(exc_info.value) == (
-        "Invalid price check digit for price data '1234' in RCN '2011122812349': "
+        "Invalid check digit for variable measure value '1234' in RCN '2011122812349': "
         "Expected 9, got 8."
     )
 

@@ -1,9 +1,11 @@
 """Restricted Circulation Numbers (RCN)."""
 
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 from decimal import Decimal
-from functools import partial
-from typing import Callable, Dict, Optional
+from enum import Enum
+from typing import Dict, Optional
 
 from biip import EncodeError, ParseError
 from biip.gs1 import checksums
@@ -96,11 +98,13 @@ class Rcn(Gtin):
             # Without a strategy, we cannot extract anything.
             return
 
-        if strategy.get_weight is not None:
-            self.weight = strategy.get_weight(self)
+        strategy.verify_check_digit(self)
 
-        if strategy.get_price is not None:
-            self.price = strategy.get_price(self)
+        if strategy.measure_type == _MeasureType.WEIGHT:
+            self.weight = strategy.get_variable_measure(self)
+
+        if strategy.measure_type == _MeasureType.PRICE:
+            self.price = strategy.get_variable_measure(self)
 
         currency_code = self.region.get_currency_code()
         if self.price is not None and moneyed is not None and currency_code is not None:
@@ -145,212 +149,150 @@ class Rcn(Gtin):
             )
 
         strategy = rules.get(rcn_prefix)
-        if strategy is None or strategy.without_variable_measure is None:
+        if strategy is None:
             # This prefix has no rules for removing variable parts.
             return self
 
         return strategy.without_variable_measure(self)
 
 
-def _get_price_from_pppp(rcn: Rcn) -> Optional[Decimal]:
-    # Get price from the last four digits of the payload, with the placement of
-    # the decimal separator decided by the prefix.
-    #
-    # These rules are used in the following regions:
-    # - Norway:
-    #   No specification found, but products tested seems to match Swedish rules.
-    # - Sweden:
-    #   https://gs1.se/en/support/how-do-i-create-my-variable-weight-numbers/
-
-    assert rcn.payload[:2] in ("20", "21", "22")
-
-    value = rcn.payload[-4:]
-
-    num_decimals = 2 - int(rcn.payload[1])
-    num_units = 4 - num_decimals
-
-    units = value[:num_units]
-    decimals = value[num_units:]
-    return Decimal(f"{units}.{decimals}")
-
-
-def _get_price_from_n_digit_cents(n: int, rcn: Rcn) -> Optional[Decimal]:
-    # Get price in hundreths of the currency from the last N digits of the payload.
-    #
-    # These rules are used in the following regions:
-    # - Denmark:
-    #   https://www.gs1.dk/om-gs1/overblik-over-gs1-standarder/gtin-13-pris
-
-    cents = Decimal(rcn.payload[-n:])
-    return cents / 100
-
-
-def _get_price_from_vpppp_with_cents(rcn: Rcn) -> Optional[Decimal]:
-    # Get price from the last five digits of the payload, where the first one is
-    # a verification digit, and the price is given in hundredths of the currency.
-    #
-    # References:
-    # - Great Britain:
-    #   https://www.gs1uk.org/how-to-barcode-variable-measure-items
-
-    check_digit = int(rcn.payload[-5])
-    value = rcn.payload[-4:]
-
-    calculated_check_digit = checksums.price_check_digit(value)
-    if check_digit != calculated_check_digit:
-        raise ParseError(
-            f"Invalid price check digit for price data {value!r} "
-            f"in RCN {rcn.value!r}: "
-            f"Expected {calculated_check_digit!r}, got {check_digit!r}."
-        )
-
-    cents = Decimal(value)
-    return cents / 100
-
-
-def _get_weight_from_pppp(rcn: Rcn) -> Optional[Decimal]:
-    # Get weight from the last four digits of the payload, with the placement of
-    # the decimal separator decided by the prefix.
-    #
-    # References:
-    # - Estonia, Latvia, and Lithuania:
-    #   https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf
-    # - Finland:
-    #   https://gs1.fi/en/instructions/gs1-company-prefix/how-identify-product-gtin
-    # - Norway:
-    #   No specification found, but products tested seems to match these rules.
-    # - Sweden:
-    #   https://gs1.se/en/support/how-do-i-create-my-variable-weight-numbers/
-
-    assert rcn.payload[:2] in ("23", "24", "25")
-
-    value = rcn.payload[-4:]
-
-    num_decimals = 6 - int(rcn.payload[1])
-    num_units = 4 - num_decimals
-
-    units = value[:num_units]
-    decimals = value[num_units:]
-    return Decimal(f"{units}.{decimals}")
-
-
-def _get_weight_from_n_digit_grams(n: int, rcn: Rcn) -> Optional[Decimal]:
-    # Get weight in grams from the last N digits of the payload.
-    #
-    # References:
-    # - Denmark:
-    #   https://www.gs1.dk/om-gs1/overblik-over-gs1-standarder/gtin-13-vaegt
-
-    grams = Decimal(rcn.payload[-n:])
-    return grams / 1000
-
-
-def _zero_n_last(n: int, rcn: Rcn) -> Gtin:
-    # Zero out the last N digits of the payload, and recalculate the check
-    # digit.
-
-    measure = "0" * n
-    payload_len = len(rcn.value) - n - 1
-    payload = f"{rcn.value[:payload_len]}{measure}"
-    check_digit = checksums.numeric_check_digit(payload)
-    value = f"{payload}{check_digit}"
-    return Gtin.parse(value, rcn_region=rcn.region)
-
-
-def _zero_vpppp(rcn: Rcn) -> Gtin:
-    # Zero out the last four digits of the payload (pppp), and recalculate both
-    # the check digit and the price verifier digit (v).
-
-    measure = "0000"
-    price_check_digit = checksums.price_check_digit(measure)
-    payload = f"{rcn.value[:-6]}{price_check_digit}{measure}"
-    check_digit = checksums.numeric_check_digit(payload)
-    value = f"{payload}{check_digit}"
-    return Gtin.parse(value, rcn_region=rcn.region)
+class _MeasureType(str, Enum):
+    PIECES = "pieces"
+    PRICE = "price"
+    WEIGHT = "weight"
 
 
 @dataclass
-class _RcnStrategy:
-    get_price: Optional[Callable[[Rcn], Optional[Decimal]]] = None
-    get_weight: Optional[Callable[[Rcn], Optional[Decimal]]] = None
-    without_variable_measure: Optional[Callable[[Rcn], Gtin]] = None
+class _Strategy:
+    measure_type: _MeasureType
+    pattern: str
+    num_decimals: int
+
+    prefix_slice: slice = field(init=False)
+    value_slice: slice = field(init=False)
+    check_digit_slice: Optional[slice] = field(init=False)
+
+    def __post_init__(self) -> None:
+        assert len(self.pattern) == 12, "Pattern must be exactly 12 chars long."
+
+        prefix_slice = self._get_pattern_slice("P")
+        value_slice = self._get_pattern_slice("V")
+
+        assert prefix_slice is not None, "Pattern must contain a prefix marker (P)."
+        assert value_slice is not None, "Pattern must contain a value marker (V)."
+
+        self.prefix_slice = prefix_slice
+        self.value_slice = value_slice
+        self.check_digit_slice = self._get_pattern_slice("C")
+
+    def _get_pattern_slice(self, char: str) -> Optional[slice]:
+        if char not in self.pattern:
+            return None
+        return slice(self.pattern.index(char), self.pattern.rindex(char) + 1)
+
+    def verify_check_digit(self, rcn: Rcn) -> None:
+        if self.check_digit_slice is None:
+            return None
+
+        value = rcn.value[self.value_slice]
+        check_digit = int(rcn.value[self.check_digit_slice])
+        calculated_check_digit = checksums.price_check_digit(value)
+
+        if check_digit != calculated_check_digit:
+            raise ParseError(
+                f"Invalid check digit for variable measure value {value!r} "
+                f"in RCN {rcn.value!r}: "
+                f"Expected {calculated_check_digit!r}, got {check_digit!r}."
+            )
+
+    def get_variable_measure(self, rcn: Rcn) -> Decimal:
+        value = Decimal(rcn.value[self.value_slice])
+        return value / Decimal(10) ** self.num_decimals
+
+    def without_variable_measure(self, rcn: Rcn) -> Gtin:
+        # Zero out the variable measure part of the payload, and recalculate both
+        # the GTIN check digit and the variable measure's check digit digit, if any.
+
+        zeroed_value = "0" * len(rcn.value[self.value_slice])
+
+        digits = list(self.pattern)
+        digits[self.prefix_slice] = list(rcn.value[self.prefix_slice])
+        digits[self.value_slice] = list(zeroed_value)
+        if self.check_digit_slice is not None:
+            digits[self.check_digit_slice] = [
+                str(checksums.price_check_digit(zeroed_value))
+            ]
+
+        gtin_payload = "".join(digits)
+        gtin_check_digit = checksums.numeric_check_digit(gtin_payload)
+        gtin = f"{gtin_payload}{gtin_check_digit}"
+        return Gtin.parse(gtin, rcn_region=rcn.region)
 
 
-_price_from_pppp = _RcnStrategy(
-    get_price=_get_price_from_pppp,
-    without_variable_measure=partial(_zero_n_last, 4),
-)
-
-_price_from_6_digit_hundreths = _RcnStrategy(
-    get_price=partial(_get_price_from_n_digit_cents, 6),
-    without_variable_measure=partial(_zero_n_last, 6),
-)
-
-_weight_from_pppp = _RcnStrategy(
-    get_weight=_get_weight_from_pppp,
-    without_variable_measure=partial(_zero_n_last, 4),
-)
-
-_weight_from_5_digit_grams = _RcnStrategy(
-    get_weight=partial(_get_weight_from_n_digit_grams, 5),
-    without_variable_measure=partial(_zero_n_last, 5),
-)
-
-_weight_from_6_digit_grams = _RcnStrategy(
-    get_weight=partial(_get_weight_from_n_digit_grams, 6),
-    without_variable_measure=partial(_zero_n_last, 6),
-)
-
-_RCN_RULES: Dict[RcnRegion, Dict[str, _RcnStrategy]] = {
+_RCN_RULES: Dict[RcnRegion, Dict[str, _Strategy]] = {
     RcnRegion.DENMARK: {
-        "21": _price_from_6_digit_hundreths,
-        "22": _price_from_6_digit_hundreths,
-        "23": _price_from_6_digit_hundreths,
-        "24": _price_from_6_digit_hundreths,
-        "26": _weight_from_6_digit_grams,
-        "27": _weight_from_5_digit_grams,
-        "28": _weight_from_6_digit_grams,
+        # References:
+        #   https://www.gs1.dk/om-gs1/overblik-over-gs1-standarder/gtin-13-pris
+        #   https://www.gs1.dk/om-gs1/overblik-over-gs1-standarder/gtin-13-vaegt
+        "21": _Strategy(_MeasureType.PRICE, "PPPPPPVVVVVV", num_decimals=2),
+        "22": _Strategy(_MeasureType.PRICE, "PPPPPPVVVVVV", num_decimals=2),
+        "23": _Strategy(_MeasureType.PRICE, "PPPPPPVVVVVV", num_decimals=2),
+        "24": _Strategy(_MeasureType.PRICE, "PPPPPPVVVVVV", num_decimals=2),
+        "26": _Strategy(_MeasureType.WEIGHT, "PPPPPPVVVVVV", num_decimals=3),
+        "27": _Strategy(_MeasureType.WEIGHT, "PPPPPPPVVVVV", num_decimals=3),
+        "28": _Strategy(_MeasureType.WEIGHT, "PPPPPPVVVVVV", num_decimals=3),
     },
     RcnRegion.ESTONIA: {
-        "23": _weight_from_pppp,
-        "24": _weight_from_pppp,
-        "25": _weight_from_pppp,
+        # References:
+        #   https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf
+        "23": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=3),
+        "24": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=2),
+        "25": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=1),
     },
     RcnRegion.FINLAND: {
-        "23": _weight_from_pppp,
-        "24": _weight_from_pppp,
-        "25": _weight_from_pppp,
+        # References:
+        #  https://gs1.fi/en/instructions/gs1-company-prefix/how-identify-product-gtin
+        "23": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=3),
+        "24": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=2),
+        "25": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=1),
     },
     RcnRegion.GREAT_BRITAIN: {
-        "20": _RcnStrategy(
-            get_price=_get_price_from_vpppp_with_cents,
-            without_variable_measure=_zero_vpppp,
-        ),
+        # References:
+        #   https://www.gs1uk.org/how-to-barcode-variable-measure-items
+        "20": _Strategy(_MeasureType.PRICE, "PPPPPPPCVVVV", num_decimals=2),
     },
     RcnRegion.LATVIA: {
-        "23": _weight_from_pppp,
-        "24": _weight_from_pppp,
-        "25": _weight_from_pppp,
+        # References:
+        #   https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf
+        "23": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=3),
+        "24": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=2),
+        "25": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=1),
     },
     RcnRegion.LITHUANIA: {
-        "23": _weight_from_pppp,
-        "24": _weight_from_pppp,
-        "25": _weight_from_pppp,
+        # References:
+        #   https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf
+        "23": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=3),
+        "24": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=2),
+        "25": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=1),
     },
     RcnRegion.NORWAY: {
-        "20": _price_from_pppp,
-        "21": _price_from_pppp,
-        "22": _price_from_pppp,
-        "23": _weight_from_pppp,
-        "24": _weight_from_pppp,
-        "25": _weight_from_pppp,
+        # References:
+        #   No specification found, but products tested seems to match Swedish rules.
+        "20": _Strategy(_MeasureType.PRICE, "PPPPPPPPVVVV", num_decimals=2),
+        "21": _Strategy(_MeasureType.PRICE, "PPPPPPPPVVVV", num_decimals=1),
+        "22": _Strategy(_MeasureType.PRICE, "PPPPPPPPVVVV", num_decimals=0),
+        "23": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=3),
+        "24": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=2),
+        "25": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=1),
     },
     RcnRegion.SWEDEN: {
-        "20": _price_from_pppp,
-        "21": _price_from_pppp,
-        "22": _price_from_pppp,
-        "23": _weight_from_pppp,
-        "24": _weight_from_pppp,
-        "25": _weight_from_pppp,
+        # References:
+        #   https://gs1.se/en/support/how-do-i-create-my-variable-weight-numbers/
+        "20": _Strategy(_MeasureType.PRICE, "PPPPPPPPVVVV", num_decimals=2),
+        "21": _Strategy(_MeasureType.PRICE, "PPPPPPPPVVVV", num_decimals=1),
+        "22": _Strategy(_MeasureType.PRICE, "PPPPPPPPVVVV", num_decimals=0),
+        "23": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=3),
+        "24": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=2),
+        "25": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=1),
     },
 }
