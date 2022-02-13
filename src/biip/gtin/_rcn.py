@@ -82,18 +82,7 @@ class Rcn(Gtin):
             region = RcnRegion(region)
         self.region = region
 
-        # Classification as RCN depends on the prefix being known, so we won't
-        # get here unless it is known.
-        assert self.prefix is not None
-        rcn_prefix = self.prefix.value[:2]
-
-        rules = _RCN_RULES.get(self.region)
-        if rules is None:
-            raise Exception(  # pragma: no cover
-                "RCN region defined without defining rules. This is a bug."
-            )
-
-        strategy = rules.get(rcn_prefix)
+        strategy = _Strategy.get_for_rcn(self)
         if strategy is None:
             # Without a strategy, we cannot extract anything.
             return
@@ -137,18 +126,7 @@ class Rcn(Gtin):
                 f"RCN rules for the geographical region {self.region!r} are unknown."
             )
 
-        # Classification as RCN depends on the prefix being known, so we won't
-        # get here unless it is known.
-        assert self.prefix is not None
-        rcn_prefix = self.prefix.value[:2]
-
-        rules = _RCN_RULES.get(self.region)
-        if rules is None:
-            raise Exception(  # pragma: no cover
-                "RCN region defined without defining rules. This is a bug."
-            )
-
-        strategy = rules.get(rcn_prefix)
+        strategy = _Strategy.get_for_rcn(self)
         if strategy is None:
             # This prefix has no rules for removing variable parts.
             return self
@@ -171,6 +149,25 @@ class _Strategy:
     prefix_slice: slice = field(init=False)
     value_slice: slice = field(init=False)
     check_digit_slice: Optional[slice] = field(init=False)
+
+    @classmethod
+    def get_for_rcn(cls, rcn: Rcn) -> Optional[_Strategy]:
+        # The RCN's geographical region must be known to lookup the correct
+        # strategy for interpreting the RCN's variable measure.
+        assert rcn.region is not None
+
+        region_rules = _RCN_RULES.get(rcn.region)
+        if region_rules is None:
+            raise Exception(  # pragma: no cover
+                "RCN region defined without defining rules. This is a bug."
+            )
+
+        # Classification as RCN depends on the prefix being known, so we won't
+        # get here unless it is known.
+        assert rcn.prefix is not None
+
+        rcn_prefix = rcn.prefix.value[:2]
+        return region_rules.get(rcn_prefix)
 
     def __post_init__(self) -> None:
         assert len(self.pattern) == 12, "Pattern must be exactly 12 chars long."
