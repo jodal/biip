@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass, field
 from decimal import Decimal
+from functools import partial
 from typing import Callable, Dict, Optional
 
 from biip import EncodeError, ParseError
@@ -173,11 +174,23 @@ def _get_price_from_pppp(rcn: Rcn) -> Optional[Decimal]:
     return Decimal(f"{units}.{decimals}")
 
 
-def _get_price_from_vpppp_with_houndredths(rcn: Rcn) -> Optional[Decimal]:
+def _get_price_from_n_digit_cents(n: int, rcn: Rcn) -> Optional[Decimal]:
+    # Get price in hundreths of the currency from the last N digits of the payload.
+    #
+    # These rules are used in the following regions:
+    # - Denmark:
+    #   https://www.gs1.dk/om-gs1/overblik-over-gs1-standarder/gtin-13-pris
+
+    cents = Decimal(rcn.payload[-n:])
+    return cents / 100
+
+
+def _get_price_from_vpppp_with_cents(rcn: Rcn) -> Optional[Decimal]:
     # Get price from the last five digits of the payload, where the first one is
     # a verification digit, and the price is given in hundredths of the currency.
     #
     # References:
+    # - Great Britain:
     #   https://www.gs1uk.org/how-to-barcode-variable-measure-items
 
     check_digit = int(rcn.payload[-5])
@@ -221,12 +234,24 @@ def _get_weight_from_pppp(rcn: Rcn) -> Optional[Decimal]:
     return Decimal(f"{units}.{decimals}")
 
 
-def _zero_pppp(rcn: Rcn) -> Gtin:
-    # Zero out the last four digits of the payload (pppp), and recalculate the
-    # check digit.
+def _get_weight_from_n_digit_grams(n: int, rcn: Rcn) -> Optional[Decimal]:
+    # Get weight in grams from the last N digits of the payload.
+    #
+    # References:
+    # - Denmark:
+    #   https://www.gs1.dk/om-gs1/overblik-over-gs1-standarder/gtin-13-vaegt
 
-    measure = "0000"
-    payload = f"{rcn.value[:-5]}{measure}"
+    grams = Decimal(rcn.payload[-n:])
+    return grams / 1000
+
+
+def _zero_n_last(n: int, rcn: Rcn) -> Gtin:
+    # Zero out the last N digits of the payload, and recalculate the check
+    # digit.
+
+    measure = "0" * n
+    payload_len = len(rcn.value) - n - 1
+    payload = f"{rcn.value[:payload_len]}{measure}"
     check_digit = checksums.numeric_check_digit(payload)
     value = f"{payload}{check_digit}"
     return Gtin.parse(value, rcn_region=rcn.region)
@@ -253,15 +278,39 @@ class _RcnStrategy:
 
 _price_from_pppp = _RcnStrategy(
     get_price=_get_price_from_pppp,
-    without_variable_measure=_zero_pppp,
+    without_variable_measure=partial(_zero_n_last, 4),
+)
+
+_price_from_6_digit_hundreths = _RcnStrategy(
+    get_price=partial(_get_price_from_n_digit_cents, 6),
+    without_variable_measure=partial(_zero_n_last, 6),
 )
 
 _weight_from_pppp = _RcnStrategy(
     get_weight=_get_weight_from_pppp,
-    without_variable_measure=_zero_pppp,
+    without_variable_measure=partial(_zero_n_last, 4),
+)
+
+_weight_from_5_digit_grams = _RcnStrategy(
+    get_weight=partial(_get_weight_from_n_digit_grams, 5),
+    without_variable_measure=partial(_zero_n_last, 5),
+)
+
+_weight_from_6_digit_grams = _RcnStrategy(
+    get_weight=partial(_get_weight_from_n_digit_grams, 6),
+    without_variable_measure=partial(_zero_n_last, 6),
 )
 
 _RCN_RULES: Dict[RcnRegion, Dict[str, _RcnStrategy]] = {
+    RcnRegion.DENMARK: {
+        "21": _price_from_6_digit_hundreths,
+        "22": _price_from_6_digit_hundreths,
+        "23": _price_from_6_digit_hundreths,
+        "24": _price_from_6_digit_hundreths,
+        "26": _weight_from_6_digit_grams,
+        "27": _weight_from_5_digit_grams,
+        "28": _weight_from_6_digit_grams,
+    },
     RcnRegion.ESTONIA: {
         "23": _weight_from_pppp,
         "24": _weight_from_pppp,
@@ -274,7 +323,7 @@ _RCN_RULES: Dict[RcnRegion, Dict[str, _RcnStrategy]] = {
     },
     RcnRegion.GREAT_BRITAIN: {
         "20": _RcnStrategy(
-            get_price=_get_price_from_vpppp_with_houndredths,
+            get_price=_get_price_from_vpppp_with_cents,
             without_variable_measure=_zero_vpppp,
         ),
     },
