@@ -56,6 +56,65 @@ def test_region_baltics(
 @pytest.mark.parametrize(
     "value, weight, price, money",
     [
+        ("2135040039753", None, Decimal("39.75"), Money("39.75", "DKK")),
+        ("2235040039750", None, Decimal("39.75"), Money("39.75", "DKK")),
+        ("2335040039757", None, Decimal("39.75"), Money("39.75", "DKK")),
+        ("2435040039754", None, Decimal("39.75"), Money("39.75", "DKK")),
+        ("2623570001505", Decimal("0.150"), None, None),
+        ("2712341002251", Decimal("0.225"), None, None),
+        ("2823570001509", Decimal("0.150"), None, None),
+        ("2911111111111", None, None, None),
+    ],
+)
+def test_region_denmark(
+    value: str,
+    weight: Optional[Decimal],
+    price: Optional[Decimal],
+    money: Optional[Money],
+) -> None:
+    # References:
+    #   https://www.gs1.dk/om-gs1/overblik-over-gs1-standarder/gtin-13-pris
+    #   https://www.gs1.dk/om-gs1/overblik-over-gs1-standarder/gtin-13-vaegt
+
+    rcn = Gtin.parse(value, rcn_region=RcnRegion.DENMARK)
+
+    assert isinstance(rcn, Rcn)
+    assert rcn.region == RcnRegion.DENMARK
+    assert rcn.weight == weight
+    assert rcn.price == price
+    assert rcn.money == money
+
+
+@pytest.mark.parametrize(
+    "value, weight, price, money",
+    [
+        ("2388060112344", Decimal("1.234"), None, None),
+        ("2488060112341", Decimal("12.34"), None, None),
+        ("2588060112348", Decimal("123.4"), None, None),
+        ("2911111111111", None, None, None),
+    ],
+)
+def test_region_finland(
+    value: str,
+    weight: Optional[Decimal],
+    price: Optional[Decimal],
+    money: Optional[Money],
+) -> None:
+    # References:
+    #   https://gs1.fi/en/instructions/gs1-company-prefix/how-identify-product-gtin
+
+    rcn = Gtin.parse(value, rcn_region=RcnRegion.FINLAND)
+
+    assert isinstance(rcn, Rcn)
+    assert rcn.region == RcnRegion.FINLAND
+    assert rcn.weight == weight
+    assert rcn.price == price
+    assert rcn.money == money
+
+
+@pytest.mark.parametrize(
+    "value, weight, price, money",
+    [
         # NOTE: These examples are constructed from a template. This should be
         # extended with actual examples from either specifications or real
         # British products.
@@ -91,33 +150,6 @@ def test_region_great_britain_fails_with_invalid_price_check_digit() -> None:
         "Invalid price check digit for price data '1234' in RCN '2011122812349': "
         "Expected 9, got 8."
     )
-
-
-@pytest.mark.parametrize(
-    "value, weight, price, money",
-    [
-        ("2388060112344", Decimal("1.234"), None, None),
-        ("2488060112341", Decimal("12.34"), None, None),
-        ("2588060112348", Decimal("123.4"), None, None),
-        ("2911111111111", None, None, None),
-    ],
-)
-def test_region_finland(
-    value: str,
-    weight: Optional[Decimal],
-    price: Optional[Decimal],
-    money: Optional[Money],
-) -> None:
-    # References:
-    #   https://gs1.fi/en/instructions/gs1-company-prefix/how-identify-product-gtin
-
-    rcn = Gtin.parse(value, rcn_region=RcnRegion.FINLAND)
-
-    assert isinstance(rcn, Rcn)
-    assert rcn.region == RcnRegion.FINLAND
-    assert rcn.weight == weight
-    assert rcn.price == price
-    assert rcn.money == money
 
 
 @pytest.mark.parametrize(

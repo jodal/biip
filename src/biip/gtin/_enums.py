@@ -55,6 +55,9 @@ class RcnRegion(Enum):
     The value of the enum is the lowercase ISO 3166-1 Alpha-2 code.
     """
 
+    #: Denmark
+    DENMARK = "dk"
+
     #: Estonia
     ESTONIA = "ee"
 
@@ -87,6 +90,7 @@ class RcnRegion(Enum):
             )
 
         return {
+            "208": RcnRegion.DENMARK,
             "233": RcnRegion.ESTONIA,
             "246": RcnRegion.FINLAND,
             "826": RcnRegion.GREAT_BRITAIN,
@@ -103,6 +107,7 @@ class RcnRegion(Enum):
     def get_currency_code(self) -> Optional[str]:
         """Get the ISO-4217 currency code for the region."""
         return {
+            RcnRegion.DENMARK: "DKK",
             RcnRegion.GREAT_BRITAIN: "GBP",
             RcnRegion.NORWAY: "NOK",
             RcnRegion.SWEDEN: "SEK",

@@ -59,6 +59,7 @@ def test_gtin_14_with_rcn_prefix_is_not_an_rcn() -> None:
 @pytest.mark.parametrize(
     "value, rcn_region",
     [
+        ("dk", RcnRegion.DENMARK),
         ("ee", RcnRegion.ESTONIA),
         ("fi", RcnRegion.FINLAND),
         ("gb", RcnRegion.GREAT_BRITAIN),
@@ -93,6 +94,7 @@ def test_fails_when_rcn_region_is_unknown_string() -> None:
 @pytest.mark.parametrize(
     "value, rcn_region",
     [
+        ("208", RcnRegion.DENMARK),
         ("233", RcnRegion.ESTONIA),
         ("246", RcnRegion.FINLAND),
         ("826", RcnRegion.GREAT_BRITAIN),
