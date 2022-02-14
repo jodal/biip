@@ -112,14 +112,17 @@ def test_fails_when_rcn_region_is_unknown_string() -> None:
         (8, None),  # Albania, once supported by Biip.
     ],
 )
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_rcn_region_lookup_by_iso_3166_1_numeric_code(
     value: Union[int, str], rcn_region: RcnRegion
 ) -> None:
-    result = RcnRegion.from_iso_3166_1_numeric_code(value)
+    with pytest.deprecated_call(match="will be removed in Biip 3.0"):
+        result = RcnRegion.from_iso_3166_1_numeric_code(value)
 
     assert result == rcn_region
 
 
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_fails_when_iso_3166_1_code_is_too_long() -> None:
     with pytest.raises(ValueError) as exc_info:
         RcnRegion.from_iso_3166_1_numeric_code("1234")
@@ -130,6 +133,7 @@ def test_fails_when_iso_3166_1_code_is_too_long() -> None:
     )
 
 
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_fails_when_iso_3166_1_code_is_unknown_string() -> None:
     with pytest.raises(ValueError) as exc_info:
         RcnRegion.from_iso_3166_1_numeric_code("foo")
