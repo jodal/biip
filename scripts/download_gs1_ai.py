@@ -39,13 +39,44 @@ def parse(html_content: bytes) -> List[GS1ApplicationIdentifier]:
                 ai=columns[0].text.strip(),
                 description=columns[1].text.strip(),
                 format=columns[2].text.strip(),
-                data_title=columns[3].text.strip(),
+                data_title=_fix_data_title(columns[3].text.strip()),
                 fnc1_required=columns[4].text.strip() == "Yes",
-                pattern=columns[5].text.strip(),
+                pattern=_fix_pattern(columns[5].text.strip()),
             )
         )
 
     return result
+
+
+def _fix_data_title(value: str) -> str:
+    """Remove HTML elements from the data title."""
+
+    if "<sup>" in value:
+        value = value.replace("<sup>", "")
+    if "</sup>" in value:
+        value = value.replace("</sup>", "")
+
+    return value
+
+
+def _fix_pattern(value: str) -> str:
+    """Fix regular expression metacharacters that are missing their slash prefix."""
+
+    if r"(d" in value:
+        value = value.replace(r"(d", r"(\d")
+
+    if "x" in value:
+        parts = value.split("x")
+        new_parts = []
+        for part in parts[:-1]:
+            if part.endswith("\\"):
+                new_parts.append(part)
+            else:
+                new_parts.append(part + "\\")
+        new_parts.append(parts[-1])
+        value = "x".join(new_parts)
+
+    return value
 
 
 def output(application_identifiers: List[GS1ApplicationIdentifier]) -> None:

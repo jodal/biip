@@ -105,7 +105,7 @@
   },
   {
     "ai": "235",
-    "description": "Third Party Controlled, Serialised Extension of GTIN (TPX)",
+    "description": "Third Party Controlled, Serialised Extension of Global Trade Item Number (GTIN) (TPX)",
     "data_title": "TPX",
     "fnc1_required": true,
     "format": "N3+X..28",
@@ -3779,6 +3779,14 @@
     "ai": "714",
     "description": "National Healthcare Reimbursement Number (NHRN) - Portugal AIM",
     "data_title": "NHRN AIM",
+    "fnc1_required": true,
+    "format": "N3+X..20",
+    "pattern": "^714([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+  },
+  {
+    "ai": "715",
+    "description": "National Healthcare Reimbursement Number (NHRN) - United States of America NDC",
+    "data_title": "NHRN NDC",
     "fnc1_required": true,
     "format": "N3+X..20",
     "pattern": "^714([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
