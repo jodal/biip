@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import warnings
 from enum import Enum, IntEnum
 from typing import Optional, Union
 
@@ -84,7 +85,27 @@ class RcnRegion(Enum):
 
     @classmethod
     def from_iso_3166_1_numeric_code(cls, code: Union[int, str]) -> Optional[RcnRegion]:
-        """Get the region from an ISO 3166-1 numeric code."""
+        """Get the region from an ISO 3166-1 numeric code.
+
+        Args:
+            code: The ISO 3166-1 numeric code.
+
+        Returns:
+            The RCN region or ``None`` if the code does not match a RCN region
+            known to Biip.
+
+        Raises:
+            ValueError: If the code is not a valid ISO 3166-1 numeric code.
+
+        Deprecated:
+            This method was deprecated in Biip 2.2. It will be removed in Biip 3.0.
+        """
+        warnings.warn(
+            "The method from_iso_3166_1_numeric_code() is deprecated "
+            "and will be removed in Biip 3.0.",
+            DeprecationWarning,
+        )
+
         code = str(code).zfill(3)
 
         if len(code) != 3 or not code.isnumeric():

@@ -50,7 +50,6 @@ def parse(html_content: bytes) -> List[GS1ApplicationIdentifier]:
 
 def _fix_data_title(value: str) -> str:
     """Remove HTML elements from the data title."""
-
     if "<sup>" in value:
         value = value.replace("<sup>", "")
     if "</sup>" in value:
@@ -61,7 +60,6 @@ def _fix_data_title(value: str) -> str:
 
 def _fix_pattern(value: str) -> str:
     """Fix regular expression metacharacters that are missing their slash prefix."""
-
     if r"(d" in value:
         value = value.replace(r"(d", r"(\d")
 
