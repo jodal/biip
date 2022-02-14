@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "biip"
-version = "2.1.0"
+version = "2.2.0"
 description = "Biip interprets the data in barcodes."
 authors = ["Stein Magnus Jodal <stein.magnus@jodal.no>"]
 license = "Apache-2.0"
@@ -17,15 +17,15 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.7.0"
-importlib_metadata = {version = ">=1.6,<5.0", python = "<3.8"}
-py-moneyed = {version = ">=0.8", optional = true}
+importlib_metadata = { version = ">=1.6,<5.0", python = "<3.8" }
+py-moneyed = { version = ">=0.8", optional = true }
 
 [tool.poetry.extras]
 money = ["py-moneyed"]
 
 [tool.poetry.dev-dependencies]
 beautifulsoup4 = "^4.9.1"
-black = {version = "^22.1", allow-prereleases = true}
+black = { version = "^22.1", allow-prereleases = true }
 codecov = "^2.1.8"
 coverage = "^6.0"
 darglint = "^1.3.0"
