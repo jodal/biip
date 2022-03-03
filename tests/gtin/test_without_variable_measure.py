@@ -10,7 +10,8 @@ from biip.gtin import Gtin, Rcn, RcnRegion
 @pytest.mark.parametrize(
     "rcn_region, value, expected",
     [
-        (RcnRegion.DENMARK, "2712341002251", "2712341000004"),
+        (RcnRegion.DENMARK, "2712341002251", "2712341000004"),  # GTIN-13
+        (RcnRegion.DENMARK, "02712341002251", "2712341000004"),  # GTIN-14
         (RcnRegion.ESTONIA, "2311111112345", "2311111100007"),
         (RcnRegion.FINLAND, "2311111112345", "2311111100007"),
         (RcnRegion.GREAT_BRITAIN, "2011122912346", "2011122000005"),
@@ -29,7 +30,7 @@ def test_without_variable_measure_strips_variable_parts(
     stripped_rcn = original_rcn.without_variable_measure()
 
     assert isinstance(stripped_rcn, Rcn)
-    assert stripped_rcn.value == expected
+    assert stripped_rcn.as_gtin_13() == expected
     assert stripped_rcn.region == original_rcn.region
 
 
@@ -93,8 +94,10 @@ def test_without_variable_measure_keeps_nonvariable_rcn_unchanged(
 @pytest.mark.parametrize(
     "rcn_region, value",
     [
-        (RcnRegion.NORWAY, "00012348"),
-        (RcnRegion.NORWAY, "0412345678903"),
+        (RcnRegion.NORWAY, "00012348"),  # GTIN-8
+        (RcnRegion.NORWAY, "412345678903"),  # GTIN-12
+        (RcnRegion.NORWAY, "0412345678903"),  # GTIN-13
+        (RcnRegion.NORWAY, "00412345678903"),  # GTIN-14
     ],
 )
 def test_without_variable_measure_keeps_company_rcn_unchanged(
