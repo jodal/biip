@@ -214,10 +214,11 @@ class _Strategy:
         # Zero out the variable measure part of the payload, and recalculate both
         # the GTIN check digit and the variable measure's check digit digit, if any.
 
-        zeroed_value = "0" * len(rcn.value[self.value_slice])
+        rcn_13 = rcn.as_gtin_13()
+        zeroed_value = "0" * len(rcn_13[self.value_slice])
 
         digits = list(self.pattern)
-        digits[self.prefix_slice] = list(rcn.value[self.prefix_slice])
+        digits[self.prefix_slice] = list(rcn_13[self.prefix_slice])
         digits[self.value_slice] = list(zeroed_value)
         if self.check_digit_slice is not None:
             digits[self.check_digit_slice] = [
