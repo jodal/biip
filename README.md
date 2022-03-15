@@ -101,9 +101,13 @@ Please open an issue if you have any barcode parsing related needs that are not 
     values.
   - Parsing of price values into `Money` values if `py-moneyed` is
     installed and the region's RCN parsing rules specifies a currency.
+  - Denmark: Parsing of weight and price.
   - Estland: Parsing of weight.
   - Finland: Parsing of weight.
-  - Great Britain: Parsing of price, including validation of price check digit.
+  - Germany: Parsing of weight, price, and count, including validation of
+    measurement check digit.
+  - Great Britain: Parsing of price, including validation of measurement check
+    digit.
   - Latvia: Parsing of weight.
   - Lithuania: Parsing of weight.
   - Norway: Parsing of weight and price.
