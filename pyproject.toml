@@ -67,6 +67,26 @@ profile = "black"
 minversion = "6.0"
 addopts = "--xdoc"
 
+[tool.mypy]
+no_implicit_optional = true
+warn_return_any = true
+warn_redundant_casts = true
+warn_unused_configs = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = "biip.*"
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = [
+    "bs4.*",
+    "moneyed.*",
+    "nox.*",
+    "pytest.*",
+]
+ignore_missing_imports = true
+
 [build-system]
 requires = ["poetry-core>=1.0"]
 build-backend = "poetry.core.masonry.api"
