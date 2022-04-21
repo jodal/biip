@@ -1,4 +1,4 @@
-py-moneyed==1.2
+py-moneyed==2.0
 sphinx==4.3.2
 sphinx-autodoc-typehints==1.17.1
 sphinx-rtd-theme==1.0.0
