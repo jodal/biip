@@ -72,7 +72,7 @@ class Gtin:
                 f"Expected 8, 12, 13, or 14 digits, got {len(value)}."
             )
 
-        if not value.isnumeric():
+        if not value.isdecimal():
             raise ParseError(
                 f"Failed to parse {value!r} as GTIN: Expected a numerical value."
             )

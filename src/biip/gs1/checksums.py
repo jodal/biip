@@ -25,7 +25,7 @@ def numeric_check_digit(value: str) -> int:
         >>> numeric_check_digit("9501234")  # GTIN-8
         6
     """
-    if not value.isnumeric():
+    if not value.isdecimal():
         raise ValueError(f"Expected numeric value, got {value!r}.")
 
     digits = list(map(int, list(value)))
@@ -60,7 +60,7 @@ def price_check_digit(value: str) -> int:
         >>> price_check_digit("14685")
         6
     """
-    if not value.isnumeric():
+    if not value.isdecimal():
         raise ValueError(f"Expected numeric value, got {value!r}.")
 
     if len(value) == 4:

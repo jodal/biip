@@ -34,13 +34,14 @@ def test_parse_value_with_invalid_length() -> None:
     )
 
 
-def test_parse_nonnumeric_value() -> None:
+@pytest.mark.parametrize("value", ["123456789o128", "123456789⁰128"])
+def test_parse_nonnumeric_value(value: str) -> None:
     with pytest.raises(ParseError) as exc_info:
-        Gln.parse("123456789o128")
+        Gln.parse(value)
 
     assert (
         str(exc_info.value)
-        == "Failed to parse '123456789o128' as GLN: Expected a numerical value."
+        == f"Failed to parse {value!r} as GLN: Expected a numerical value."
     )
 
 

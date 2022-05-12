@@ -3,11 +3,12 @@ import pytest
 from biip.gs1.checksums import numeric_check_digit, price_check_digit
 
 
-def test_numeric_check_digit_with_nonnumeric_value() -> None:
+@pytest.mark.parametrize("value", ["abc", "⁰⁰⁰"])
+def test_numeric_check_digit_with_nonnumeric_value(value: str) -> None:
     with pytest.raises(ValueError) as exc_info:
-        numeric_check_digit("abc")
+        numeric_check_digit(value)
 
-    assert str(exc_info.value) == "Expected numeric value, got 'abc'."
+    assert str(exc_info.value) == f"Expected numeric value, got {value!r}."
 
 
 @pytest.mark.parametrize(
@@ -29,11 +30,12 @@ def test_numeric_check_digit(value: str, expected: int) -> None:
     assert numeric_check_digit(value) == expected
 
 
-def test_price_check_digit_with_nonnumeric_value() -> None:
+@pytest.mark.parametrize("value", ["abc", "⁰⁰⁰"])
+def test_price_check_digit_with_nonnumeric_value(value: str) -> None:
     with pytest.raises(ValueError) as exc_info:
-        price_check_digit("abc")
+        price_check_digit(value)
 
-    assert str(exc_info.value) == "Expected numeric value, got 'abc'."
+    assert str(exc_info.value) == f"Expected numeric value, got {value!r}."
 
 
 @pytest.mark.parametrize(

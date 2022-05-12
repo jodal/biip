@@ -17,13 +17,14 @@ def test_parse_value_with_invalid_length() -> None:
     )
 
 
-def test_parse_nonnumeric_value() -> None:
+@pytest.mark.parametrize("value", ["0123456789abc", "0123456789⁰⁰⁰"])
+def test_parse_nonnumeric_value(value: str) -> None:
     with pytest.raises(ParseError) as exc_info:
-        Gtin.parse("0123456789abc")
+        Gtin.parse(value)
 
     assert (
         str(exc_info.value)
-        == "Failed to parse '0123456789abc' as GTIN: Expected a numerical value."
+        == f"Failed to parse {value!r} as GTIN: Expected a numerical value."
     )
 
 

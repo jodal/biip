@@ -243,7 +243,7 @@ def test_extract_amount_payable(value: str, expected: Decimal) -> None:
         ("39117101230", "ZAR", Decimal("123.0")),
         ("391097812301", "EUR", Decimal("12301")),
         #
-        # Amount payable for variable mesure trade item and currency (section 3.6.9)
+        # Amount payable for variable measure trade item and currency (section 3.6.9)
         ("39327101230", "ZAR", Decimal("12.30")),
         ("39317101230", "ZAR", Decimal("123.0")),
         ("393097812301", "EUR", Decimal("12301")),

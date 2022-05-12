@@ -108,7 +108,7 @@ class RcnRegion(Enum):
 
         code = str(code).zfill(3)
 
-        if len(code) != 3 or not code.isnumeric():
+        if len(code) != 3 or not code.isdecimal():
             raise ValueError(
                 f"Expected ISO 3166-1 numeric code to be 3 digits, got {code!r}."
             )

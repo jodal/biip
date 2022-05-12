@@ -67,13 +67,14 @@ def test_parse_value_with_invalid_length() -> None:
     )
 
 
-def test_parse_nonnumeric_value() -> None:
+@pytest.mark.parametrize("value", ["012345678abc", "012345678⁰⁰⁰"])
+def test_parse_nonnumeric_value(value: str) -> None:
     with pytest.raises(ParseError) as exc_info:
-        Upc.parse("012345678abc")
+        Upc.parse(value)
 
     assert (
         str(exc_info.value)
-        == "Failed to parse '012345678abc' as UPC: Expected a numerical value."
+        == f"Failed to parse {value!r} as UPC: Expected a numerical value."
     )
 
 

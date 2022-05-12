@@ -37,13 +37,14 @@ def test_parse_value_with_invalid_length() -> None:
     )
 
 
-def test_parse_nonnumeric_value() -> None:
+@pytest.mark.parametrize("value", ["012345678901234abc", "012345678901234⁰⁰⁰"])
+def test_parse_nonnumeric_value(value: str) -> None:
     with pytest.raises(ParseError) as exc_info:
-        Sscc.parse("012345678901234abc")
+        Sscc.parse(value)
 
     assert (
         str(exc_info.value)
-        == "Failed to parse '012345678901234abc' as SSCC: Expected a numerical value."
+        == f"Failed to parse {value!r} as SSCC: Expected a numerical value."
     )
 
 

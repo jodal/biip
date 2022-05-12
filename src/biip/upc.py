@@ -113,7 +113,7 @@ class Upc:
                 f"Expected 6, 7, 8, or 12 digits, got {length}."
             )
 
-        if not value.isnumeric():
+        if not value.isdecimal():
             raise ParseError(
                 f"Failed to parse {value!r} as UPC: Expected a numerical value."
             )
@@ -261,7 +261,7 @@ class Upc:
 
 def _upc_e_to_upc_a_expansion(value: str) -> str:
     assert len(value) == 8
-    assert value.isnumeric()
+    assert value.isdecimal()
 
     last_digit = int(value[6])
     check_digit = int(value[7])
@@ -285,7 +285,7 @@ def _upc_e_to_upc_a_expansion(value: str) -> str:
 
 def _upc_a_to_upc_e_suppression(value: str) -> str:
     assert len(value) == 12
-    assert value.isnumeric()
+    assert value.isdecimal()
 
     check_digit = int(value[11])
 
