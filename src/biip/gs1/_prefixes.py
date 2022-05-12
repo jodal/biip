@@ -51,14 +51,14 @@ class GS1Prefix:
         for prefix_range in _GS1_PREFIX_RANGES:
             prefix = value[: prefix_range.length]
 
-            if not prefix.isnumeric():
+            if not prefix.isdecimal():
                 continue
             number = int(prefix)
 
             if prefix_range.min_value <= number <= prefix_range.max_value:
                 return cls(value=prefix, usage=prefix_range.usage)
 
-        if not prefix.isnumeric():
+        if not prefix.isdecimal():
             # `prefix` is now the shortest prefix possible, and should be
             # numeric even if the prefix assignment is unknown.
             raise ParseError(f"Failed to get GS1 Prefix from {value!r}.")

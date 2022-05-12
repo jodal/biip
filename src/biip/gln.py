@@ -75,7 +75,7 @@ class Gln:
                 f"Expected 13 digits, got {len(value)}."
             )
 
-        if not value.isnumeric():
+        if not value.isdecimal():
             raise ParseError(
                 f"Failed to parse {value!r} as GLN: Expected a numerical value."
             )
