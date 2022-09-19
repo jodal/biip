@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "biip"
-version = "2.2.2"
+version = "2.2.3"
 description = "Biip interprets the data in barcodes."
 authors = ["Stein Magnus Jodal <stein.magnus@jodal.no>"]
 license = "Apache-2.0"
