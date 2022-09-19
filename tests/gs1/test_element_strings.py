@@ -229,6 +229,9 @@ def test_extract_variable_measures(value: str, expected: Decimal) -> None:
         ("3921123456", Decimal("12345.6")),
         ("3923123456789012345", Decimal("123456789012.345")),
         ("3929123456789012345", Decimal("123456.789012345")),
+        #
+        # AI without value is ignored
+        ("3923", None),
     ],
 )
 def test_extract_amount_payable(value: str, expected: Decimal) -> None:
@@ -247,6 +250,9 @@ def test_extract_amount_payable(value: str, expected: Decimal) -> None:
         ("39327101230", "ZAR", Decimal("12.30")),
         ("39317101230", "ZAR", Decimal("123.0")),
         ("393097812301", "EUR", Decimal("12301")),
+        #
+        # AI without value is ignored
+        ("3933978", None, None),
     ],
 )
 def test_extract_amount_payable_and_currency(
@@ -257,14 +263,20 @@ def test_extract_amount_payable_and_currency(
     assert element_string.decimal == expected_decimal
 
     # Optional: If py-moneyed is installed, create Money instances
-    assert element_string.money is not None
-    assert element_string.money.amount == expected_decimal
-    assert element_string.money.currency.code == expected_currency
+    if expected_decimal is None:
+        assert element_string.money is None
+    else:
+        assert element_string.money is not None
+        assert element_string.money.amount == expected_decimal
+        assert element_string.money.currency.code == expected_currency
 
 
 @pytest.mark.parametrize(
     "value, expected",
-    [("39400010", Decimal("10")), ("39410055", Decimal("5.5"))],
+    [
+        ("39400010", Decimal("10")),
+        ("39410055", Decimal("5.5")),
+    ],
 )
 def test_extract_percentage_discount(value: str, expected: Decimal) -> None:
     assert GS1ElementString.extract(value).decimal == expected
