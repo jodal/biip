@@ -151,6 +151,19 @@ def test_region_germany(
     assert rcn.money == money
 
 
+def test_region_germany_fails_with_invalid_variable_measure_check_digit() -> None:
+    # The digit 8 in the value below is the variable measure check digit. The
+    # correct value is 9.
+
+    with pytest.raises(ParseError) as exc_info:
+        Gtin.parse("2511118000120", rcn_region=RcnRegion.GERMANY)
+
+    assert str(exc_info.value) == (
+        "Invalid check digit for variable measure value '00012' in RCN '2511118000120': "
+        "Expected 9, got 8."
+    )
+
+
 @pytest.mark.parametrize(
     "value, weight, price, money",
     [
