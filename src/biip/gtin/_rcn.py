@@ -195,8 +195,9 @@ class _Strategy:
         if self.check_digit_slice is None:
             return None
 
-        value = rcn.value[self.value_slice]
-        check_digit = int(rcn.value[self.check_digit_slice])
+        rcn_13 = rcn.as_gtin_13()
+        value = rcn_13[self.value_slice]
+        check_digit = int(rcn_13[self.check_digit_slice])
         calculated_check_digit = checksums.price_check_digit(value)
 
         if check_digit != calculated_check_digit:
@@ -207,7 +208,8 @@ class _Strategy:
             )
 
     def get_variable_measure(self, rcn: Rcn) -> Decimal:
-        value = Decimal(rcn.value[self.value_slice])
+        rcn_13 = rcn.as_gtin_13()
+        value = Decimal(rcn_13[self.value_slice])
         return value / Decimal(10) ** self.num_decimals
 
     def without_variable_measure(self, rcn: Rcn) -> Gtin:

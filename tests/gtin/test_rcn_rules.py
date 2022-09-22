@@ -124,6 +124,10 @@ def test_region_finland(
         # Weight
         ("2811111068708", Decimal("6.870"), None, None, None),
         ("2930711068700", Decimal("6.870"), None, None, None),
+        # GTIN-14 works exactly like GTIN-13
+        ("02211114002394", None, None, Decimal("2.39"), Money("2.39", "EUR")),
+        ("02511119000129", None, 12, None, None),
+        ("02811111068708", Decimal("6.870"), None, None, None),
     ],
 )
 def test_region_germany(
