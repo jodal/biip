@@ -96,29 +96,6 @@ def parse(
         raise ParseError(f"Failed to parse {value!r}:\n{result._get_errors_list()}")
 
 
-def parse_hri(value: str) -> ParseResult:
-    """Parse the GS1 string given in HRI (human readable interpretation) format.
-
-    Args:
-        value: The GS1 string to parse.
-
-    Returns:
-        Data class created by ``parse``.
-
-    Raises:
-        ParseError: If parsing of the data fails.
-    """
-    pattern = r"\((\d+)\)(\w+)"
-    matches = re.findall(pattern, value)
-    ai_map = {entry.ai: entry for entry in _GS1_APPLICATION_IDENTIFIERS}
-    matches = [(ai_map[ai], value) for ai, value in matches]
-    normalized_string = "".join(
-        "".join([gs1ai.ai, value, ("\x1d" if gs1ai.fnc1_required else "")])
-        for gs1ai, value in matches
-    )
-    return parse(normalized_string)
-
-
 @dataclass
 class ParseConfig:
     """Configuration options for parsers."""
