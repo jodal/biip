@@ -7,11 +7,7 @@ from dataclasses import dataclass
 from typing import Callable, Iterable, List, Optional, Tuple
 
 from biip import ParseError
-from biip.gs1 import (
-    DEFAULT_SEPARATOR_CHARS,
-    GS1Message,
-    GS1Symbology,
-)
+from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1Message, GS1Symbology
 from biip.gtin import Gtin, GtinFormat, RcnRegion
 from biip.sscc import Sscc
 from biip.symbology import SymbologyIdentifier
