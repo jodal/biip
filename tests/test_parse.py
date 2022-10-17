@@ -2,7 +2,7 @@ from datetime import date
 
 import pytest
 
-from biip import ParseError, ParseResult, parse, parse_hri
+from biip import ParseError, ParseResult, parse
 from biip.gs1 import (
     GS1ApplicationIdentifier,
     GS1ElementString,
