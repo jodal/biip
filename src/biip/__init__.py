@@ -55,7 +55,7 @@ except ImportError:  # pragma: no cover
     from importlib_metadata import version, PackageNotFoundError  # type: ignore
 
 from biip._exceptions import BiipException, EncodeError, ParseError
-from biip._parser import ParseResult, parse, parse_hri
+from biip._parser import ParseResult, parse
 
 __all__ = [
     "parse",
