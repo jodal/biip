@@ -73,7 +73,7 @@ class GS1ApplicationIdentifier:
             Number (GTIN)', data_title='GTIN', fnc1_required=False,
             format='N2+N14')
         """
-        for application_identifier in _GS1_APPLICATION_IDENTIFIERS:
+        for application_identifier in _GS1_APPLICATION_IDENTIFIERS.values():
             if value.startswith(application_identifier.ai):
                 return application_identifier
 
