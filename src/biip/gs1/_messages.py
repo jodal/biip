@@ -85,7 +85,7 @@ class GS1Message:
         return cls(value=value, element_strings=element_strings)
 
     @classmethod
-    def parse_hri_string(cls, value: str) -> GS1Message:
+    def parse_hri(value: str) -> GS1Message:
         """Parse the GS1 string given in HRI (human readable interpretation) format.
 
         Args:

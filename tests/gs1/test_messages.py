@@ -106,32 +106,24 @@ def test_parse(value: str, expected: GS1Message) -> None:
     [
         (
             "(17)221231",
-            ParseResult(
+            GS1Message(
                 value="17221231",
-                gtin_error="Invalid GTIN check digit for '17221231': Expected 8, got 1.",
-                upc_error="Invalid UPC-E check digit for '17221231': Expected 5, got 1.",
-                sscc_error=(
-                    "Failed to parse '17221231' as SSCC: Expected 18 digits, got 8."
-                ),
-                gs1_message=GS1Message(
-                    value="17221231",
-                    element_strings=[
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("17"),
-                            value="221231",
-                            pattern_groups=["221231"],
-                            date=date(2022, 12, 31),
-                        )
-                    ],
-                ),
-            ),
+                element_strings=[
+                    GS1ElementString(
+                        ai=GS1ApplicationIdentifier.extract("17"),
+                        value="221231",
+                        pattern_groups=["221231"],
+                        date=date(2022, 12, 31),
+                    )
+                ],
+            )
         ),
-        ("(10)123(17)221231", parse("10123\x1d17221231")),
-        ("(17)221231(10)123", parse("1722123110123\x1d")),
+        ("(10)123(17)221231", GS1Message.parse("10123\x1d17221231")),
+        ("(17)221231(10)123", GS1Message.parse("1722123110123\x1d")),
     ],
 )
-def test_parse_hri(value: str, expected: ParseResult) -> None:
-    actual = parse_hri(value)
+def test_parse_hri(value: str, expected: GS1Message) -> None:
+    actual = GS1Message.parse_hri(value)
     assert actual == expected
 
 
