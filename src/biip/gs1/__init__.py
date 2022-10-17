@@ -20,7 +20,7 @@ If the parsing succeeds, it returns a :class:`GS1Message` object.
 
     >>> msg = GS1Message.parse("010703206980498815210526100329")
 
-The has a raw value as well as an HRI, short for "human readable
+The ``GS1Message`` has a raw value as well as an HRI, short for "human readable
 interpretation". The HRI is the text usually printed below or next to the
 barcode.
 
@@ -28,6 +28,10 @@ barcode.
     '010703206980498815210526100329'
     >>> msg.as_hri()
     '(01)07032069804988(15)210526(10)0329'
+
+HRI can also be parsed
+
+    >>> GS1Message.parse_hri("(01)07032069804988(15)210526(10)0329")
 
 A message can contain multiple element strings.
 
