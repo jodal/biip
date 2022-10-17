@@ -110,16 +110,87 @@ def test_parse(value: str, expected: GS1Message) -> None:
                 value="17221231",
                 element_strings=[
                     GS1ElementString(
-                        ai=GS1ApplicationIdentifier.extract("17"),
+                        ai=GS1ApplicationIdentifier(
+                            ai="17",
+                            description="Expiration date (YYMMDD)",
+                            data_title="USE BY OR EXPIRY",
+                            fnc1_required=False,
+                            format="N2+N6",
+                            pattern="^17(\\d{6})$",
+                        ),
                         value="221231",
                         pattern_groups=["221231"],
                         date=date(2022, 12, 31),
                     )
                 ],
-            )
+            ),
         ),
-        ("(10)123(17)221231", GS1Message.parse("10123\x1d17221231")),
-        ("(17)221231(10)123", GS1Message.parse("1722123110123\x1d")),
+        (
+            "(10)123(17)221231",
+            GS1Message(
+                value="10123\x1d17221231",
+                element_strings=[
+                    GS1ElementString(
+                        ai=GS1ApplicationIdentifier(
+                            ai="10",
+                            description="Batch or lot number",
+                            data_title="BATCH/LOT",
+                            fnc1_required=True,
+                            format="N2+X..20",
+                            pattern="^10([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$",
+                        ),
+                        value="123",
+                        pattern_groups=["123"],
+                    ),
+                    GS1ElementString(
+                        ai=GS1ApplicationIdentifier(
+                            ai="17",
+                            description="Expiration date (YYMMDD)",
+                            data_title="USE BY OR EXPIRY",
+                            fnc1_required=False,
+                            format="N2+N6",
+                            pattern="^17(\\d{6})$",
+                        ),
+                        value="221231",
+                        pattern_groups=["221231"],
+                        date=date(2022, 12, 31),
+                    ),
+                ],
+            ),
+        ),
+        (
+            "(17)221231(10)123",
+            GS1Message(
+                value="1722123110123",
+                element_strings=[
+                    GS1ElementString(
+                        ai=GS1ApplicationIdentifier(
+                            ai="17",
+                            description="Expiration date (YYMMDD)",
+                            data_title="USE BY OR EXPIRY",
+                            fnc1_required=False,
+                            format="N2+N6",
+                            pattern="^17(\\d{6})$",
+                        ),
+                        value="221231",
+                        pattern_groups=["221231"],
+                        date=date(2022, 12, 31),
+                    ),
+                    GS1ElementString(
+                        ai=GS1ApplicationIdentifier(
+                            ai="10",
+                            description="Batch or lot number",
+                            data_title="BATCH/LOT",
+                            fnc1_required=True,
+                            format="N2+X..20",
+                            pattern="^10([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$",
+                        ),
+                        value="123",
+                        pattern_groups=["123"],
+                    ),
+                ],
+            ),
+        ),
     ],
 )
 def test_parse_hri(value: str, expected: GS1Message) -> None:
