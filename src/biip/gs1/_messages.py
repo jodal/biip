@@ -8,12 +8,12 @@ import re
 
 from biip import ParseError
 from biip.gs1 import (
-    _GS1_APPLICATION_IDENTIFIERS,
     DEFAULT_SEPARATOR_CHARS,
     GS1ApplicationIdentifier,
     GS1ElementString,
 )
 from biip.gtin import RcnRegion
+import biip.gs1._application_identifiers
 
 
 @dataclass
@@ -85,7 +85,7 @@ class GS1Message:
         return cls(value=value, element_strings=element_strings)
 
     @classmethod
-    def parse_hri_string(value: str) -> GS1Message:
+    def parse_hri_string(cls, value: str) -> GS1Message:
         """Parse the GS1 string given in HRI (human readable interpretation) format.
 
         Args:
@@ -99,13 +99,15 @@ class GS1Message:
         """
         pattern = r"\((\d+)\)(\w+)"
         matches = re.findall(pattern, value)
-        ai_map = {entry.ai: entry for entry in _GS1_APPLICATION_IDENTIFIERS}
-        matches = [(ai_map[ai], value) for ai, value in matches]
+        matches = [
+            (biip.gs1._application_identifiers._GS1_APPLICATION_IDENTIFIERS[ai], value)
+            for ai, value in matches
+        ]
         normalized_string = "".join(
             "".join([gs1ai.ai, value, ("\x1d" if gs1ai.fnc1_required else "")])
             for gs1ai, value in matches
         )
-        return parse(normalized_string)
+        return GS1Message.parse(normalized_string)
 
     def as_hri(self) -> str:
         """Render as a human readable interpretation (HRI).

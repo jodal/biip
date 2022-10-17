@@ -75,7 +75,6 @@ DEFAULT_SEPARATOR_CHARS: Tuple[str] = ("\x1d",)
 from biip.gs1._symbology import GS1Symbology  # isort:skip  # noqa: E402
 from biip.gs1._application_identifiers import (  # isort:skip  # noqa: E402
     GS1ApplicationIdentifier,
-    _GS1_APPLICATION_IDENTIFIERS,
 )
 from biip.gs1._prefixes import GS1Prefix  # isort:skip  # noqa: E402
 from biip.gs1._element_strings import (  # isort:skip  # noqa: E402

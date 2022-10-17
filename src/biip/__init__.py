@@ -59,7 +59,6 @@ from biip._parser import ParseResult, parse, parse_hri
 
 __all__ = [
     "parse",
-    "parse_hri",
     "ParseResult",
     "BiipException",
     "EncodeError",

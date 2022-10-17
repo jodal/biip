@@ -92,7 +92,10 @@ _GS1_APPLICATION_IDENTIFIERS_FILE = (
     pathlib.Path(__file__).parent / "_application_identifiers.json"
 )
 
-_GS1_APPLICATION_IDENTIFIERS = [
-    GS1ApplicationIdentifier(**kwargs)
-    for kwargs in json.loads(_GS1_APPLICATION_IDENTIFIERS_FILE.read_text())
-]
+_GS1_APPLICATION_IDENTIFIERS = {
+    entry.ai: entry
+    for entry in [
+        GS1ApplicationIdentifier(**kwargs)
+        for kwargs in json.loads(_GS1_APPLICATION_IDENTIFIERS_FILE.read_text())
+    ]
+}

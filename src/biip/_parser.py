@@ -8,7 +8,6 @@ from typing import Callable, Iterable, List, Optional, Tuple
 
 from biip import ParseError
 from biip.gs1 import (
-    _GS1_APPLICATION_IDENTIFIERS,
     DEFAULT_SEPARATOR_CHARS,
     GS1Message,
     GS1Symbology,
