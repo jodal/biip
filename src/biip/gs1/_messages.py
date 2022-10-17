@@ -92,7 +92,7 @@ class GS1Message:
             value: The GS1 string to parse.
 
         Returns:
-            Data class created by ``parse``.
+            A message object with one or more element strings.
 
         Raises:
             ParseError: If parsing of the data fails.
