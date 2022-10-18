@@ -29,7 +29,7 @@ barcode.
     >>> msg.as_hri()
     '(01)07032069804988(15)210526(10)0329'
 
-HRI can also be parsed
+HRI can also be parsed.
 
     >>> GS1Message.parse_hri("(01)07032069804988(15)210526(10)0329")
 
