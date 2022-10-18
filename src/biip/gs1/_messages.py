@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from typing import Iterable, List, Optional, Union
-import re
 
 from biip import ParseError
 from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1ApplicationIdentifier, GS1ElementString
