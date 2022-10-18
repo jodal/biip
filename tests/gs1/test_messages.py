@@ -194,8 +194,7 @@ def test_parse(value: str, expected: GS1Message) -> None:
     ],
 )
 def test_parse_hri(value: str, expected: GS1Message) -> None:
-    actual = GS1Message.parse_hri(value)
-    assert actual == expected
+    assert GS1Message.parse_hri(value) == expected
 
 
 @pytest.mark.parametrize(
