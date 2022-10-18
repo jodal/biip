@@ -96,7 +96,7 @@ class GS1Message:
         pattern = r"\((\d+)\)(\w+)"
         matches = re.findall(pattern, value)
         matches = [
-            (biip.gs1._application_identifiers._GS1_APPLICATION_IDENTIFIERS[ai], value)
+            (_GS1_APPLICATION_IDENTIFIERS[ai], value)
             for ai, value in matches
         ]
         normalized_string = "".join(
