@@ -95,10 +95,7 @@ class GS1Message:
         """
         pattern = r"\((\d+)\)(\w+)"
         matches = re.findall(pattern, value)
-        matches = [
-            (_GS1_APPLICATION_IDENTIFIERS[ai], value)
-            for ai, value in matches
-        ]
+        matches = [(_GS1_APPLICATION_IDENTIFIERS[ai], value) for ai, value in matches]
         normalized_string = "".join(
             "".join([gs1ai.ai, value, ("\x1d" if gs1ai.fnc1_required else "")])
             for gs1ai, value in matches
