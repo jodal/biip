@@ -102,6 +102,98 @@ def test_parse(value: str, expected: GS1Message) -> None:
 
 
 @pytest.mark.parametrize(
+    "value, separator_chars, expected_hri",
+    [
+        (
+            # Variable-length lot number field last, all OK.
+            "010703206980498815210526100329",
+            DEFAULT_SEPARATOR_CHARS,
+            "(01)07032069804988(15)210526(10)0329",
+        ),
+        (
+            # Variable-length lot number field in the middle, consuming the
+            # best before date field at the end.
+            "010703206980498810032915210526",
+            DEFAULT_SEPARATOR_CHARS,
+            "(01)07032069804988(10)032915210526",
+        ),
+        (
+            # Variable-length lot number field in the middle, end marked with
+            # default separator character.
+            "0107032069804988100329\x1d15210526",
+            DEFAULT_SEPARATOR_CHARS,
+            "(01)07032069804988(10)0329(15)210526",
+        ),
+        (
+            # Variable-length lot number field in the middle, end marked with
+            # custom separator character.
+            "0107032069804988100329|15210526",
+            ["|"],
+            "(01)07032069804988(10)0329(15)210526",
+        ),
+        (
+            # Unrealistic corner case just to exercise the code:
+            # Two variable-length fields marked with different separators
+            "0107032069804988100329|2112345\x1d15210526",
+            ["|"] + list(DEFAULT_SEPARATOR_CHARS),
+            "(01)07032069804988(10)0329(21)12345(15)210526",
+        ),
+    ],
+)
+def test_parse_with_separator_char(
+    value: str, separator_chars: Iterable[str], expected_hri: str
+) -> None:
+    assert (
+        GS1Message.parse(value, separator_chars=separator_chars).as_hri()
+        == expected_hri
+    )
+
+
+def test_parse_with_too_long_separator_char_fails() -> None:
+    with pytest.raises(ValueError) as exc_info:
+        GS1Message.parse("10222--15210526", separator_chars=["--"])
+
+    assert (
+        str(exc_info.value)
+        == "All separator characters must be exactly 1 character long, got ['--']."
+    )
+
+
+def test_parse_fails_if_unparsed_data_left() -> None:
+    # 10 = AI for BATCH/LOT
+    # 222... = Max length BATCH/LOT
+    # aaa = Superflous data
+    value = "1022222222222222222222aaa"
+
+    with pytest.raises(ParseError) as exc_info:
+        GS1Message.parse(value)
+
+    assert str(exc_info.value) == "Failed to get GS1 Application Identifier from 'aaa'."
+
+
+def test_parse_fails_if_fixed_length_field_ends_with_separator_char() -> None:
+    # 15... is a fixed length date.
+    # \1xd is the default separator character in an illegal position.
+    # 10... is any other field.
+    value = "15210526\x1d100329"
+
+    with pytest.raises(ParseError) as exc_info:
+        GS1Message.parse(value)
+
+    assert str(exc_info.value) == (
+        r"Element String '(15)210526' has fixed length and "
+        r"should not end with a separator character. "
+        r"Separator character '\x1d' found in '15210526\x1d100329'."
+    )
+
+
+def test_parse_strips_surrounding_whitespace() -> None:
+    message = GS1Message.parse("  \t 800370713240010220085952 \n  ")
+
+    assert message.value == "800370713240010220085952"
+
+
+@pytest.mark.parametrize(
     "value, expected",
     [
         (
@@ -195,98 +287,6 @@ def test_parse(value: str, expected: GS1Message) -> None:
 )
 def test_parse_hri(value: str, expected: GS1Message) -> None:
     assert GS1Message.parse_hri(value) == expected
-
-
-@pytest.mark.parametrize(
-    "value, separator_chars, expected_hri",
-    [
-        (
-            # Variable-length lot number field last, all OK.
-            "010703206980498815210526100329",
-            DEFAULT_SEPARATOR_CHARS,
-            "(01)07032069804988(15)210526(10)0329",
-        ),
-        (
-            # Variable-length lot number field in the middle, consuming the
-            # best before date field at the end.
-            "010703206980498810032915210526",
-            DEFAULT_SEPARATOR_CHARS,
-            "(01)07032069804988(10)032915210526",
-        ),
-        (
-            # Variable-length lot number field in the middle, end marked with
-            # default separator character.
-            "0107032069804988100329\x1d15210526",
-            DEFAULT_SEPARATOR_CHARS,
-            "(01)07032069804988(10)0329(15)210526",
-        ),
-        (
-            # Variable-length lot number field in the middle, end marked with
-            # custom separator character.
-            "0107032069804988100329|15210526",
-            ["|"],
-            "(01)07032069804988(10)0329(15)210526",
-        ),
-        (
-            # Unrealistic corner case just to exercise the code:
-            # Two variable-length fields marked with different separators
-            "0107032069804988100329|2112345\x1d15210526",
-            ["|"] + list(DEFAULT_SEPARATOR_CHARS),
-            "(01)07032069804988(10)0329(21)12345(15)210526",
-        ),
-    ],
-)
-def test_parse_with_separator_char(
-    value: str, separator_chars: Iterable[str], expected_hri: str
-) -> None:
-    assert (
-        GS1Message.parse(value, separator_chars=separator_chars).as_hri()
-        == expected_hri
-    )
-
-
-def test_parse_with_too_long_separator_char_fails() -> None:
-    with pytest.raises(ValueError) as exc_info:
-        GS1Message.parse("10222--15210526", separator_chars=["--"])
-
-    assert (
-        str(exc_info.value)
-        == "All separator characters must be exactly 1 character long, got ['--']."
-    )
-
-
-def test_parse_fails_if_unparsed_data_left() -> None:
-    # 10 = AI for BATCH/LOT
-    # 222... = Max length BATCH/LOT
-    # aaa = Superflous data
-    value = "1022222222222222222222aaa"
-
-    with pytest.raises(ParseError) as exc_info:
-        GS1Message.parse(value)
-
-    assert str(exc_info.value) == "Failed to get GS1 Application Identifier from 'aaa'."
-
-
-def test_parse_fails_if_fixed_length_field_ends_with_separator_char() -> None:
-    # 15... is a fixed length date.
-    # \1xd is the default separator character in an illegal position.
-    # 10... is any other field.
-    value = "15210526\x1d100329"
-
-    with pytest.raises(ParseError) as exc_info:
-        GS1Message.parse(value)
-
-    assert str(exc_info.value) == (
-        r"Element String '(15)210526' has fixed length and "
-        r"should not end with a separator character. "
-        r"Separator character '\x1d' found in '15210526\x1d100329'."
-    )
-
-
-def test_parse_strips_surrounding_whitespace() -> None:
-    message = GS1Message.parse("  \t 800370713240010220085952 \n  ")
-
-    assert message.value == "800370713240010220085952"
 
 
 @pytest.mark.parametrize(
