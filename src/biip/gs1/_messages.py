@@ -87,11 +87,19 @@ class GS1Message:
         return cls(value=value, element_strings=element_strings)
 
     @classmethod
-    def parse_hri(cls, value: str) -> GS1Message:
+    def parse_hri(
+        cls,
+        value: str,
+        *,
+        rcn_region: Optional[RcnRegion] = None,
+    ) -> GS1Message:
         """Parse the GS1 string given in HRI (human readable interpretation) format.
 
         Args:
-            value: The GS1 string to parse.
+            value: The HRI string to parse.
+            rcn_region: The geographical region whose rules should be used to
+                interpret Restricted Circulation Numbers (RCN).
+                Needed to extract e.g. variable weight/price from GTIN.
 
         Returns:
             A message object with one or more element strings.
@@ -133,7 +141,7 @@ class GS1Message:
             ]
         )
         normalized_string = "".join(parts)
-        return GS1Message.parse(normalized_string)
+        return GS1Message.parse(normalized_string, rcn_region=rcn_region)
 
     def as_hri(self) -> str:
         """Render as a human readable interpretation (HRI).

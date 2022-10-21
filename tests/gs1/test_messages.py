@@ -1,4 +1,5 @@
 from datetime import date
+from decimal import Decimal
 from typing import Iterable, List
 
 import pytest
@@ -11,7 +12,7 @@ from biip.gs1 import (
     GS1Message,
     GS1Prefix,
 )
-from biip.gtin import Gtin, GtinFormat
+from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion
 
 
 @pytest.mark.parametrize(
@@ -293,6 +294,19 @@ def test_parse_strips_surrounding_whitespace() -> None:
 )
 def test_parse_hri(value: str, expected: GS1Message) -> None:
     assert GS1Message.parse_hri(value) == expected
+
+
+def test_parse_hri_with_gtin_with_variable_weight() -> None:
+    result = GS1Message.parse_hri(
+        "(01)02302148210869",
+        rcn_region=RcnRegion.NORWAY,
+    )
+
+    gs1_gtin = result.get(ai="01")
+    assert gs1_gtin
+    gtin = gs1_gtin.gtin
+    assert isinstance(gtin, Rcn)
+    assert gtin.weight == Decimal("1.086")
 
 
 def test_parse_hri_strips_surrounding_whitespace() -> None:
