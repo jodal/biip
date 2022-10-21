@@ -295,12 +295,33 @@ def test_parse_hri(value: str, expected: GS1Message) -> None:
     assert GS1Message.parse_hri(value) == expected
 
 
+def test_parse_hri_strips_surrounding_whitespace() -> None:
+    message = GS1Message.parse_hri("  \t (17)221231 \n  ")
+
+    assert message.value == "17221231"
+
+
 @pytest.mark.parametrize(
     "value",
     [
         "",  # Empty string
-        "aa15210526",  # Invalid data
-        "15210526100329",  # Valid data, without parenthesis
+        "17221231",  # Valid data, but no parenthesis
+        "aaa(17)221231",  # Valid data, but extra data in front
+    ],
+)
+def test_parse_hri_fails_if_not_starting_with_parenthesis(value: str) -> None:
+    with pytest.raises(ParseError) as exc_info:
+        GS1Message.parse_hri(value)
+
+    assert str(exc_info.value) == (
+        f"Expected HRI string {value!r} to start with a parenthesis."
+    )
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        "(15)",  # Valid start of string, but no data
     ],
 )
 def test_parse_hri_fails_if_no_pattern_matches(value: str) -> None:
@@ -316,7 +337,7 @@ def test_parse_hri_fails_if_no_pattern_matches(value: str) -> None:
 @pytest.mark.parametrize(
     "value",
     [
-        "(1)15210526",  # Unknown AI
+        "(1)15210526",
     ],
 )
 def test_parse_hri_fails_if_ai_is_unknown(value: str) -> None:

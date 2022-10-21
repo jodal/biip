@@ -99,6 +99,12 @@ class GS1Message:
         Raises:
             ParseError: If parsing of the data fails.
         """
+        value = value.strip()
+        if not value.startswith("("):
+            raise ParseError(
+                f"Expected HRI string {value!r} to start with a parenthesis."
+            )
+
         pattern = r"\((\d+)\)(\w+)"
         matches = re.findall(pattern, value)
         if not matches:
