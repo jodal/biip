@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from itertools import chain
 from typing import Iterable, List, Optional, Union
 
 from biip import ParseError
@@ -115,16 +116,17 @@ class GS1Message:
                 )
             pairs.append((_GS1_APPLICATION_IDENTIFIERS[ai_number], ai_data))
 
-        normalized_string = "".join(
-            "".join(
+        parts = chain(
+            *[
                 [
-                    gs1ai.ai,
-                    value,
-                    (ASCII_GROUP_SEPARATOR if gs1ai.fnc1_required else ""),
+                    gs1_ai.ai,
+                    ai_data,
+                    (ASCII_GROUP_SEPARATOR if gs1_ai.fnc1_required else ""),
                 ]
-            )
-            for gs1ai, value in pairs
+                for gs1_ai, ai_data in pairs
+            ]
         )
+        normalized_string = "".join(parts)
         return GS1Message.parse(normalized_string)
 
     def as_hri(self) -> str:
