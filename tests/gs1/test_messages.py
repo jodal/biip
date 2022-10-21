@@ -229,7 +229,10 @@ def test_parse_strips_surrounding_whitespace() -> None:
                             data_title="BATCH/LOT",
                             fnc1_required=True,
                             format="N2+X..20",
-                            pattern="^10([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$",
+                            pattern=(
+                                "^10([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F"
+                                "\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+                            ),
                         ),
                         value="123",
                         pattern_groups=["123"],
@@ -275,7 +278,10 @@ def test_parse_strips_surrounding_whitespace() -> None:
                             data_title="BATCH/LOT",
                             fnc1_required=True,
                             format="N2+X..20",
-                            pattern="^10([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$",
+                            pattern=(
+                                "^10([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F"
+                                "\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+                            ),
                         ),
                         value="123",
                         pattern_groups=["123"],
