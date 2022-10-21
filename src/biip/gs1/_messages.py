@@ -95,10 +95,24 @@ class GS1Message:
         """
         pattern = r"\((\d+)\)(\w+)"
         matches = re.findall(pattern, value)
-        matches = [(_GS1_APPLICATION_IDENTIFIERS[ai], value) for ai, value in matches]
+        if not matches:
+            raise ParseError(
+                f"Could not find any GS1 Application Identifiers in {value!r}. "
+                "Expected format: '(AI)DATA(AI)DATA'."
+            )
+
+        pairs = []
+        for ai_number, ai_data in matches:
+            if ai_number not in _GS1_APPLICATION_IDENTIFIERS:
+                raise ParseError(
+                    "Does not recognize the GS1 Application Identifier "
+                    f"{ai_number!r} in {value!r}."
+                )
+            pairs.append((_GS1_APPLICATION_IDENTIFIERS[ai_number], ai_data))
+
         normalized_string = "".join(
             "".join([gs1ai.ai, value, ("\x1d" if gs1ai.fnc1_required else "")])
-            for gs1ai, value in matches
+            for gs1ai, value in pairs
         )
         return GS1Message.parse(normalized_string)
 

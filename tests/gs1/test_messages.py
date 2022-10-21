@@ -296,6 +296,39 @@ def test_parse_hri(value: str, expected: GS1Message) -> None:
 
 
 @pytest.mark.parametrize(
+    "value",
+    [
+        "",  # Empty string
+        "aa15210526",  # Invalid data
+        "15210526100329",  # Valid data, without parenthesis
+    ],
+)
+def test_parse_hri_fails_if_no_pattern_matches(value: str) -> None:
+    with pytest.raises(ParseError) as exc_info:
+        GS1Message.parse_hri(value)
+
+    assert str(exc_info.value) == (
+        "Could not find any GS1 Application Identifiers in "
+        f"{value!r}. Expected format: '(AI)DATA(AI)DATA'."
+    )
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        "(1)15210526",  # Unknown AI
+    ],
+)
+def test_parse_hri_fails_if_ai_is_unknown(value: str) -> None:
+    with pytest.raises(ParseError) as exc_info:
+        GS1Message.parse_hri(value)
+
+    assert str(exc_info.value) == (
+        "Does not recognize the GS1 Application Identifier '1' in '(1)15210526'."
+    )
+
+
+@pytest.mark.parametrize(
     "value, expected",
     [
         (
