@@ -7,7 +7,12 @@ from dataclasses import dataclass
 from typing import Iterable, List, Optional, Union
 
 from biip import ParseError
-from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1ApplicationIdentifier, GS1ElementString
+from biip.gs1 import (
+    ASCII_GROUP_SEPARATOR,
+    DEFAULT_SEPARATOR_CHARS,
+    GS1ApplicationIdentifier,
+    GS1ElementString,
+)
 from biip.gs1._application_identifiers import _GS1_APPLICATION_IDENTIFIERS
 from biip.gtin import RcnRegion
 
@@ -111,7 +116,13 @@ class GS1Message:
             pairs.append((_GS1_APPLICATION_IDENTIFIERS[ai_number], ai_data))
 
         normalized_string = "".join(
-            "".join([gs1ai.ai, value, ("\x1d" if gs1ai.fnc1_required else "")])
+            "".join(
+                [
+                    gs1ai.ai,
+                    value,
+                    (ASCII_GROUP_SEPARATOR if gs1ai.fnc1_required else ""),
+                ]
+            )
             for gs1ai, value in pairs
         )
         return GS1Message.parse(normalized_string)

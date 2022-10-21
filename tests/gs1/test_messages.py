@@ -173,7 +173,7 @@ def test_parse_fails_if_unparsed_data_left() -> None:
 
 def test_parse_fails_if_fixed_length_field_ends_with_separator_char() -> None:
     # 15... is a fixed length date.
-    # \1xd is the default separator character in an illegal position.
+    # \x1d is the default separator character in an illegal position.
     # 10... is any other field.
     value = "15210526\x1d100329"
 
