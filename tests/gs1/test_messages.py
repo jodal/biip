@@ -359,7 +359,7 @@ def test_parse_hri_fails_if_ai_is_unknown(value: str) -> None:
         GS1Message.parse_hri(value)
 
     assert str(exc_info.value) == (
-        "Does not recognize the GS1 Application Identifier '1' in '(1)15210526'."
+        "Unknown GS1 Application Identifier '1' in '(1)15210526'."
     )
 
 

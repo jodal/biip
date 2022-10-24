@@ -125,8 +125,7 @@ class GS1Message:
         for ai_number, ai_data in matches:
             if ai_number not in _GS1_APPLICATION_IDENTIFIERS:
                 raise ParseError(
-                    "Does not recognize the GS1 Application Identifier "
-                    f"{ai_number!r} in {value!r}."
+                    f"Unknown GS1 Application Identifier {ai_number!r} in {value!r}."
                 )
             pairs.append((_GS1_APPLICATION_IDENTIFIERS[ai_number], ai_data))
 
