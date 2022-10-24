@@ -69,11 +69,13 @@ methods to lookup element strings either by the Application Identifier's
 
 from typing import Tuple
 
+ASCII_GROUP_SEPARATOR = "\x1d"
+
 #: The default separator character is <GS>, ASCII value 29.
 #:
 #: References:
 #:   GS1 General Specifications, section 7.8.3.
-DEFAULT_SEPARATOR_CHARS: Tuple[str] = ("\x1d",)
+DEFAULT_SEPARATOR_CHARS: Tuple[str] = (ASCII_GROUP_SEPARATOR,)
 
 # The following must be imported in this specific order.
 from biip.gs1._symbology import GS1Symbology  # isort:skip  # noqa: E402

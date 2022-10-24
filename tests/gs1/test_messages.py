@@ -1,4 +1,5 @@
 from datetime import date
+from decimal import Decimal
 from typing import Iterable, List
 
 import pytest
@@ -11,7 +12,7 @@ from biip.gs1 import (
     GS1Message,
     GS1Prefix,
 )
-from biip.gtin import Gtin, GtinFormat
+from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion
 
 
 @pytest.mark.parametrize(
@@ -173,7 +174,7 @@ def test_parse_fails_if_unparsed_data_left() -> None:
 
 def test_parse_fails_if_fixed_length_field_ends_with_separator_char() -> None:
     # 15... is a fixed length date.
-    # \1xd is the default separator character in an illegal position.
+    # \x1d is the default separator character in an illegal position.
     # 10... is any other field.
     value = "15210526\x1d100329"
 
@@ -293,6 +294,73 @@ def test_parse_strips_surrounding_whitespace() -> None:
 )
 def test_parse_hri(value: str, expected: GS1Message) -> None:
     assert GS1Message.parse_hri(value) == expected
+
+
+def test_parse_hri_with_gtin_with_variable_weight() -> None:
+    result = GS1Message.parse_hri(
+        "(01)02302148210869",
+        rcn_region=RcnRegion.NORWAY,
+    )
+
+    gs1_gtin = result.get(ai="01")
+    assert gs1_gtin
+    gtin = gs1_gtin.gtin
+    assert isinstance(gtin, Rcn)
+    assert gtin.weight == Decimal("1.086")
+
+
+def test_parse_hri_strips_surrounding_whitespace() -> None:
+    message = GS1Message.parse_hri("  \t (17)221231 \n  ")
+
+    assert message.value == "17221231"
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        "",  # Empty string
+        "17221231",  # Valid data, but no parenthesis
+        "aaa(17)221231",  # Valid data, but extra data in front
+    ],
+)
+def test_parse_hri_fails_if_not_starting_with_parenthesis(value: str) -> None:
+    with pytest.raises(ParseError) as exc_info:
+        GS1Message.parse_hri(value)
+
+    assert str(exc_info.value) == (
+        f"Expected HRI string {value!r} to start with a parenthesis."
+    )
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        "(15)",  # Valid start of string, but no data
+    ],
+)
+def test_parse_hri_fails_if_no_pattern_matches(value: str) -> None:
+    with pytest.raises(ParseError) as exc_info:
+        GS1Message.parse_hri(value)
+
+    assert str(exc_info.value) == (
+        "Could not find any GS1 Application Identifiers in "
+        f"{value!r}. Expected format: '(AI)DATA(AI)DATA'."
+    )
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        "(1)15210526",
+    ],
+)
+def test_parse_hri_fails_if_ai_is_unknown(value: str) -> None:
+    with pytest.raises(ParseError) as exc_info:
+        GS1Message.parse_hri(value)
+
+    assert str(exc_info.value) == (
+        "Unknown GS1 Application Identifier '1' in '(1)15210526'."
+    )
 
 
 @pytest.mark.parametrize(
