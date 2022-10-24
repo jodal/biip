@@ -77,6 +77,7 @@ Please open an issue if you have any barcode parsing related needs that are not 
       parse amounts with currency into `Money` values.
   - Encode as Human Readable Interpretation (HRI),
     e.g. with parenthesis around the AI numbers.
+  - Parse Human Readable Interpretation (HRI) strings.
   - Easy lookup of parsed Element Strings by:
     - Application Identifier (AI) prefix
     - Part of AI's data title
