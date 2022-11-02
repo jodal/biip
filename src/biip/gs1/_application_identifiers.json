@@ -3957,7 +3957,7 @@
     "data_title": "CPID",
     "fnc1_required": true,
     "format": "N4+Y..30",
-    "pattern": "^8010([\\x23\\x2D\\x2F\\x30-\\x39\\x41-\\x5A]{0,30})$"
+    "pattern": "^8010([\\x23\\x2D\\x2F\\x30-\\x39\\x41-\\x5A]{5,30})$"
   },
   {
     "ai": "8011",
