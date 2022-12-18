@@ -37,11 +37,12 @@ class GS1ElementString:
         GS1ElementString(ai=GS1ApplicationIdentifier(ai='01',
         description='Global Trade Item Number (GTIN)', data_title='GTIN',
         fnc1_required=False, format='N2+N14'), value='07032069804988',
-        pattern_groups=['07032069804988'], gln=None,
+        pattern_groups=['07032069804988'], gln=None, gln_error=None,
         gtin=Gtin(value='07032069804988', format=GtinFormat.GTIN_13,
         prefix=GS1Prefix(value='703', usage='GS1 Norway'),
-        payload='703206980498', check_digit=8, packaging_level=None), sscc=None,
-        date=None, decimal=None, money=None)
+        payload='703206980498', check_digit=8, packaging_level=None),
+        gtin_error=None, sscc=None, sscc_error=None, date=None, decimal=None,
+        money=None)
         >>> element_string.as_hri()
         '(01)07032069804988'
     """
@@ -58,11 +59,20 @@ class GS1ElementString:
     #: A GLN created from the element string, if the AI represents a GLN.
     gln: Optional[Gln] = None
 
+    #: The GLN parse error, if parsing as a GLN was attempted and failed.
+    gln_error: Optional[str] = None
+
     #: A GTIN created from the element string, if the AI represents a GTIN.
     gtin: Optional[Gtin] = None
 
+    #: The GTIN parse error, if parsing as a GTIN was attempted and failed.
+    gtin_error: Optional[str] = None
+
     #: An SSCC created from the element string, if the AI represents a SSCC.
     sscc: Optional[Sscc] = None
+
+    #: The SSCC parse error, if parsing as an SSCC was attempted and failed.
+    sscc_error: Optional[str] = None
 
     #: A date created from the element string, if the AI represents a date.
     date: Optional[datetime.date] = None
@@ -83,6 +93,17 @@ class GS1ElementString:
         separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
     ) -> GS1ElementString:
         """Extract the first GS1 Element String from the given value.
+
+        If the element string contains a primitive data type, like a date,
+        decimal number, or currency, it will be parsed and stored in the
+        ``date``, ``decimal``, or ``money`` field respectively. If parsing of
+        a primitive data type fails, a ``ParseError`` will be raised.
+
+        If the element string contains another supported format, like a GLN,
+        GTIN, or SSCC, it will parsed and validated, and the result stored in
+        the fields ``gln``, ``gtin``, or ``sscc`` respectively. If parsing or
+        validation of an inner format fails, the ``gln_error``, ``gtin_error``,
+        or ``sscc_error`` field will be set. No ``ParseError`` will be raised.
 
         Args:
             value: The string to extract an Element String from. May contain
@@ -135,19 +156,34 @@ class GS1ElementString:
         if self.ai.ai[:2] != "41":
             return
 
-        self.gln = Gln.parse(self.value)
+        try:
+            self.gln = Gln.parse(self.value)
+            self.gln_error = None
+        except ParseError as exc:
+            self.gln = None
+            self.gln_error = str(exc)
 
     def _set_gtin(self, *, rcn_region: Optional[RcnRegion] = None) -> None:
         if self.ai.ai not in ("01", "02"):
             return
 
-        self.gtin = Gtin.parse(self.value, rcn_region=rcn_region)
+        try:
+            self.gtin = Gtin.parse(self.value, rcn_region=rcn_region)
+            self.gtin_error = None
+        except ParseError as exc:
+            self.gtin = None
+            self.gtin_error = str(exc)
 
     def _set_sscc(self) -> None:
         if self.ai.ai != "00":
             return
 
-        self.sscc = Sscc.parse(self.value)
+        try:
+            self.sscc = Sscc.parse(self.value)
+            self.sscc_error = None
+        except ParseError as exc:
+            self.sscc = None
+            self.sscc_error = str(exc)
 
     def _set_date(self) -> None:
         if self.ai.ai not in ("11", "12", "13", "15", "16", "17"):
