@@ -90,7 +90,9 @@ from biip.upc import Upc, UpcFormat
                     payload="1234567",
                     check_digit=0,
                 ),
-                sscc_error="Failed to parse '12345670' as SSCC: Expected 18 digits, got 8.",
+                sscc_error=(
+                    "Failed to parse '12345670' as SSCC: Expected 18 digits, got 8."
+                ),
                 gs1_message_error="Failed to parse GS1 AI (12) date from '345670'.",
             ),
         ),
@@ -260,7 +262,9 @@ from biip.upc import Upc, UpcFormat
                     payload="0425261",
                     check_digit=4,
                 ),
-                sscc_error="Failed to parse '425261' as SSCC: Expected 18 digits, got 6.",
+                sscc_error=(
+                    "Failed to parse '425261' as SSCC: Expected 18 digits, got 6."
+                ),
                 gs1_message=GS1Message(
                     value="425261",
                     element_strings=[
@@ -437,8 +441,12 @@ from biip.upc import Upc, UpcFormat
             "15210527",
             ParseResult(
                 value="15210527",
-                gtin_error="Invalid GTIN check digit for '15210527': Expected 4, got 7.",
-                upc_error="Invalid UPC-E check digit for '15210527': Expected 6, got 7.",
+                gtin_error=(
+                    "Invalid GTIN check digit for '15210527': Expected 4, got 7."
+                ),
+                upc_error=(
+                    "Invalid UPC-E check digit for '15210527': Expected 6, got 7."
+                ),
                 sscc_error=(
                     "Failed to parse '15210527' as SSCC: Expected 18 digits, got 8."
                 ),
