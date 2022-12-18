@@ -44,7 +44,13 @@ class Gtin:
     packaging_level: Optional[int] = None
 
     @classmethod
-    def parse(cls, value: str, *, rcn_region: Optional[RcnRegion] = None) -> Gtin:
+    def parse(
+        cls,
+        value: str,
+        *,
+        rcn_region: Optional[RcnRegion] = None,
+        rcn_verify_variable_measure: bool = True,
+    ) -> Gtin:
         """Parse the given value into a :class:`Gtin` object.
 
         Both GTIN-8, GTIN-12, GTIN-13, and GTIN-14 are supported.
@@ -54,6 +60,10 @@ class Gtin:
             rcn_region: The geographical region whose rules should be used to
                 interpret Restricted Circulation Numbers (RCN).
                 Needed to extract e.g. variable weight/price from GTIN.
+            rcn_verify_variable_measure: Whether to verify that the variable
+                measure in a RCN matches its check digit, if present. Some
+                companies use the variable measure check digit for other
+                purposes, requiring this check to be disabled.
 
         Returns:
             GTIN data structure with the successfully extracted data.
@@ -126,7 +136,10 @@ class Gtin:
         )
 
         if isinstance(gtin, Rcn) and rcn_region is not None:
-            gtin._parse_with_regional_rules(rcn_region)
+            gtin._parse_with_regional_rules(
+                region=rcn_region,
+                verify_variable_measure=rcn_verify_variable_measure,
+            )
 
         return gtin
 

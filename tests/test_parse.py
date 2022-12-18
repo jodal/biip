@@ -1,4 +1,5 @@
 from datetime import date
+from decimal import Decimal
 
 import pytest
 
@@ -10,7 +11,7 @@ from biip.gs1 import (
     GS1Prefix,
     GS1Symbology,
 )
-from biip.gtin import Gtin, GtinFormat
+from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
 from biip.sscc import Sscc
 from biip.symbology import Symbology, SymbologyIdentifier
 from biip.upc import Upc, UpcFormat
@@ -620,6 +621,60 @@ from biip.upc import Upc, UpcFormat
 )
 def test_parse(value: str, expected: ParseResult) -> None:
     assert parse(value) == expected
+
+
+def test_parse_rcn_with_ignored_invalid_check_digit() -> None:
+    # NOTE: GTINs with variable weight usually only appear on consumer units,
+    # and thus in barcodes like EAN-13, but we use a GS1-128 barcode (symbology
+    # identifier `]C1`) in this example, so that we get to test the correct
+    # passing of the `rcn_verify_variable_measure` parameter throughout all the
+    # classes.
+
+    result = parse(
+        "]C10102824040005133",
+        rcn_region=RcnRegion.GERMANY,
+        rcn_verify_variable_measure=False,
+    )
+
+    assert result == ParseResult(
+        value="]C10102824040005133",
+        symbology_identifier=SymbologyIdentifier(
+            value="]C1",
+            symbology=Symbology.CODE_128,
+            modifiers="1",
+            gs1_symbology=GS1Symbology.GS1_128,
+        ),
+        gtin=Rcn(
+            value="02824040005133",
+            format=GtinFormat.GTIN_13,
+            prefix=GS1Prefix.extract("282"),
+            payload="282404000513",
+            check_digit=3,
+            usage=RcnUsage.GEOGRAPHICAL,
+            region=RcnRegion.GERMANY,
+            weight=Decimal("0.513"),
+        ),
+        gs1_message=GS1Message(
+            value="0102824040005133",
+            element_strings=[
+                GS1ElementString(
+                    ai=GS1ApplicationIdentifier.extract("01"),
+                    value="02824040005133",
+                    pattern_groups=["02824040005133"],
+                    gtin=Rcn(
+                        value="02824040005133",
+                        format=GtinFormat.GTIN_13,
+                        prefix=GS1Prefix.extract("282"),
+                        payload="282404000513",
+                        check_digit=3,
+                        usage=RcnUsage.GEOGRAPHICAL,
+                        region=RcnRegion.GERMANY,
+                        weight=Decimal("0.513"),
+                    ),
+                )
+            ],
+        ),
+    )
 
 
 def test_parse_strips_surrounding_whitespace() -> None:

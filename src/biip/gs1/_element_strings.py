@@ -90,6 +90,7 @@ class GS1ElementString:
         value: str,
         *,
         rcn_region: Optional[RcnRegion] = None,
+        rcn_verify_variable_measure: bool = True,
         separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
     ) -> GS1ElementString:
         """Extract the first GS1 Element String from the given value.
@@ -111,6 +112,10 @@ class GS1ElementString:
             rcn_region: The geographical region whose rules should be used to
                 interpret Restricted Circulation Numbers (RCN).
                 Needed to extract e.g. variable weight/price from GTIN.
+            rcn_verify_variable_measure: Whether to verify that the variable
+                measure in a RCN matches its check digit, if present. Some
+                companies use the variable measure check digit for other
+                purposes, requiring this check to be disabled.
             separator_chars: Characters used in place of the FNC1 symbol.
                 Defaults to `<GS>` (ASCII value 29).
                 If variable-length fields are not terminated with a separator
@@ -145,7 +150,10 @@ class GS1ElementString:
 
         element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
         element._set_gln()
-        element._set_gtin(rcn_region=rcn_region)
+        element._set_gtin(
+            rcn_region=rcn_region,
+            rcn_verify_variable_measure=rcn_verify_variable_measure,
+        )
         element._set_sscc()
         element._set_date()
         element._set_decimal()
@@ -163,12 +171,21 @@ class GS1ElementString:
             self.gln = None
             self.gln_error = str(exc)
 
-    def _set_gtin(self, *, rcn_region: Optional[RcnRegion] = None) -> None:
+    def _set_gtin(
+        self,
+        *,
+        rcn_region: Optional[RcnRegion],
+        rcn_verify_variable_measure: bool,
+    ) -> None:
         if self.ai.ai not in ("01", "02"):
             return
 
         try:
-            self.gtin = Gtin.parse(self.value, rcn_region=rcn_region)
+            self.gtin = Gtin.parse(
+                self.value,
+                rcn_region=rcn_region,
+                rcn_verify_variable_measure=rcn_verify_variable_measure,
+            )
             self.gtin_error = None
         except ParseError as exc:
             self.gtin = None

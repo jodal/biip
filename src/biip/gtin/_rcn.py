@@ -40,24 +40,24 @@ class Rcn(Gtin):
 
     #: Where the RCN can be circulated,
     #: in a geographical region or within a company.
-    usage: Optional[RcnUsage] = field(default=None, init=False)
+    usage: Optional[RcnUsage] = field(default=None)
 
     #: The geographical region whose rules are used to interpret the contents
     #: of  the RCN.
-    region: Optional[RcnRegion] = field(default=None, init=False)
+    region: Optional[RcnRegion] = field(default=None)
 
     #: A variable weight value extracted from the GTIN.
-    weight: Optional[Decimal] = field(default=None, init=False)
+    weight: Optional[Decimal] = field(default=None)
 
     #: A variable count extracted from the GTIN.
-    count: Optional[int] = field(default=None, init=False)
+    count: Optional[int] = field(default=None)
 
     #: A variable weight price extracted from the GTIN.
-    price: Optional[Decimal] = field(default=None, init=False)
+    price: Optional[Decimal] = field(default=None)
 
     #: A Money value created from the variable weight price.
     #: Only set if py-moneyed is installed and the currency is known.
-    money: Optional["moneyed.Money"] = field(default=None, init=False)
+    money: Optional["moneyed.Money"] = field(default=None)
 
     def __post_init__(self) -> None:
         """Initialize derivated fields."""
@@ -73,7 +73,12 @@ class Rcn(Gtin):
         if "within a company" in self.prefix.usage:
             self.usage = RcnUsage.COMPANY
 
-    def _parse_with_regional_rules(self, region: RcnRegion) -> None:
+    def _parse_with_regional_rules(
+        self,
+        *,
+        region: RcnRegion,
+        verify_variable_measure: bool,
+    ) -> None:
         if self.usage == RcnUsage.COMPANY:
             # The value is an RCN, but it is intended for use within a company,
             # so we can only interpret it as an opaque GTIN.
@@ -88,7 +93,8 @@ class Rcn(Gtin):
             # Without a strategy, we cannot extract anything.
             return
 
-        strategy.verify_check_digit(self)
+        if verify_variable_measure:
+            strategy.verify_check_digit(self)
 
         if strategy.measure_type == _MeasureType.WEIGHT:
             self.weight = strategy.get_variable_measure(self)
