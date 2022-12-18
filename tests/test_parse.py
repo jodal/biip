@@ -6,6 +6,7 @@ import pytest
 from biip import ParseError, ParseResult, parse
 from biip.gs1 import (
     GS1ApplicationIdentifier,
+    GS1CompanyPrefix,
     GS1ElementString,
     GS1Message,
     GS1Prefix,
@@ -285,69 +286,63 @@ from biip.upc import Upc, UpcFormat
         ),
         (
             # SSCC
-            "376130321109103420",
+            "157035381410375177",
             ParseResult(
-                value="376130321109103420",
+                value="157035381410375177",
                 gtin_error=(
-                    "Failed to parse '376130321109103420' as GTIN: "
+                    "Failed to parse '157035381410375177' as GTIN: "
                     "Expected 8, 12, 13, or 14 digits, got 18."
                 ),
                 upc_error=(
-                    "Failed to parse '376130321109103420' as UPC: "
+                    "Failed to parse '157035381410375177' as UPC: "
                     "Expected 6, 7, 8, or 12 digits, got 18."
                 ),
                 sscc=Sscc(
-                    value="376130321109103420",
-                    prefix=GS1Prefix(
-                        value="761", usage="GS1 Schweiz, Suisse, Svizzera"
-                    ),
-                    extension_digit=3,
-                    payload="37613032110910342",
-                    check_digit=0,
+                    value="157035381410375177",
+                    prefix=GS1Prefix(value="570", usage="GS1 Denmark"),
+                    company_prefix=GS1CompanyPrefix(value="5703538"),
+                    extension_digit=1,
+                    payload="15703538141037517",
+                    check_digit=7,
                 ),
-                gs1_message_error=(
-                    "Failed to get GS1 Application Identifier from '09103420'."
-                ),
+                gs1_message_error="Failed to parse GS1 AI (15) date from '703538'.",
             ),
         ),
         (
             # GS1 AI: SSCC
-            "00376130321109103420",
+            "00157035381410375177",
             ParseResult(
-                value="00376130321109103420",
+                value="00157035381410375177",
                 gtin_error=(
-                    "Failed to parse '00376130321109103420' as GTIN: "
+                    "Failed to parse '00157035381410375177' as GTIN: "
                     "Expected 8, 12, 13, or 14 digits, got 20."
                 ),
                 upc_error=(
-                    "Failed to parse '00376130321109103420' as UPC: "
+                    "Failed to parse '00157035381410375177' as UPC: "
                     "Expected 6, 7, 8, or 12 digits, got 20."
                 ),
                 sscc=Sscc(
-                    value="376130321109103420",
-                    prefix=GS1Prefix(
-                        value="761", usage="GS1 Schweiz, Suisse, Svizzera"
-                    ),
-                    extension_digit=3,
-                    payload="37613032110910342",
-                    check_digit=0,
+                    value="157035381410375177",
+                    prefix=GS1Prefix(value="570", usage="GS1 Denmark"),
+                    company_prefix=GS1CompanyPrefix(value="5703538"),
+                    extension_digit=1,
+                    payload="15703538141037517",
+                    check_digit=7,
                 ),
                 gs1_message=GS1Message(
-                    value="00376130321109103420",
+                    value="00157035381410375177",
                     element_strings=[
                         GS1ElementString(
                             ai=GS1ApplicationIdentifier.extract("00"),
-                            value="376130321109103420",
-                            pattern_groups=["376130321109103420"],
+                            value="157035381410375177",
+                            pattern_groups=["157035381410375177"],
                             sscc=Sscc(
-                                value="376130321109103420",
-                                prefix=GS1Prefix(
-                                    value="761",
-                                    usage="GS1 Schweiz, Suisse, Svizzera",
-                                ),
-                                extension_digit=3,
-                                payload="37613032110910342",
-                                check_digit=0,
+                                value="157035381410375177",
+                                prefix=GS1Prefix(value="570", usage="GS1 Denmark"),
+                                company_prefix=GS1CompanyPrefix(value="5703538"),
+                                extension_digit=1,
+                                payload="15703538141037517",
+                                check_digit=7,
                             ),
                         )
                     ],

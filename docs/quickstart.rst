@@ -246,12 +246,12 @@ Serial Shipping Container Code (SSCC)
 -------------------------------------
 
 If we scan a GS1-128 barcode on a pallet,
-we might get the data string ``00376130321109103420``:
+we might get the data string ``00157035381410375177``:
 
-    >>> result = biip.parse("00376130321109103420")
+    >>> result = biip.parse("00157035381410375177")
     >>> result.gs1_message
     GS1Message(
-        value='00376130321109103420',
+        value='00157035381410375177',
         element_strings=[
             GS1ElementString(
                 ai=GS1ApplicationIdentifier(
@@ -261,18 +261,19 @@ we might get the data string ``00376130321109103420``:
                     fnc1_required=False,
                     format='N2+N18',
                 ),
-                value='376130321109103420',
-                pattern_groups=['376130321109103420'],
+                value='157035381410375177',
+                pattern_groups=['157035381410375177'],
                 gln=None,
                 gln_error=None,
                 gtin=None,
                 gtin_error=None,
                 sscc=Sscc(
-                    value='376130321109103420',
-                    prefix=GS1Prefix(value='761', usage='GS1 Schweiz, Suisse, Svizzera'),
-                    extension_digit=3,
-                    payload='37613032110910342',
-                    check_digit=0,
+                    value='157035381410375177',
+                    prefix=GS1Prefix(value='570', usage='GS1 Denmark'),
+                    company_prefix=GS1CompanyPrefix(value='5703538'),
+                    extension_digit=1,
+                    payload='15703538141037517',
+                    check_digit=7,
                 ),
                 sscc_error=None,
                 date=None,
@@ -298,7 +299,9 @@ You can extract the Element String using
     >>> element_string.ai.data_title
     'SSCC'
     >>> element_string.sscc.prefix.usage
-    'GS1 Schweiz, Suisse, Svizzera'
+    'GS1 Denmark'
+    >>> element_string.sscc.as_hri()
+    '1 5703538 141037517 7'
 
 In case SSCCs are what you are primarily working with,
 the :class:`~biip.sscc.Sscc` instance is also available directly from :class:`~biip.ParseResult`::
@@ -311,7 +314,7 @@ e.g. to print below a barcode,
 you can use :meth:`~biip.gs1.GS1Message.as_hri`::
 
     >>> result.gs1_message.as_hri()
-    '(00)376130321109103420'
+    '(00)157035381410375177'
 
 
 Product IDs, expiration dates, and lot numbers
