@@ -94,6 +94,17 @@ class GS1ElementString:
     ) -> GS1ElementString:
         """Extract the first GS1 Element String from the given value.
 
+        If the element string contains a primitive data type, like a date,
+        decimal number, or currency, it will be parsed and stored in the
+        ``date``, ``decimal``, or ``money`` field respectively. If parsing of
+        a primitive data type fails, a ``ParseError`` will be raised.
+
+        If the element string contains another supported format, like a GLN,
+        GTIN, or SSCC, it will parsed and validated, and the result stored in
+        the fields ``gln``, ``gtin``, or ``sscc`` respectively. If parsing or
+        validation of an inner format fails, the ``gln_error``, ``gtin_error``,
+        or ``sscc_error`` field will be set. No ``ParseError`` will be raised.
+
         Args:
             value: The string to extract an Element String from. May contain
                 more than one Element String.
