@@ -1,7 +1,5 @@
 """Tests of parsing SSCCs."""
 
-from typing import Optional
-
 import pytest
 
 from biip import ParseError
@@ -59,26 +57,19 @@ def test_parse_with_invalid_check_digit() -> None:
 
 
 @pytest.mark.parametrize(
-    "prefix_length, expected",
+    "value, expected",
     [
-        (None, "3 761 3032110910342 0"),
-        (7, "3 761 3032 110910342 0"),
-        (8, "3 761 30321 10910342 0"),
-        (9, "3 761 303211 0910342 0"),
-        (10, "3 761 3032110 910342 0"),
+        ("157035381410375177", "1 5703538 141037517 7"),
+        ("357081300469846950", "3 5708130 046984695 0"),
+        ("370595680445154697", "3 705956 8044515469 7"),
+        # GS1 Prefix 671 is currently unassigned:
+        ("376130321109103420", "3 7613032110910342 0"),
     ],
 )
-def test_as_hri(prefix_length: Optional[int], expected: str) -> None:
-    sscc = Sscc.parse("376130321109103420")
+def test_as_hri(value: str, expected: str) -> None:
+    sscc = Sscc.parse(value)
 
-    assert sscc.as_hri(company_prefix_length=prefix_length) == expected
-
-
-def test_as_hri_with_unknown_gs1_prefix() -> None:
-    # GS1 prefix 671 is currently unassigned.
-    sscc = Sscc.parse("367130321109103428")
-
-    assert sscc.as_hri() == "3 6713032110910342 8"
+    assert sscc.as_hri() == expected
 
 
 def test_as_hri_with_too_low_company_prefix_length() -> None:

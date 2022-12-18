@@ -10,18 +10,20 @@ instead of using :func:`biip.parse`.
 
 If parsing succeeds, it returns a :class:`Sscc` object.
 
-    >>> sscc = Sscc.parse("376130321109103420")
+    >>> sscc = Sscc.parse("157035381410375177")
     >>> sscc
-    Sscc(value='376130321109103420', prefix=GS1Prefix(value='761',
-    usage='GS1 Schweiz, Suisse, Svizzera'), extension_digit=3,
-    payload='37613032110910342', check_digit=0)
+    Sscc(value='157035381410375177', prefix=GS1Prefix(value='570', usage='GS1
+    Denmark'), extension_digit=1, payload='15703538141037517', check_digit=7)
 
 Biip can format the SSCC in HRI format for printing on a label.
 
     >>> sscc.as_hri()
-    '3 761 3032110910342 0'
-    >>> sscc.as_hri(company_prefix_length=8)
-    '3 761 30321 10910342 0'
+    '1 5703538 141037517 7'
+
+If the detected GS1 Company Prefix length is wrong, it can be overridden:
+
+    >>> sscc.as_hri(company_prefix_length=9)
+    '1 570353814 1037517 7'
 """
 
 from __future__ import annotations
@@ -30,7 +32,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 from biip import ParseError
-from biip.gs1 import GS1Prefix
+from biip.gs1 import GS1CompanyPrefix, GS1Prefix
 from biip.gs1.checksums import numeric_check_digit
 
 
@@ -108,37 +110,40 @@ class Sscc:
 
         The HRI is often printed directly below barcodes.
 
+        The GS1 Company Prefix length will be detected and used to render the
+        Company Prefix and the Serial Reference as two separate groups. If the
+        GS1 Company Prefix length cannot be found, the Company Prefix and the
+        Serial Reference are rendered as a single group.
+
         Args:
-            company_prefix_length: Length of the assigned GS1 Company prefix.
-                7-10 characters. If not specified, the GS1 Company Prefix and
-                the Serial Reference are rendered as a single group.
+            company_prefix_length: Override the detected GS1 Company Prefix
+                length. 7-10 characters. If not specified, the GS1 Company
+                Prefix is automatically detected.
 
         Raises:
-            ValueError: If an illegal company prefix length is used.
+            ValueError: If an illegal company prefix length is given.
 
         Returns:
             A human-readable string where the logic parts are separated by whitespace.
         """
         value = self.payload[1:]  # Strip extension digit
 
-        if self.prefix is None:
-            return f"{self.extension_digit} {value} {self.check_digit}"
-
-        gs1_prefix = self.prefix.value
+        if company_prefix_length is not None:
+            # Using override of GS1 Company Prefix length
+            if not (7 <= company_prefix_length <= 10):
+                raise ValueError(
+                    "Expected company prefix length between 7 and 10, "
+                    f"got {company_prefix_length!r}."
+                )
+        else:
+            # Using auto-detection of GS1 Company Prefix length
+            gs1_company_prefix = GS1CompanyPrefix.extract(value)
+            if gs1_company_prefix is not None:
+                company_prefix_length = len(gs1_company_prefix.value)
 
         if company_prefix_length is None:
-            data = value[len(gs1_prefix) :]
-            return f"{self.extension_digit} {gs1_prefix} {data} {self.check_digit}"
+            return f"{self.extension_digit} {value} {self.check_digit}"
 
-        if not (7 <= company_prefix_length <= 10):
-            raise ValueError(
-                "Expected company prefix length between 7 and 10, "
-                f"got {company_prefix_length!r}."
-            )
-
-        company_prefix = value[len(gs1_prefix) : company_prefix_length]
-        serial_reference = value[company_prefix_length:]
-        return (
-            f"{self.extension_digit} {gs1_prefix} {company_prefix} "
-            f"{serial_reference} {self.check_digit}"
-        )
+        company_prefix = value[:company_prefix_length]
+        serial = value[company_prefix_length:]
+        return f"{self.extension_digit} {company_prefix} {serial} {self.check_digit}"
