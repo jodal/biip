@@ -1,5 +1,3 @@
-from typing import Union
-
 import pytest
 
 from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
@@ -90,58 +88,6 @@ def test_fails_when_rcn_region_is_unknown_string() -> None:
         )
 
     assert str(exc_info.value) == "'foo' is not a valid RcnRegion"
-
-
-@pytest.mark.parametrize(
-    "value, rcn_region",
-    [
-        ("208", RcnRegion.DENMARK),
-        ("233", RcnRegion.ESTONIA),
-        ("246", RcnRegion.FINLAND),
-        ("276", RcnRegion.GERMANY),
-        ("826", RcnRegion.GREAT_BRITAIN),
-        ("428", RcnRegion.LATVIA),
-        ("440", RcnRegion.LITHUANIA),
-        ("578", RcnRegion.NORWAY),
-        ("752", RcnRegion.SWEDEN),
-        # Unknown numeric codes returns None:
-        ("999", None),
-        # Integers are converted to strings before lookup:
-        (233, RcnRegion.ESTONIA),
-        # Integers are padded to three digits before lookup:
-        (8, None),  # Albania, once supported by Biip.
-    ],
-)
-@pytest.mark.filterwarnings("ignore::DeprecationWarning")
-def test_rcn_region_lookup_by_iso_3166_1_numeric_code(
-    value: Union[int, str], rcn_region: RcnRegion
-) -> None:
-    with pytest.deprecated_call(match="will be removed in Biip 3.0"):
-        result = RcnRegion.from_iso_3166_1_numeric_code(value)
-
-    assert result == rcn_region
-
-
-@pytest.mark.filterwarnings("ignore::DeprecationWarning")
-def test_fails_when_iso_3166_1_code_is_too_long() -> None:
-    with pytest.raises(ValueError) as exc_info:
-        RcnRegion.from_iso_3166_1_numeric_code("1234")
-
-    assert (
-        str(exc_info.value)
-        == "Expected ISO 3166-1 numeric code to be 3 digits, got '1234'."
-    )
-
-
-@pytest.mark.filterwarnings("ignore::DeprecationWarning")
-def test_fails_when_iso_3166_1_code_is_unknown_string() -> None:
-    with pytest.raises(ValueError) as exc_info:
-        RcnRegion.from_iso_3166_1_numeric_code("foo")
-
-    assert (
-        str(exc_info.value)
-        == "Expected ISO 3166-1 numeric code to be 3 digits, got 'foo'."
-    )
 
 
 def test_rcn_usage_repr() -> None:

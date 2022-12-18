@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-import warnings
 from enum import Enum, IntEnum
-from typing import Optional, Union
+from typing import Optional
 
 
 class GtinFormat(IntEnum):
@@ -84,48 +83,6 @@ class RcnRegion(Enum):
 
     #: Sweden
     SWEDEN = "se"
-
-    @classmethod
-    def from_iso_3166_1_numeric_code(cls, code: Union[int, str]) -> Optional[RcnRegion]:
-        """Get the region from an ISO 3166-1 numeric code.
-
-        Args:
-            code: The ISO 3166-1 numeric code.
-
-        Returns:
-            The RCN region or ``None`` if the code does not match a RCN region
-            known to Biip.
-
-        Raises:
-            ValueError: If the code is not a valid ISO 3166-1 numeric code.
-
-        Deprecated:
-            This method was deprecated in Biip 2.2. It will be removed in Biip 3.0.
-        """
-        warnings.warn(
-            "The method from_iso_3166_1_numeric_code() is deprecated "
-            "and will be removed in Biip 3.0.",
-            DeprecationWarning,
-        )
-
-        code = str(code).zfill(3)
-
-        if len(code) != 3 or not code.isdecimal():
-            raise ValueError(
-                f"Expected ISO 3166-1 numeric code to be 3 digits, got {code!r}."
-            )
-
-        return {
-            "208": RcnRegion.DENMARK,
-            "233": RcnRegion.ESTONIA,
-            "246": RcnRegion.FINLAND,
-            "276": RcnRegion.GERMANY,
-            "826": RcnRegion.GREAT_BRITAIN,
-            "428": RcnRegion.LATVIA,
-            "440": RcnRegion.LITHUANIA,
-            "578": RcnRegion.NORWAY,
-            "752": RcnRegion.SWEDEN,
-        }.get(code)
 
     def __repr__(self) -> str:
         """Canonical string representation of format."""
