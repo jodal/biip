@@ -3522,7 +3522,7 @@
   {
     "ai": "4324",
     "description": "Not before delivery date time",
-    "data_title": "NOT BEF DEL DT",
+    "data_title": "NBEF DEL DT",
     "fnc1_required": true,
     "format": "N4+N10",
     "pattern": "^4324(\\d{10})$"
@@ -3530,7 +3530,7 @@
   {
     "ai": "4325",
     "description": "Not after delivery date time",
-    "data_title": "NOT AFT DEL DT",
+    "data_title": "NAFT DEL DT",
     "fnc1_required": true,
     "format": "N4+N10",
     "pattern": "^4325(\\d{10})$"
