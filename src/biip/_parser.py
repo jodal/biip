@@ -19,6 +19,7 @@ def parse(
     value: str,
     *,
     rcn_region: Optional[RcnRegion] = None,
+    rcn_verify_variable_measure: bool = True,
     separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
 ) -> ParseResult:
     """Identify data format and parse data.
@@ -34,6 +35,10 @@ def parse(
         rcn_region: The geographical region whose rules should be used to
             interpret Restricted Circulation Numbers (RCN).
             Needed to extract e.g. variable weight/price from GTIN.
+        rcn_verify_variable_measure: Whether to verify that the variable measure
+            in a RCN matches its check digit, if present. Some companies use the
+            variable measure check digit for other purposes, requiring this
+            check to be disabled.
         separator_chars: Characters used in place of the FNC1 symbol.
             Defaults to `<GS>` (ASCII value 29).
             If variable-length fields in the middle of the message are
@@ -49,6 +54,7 @@ def parse(
     value = value.strip()
     config = ParseConfig(
         rcn_region=rcn_region,
+        rcn_verify_variable_measure=rcn_verify_variable_measure,
         separator_chars=separator_chars,
     )
     result = ParseResult(value=value)
@@ -95,6 +101,7 @@ class ParseConfig:
     """Configuration options for parsers."""
 
     rcn_region: Optional[RcnRegion]
+    rcn_verify_variable_measure: bool
     separator_chars: Iterable[str]
 
 
@@ -162,7 +169,11 @@ def _parse_gtin(
         return  # pragma: no cover
 
     try:
-        result.gtin = Gtin.parse(value, rcn_region=config.rcn_region)
+        result.gtin = Gtin.parse(
+            value,
+            rcn_region=config.rcn_region,
+            rcn_verify_variable_measure=config.rcn_verify_variable_measure,
+        )
         result.gtin_error = None
     except ParseError as exc:
         result.gtin = None
@@ -226,6 +237,7 @@ def _parse_gs1_message(
         result.gs1_message = GS1Message.parse(
             value,
             rcn_region=config.rcn_region,
+            rcn_verify_variable_measure=config.rcn_verify_variable_measure,
             separator_chars=config.separator_chars,
         )
         result.gs1_message_error = None
