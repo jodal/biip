@@ -63,7 +63,7 @@
     "length": 3,
     "min_value": 200,
     "max_value": 299,
-    "usage": "Used to issue Restricted Circulation Numbers within a geographic region (MO defined)"
+    "usage": "Used to issue GS1 Restricted Circulation Numbers within a geographic region (MO defined)"
   },
   {
     "length": 3,
@@ -111,12 +111,6 @@
     "length": 3,
     "min_value": 450,
     "max_value": 459,
-    "usage": "GS1 Japan"
-  },
-  {
-    "length": 3,
-    "min_value": 490,
-    "max_value": 499,
     "usage": "GS1 Japan"
   },
   {
@@ -235,6 +229,12 @@
   },
   {
     "length": 3,
+    "min_value": 490,
+    "max_value": 499,
+    "usage": "GS1 Japan"
+  },
+  {
+    "length": 3,
     "min_value": 500,
     "max_value": 509,
     "usage": "GS1 UK"
@@ -343,6 +343,24 @@
   },
   {
     "length": 3,
+    "min_value": 605,
+    "max_value": 605,
+    "usage": "Managed by GS1 Global Office for future MO"
+  },
+  {
+    "length": 3,
+    "min_value": 606,
+    "max_value": 606,
+    "usage": "Managed by GS1 Global Office for future MO"
+  },
+  {
+    "length": 3,
+    "min_value": 607,
+    "max_value": 607,
+    "usage": "GS1 Oman"
+  },
+  {
+    "length": 3,
     "min_value": 608,
     "max_value": 608,
     "usage": "GS1 Bahrain"
@@ -355,6 +373,12 @@
   },
   {
     "length": 3,
+    "min_value": 610,
+    "max_value": 610,
+    "usage": "Managed by GS1 Global Office for future MO"
+  },
+  {
+    "length": 3,
     "min_value": 611,
     "max_value": 611,
     "usage": "GS1 Morocco"
@@ -364,6 +388,12 @@
     "min_value": 613,
     "max_value": 613,
     "usage": "GS1 Algeria"
+  },
+  {
+    "length": 3,
+    "min_value": 614,
+    "max_value": 614,
+    "usage": "Managed by GS1 Global Office for future MO"
   },
   {
     "length": 3,
@@ -415,12 +445,6 @@
   },
   {
     "length": 3,
-    "min_value": 623,
-    "max_value": 623,
-    "usage": "GS1 Brunei"
-  },
-  {
-    "length": 3,
     "min_value": 624,
     "max_value": 624,
     "usage": "GS1 Libya"
@@ -454,6 +478,18 @@
     "min_value": 629,
     "max_value": 629,
     "usage": "GS1 Emirates"
+  },
+  {
+    "length": 3,
+    "min_value": 630,
+    "max_value": 630,
+    "usage": "GS1 Qatar"
+  },
+  {
+    "length": 3,
+    "min_value": 631,
+    "max_value": 631,
+    "usage": "GS1 Namibia"
   },
   {
     "length": 3,
@@ -538,6 +574,12 @@
     "min_value": 754,
     "max_value": 755,
     "usage": "GS1 Canada"
+  },
+  {
+    "length": 3,
+    "min_value": 758,
+    "max_value": 758,
+    "usage": "Managed by GS1 Global Office for future MO"
   },
   {
     "length": 3,
@@ -657,7 +699,7 @@
     "length": 3,
     "min_value": 868,
     "max_value": 869,
-    "usage": "GS1 Turkey"
+    "usage": "GS1 T\u00fcrkiye"
   },
   {
     "length": 3,
@@ -706,6 +748,12 @@
     "min_value": 893,
     "max_value": 893,
     "usage": "GS1 Vietnam"
+  },
+  {
+    "length": 3,
+    "min_value": 894,
+    "max_value": 894,
+    "usage": "Managed by GS1 Global Office for future MO"
   },
   {
     "length": 3,
@@ -765,7 +813,7 @@
     "length": 3,
     "min_value": 958,
     "max_value": 958,
-    "usage": "GS1 Macau, China"
+    "usage": "GS1 Macao, China"
   },
   {
     "length": 3,
@@ -794,7 +842,7 @@
   {
     "length": 3,
     "min_value": 981,
-    "max_value": 984,
+    "max_value": 983,
     "usage": "GS1 coupon identification for common currency areas"
   },
   {
