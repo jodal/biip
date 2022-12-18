@@ -1,4 +1,4 @@
-"""Script to download and extract Company Prefix data from GS1."""
+"""Script to download and extract Prefix data from GS1."""
 
 import dataclasses
 import json
@@ -9,14 +9,14 @@ from bs4 import BeautifulSoup
 
 from biip.gs1._prefixes import _GS1PrefixRange
 
-COMPANY_PREFIX_URL = "https://www.gs1.org/standards/id-keys/company-prefix"
+PREFIX_URL = "https://www.gs1.org/standards/id-keys/company-prefix"
 
 
 def main() -> None:
     """The script's main function."""
-    html_content = download(COMPANY_PREFIX_URL)
-    company_prefixes: List[_GS1PrefixRange] = parse(html_content)
-    output(company_prefixes)
+    html_content = download(PREFIX_URL)
+    prefixes: List[_GS1PrefixRange] = parse(html_content)
+    output(prefixes)
 
 
 def download(url: str) -> bytes:
@@ -77,9 +77,9 @@ def parse(html_content: bytes) -> List[_GS1PrefixRange]:
     return result
 
 
-def output(company_prefixes: List[_GS1PrefixRange]) -> None:
+def output(prefixes: List[_GS1PrefixRange]) -> None:
     """Output the _GS1PrefixRange objects as JSON to stdout."""
-    print(json.dumps([dataclasses.asdict(cp) for cp in company_prefixes], indent=2))
+    print(json.dumps([dataclasses.asdict(cp) for cp in prefixes], indent=2))
 
 
 if __name__ == "__main__":
