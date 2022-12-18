@@ -40,6 +40,7 @@ class GS1Message:
         value: str,
         *,
         rcn_region: Optional[RcnRegion] = None,
+        rcn_verify_variable_measure: bool = True,
         separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
     ) -> GS1Message:
         """Parse a string from a barcode scan as a GS1 message with AIs.
@@ -49,6 +50,10 @@ class GS1Message:
             rcn_region: The geographical region whose rules should be used to
                 interpret Restricted Circulation Numbers (RCN).
                 Needed to extract e.g. variable weight/price from GTIN.
+            rcn_verify_variable_measure: Whether to verify that the variable
+                measure in a RCN matches its check digit, if present. Some
+                companies use the variable measure check digit for other
+                purposes, requiring this check to be disabled.
             separator_chars: Characters used in place of the FNC1 symbol.
                 Defaults to `<GS>` (ASCII value 29).
                 If variable-length fields in the middle of the message are
@@ -67,7 +72,10 @@ class GS1Message:
 
         while rest:
             element_string = GS1ElementString.extract(
-                rest, rcn_region=rcn_region, separator_chars=separator_chars
+                rest,
+                rcn_region=rcn_region,
+                rcn_verify_variable_measure=rcn_verify_variable_measure,
+                separator_chars=separator_chars,
             )
             element_strings.append(element_string)
 
@@ -92,6 +100,7 @@ class GS1Message:
         value: str,
         *,
         rcn_region: Optional[RcnRegion] = None,
+        rcn_verify_variable_measure: bool = True,
     ) -> GS1Message:
         """Parse the GS1 string given in HRI (human readable interpretation) format.
 
@@ -100,6 +109,10 @@ class GS1Message:
             rcn_region: The geographical region whose rules should be used to
                 interpret Restricted Circulation Numbers (RCN).
                 Needed to extract e.g. variable weight/price from GTIN.
+            rcn_verify_variable_measure: Whether to verify that the variable
+                measure in a RCN matches its check digit, if present. Some
+                companies use the variable measure check digit for other
+                purposes, requiring this check to be disabled.
 
         Returns:
             A message object with one or more element strings.
@@ -140,7 +153,11 @@ class GS1Message:
             ]
         )
         normalized_string = "".join(parts)
-        return GS1Message.parse(normalized_string, rcn_region=rcn_region)
+        return GS1Message.parse(
+            normalized_string,
+            rcn_region=rcn_region,
+            rcn_verify_variable_measure=rcn_verify_variable_measure,
+        )
 
     def as_hri(self) -> str:
         """Render as a human readable interpretation (HRI).
