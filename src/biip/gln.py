@@ -12,7 +12,8 @@ If parsing succeeds, it returns a :class:`Gln` object.
     >>> gln = Gln.parse("1234567890128")
     >>> gln
     Gln(value='1234567890128', prefix=GS1Prefix(value='123',
-    usage='GS1 US'), payload='123456789012', check_digit=8)
+    usage='GS1 US'), company_prefix=GS1CompanyPrefix(value='1234567890'),
+    payload='123456789012', check_digit=8)
 
 As GLNs do not appear independently in barcodes, the GLN parser is not a part of
 the top-level parser :func:`biip.parse`. However, if you are parsing a barcode
@@ -21,8 +22,9 @@ using the :class:`Gln` class.
 
    >>> import biip
    >>> biip.parse("4101234567890128").gs1_message.get(data_title="SHIP TO").gln
-   Gln(value='1234567890128', prefix=GS1Prefix(value='123',
-   usage='GS1 US'), payload='123456789012', check_digit=8)
+   Gln(value='1234567890128', prefix=GS1Prefix(value='123', usage='GS1 US'),
+   company_prefix=GS1CompanyPrefix(value='1234567890'), payload='123456789012',
+   check_digit=8)
 """
 
 from __future__ import annotations
@@ -31,7 +33,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 from biip import ParseError
-from biip.gs1 import GS1Prefix
+from biip.gs1 import GS1CompanyPrefix, GS1Prefix
 from biip.gs1.checksums import numeric_check_digit
 
 
@@ -42,9 +44,12 @@ class Gln:
     #: Raw unprocessed value.
     value: str
 
-    #: The GS1 prefix, indicating what GS1 country organization that assigned
+    #: The GS1 Prefix, indicating what GS1 country organization that assigned
     #: code range.
     prefix: Optional[GS1Prefix]
+
+    #: The GS1 Company Prefix, identifying the company that issued the GLN.
+    company_prefix: Optional[GS1CompanyPrefix]
 
     #: The actual payload, including extension digit, company prefix, and item
     #: reference. Excludes the check digit.
@@ -81,6 +86,7 @@ class Gln:
             )
 
         prefix = GS1Prefix.extract(value)
+        company_prefix = GS1CompanyPrefix.extract(value)
         payload = value[:-1]
         check_digit = int(value[-1])
 
@@ -94,6 +100,7 @@ class Gln:
         return cls(
             value=value,
             prefix=prefix,
+            company_prefix=company_prefix,
             payload=payload,
             check_digit=check_digit,
         )

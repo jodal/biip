@@ -86,6 +86,7 @@ Please open an issue if you have any barcode parsing related needs that are not 
   - Parse.
   - Extract and validate check digit.
   - Extract GS1 Prefix.
+  - Extract GS1 Company Prefix.
 - GTIN (Global Trade Item Number)
   - Parse GTIN-8, e.g. from EAN-8 barcodes.
   - Parse GTIN-12, e.g. from UPC-A and UPC-E barcodes.

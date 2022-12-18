@@ -66,6 +66,7 @@ from biip.sscc import Sscc
                 gln=Gln(
                     value="1234567890128",
                     prefix=GS1Prefix(value="123", usage="GS1 US"),
+                    company_prefix=GS1CompanyPrefix(value="1234567890"),
                     payload="123456789012",
                     check_digit=8,
                 ),
