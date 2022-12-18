@@ -5,7 +5,8 @@ import pytest
 from moneyed import Money
 
 from biip import ParseError
-from biip.gtin import Gtin, Rcn, RcnRegion
+from biip.gs1 import GS1Prefix
+from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
 
 
 @pytest.mark.parametrize(
@@ -159,8 +160,31 @@ def test_region_germany_fails_with_invalid_variable_measure_check_digit() -> Non
         Gtin.parse("2511118000120", rcn_region=RcnRegion.GERMANY)
 
     assert str(exc_info.value) == (
-        "Invalid check digit for variable measure value '00012' in RCN '2511118000120': "
-        "Expected 9, got 8."
+        "Invalid check digit for variable measure value '00012' "
+        "in RCN '2511118000120': Expected 9, got 8."
+    )
+
+
+def test_region_germany_when_not_verifying_invalid_check_digit() -> None:
+    # The digit 8 in the value below is the variable measure check digit. The
+    # correct value is 9.
+
+    rcn = Gtin.parse(
+        "2511118000120",
+        rcn_region=RcnRegion.GERMANY,
+        rcn_verify_variable_measure=False,
+    )
+
+    assert isinstance(rcn, Rcn)
+    assert rcn == Rcn(
+        value="2511118000120",
+        format=GtinFormat.GTIN_13,
+        prefix=GS1Prefix.extract("251"),
+        payload="251111800012",
+        check_digit=0,
+        region=RcnRegion.GERMANY,
+        usage=RcnUsage.GEOGRAPHICAL,
+        count=12,
     )
 
 
@@ -201,6 +225,29 @@ def test_region_great_britain_fails_with_invalid_price_check_digit() -> None:
     assert str(exc_info.value) == (
         "Invalid check digit for variable measure value '1234' in RCN '2011122812349': "
         "Expected 9, got 8."
+    )
+
+
+def test_region_great_britain_when_not_verifying_invalid_check_digit() -> None:
+    # The digit 8 in the value below is the price check digit. The correct value is 9.
+
+    rcn = Gtin.parse(
+        "2011122812349",
+        rcn_region=RcnRegion.GREAT_BRITAIN,
+        rcn_verify_variable_measure=False,
+    )
+
+    assert isinstance(rcn, Rcn)
+    assert rcn == Rcn(
+        value="2011122812349",
+        format=GtinFormat.GTIN_13,
+        prefix=GS1Prefix.extract("201"),
+        payload="201112281234",
+        check_digit=9,
+        region=RcnRegion.GREAT_BRITAIN,
+        usage=RcnUsage.GEOGRAPHICAL,
+        price=Decimal("12.34"),
+        money=Money("12.34", "GBP"),
     )
 
 
