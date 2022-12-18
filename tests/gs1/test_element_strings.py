@@ -80,6 +80,53 @@ def test_extract(value: str, expected: GS1ElementString) -> None:
 
 
 @pytest.mark.parametrize(
+    "value, expected",
+    [
+        (  # GS1 element string with invalid GLN
+            "4101234567890127",
+            GS1ElementString(
+                ai=GS1ApplicationIdentifier.extract("410"),
+                value="1234567890127",
+                pattern_groups=["1234567890127"],
+                gln=None,  # Not set, because GLN is invalid.
+                gln_error=(
+                    "Invalid GLN check digit for '1234567890127': " "Expected 8, got 7."
+                ),
+            ),
+        ),
+        (  # GS1 element string with invalid GTIN
+            "0107032069804987",
+            GS1ElementString(
+                ai=GS1ApplicationIdentifier.extract("01"),
+                value="07032069804987",
+                pattern_groups=["07032069804987"],
+                gtin=None,  # Not set, because GTIN is invalid.
+                gtin_error=(
+                    "Invalid GTIN check digit for '07032069804987': "
+                    "Expected 8, got 7."
+                ),
+            ),
+        ),
+        (  # GS1 element string with invalid SSCC
+            "00376130321109103421",
+            GS1ElementString(
+                ai=GS1ApplicationIdentifier.extract("00"),
+                value="376130321109103421",
+                pattern_groups=["376130321109103421"],
+                sscc=None,  # Not set, because SSCC is invalid.
+                sscc_error=(
+                    "Invalid SSCC check digit for '376130321109103421': "
+                    "Expected 0, got 1."
+                ),
+            ),
+        ),
+    ],
+)
+def test_extract_with_nested_error(value: str, expected: GS1ElementString) -> None:
+    assert GS1ElementString.extract(value) == expected
+
+
+@pytest.mark.parametrize(
     "ai_code, bad_value",
     [
         # Too short product number

@@ -145,19 +145,34 @@ class GS1ElementString:
         if self.ai.ai[:2] != "41":
             return
 
-        self.gln = Gln.parse(self.value)
+        try:
+            self.gln = Gln.parse(self.value)
+            self.gln_error = None
+        except ParseError as exc:
+            self.gln = None
+            self.gln_error = str(exc)
 
     def _set_gtin(self, *, rcn_region: Optional[RcnRegion] = None) -> None:
         if self.ai.ai not in ("01", "02"):
             return
 
-        self.gtin = Gtin.parse(self.value, rcn_region=rcn_region)
+        try:
+            self.gtin = Gtin.parse(self.value, rcn_region=rcn_region)
+            self.gtin_error = None
+        except ParseError as exc:
+            self.gtin = None
+            self.gtin_error = str(exc)
 
     def _set_sscc(self) -> None:
         if self.ai.ai != "00":
             return
 
-        self.sscc = Sscc.parse(self.value)
+        try:
+            self.sscc = Sscc.parse(self.value)
+            self.sscc_error = None
+        except ParseError as exc:
+            self.sscc = None
+            self.sscc_error = str(exc)
 
     def _set_date(self) -> None:
         if self.ai.ai not in ("11", "12", "13", "15", "16", "17"):
