@@ -4,7 +4,7 @@ import pytest
 
 from biip import ParseError
 from biip.gln import Gln
-from biip.gs1 import GS1Prefix
+from biip.gs1 import GS1CompanyPrefix, GS1Prefix
 
 
 def test_parse() -> None:
@@ -13,6 +13,7 @@ def test_parse() -> None:
     assert gln == Gln(
         value="1234567890128",
         prefix=GS1Prefix(value="123", usage="GS1 US"),
+        company_prefix=GS1CompanyPrefix(value="1234567890"),
         payload="123456789012",
         check_digit=8,
     )

@@ -46,7 +46,8 @@ In this example, the first element string is a GTIN.
     format='N2+N14'), value='07032069804988', pattern_groups=['07032069804988'],
     gln=None, gln_error=None, gtin=Gtin(value='07032069804988',
     format=GtinFormat.GTIN_13, prefix=GS1Prefix(value='703', usage='GS1
-    Norway'), payload='703206980498', check_digit=8, packaging_level=None),
+    Norway'), company_prefix=GS1CompanyPrefix(value='703206'),
+    payload='703206980498', check_digit=8, packaging_level=None),
     gtin_error=None, sscc=None, sscc_error=None, date=None, decimal=None,
     money=None)
 

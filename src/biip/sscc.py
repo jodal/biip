@@ -13,7 +13,8 @@ If parsing succeeds, it returns a :class:`Sscc` object.
     >>> sscc = Sscc.parse("157035381410375177")
     >>> sscc
     Sscc(value='157035381410375177', prefix=GS1Prefix(value='570', usage='GS1
-    Denmark'), extension_digit=1, payload='15703538141037517', check_digit=7)
+    Denmark'), company_prefix=GS1CompanyPrefix(value='5703538'),
+    extension_digit=1, payload='15703538141037517', check_digit=7)
 
 Biip can format the SSCC in HRI format for printing on a label.
 
@@ -43,9 +44,12 @@ class Sscc:
     #: Raw unprocessed value.
     value: str
 
-    #: The GS1 prefix, indicating what GS1 country organization that assigned
+    #: The GS1 Prefix, indicating what GS1 country organization that assigned
     #: code range.
     prefix: Optional[GS1Prefix]
+
+    #: The GS1 Company Prefix, identifying the company that issued the SSCC.
+    company_prefix: Optional[GS1CompanyPrefix]
 
     #: Extension digit used to increase the capacity of the serial reference.
     extension_digit: int
@@ -86,6 +90,7 @@ class Sscc:
 
         value_without_extension_digit = value[1:]
         prefix = GS1Prefix.extract(value_without_extension_digit)
+        company_prefix = GS1CompanyPrefix.extract(value_without_extension_digit)
         extension_digit = int(value[0])
         payload = value[:-1]
         check_digit = int(value[-1])
@@ -100,6 +105,7 @@ class Sscc:
         return cls(
             value=value,
             prefix=prefix,
+            company_prefix=company_prefix,
             extension_digit=extension_digit,
             payload=payload,
             check_digit=check_digit,
@@ -135,11 +141,9 @@ class Sscc:
                     "Expected company prefix length between 7 and 10, "
                     f"got {company_prefix_length!r}."
                 )
-        else:
-            # Using auto-detection of GS1 Company Prefix length
-            gs1_company_prefix = GS1CompanyPrefix.extract(value)
-            if gs1_company_prefix is not None:
-                company_prefix_length = len(gs1_company_prefix.value)
+        elif self.company_prefix is not None:
+            # Using auto-detected GS1 Company Prefix length
+            company_prefix_length = len(self.company_prefix.value)
 
         if company_prefix_length is None:
             return f"{self.extension_digit} {value} {self.check_digit}"

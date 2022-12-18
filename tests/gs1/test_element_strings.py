@@ -5,7 +5,12 @@ import pytest
 
 from biip import ParseError
 from biip.gln import Gln
-from biip.gs1 import GS1ApplicationIdentifier, GS1ElementString, GS1Prefix
+from biip.gs1 import (
+    GS1ApplicationIdentifier,
+    GS1CompanyPrefix,
+    GS1ElementString,
+    GS1Prefix,
+)
 from biip.gtin import Gtin, GtinFormat
 from biip.sscc import Sscc
 
@@ -22,6 +27,7 @@ from biip.sscc import Sscc
                 sscc=Sscc(
                     value="373400306809981733",
                     prefix=GS1Prefix(value="734", usage="GS1 Sweden"),
+                    company_prefix=GS1CompanyPrefix(value="73400306"),
                     extension_digit=3,
                     payload="37340030680998173",
                     check_digit=3,
@@ -38,6 +44,7 @@ from biip.sscc import Sscc
                     value="07032069804988",
                     format=GtinFormat.GTIN_13,
                     prefix=GS1Prefix(value="703", usage="GS1 Norway"),
+                    company_prefix=GS1CompanyPrefix(value="703206"),
                     payload="703206980498",
                     check_digit=8,
                 ),
@@ -60,6 +67,7 @@ from biip.sscc import Sscc
                 gln=Gln(
                     value="1234567890128",
                     prefix=GS1Prefix(value="123", usage="GS1 US"),
+                    company_prefix=GS1CompanyPrefix(value="1234567890"),
                     payload="123456789012",
                     check_digit=8,
                 ),

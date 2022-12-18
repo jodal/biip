@@ -6,6 +6,7 @@ import pytest
 from biip import ParseError, ParseResult, parse
 from biip.gs1 import (
     GS1ApplicationIdentifier,
+    GS1CompanyPrefix,
     GS1ElementString,
     GS1Message,
     GS1Prefix,
@@ -29,6 +30,7 @@ from biip.upc import Upc, UpcFormat
                     value="96385074",
                     format=GtinFormat.GTIN_8,
                     prefix=GS1Prefix(value="00009", usage="GS1 US"),
+                    company_prefix=GS1CompanyPrefix(value="0000963"),
                     payload="9638507",
                     check_digit=4,
                 ),
@@ -66,6 +68,7 @@ from biip.upc import Upc, UpcFormat
                     value="96385074",
                     format=GtinFormat.GTIN_8,
                     prefix=GS1Prefix(value="00009", usage="GS1 US"),
+                    company_prefix=GS1CompanyPrefix(value="0000963"),
                     payload="9638507",
                     check_digit=4,
                 ),
@@ -81,6 +84,7 @@ from biip.upc import Upc, UpcFormat
                     value="12345670",
                     format=GtinFormat.GTIN_8,
                     prefix=GS1Prefix(value="00001", usage="GS1 US"),
+                    company_prefix=GS1CompanyPrefix(value="0000123"),
                     payload="1234567",
                     check_digit=0,
                 ),
@@ -106,6 +110,7 @@ from biip.upc import Upc, UpcFormat
                     value="123601057072",
                     format=GtinFormat.GTIN_12,
                     prefix=GS1Prefix(value="012", usage="GS1 US"),
+                    company_prefix=None,
                     payload="12360105707",
                     check_digit=2,
                 ),
@@ -140,6 +145,7 @@ from biip.upc import Upc, UpcFormat
                     value="0123601057072",
                     format=GtinFormat.GTIN_12,
                     prefix=GS1Prefix(value="012", usage="GS1 US"),
+                    company_prefix=None,
                     payload="12360105707",
                     check_digit=2,
                 ),
@@ -161,6 +167,7 @@ from biip.upc import Upc, UpcFormat
                     value="5901234123457",
                     format=GtinFormat.GTIN_13,
                     prefix=GS1Prefix(value="590", usage="GS1 Poland"),
+                    company_prefix=None,
                     payload="590123412345",
                     check_digit=7,
                 ),
@@ -192,6 +199,7 @@ from biip.upc import Upc, UpcFormat
                     value="5901234123457",
                     format=GtinFormat.GTIN_13,
                     prefix=GS1Prefix(value="590", usage="GS1 Poland"),
+                    company_prefix=None,
                     payload="590123412345",
                     check_digit=7,
                 ),
@@ -206,6 +214,7 @@ from biip.upc import Upc, UpcFormat
                     value="05901234123457",
                     format=GtinFormat.GTIN_13,
                     prefix=GS1Prefix(value="590", usage="GS1 Poland"),
+                    company_prefix=None,
                     payload="590123412345",
                     check_digit=7,
                 ),
@@ -237,6 +246,7 @@ from biip.upc import Upc, UpcFormat
                     value="05901234123457",
                     format=GtinFormat.GTIN_13,
                     prefix=GS1Prefix(value="590", usage="GS1 Poland"),
+                    company_prefix=None,
                     payload="590123412345",
                     check_digit=7,
                 ),
@@ -252,6 +262,7 @@ from biip.upc import Upc, UpcFormat
                     value="042100005264",
                     format=GtinFormat.GTIN_12,
                     prefix=GS1Prefix(value="004", usage="GS1 US"),
+                    company_prefix=GS1CompanyPrefix(value="0042100"),
                     payload="04210000526",
                     check_digit=4,
                     packaging_level=None,
@@ -285,69 +296,63 @@ from biip.upc import Upc, UpcFormat
         ),
         (
             # SSCC
-            "376130321109103420",
+            "157035381410375177",
             ParseResult(
-                value="376130321109103420",
+                value="157035381410375177",
                 gtin_error=(
-                    "Failed to parse '376130321109103420' as GTIN: "
+                    "Failed to parse '157035381410375177' as GTIN: "
                     "Expected 8, 12, 13, or 14 digits, got 18."
                 ),
                 upc_error=(
-                    "Failed to parse '376130321109103420' as UPC: "
+                    "Failed to parse '157035381410375177' as UPC: "
                     "Expected 6, 7, 8, or 12 digits, got 18."
                 ),
                 sscc=Sscc(
-                    value="376130321109103420",
-                    prefix=GS1Prefix(
-                        value="761", usage="GS1 Schweiz, Suisse, Svizzera"
-                    ),
-                    extension_digit=3,
-                    payload="37613032110910342",
-                    check_digit=0,
+                    value="157035381410375177",
+                    prefix=GS1Prefix(value="570", usage="GS1 Denmark"),
+                    company_prefix=GS1CompanyPrefix(value="5703538"),
+                    extension_digit=1,
+                    payload="15703538141037517",
+                    check_digit=7,
                 ),
-                gs1_message_error=(
-                    "Failed to get GS1 Application Identifier from '09103420'."
-                ),
+                gs1_message_error="Failed to parse GS1 AI (15) date from '703538'.",
             ),
         ),
         (
             # GS1 AI: SSCC
-            "00376130321109103420",
+            "00157035381410375177",
             ParseResult(
-                value="00376130321109103420",
+                value="00157035381410375177",
                 gtin_error=(
-                    "Failed to parse '00376130321109103420' as GTIN: "
+                    "Failed to parse '00157035381410375177' as GTIN: "
                     "Expected 8, 12, 13, or 14 digits, got 20."
                 ),
                 upc_error=(
-                    "Failed to parse '00376130321109103420' as UPC: "
+                    "Failed to parse '00157035381410375177' as UPC: "
                     "Expected 6, 7, 8, or 12 digits, got 20."
                 ),
                 sscc=Sscc(
-                    value="376130321109103420",
-                    prefix=GS1Prefix(
-                        value="761", usage="GS1 Schweiz, Suisse, Svizzera"
-                    ),
-                    extension_digit=3,
-                    payload="37613032110910342",
-                    check_digit=0,
+                    value="157035381410375177",
+                    prefix=GS1Prefix(value="570", usage="GS1 Denmark"),
+                    company_prefix=GS1CompanyPrefix(value="5703538"),
+                    extension_digit=1,
+                    payload="15703538141037517",
+                    check_digit=7,
                 ),
                 gs1_message=GS1Message(
-                    value="00376130321109103420",
+                    value="00157035381410375177",
                     element_strings=[
                         GS1ElementString(
                             ai=GS1ApplicationIdentifier.extract("00"),
-                            value="376130321109103420",
-                            pattern_groups=["376130321109103420"],
+                            value="157035381410375177",
+                            pattern_groups=["157035381410375177"],
                             sscc=Sscc(
-                                value="376130321109103420",
-                                prefix=GS1Prefix(
-                                    value="761",
-                                    usage="GS1 Schweiz, Suisse, Svizzera",
-                                ),
-                                extension_digit=3,
-                                payload="37613032110910342",
-                                check_digit=0,
+                                value="157035381410375177",
+                                prefix=GS1Prefix(value="570", usage="GS1 Denmark"),
+                                company_prefix=GS1CompanyPrefix(value="5703538"),
+                                extension_digit=1,
+                                payload="15703538141037517",
+                                check_digit=7,
                             ),
                         )
                     ],
@@ -396,6 +401,7 @@ from biip.upc import Upc, UpcFormat
                     value="00123601057072",
                     format=GtinFormat.GTIN_12,
                     prefix=GS1Prefix(value="012", usage="GS1 US"),
+                    company_prefix=None,
                     payload="12360105707",
                     check_digit=2,
                     packaging_level=None,
@@ -422,6 +428,7 @@ from biip.upc import Upc, UpcFormat
                                 value="00123601057072",
                                 format=GtinFormat.GTIN_12,
                                 prefix=GS1Prefix(value="012", usage="GS1 US"),
+                                company_prefix=None,
                                 payload="12360105707",
                                 check_digit=2,
                                 packaging_level=None,
@@ -440,6 +447,7 @@ from biip.upc import Upc, UpcFormat
                     value="05901234123457",
                     format=GtinFormat.GTIN_13,
                     prefix=GS1Prefix(value="590", usage="GS1 Poland"),
+                    company_prefix=None,
                     payload="590123412345",
                     check_digit=7,
                 ),
@@ -462,6 +470,7 @@ from biip.upc import Upc, UpcFormat
                                 value="05901234123457",
                                 format=GtinFormat.GTIN_13,
                                 prefix=GS1Prefix(value="590", usage="GS1 Poland"),
+                                company_prefix=None,
                                 payload="590123412345",
                                 check_digit=7,
                             ),
@@ -545,6 +554,7 @@ from biip.upc import Upc, UpcFormat
                     value="05901234123457",
                     format=GtinFormat.GTIN_13,
                     prefix=GS1Prefix(value="590", usage="GS1 Poland"),
+                    company_prefix=None,
                     payload="590123412345",
                     check_digit=7,
                 ),
@@ -559,6 +569,7 @@ from biip.upc import Upc, UpcFormat
                                 value="05901234123457",
                                 format=GtinFormat.GTIN_13,
                                 prefix=GS1Prefix(value="590", usage="GS1 Poland"),
+                                company_prefix=None,
                                 payload="590123412345",
                                 check_digit=7,
                             ),
@@ -588,6 +599,7 @@ from biip.upc import Upc, UpcFormat
                     value="00123456789012",
                     format=GtinFormat.GTIN_12,
                     prefix=GS1Prefix(value="012", usage="GS1 US"),
+                    company_prefix=None,
                     payload="12345678901",
                     check_digit=2,
                 ),
@@ -609,6 +621,7 @@ from biip.upc import Upc, UpcFormat
                                 value="00123456789012",
                                 format=GtinFormat.GTIN_12,
                                 prefix=GS1Prefix(value="012", usage="GS1 US"),
+                                company_prefix=None,
                                 payload="12345678901",
                                 check_digit=2,
                             ),
@@ -648,6 +661,7 @@ def test_parse_rcn_with_ignored_invalid_check_digit() -> None:
             value="02824040005133",
             format=GtinFormat.GTIN_13,
             prefix=GS1Prefix.extract("282"),
+            company_prefix=None,
             payload="282404000513",
             check_digit=3,
             usage=RcnUsage.GEOGRAPHICAL,
@@ -665,6 +679,7 @@ def test_parse_rcn_with_ignored_invalid_check_digit() -> None:
                         value="02824040005133",
                         format=GtinFormat.GTIN_13,
                         prefix=GS1Prefix.extract("282"),
+                        company_prefix=None,
                         payload="282404000513",
                         check_digit=3,
                         usage=RcnUsage.GEOGRAPHICAL,

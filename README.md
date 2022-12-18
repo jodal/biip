@@ -61,6 +61,7 @@ Please open an issue if you have any barcode parsing related needs that are not 
 - GS1 (multiple Element Strings with Application Identifiers)
   - Recognize all specified Application Identifiers.
   - Recognize allocating GS1 Member Organization from the GS1 Company Prefix.
+  - Recognize the GS1 Company Prefix.
   - Parse fixed-length Element Strings.
   - Parse variable-length Element Strings.
     - Support configuring the separation character.
@@ -85,6 +86,7 @@ Please open an issue if you have any barcode parsing related needs that are not 
   - Parse.
   - Extract and validate check digit.
   - Extract GS1 Prefix.
+  - Extract GS1 Company Prefix.
 - GTIN (Global Trade Item Number)
   - Parse GTIN-8, e.g. from EAN-8 barcodes.
   - Parse GTIN-12, e.g. from UPC-A and UPC-E barcodes.
@@ -92,6 +94,7 @@ Please open an issue if you have any barcode parsing related needs that are not 
   - Parse GTIN-14, e.g. from ITF-14 and GS1-128 barcodes.
   - Extract and validate check digit.
   - Extract GS1 Prefix.
+  - Extract GS1 Company Prefix.
   - Extract packaging level digit from GTIN-14.
   - Encode GTIN-8 as GTIN-12/13/14.
   - Encode GTIN-12 as GTIN-13/14.
@@ -116,7 +119,10 @@ Please open an issue if you have any barcode parsing related needs that are not 
   - Encode RCN with the variable measure part zeroed out,
     to help looking up the correct trade item.
 - SSCC (Serial Shipping Container Code)
-  - Validate check digit.
+  - Extract and validate check digit.
+  - Extract GS1 Prefix.
+  - Extract GS1 Company Prefix.
+  - Extract extension digit.
   - Encode for human consumption, with the logical groups separated by whitespace.
 - UPC (Universal Product Code)
   - Parse 12-digit UPC-A.

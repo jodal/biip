@@ -21,26 +21,27 @@ short for Global Trade Item Number,
 which can be parsed by Biip::
 
     >>> import biip
-    >>> result = biip.parse("5901234123457")
+    >>> result = biip.parse("7032069804988")
     >>> result
     ParseResult(
-        value='5901234123457',
+        value='7032069804988',
         symbology_identifier=None,
         gtin=Gtin(
-            value='5901234123457',
+            value='7032069804988',
             format=GtinFormat.GTIN_13,
-            prefix=GS1Prefix(value='590', usage='GS1 Poland'),
-            payload='590123412345',
-            check_digit=7,
+            prefix=GS1Prefix(value='703', usage='GS1 Norway'),
+            company_prefix=GS1CompanyPrefix(value='703206'),
+            payload='703206980498',
+            check_digit=8,
             packaging_level=None,
         ),
         gtin_error=None,
         upc=None,
-        upc_error="Failed to parse '5901234123457' as UPC: Expected 6, 7, 8, or 12 digits, got 13.",
+        upc_error="Failed to parse '7032069804988' as UPC: Expected 6, 7, 8, or 12 digits, got 13.",
         sscc=None,
-        sscc_error="Failed to parse '5901234123457' as SSCC: Expected 18 digits, got 13.",
-        gs1_message=None,
-        gs1_message_error="Failed to get GS1 Application Identifier from '5901234123457'.",
+        sscc_error="Failed to parse '7032069804988' as SSCC: Expected 18 digits, got 13.",
+        gs1_message=GS1Message(...),
+        gs1_message_error=None,
     )
 
 
@@ -94,6 +95,7 @@ Biip will detect it and only try the relevant parsers::
             value='9781492053743',
             format=GtinFormat.GTIN_13,
             prefix=GS1Prefix(value='978', usage='Bookland (ISBN)'),
+            company_prefix=None,
             payload='978149205374',
             check_digit=3,
             packaging_level=None,
@@ -131,6 +133,7 @@ Let's use the GTIN-12 ``123601057072`` as another example::
         value='123601057072',
         format=GtinFormat.GTIN_12,
         prefix=GS1Prefix(value='012', usage='GS1 US'),
+        company_prefix=None,
         payload='12360105707',
         check_digit=2,
         packaging_level=None,
@@ -168,6 +171,7 @@ another subset of GTIN::
             value='201',
             usage='Used to issue Restricted Circulation Numbers within a geographic region (MO defined)',
         ),
+        company_prefix=None,
         payload='201112291234',
         check_digit=6,
         packaging_level=None,
@@ -205,6 +209,7 @@ for Biip to be able to extract price and weight from the RCN::
             value='201',
             usage='Used to issue Restricted Circulation Numbers within a geographic region (MO defined)'
         ),
+        company_prefix=None,
         payload='201112291234',
         check_digit=6,
         packaging_level=None,
@@ -246,12 +251,12 @@ Serial Shipping Container Code (SSCC)
 -------------------------------------
 
 If we scan a GS1-128 barcode on a pallet,
-we might get the data string ``00376130321109103420``:
+we might get the data string ``00157035381410375177``:
 
-    >>> result = biip.parse("00376130321109103420")
+    >>> result = biip.parse("00157035381410375177")
     >>> result.gs1_message
     GS1Message(
-        value='00376130321109103420',
+        value='00157035381410375177',
         element_strings=[
             GS1ElementString(
                 ai=GS1ApplicationIdentifier(
@@ -261,18 +266,19 @@ we might get the data string ``00376130321109103420``:
                     fnc1_required=False,
                     format='N2+N18',
                 ),
-                value='376130321109103420',
-                pattern_groups=['376130321109103420'],
+                value='157035381410375177',
+                pattern_groups=['157035381410375177'],
                 gln=None,
                 gln_error=None,
                 gtin=None,
                 gtin_error=None,
                 sscc=Sscc(
-                    value='376130321109103420',
-                    prefix=GS1Prefix(value='761', usage='GS1 Schweiz, Suisse, Svizzera'),
-                    extension_digit=3,
-                    payload='37613032110910342',
-                    check_digit=0,
+                    value='157035381410375177',
+                    prefix=GS1Prefix(value='570', usage='GS1 Denmark'),
+                    company_prefix=GS1CompanyPrefix(value='5703538'),
+                    extension_digit=1,
+                    payload='15703538141037517',
+                    check_digit=7,
                 ),
                 sscc_error=None,
                 date=None,
@@ -298,7 +304,9 @@ You can extract the Element String using
     >>> element_string.ai.data_title
     'SSCC'
     >>> element_string.sscc.prefix.usage
-    'GS1 Schweiz, Suisse, Svizzera'
+    'GS1 Denmark'
+    >>> element_string.sscc.as_hri()
+    '1 5703538 141037517 7'
 
 In case SSCCs are what you are primarily working with,
 the :class:`~biip.sscc.Sscc` instance is also available directly from :class:`~biip.ParseResult`::
@@ -311,7 +319,7 @@ e.g. to print below a barcode,
 you can use :meth:`~biip.gs1.GS1Message.as_hri`::
 
     >>> result.gs1_message.as_hri()
-    '(00)376130321109103420'
+    '(00)157035381410375177'
 
 
 Product IDs, expiration dates, and lot numbers
@@ -346,6 +354,7 @@ we can see that the data contains three Element Strings::
                 value='07032069804988',
                 format=GtinFormat.GTIN_13,
                 prefix=GS1Prefix(value='703', usage='GS1 Norway'),
+                company_prefix=GS1CompanyPrefix(value='703206'),
                 payload='703206980498',
                 check_digit=8,
                 packaging_level=None,

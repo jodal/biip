@@ -8,7 +8,8 @@ example, the value can be interpreted as either a GTIN or a GS1 Message.
     >>> result = biip.parse("96385074")
     >>> result.gtin
     Gtin(value='96385074', format=GtinFormat.GTIN_8,
-    prefix=GS1Prefix(value='00009', usage='GS1 US'), payload='9638507',
+    prefix=GS1Prefix(value='00009', usage='GS1 US'),
+    company_prefix=GS1CompanyPrefix(value='0000963'), payload='9638507',
     check_digit=4, packaging_level=None)
     >>> result.gs1_message
     GS1Message(value='96385074',

@@ -3,26 +3,27 @@
 import pytest
 
 from biip import ParseError
-from biip.gs1 import GS1Prefix
+from biip.gs1 import GS1CompanyPrefix, GS1Prefix
 from biip.sscc import Sscc
 
 
 def test_parse() -> None:
-    sscc = Sscc.parse("376130321109103420")
+    sscc = Sscc.parse("157035381410375177")
 
     assert sscc == Sscc(
-        value="376130321109103420",
-        prefix=GS1Prefix(value="761", usage="GS1 Schweiz, Suisse, Svizzera"),
-        extension_digit=3,
-        payload="37613032110910342",
-        check_digit=0,
+        value="157035381410375177",
+        prefix=GS1Prefix(value="570", usage="GS1 Denmark"),
+        company_prefix=GS1CompanyPrefix(value="5703538"),
+        extension_digit=1,
+        payload="15703538141037517",
+        check_digit=7,
     )
 
 
 def test_parse_strips_surrounding_whitespace() -> None:
-    sscc = Sscc.parse("  \t 376130321109103420 \n  ")
+    sscc = Sscc.parse("  \t 157035381410375177 \n  ")
 
-    assert sscc.value == "376130321109103420"
+    assert sscc.value == "157035381410375177"
 
 
 def test_parse_value_with_invalid_length() -> None:
