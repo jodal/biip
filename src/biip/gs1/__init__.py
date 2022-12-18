@@ -84,13 +84,14 @@ from biip.gs1._symbology import GS1Symbology  # isort:skip  # noqa: E402
 from biip.gs1._application_identifiers import (  # isort:skip  # noqa: E402
     GS1ApplicationIdentifier,
 )
-from biip.gs1._prefixes import GS1Prefix  # isort:skip  # noqa: E402
+from biip.gs1._prefixes import GS1CompanyPrefix, GS1Prefix  # isort:skip  # noqa: E402
 from biip.gs1._element_strings import (  # isort:skip  # noqa: E402
     GS1ElementString,
 )
 from biip.gs1._messages import GS1Message  # isort:skip  # noqa: E402
 
 __all__ = [
+    "GS1CompanyPrefix",
     "GS1Message",
     "GS1ElementString",
     "GS1ApplicationIdentifier",
