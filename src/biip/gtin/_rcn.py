@@ -255,12 +255,15 @@ _RCN_RULES: Dict[RcnRegion, Dict[str, _Strategy]] = {
     },
     RcnRegion.FINLAND: {
         # References:
-        #  https://gs1.fi/en/instructions/gs1-company-prefix/how-identify-product-gtin
+        #   https://gs1.fi/en/instructions/gs1-company-prefix/how-identify-product-gtin
         "23": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=3),
         "24": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=2),
         "25": _Strategy(_MeasureType.WEIGHT, "PPPPPPPPVVVV", num_decimals=1),
     },
     RcnRegion.GERMANY: {
+        # References:
+        #   https://www.gs1-germany.de/fileadmin/gs1/fachpublikationen/globale-artikelnummer-gtin-in-der-anwendung.pdf
+        #   https://san.gs1-germany.de/SAN-4-Konzept
         "22": _Strategy(_MeasureType.PRICE, "PPPPPPCVVVVV", num_decimals=2),
         "23": _Strategy(_MeasureType.PRICE, "PPPPPPCVVVVV", num_decimals=2),
         "25": _Strategy(_MeasureType.COUNT, "PPPPPPCVVVVV", num_decimals=0),
