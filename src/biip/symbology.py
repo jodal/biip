@@ -168,7 +168,7 @@ class SymbologyIdentifier:
             Metadata about the extracted Symbology Identifier.
 
         Raises:
-            ParseError: If the parsing fails.o
+            ParseError: If the parsing fails.
         """
         if not value.startswith("]"):
             raise ParseError(
