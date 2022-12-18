@@ -10,9 +10,9 @@ repository = "https://github.com/jodal/biip"
 documentation = "https://biip.readthedocs.io"
 keywords = ["barcodes", "ean", "isbn", "gs1", "gtin", "upc"]
 classifiers = [
-   "Development Status :: 5 - Production/Stable",
-   "Intended Audience :: Developers",
-   "Topic :: Software Development :: Libraries",
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries",
 ]
 
 [tool.poetry.dependencies]
@@ -47,7 +47,7 @@ sphinx-autodoc-typehints = "^1.12.0"
 xdoctest = "^1.0.0"
 
 [tool.black]
-target-version = ["py36", "py37", "py38"]
+target-version = ["py37", "py38", "py39", "py310", "py311"]
 
 [tool.coverage.paths]
 source = ["src"]
@@ -79,12 +79,7 @@ module = "biip.*"
 disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
-module = [
-    "bs4.*",
-    "moneyed.*",
-    "nox.*",
-    "pytest.*",
-]
+module = ["bs4.*", "moneyed.*", "nox.*", "pytest.*"]
 ignore_missing_imports = true
 
 [build-system]
