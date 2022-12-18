@@ -24,7 +24,9 @@ class GtinFormat(IntEnum):
 
     def __str__(self) -> str:
         """Pretty string representation of format."""
-        return self.name.replace("_", "-")
+        # XXX str() is a workaround of a mypy bug until
+        # https://github.com/python/mypy/pull/14133 is released:
+        return str(self.name).replace("_", "-")
 
     def __repr__(self) -> str:
         """Canonical string representation of format."""
