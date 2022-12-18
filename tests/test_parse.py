@@ -354,6 +354,39 @@ from biip.upc import Upc, UpcFormat
             ),
         ),
         (
+            # GS1 AI: Invalid SSCC
+            "00376130321109103421",
+            ParseResult(
+                value="00376130321109103421",
+                gtin_error=(
+                    "Failed to parse '00376130321109103421' as GTIN: "
+                    "Expected 8, 12, 13, or 14 digits, got 20."
+                ),
+                upc_error=(
+                    "Failed to parse '00376130321109103421' as UPC: "
+                    "Expected 6, 7, 8, or 12 digits, got 20."
+                ),
+                sscc_error=(
+                    "Invalid SSCC check digit for "
+                    "'376130321109103421': Expected 0, got 1."
+                ),
+                gs1_message=GS1Message(
+                    value="00376130321109103421",
+                    element_strings=[
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("00"),
+                            value="376130321109103421",
+                            pattern_groups=["376130321109103421"],
+                            sscc_error=(
+                                "Invalid SSCC check digit for "
+                                "'376130321109103421': Expected 0, got 1."
+                            ),
+                        ),
+                    ],
+                ),
+            ),
+        ),
+        (
             # GS1 AI: GTIN-12. GTIN-12 is also valid as UPC-A.
             "0100123601057072",
             ParseResult(
@@ -430,6 +463,39 @@ from biip.upc import Upc, UpcFormat
                                 prefix=GS1Prefix(value="590", usage="GS1 Poland"),
                                 payload="590123412345",
                                 check_digit=7,
+                            ),
+                        )
+                    ],
+                ),
+            ),
+        ),
+        (
+            # GS1 AI: Invalid GTIN
+            "0105901234123458",
+            ParseResult(
+                value="0105901234123458",
+                gtin_error=(
+                    "Invalid GTIN check digit for '05901234123458': "
+                    "Expected 7, got 8."
+                ),
+                upc_error=(
+                    "Failed to parse '0105901234123458' as UPC: "
+                    "Expected 6, 7, 8, or 12 digits, got 16."
+                ),
+                sscc_error=(
+                    "Failed to parse '0105901234123458' as SSCC: "
+                    "Expected 18 digits, got 16."
+                ),
+                gs1_message=GS1Message(
+                    value="0105901234123458",
+                    element_strings=[
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("01"),
+                            value="05901234123458",
+                            pattern_groups=["05901234123458"],
+                            gtin_error=(
+                                "Invalid GTIN check digit for '05901234123458': "
+                                "Expected 7, got 8."
                             ),
                         )
                     ],

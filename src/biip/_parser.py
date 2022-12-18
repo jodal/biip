@@ -235,10 +235,10 @@ def _parse_gs1_message(
     else:
         # If the GS1 Message contains an SSCC, set SSCC on the top-level result.
         ai_00 = result.gs1_message.get(ai="00")
-        if ai_00 is not None and ai_00.sscc is not None:
-            queue.append((_parse_sscc, ai_00.sscc.value))
+        if ai_00 is not None:
+            queue.append((_parse_sscc, ai_00.value))
 
         # If the GS1 Message contains an GTIN, set GTIN on the top-level result.
         ai_01 = result.gs1_message.get(ai="01")
-        if ai_01 is not None and ai_01.gtin is not None:
-            queue.append((_parse_gtin, ai_01.gtin.value))
+        if ai_01 is not None:
+            queue.append((_parse_gtin, ai_01.value))
