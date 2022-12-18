@@ -24,14 +24,7 @@ from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion
                 value="010703206980498815210526100329",
                 element_strings=[
                     GS1ElementString(
-                        ai=GS1ApplicationIdentifier(
-                            ai="01",
-                            description="Global Trade Item Number (GTIN)",
-                            data_title="GTIN",
-                            fnc1_required=False,
-                            format="N2+N14",
-                            pattern="^01(\\d{14})$",
-                        ),
+                        ai=GS1ApplicationIdentifier.extract("01"),
                         value="07032069804988",
                         pattern_groups=["07032069804988"],
                         gtin=Gtin(
@@ -43,30 +36,13 @@ from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion
                         ),
                     ),
                     GS1ElementString(
-                        ai=GS1ApplicationIdentifier(
-                            ai="15",
-                            description="Best before date (YYMMDD)",
-                            data_title="BEST BEFORE or BEST BY",
-                            fnc1_required=False,
-                            format="N2+N6",
-                            pattern="^15(\\d{6})$",
-                        ),
+                        ai=GS1ApplicationIdentifier.extract("15"),
                         value="210526",
                         pattern_groups=["210526"],
                         date=date(2021, 5, 26),
                     ),
                     GS1ElementString(
-                        ai=GS1ApplicationIdentifier(
-                            ai="10",
-                            description="Batch or lot number",
-                            data_title="BATCH/LOT",
-                            fnc1_required=True,
-                            format="N2+X..20",
-                            pattern=(
-                                r"^10([\x21-\x22\x25-\x2F\x30-\x39\x3A-\x3F"
-                                r"\x41-\x5A\x5F\x61-\x7A]{0,20})$"
-                            ),
-                        ),
+                        ai=GS1ApplicationIdentifier.extract("10"),
                         value="0329",
                         pattern_groups=["0329"],
                     ),
@@ -79,17 +55,7 @@ from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion
                 value="800370713240010220085952",
                 element_strings=[
                     GS1ElementString(
-                        ai=GS1ApplicationIdentifier(
-                            ai="8003",
-                            description="Global Returnable Asset Identifier (GRAI)",
-                            data_title="GRAI",
-                            fnc1_required=True,
-                            format="N4+N14+X..16",
-                            pattern=(
-                                r"^8003(\d{14})([\x21-\x22\x25-\x2F\x30-\x39"
-                                r"\x3A-\x3F\x41-\x5A\x5F\x61-\x7A]{0,16})$"
-                            ),
-                        ),
+                        ai=GS1ApplicationIdentifier.extract("8003"),
                         value="70713240010220085952",
                         pattern_groups=["70713240010220", "085952"],
                     )
@@ -203,14 +169,7 @@ def test_parse_strips_surrounding_whitespace() -> None:
                 value="17221231",
                 element_strings=[
                     GS1ElementString(
-                        ai=GS1ApplicationIdentifier(
-                            ai="17",
-                            description="Expiration date (YYMMDD)",
-                            data_title="USE BY OR EXPIRY",
-                            fnc1_required=False,
-                            format="N2+N6",
-                            pattern="^17(\\d{6})$",
-                        ),
+                        ai=GS1ApplicationIdentifier.extract("17"),
                         value="221231",
                         pattern_groups=["221231"],
                         date=date(2022, 12, 31),
@@ -224,29 +183,12 @@ def test_parse_strips_surrounding_whitespace() -> None:
                 value="10123\x1d17221231",
                 element_strings=[
                     GS1ElementString(
-                        ai=GS1ApplicationIdentifier(
-                            ai="10",
-                            description="Batch or lot number",
-                            data_title="BATCH/LOT",
-                            fnc1_required=True,
-                            format="N2+X..20",
-                            pattern=(
-                                "^10([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F"
-                                "\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
-                            ),
-                        ),
+                        ai=GS1ApplicationIdentifier.extract("10"),
                         value="123",
                         pattern_groups=["123"],
                     ),
                     GS1ElementString(
-                        ai=GS1ApplicationIdentifier(
-                            ai="17",
-                            description="Expiration date (YYMMDD)",
-                            data_title="USE BY OR EXPIRY",
-                            fnc1_required=False,
-                            format="N2+N6",
-                            pattern="^17(\\d{6})$",
-                        ),
+                        ai=GS1ApplicationIdentifier.extract("17"),
                         value="221231",
                         pattern_groups=["221231"],
                         date=date(2022, 12, 31),
@@ -260,30 +202,13 @@ def test_parse_strips_surrounding_whitespace() -> None:
                 value="1722123110123",
                 element_strings=[
                     GS1ElementString(
-                        ai=GS1ApplicationIdentifier(
-                            ai="17",
-                            description="Expiration date (YYMMDD)",
-                            data_title="USE BY OR EXPIRY",
-                            fnc1_required=False,
-                            format="N2+N6",
-                            pattern="^17(\\d{6})$",
-                        ),
+                        ai=GS1ApplicationIdentifier.extract("17"),
                         value="221231",
                         pattern_groups=["221231"],
                         date=date(2022, 12, 31),
                     ),
                     GS1ElementString(
-                        ai=GS1ApplicationIdentifier(
-                            ai="10",
-                            description="Batch or lot number",
-                            data_title="BATCH/LOT",
-                            fnc1_required=True,
-                            format="N2+X..20",
-                            pattern=(
-                                "^10([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F"
-                                "\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
-                            ),
-                        ),
+                        ai=GS1ApplicationIdentifier.extract("10"),
                         value="123",
                         pattern_groups=["123"],
                     ),
