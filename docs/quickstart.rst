@@ -21,26 +21,27 @@ short for Global Trade Item Number,
 which can be parsed by Biip::
 
     >>> import biip
-    >>> result = biip.parse("5901234123457")
+    >>> result = biip.parse("7032069804988")
     >>> result
     ParseResult(
-        value='5901234123457',
+        value='7032069804988',
         symbology_identifier=None,
         gtin=Gtin(
-            value='5901234123457',
+            value='7032069804988',
             format=GtinFormat.GTIN_13,
-            prefix=GS1Prefix(value='590', usage='GS1 Poland'),
-            payload='590123412345',
-            check_digit=7,
+            prefix=GS1Prefix(value='703', usage='GS1 Norway'),
+            company_prefix=GS1CompanyPrefix(value='703206'),
+            payload='703206980498',
+            check_digit=8,
             packaging_level=None,
         ),
         gtin_error=None,
         upc=None,
-        upc_error="Failed to parse '5901234123457' as UPC: Expected 6, 7, 8, or 12 digits, got 13.",
+        upc_error="Failed to parse '7032069804988' as UPC: Expected 6, 7, 8, or 12 digits, got 13.",
         sscc=None,
-        sscc_error="Failed to parse '5901234123457' as SSCC: Expected 18 digits, got 13.",
-        gs1_message=None,
-        gs1_message_error="Failed to get GS1 Application Identifier from '5901234123457'.",
+        sscc_error="Failed to parse '7032069804988' as SSCC: Expected 18 digits, got 13.",
+        gs1_message=GS1Message(...),
+        gs1_message_error=None,
     )
 
 
@@ -94,6 +95,7 @@ Biip will detect it and only try the relevant parsers::
             value='9781492053743',
             format=GtinFormat.GTIN_13,
             prefix=GS1Prefix(value='978', usage='Bookland (ISBN)'),
+            company_prefix=None,
             payload='978149205374',
             check_digit=3,
             packaging_level=None,
@@ -131,6 +133,7 @@ Let's use the GTIN-12 ``123601057072`` as another example::
         value='123601057072',
         format=GtinFormat.GTIN_12,
         prefix=GS1Prefix(value='012', usage='GS1 US'),
+        company_prefix=None,
         payload='12360105707',
         check_digit=2,
         packaging_level=None,
@@ -168,6 +171,7 @@ another subset of GTIN::
             value='201',
             usage='Used to issue Restricted Circulation Numbers within a geographic region (MO defined)',
         ),
+        company_prefix=None,
         payload='201112291234',
         check_digit=6,
         packaging_level=None,
@@ -205,6 +209,7 @@ for Biip to be able to extract price and weight from the RCN::
             value='201',
             usage='Used to issue Restricted Circulation Numbers within a geographic region (MO defined)'
         ),
+        company_prefix=None,
         payload='201112291234',
         check_digit=6,
         packaging_level=None,
@@ -349,6 +354,7 @@ we can see that the data contains three Element Strings::
                 value='07032069804988',
                 format=GtinFormat.GTIN_13,
                 prefix=GS1Prefix(value='703', usage='GS1 Norway'),
+                company_prefix=GS1CompanyPrefix(value='703206'),
                 payload='703206980498',
                 check_digit=8,
                 packaging_level=None,

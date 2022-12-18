@@ -94,6 +94,7 @@ Please open an issue if you have any barcode parsing related needs that are not 
   - Parse GTIN-14, e.g. from ITF-14 and GS1-128 barcodes.
   - Extract and validate check digit.
   - Extract GS1 Prefix.
+  - Extract GS1 Company Prefix.
   - Extract packaging level digit from GTIN-14.
   - Encode GTIN-8 as GTIN-12/13/14.
   - Encode GTIN-12 as GTIN-13/14.

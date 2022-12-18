@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Optional, Type, Union
 
 from biip import EncodeError, ParseError
-from biip.gs1 import GS1Prefix
+from biip.gs1 import GS1CompanyPrefix, GS1Prefix
 from biip.gs1.checksums import numeric_check_digit
 from biip.gtin import GtinFormat, RcnRegion
 
@@ -25,9 +25,12 @@ class Gtin:
     #: Classification is done after stripping leading zeros.
     format: GtinFormat
 
-    #: The GS1 prefix, indicating what GS1 country organization that assigned
+    #: The GS1 Prefix, indicating what GS1 country organization that assigned
     #: code range.
     prefix: Optional[GS1Prefix]
+
+    #: The GS1 Company Prefix, identifying the company that issued the GTIN.
+    company_prefix: Optional[GS1CompanyPrefix]
 
     #: The actual payload, including packaging level if any, company prefix,
     #: and item reference. Excludes the check digit.
@@ -97,17 +100,18 @@ class Gtin:
         check_digit = int(stripped_value[-1])
 
         packaging_level: Optional[int] = None
+        prefix_value = stripped_value
         if gtin_format == GtinFormat.GTIN_14:
             packaging_level = int(stripped_value[0])
-            value_without_packaging_level = stripped_value[1:]
-            prefix = GS1Prefix.extract(value_without_packaging_level)
+            prefix_value = stripped_value[1:]
         elif gtin_format == GtinFormat.GTIN_12:
             # Add a zero to convert U.P.C. Company Prefix to GS1 Company Prefix
-            prefix = GS1Prefix.extract(stripped_value.zfill(13))
+            prefix_value = stripped_value.zfill(13)
         elif gtin_format == GtinFormat.GTIN_8:
-            prefix = GS1Prefix.extract(stripped_value.zfill(12))
-        else:
-            prefix = GS1Prefix.extract(stripped_value)
+            prefix_value = stripped_value.zfill(12)
+
+        prefix = GS1Prefix.extract(prefix_value)
+        company_prefix = GS1CompanyPrefix.extract(prefix_value)
 
         calculated_check_digit = numeric_check_digit(payload)
         if check_digit != calculated_check_digit:
@@ -130,6 +134,7 @@ class Gtin:
             value=value,
             format=gtin_format,
             prefix=prefix,
+            company_prefix=company_prefix,
             payload=payload,
             check_digit=check_digit,
             packaging_level=packaging_level,

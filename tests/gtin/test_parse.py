@@ -3,7 +3,7 @@
 import pytest
 
 from biip import ParseError
-from biip.gs1 import GS1Prefix
+from biip.gs1 import GS1CompanyPrefix, GS1Prefix
 from biip.gtin import Gtin, GtinFormat
 
 
@@ -62,6 +62,7 @@ def test_parse_gtin_8(value: str) -> None:
         value=value,
         format=GtinFormat.GTIN_8,
         prefix=GS1Prefix(value="00009", usage="GS1 US"),
+        company_prefix=GS1CompanyPrefix(value="0000963"),
         payload="9638507",
         check_digit=4,
     )
@@ -101,6 +102,7 @@ def test_parse_gtin_12_without_leading_zero(value: str) -> None:
         value=value,
         format=GtinFormat.GTIN_12,
         prefix=GS1Prefix(value="061", usage="GS1 US"),
+        company_prefix=GS1CompanyPrefix(value="0614141"),
         payload="61414100003",
         check_digit=6,
     )
@@ -122,6 +124,7 @@ def test_parse_gtin_12_with_1_leading_zero(value: str) -> None:
         value=value,
         format=GtinFormat.GTIN_12,
         prefix=GS1Prefix(value="003", usage="GS1 US"),
+        company_prefix=GS1CompanyPrefix(value="0036000"),
         payload="03600029145",
         check_digit=2,
     )
@@ -143,6 +146,7 @@ def test_parse_gtin_12_with_2_leading_zero(value: str) -> None:
         value=value,
         format=GtinFormat.GTIN_12,
         prefix=GS1Prefix(value="0006", usage="GS1 US"),
+        company_prefix=None,
         payload="00600029145",
         check_digit=5,
     )
@@ -164,6 +168,7 @@ def test_parse_gtin_12_with_3_leading_zero(value: str) -> None:
         value=value,
         format=GtinFormat.GTIN_12,
         prefix=GS1Prefix(value="00009", usage="GS1 US"),
+        company_prefix=GS1CompanyPrefix(value="0000902"),
         payload="00090291451",
         check_digit=1,
     )
@@ -183,6 +188,7 @@ def test_parse_gtin_13(value: str) -> None:
         value=value,
         format=GtinFormat.GTIN_13,
         prefix=GS1Prefix(value="590", usage="GS1 Poland"),
+        company_prefix=None,
         payload="590123412345",
         check_digit=7,
     )
@@ -193,6 +199,7 @@ def test_parse_gtin_14() -> None:
         value="98765432109213",
         format=GtinFormat.GTIN_14,
         prefix=GS1Prefix(value="876", usage="GS1 Netherlands"),
+        company_prefix=None,
         payload="9876543210921",
         check_digit=3,
         packaging_level=9,
@@ -204,6 +211,7 @@ def test_parse_gtin_with_unknown_gs1_prefix() -> None:
         value="6712670000276",
         format=GtinFormat.GTIN_13,
         prefix=None,
+        company_prefix=None,
         payload="671267000027",
         check_digit=6,
     )

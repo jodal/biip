@@ -18,17 +18,18 @@ instead of using :func:`biip.parse`.
 
 If parsing succeeds, it returns a :class:`Gtin` object.
 
-    >>> gtin = Gtin.parse("5901234123457")
+    >>> gtin = Gtin.parse("7032069804988")
     >>> gtin
-    Gtin(value='5901234123457', format=GtinFormat.GTIN_13,
-    prefix=GS1Prefix(value='590', usage='GS1 Poland'),
-    payload='590123412345', check_digit=7, packaging_level=None)
+    Gtin(value='7032069804988', format=GtinFormat.GTIN_13,
+    prefix=GS1Prefix(value='703', usage='GS1 Norway'),
+    company_prefix=GS1CompanyPrefix(value='703206'), payload='703206980498',
+    check_digit=8, packaging_level=None)
 
 A GTIN can be converted to any other GTIN format, as long as the target
 format is longer.
 
     >>> gtin.as_gtin_14()
-    '05901234123457'
+    '07032069804988'
 
 As all GTINs can be converted to GTIN-14, it is the recommended format to use
 when storing or comparing GTINs. For example, when looking up a product
