@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import json
+import lzma
 import pathlib
 from dataclasses import dataclass
-from typing import Optional
+from typing import Dict, Optional, Union
 
 from biip import ParseError
+
+_TrieNode = Union[Dict[str, "_TrieNode"], int]
 
 
 @dataclass(frozen=True)
@@ -80,3 +83,10 @@ _GS1_PREFIX_RANGES = [
     _GS1PrefixRange(**kwargs)
     for kwargs in json.loads(_GS1_PREFIX_RANGES_FILE.read_text())
 ]
+
+_GS1_COMPANY_PREFIX_TRIE_FILE = (
+    pathlib.Path(__file__).parent / "_company_prefix_trie.json.lzma"
+)
+
+with lzma.open(_GS1_COMPANY_PREFIX_TRIE_FILE) as fh:
+    _GS1_COMPANY_PREFIX_TRIE: _TrieNode = json.load(fh)
