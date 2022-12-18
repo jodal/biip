@@ -53,7 +53,7 @@ def docs(session):
     )
     session.install(
         "sphinx",
-        "sphinx_rtd_theme",
+        "sphinx-rtd-theme",
         "sphinx-autodoc-typehints",
     )
     session.run("sphinx-build", "docs", "docs/_build")
