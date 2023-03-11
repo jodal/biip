@@ -159,6 +159,10 @@ pythonVersion = "3.7"
 venvPath = "."
 venv = ".venv"
 typeCheckingMode = "strict"
+# Already covered by tests and careful import ordering:
+reportImportCycles = false
+# Already covered by flake8-self:
+reportPrivateUsage = false
 
 [build-system]
 requires = ["poetry-core>=1.0"]
