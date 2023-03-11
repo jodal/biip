@@ -15,6 +15,14 @@ def tests(session):
 
 
 @nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
+def black(session):
+    """Check formatting using Black."""
+    args = session.posargs or locations
+    session.run("poetry", "install", "--no-root", "--only=black", external=True)
+    session.run("black", *args)
+
+
+@nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
 def flake8(session):
     """Lint using flake8."""
     args = session.posargs or locations
@@ -22,7 +30,6 @@ def flake8(session):
         "darglint",
         "flake8",
         "flake8-annotations",
-        "flake8-black",
         "flake8-bugbear",
         "flake8-docstrings",
         "flake8-isort",
