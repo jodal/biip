@@ -3,7 +3,9 @@
 /.dmypy.json
 /.mypy_cache/
 /.nox/
+/.pytest_cache/
 /.python-version
+/.ruff_cache/
 /.venv/
 /coverage.xml
 /dist/
