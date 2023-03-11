@@ -23,25 +23,19 @@ def black(session):
 
 
 @nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
+def ruff(session):
+    """Lint using ruff."""
+    args = session.posargs or locations
+    session.run("poetry", "install", "--no-root", "--only=ruff", external=True)
+    session.run("ruff", *args)
+
+
+@nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
 def darglint(session):
     """Check docstrings using darglint."""
     args = session.posargs or ["src"]
     session.run("poetry", "install", "--no-root", "--only=darglint", external=True)
     session.run("darglint", *args)
-
-
-@nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
-def flake8(session):
-    """Lint using flake8."""
-    args = session.posargs or locations
-    session.install(
-        "flake8",
-        "flake8-annotations",
-        "flake8-bugbear",
-        "flake8-docstrings",
-        "flake8-isort",
-    )
-    session.run("flake8", *args)
 
 
 @nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
