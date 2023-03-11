@@ -91,7 +91,8 @@ ignore_missing_imports = true
 select = [
     "ANN", # flake8-annotations
     "B",   # flake8-bugbear
-    "C",   # flake8-comprehensions
+    "C4",  # flake8-comprehensions
+    "C90", # mccabe
     "D",   # pydocstyle
     "E",   # pycodestyle
     "F",   # pyflakes
