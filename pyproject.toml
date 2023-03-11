@@ -40,6 +40,9 @@ sphinx-autodoc-typehints = "^1.12.0"
 [tool.poetry.group.mypy.dependencies]
 mypy = "^1.1.1"
 
+[tool.poetry.group.pyright.dependencies]
+pyright = "^1.1.298"
+
 [tool.poetry.group.ruff.dependencies]
 ruff = "^0.0.254"
 
@@ -150,6 +153,12 @@ known-first-party = ["biip"]
 
 [tool.ruff.pydocstyle]
 convention = "google"
+
+[tool.pyright]
+pythonVersion = "3.7"
+venvPath = "."
+venv = ".venv"
+typeCheckingMode = "strict"
 
 [build-system]
 requires = ["poetry-core>=1.0"]
