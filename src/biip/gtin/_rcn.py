@@ -13,8 +13,10 @@ from biip.gtin import Gtin, RcnRegion, RcnUsage
 
 try:
     import moneyed
+
+    have_moneyed = True
 except ImportError:  # pragma: no cover
-    moneyed = None  # type: ignore[assignment]
+    have_moneyed = False
 
 
 @dataclass
@@ -106,7 +108,7 @@ class Rcn(Gtin):
             self.price = strategy.get_variable_measure(self)
 
         currency_code = self.region.get_currency_code()
-        if self.price is not None and moneyed is not None and currency_code is not None:
+        if self.price is not None and have_moneyed and currency_code is not None:
             self.money = moneyed.Money(amount=self.price, currency=currency_code)
 
     def without_variable_measure(self) -> Gtin:
