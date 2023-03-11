@@ -14,6 +14,14 @@ def tests(session):
     session.run("pytest", *args)
 
 
+@nox.session(python="3.11")
+def coverage(session):
+    """Upload test coverage data."""
+    session.run("poetry", "install", "--no-root", "--only=tests", external=True)
+    session.run("coverage", "xml", "--fail-under=0")
+    session.run("codecov", *session.posargs)
+
+
 @nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
 def black(session):
     """Check formatting using Black."""
@@ -51,11 +59,3 @@ def docs(session):
     """Build the documentation."""
     session.run("poetry", "install", "--all-extras", "--only=main,docs", external=True)
     session.run("sphinx-build", "docs", "docs/_build")
-
-
-@nox.session(python="3.11")
-def coverage(session):
-    """Upload test coverage data."""
-    session.install("coverage[toml]", "codecov")
-    session.run("coverage", "xml", "--fail-under=0")
-    session.run("codecov", *session.posargs)
