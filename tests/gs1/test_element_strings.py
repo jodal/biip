@@ -99,7 +99,7 @@ def test_extract(value: str, expected: GS1ElementString) -> None:
                 pattern_groups=["1234567890127"],
                 gln=None,  # Not set, because GLN is invalid.
                 gln_error=(
-                    "Invalid GLN check digit for '1234567890127': " "Expected 8, got 7."
+                    "Invalid GLN check digit for '1234567890127': Expected 8, got 7."
                 ),
             ),
         ),
