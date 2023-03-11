@@ -54,8 +54,28 @@ def darglint(session: nox.Session) -> None:
 def mypy(session: nox.Session) -> None:
     """Type-check using mypy."""
     args = session.posargs or locations
-    session.run("poetry", "install", "--only=mypy", external=True)
+    session.run(
+        "poetry",
+        "install",
+        "--all-extras",
+        "--only=main,dev,docs,tests,mypy",
+        external=True,
+    )
     session.run("mypy", *args)
+
+
+@nox.session(python=supported_pythons)
+def pyright(session: nox.Session) -> None:
+    """Type-check using pyright."""
+    args = session.posargs or locations
+    session.run(
+        "poetry",
+        "install",
+        "--all-extras",
+        "--only=main,dev,docs,tests,pyright",
+        external=True,
+    )
+    session.run("pyright", *args)
 
 
 @nox.session(python=docs_python)
