@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from decimal import Decimal
 from enum import Enum
-from typing import Dict, Optional
+from typing import Dict, Optional, Union
 
 from biip import EncodeError, ParseError
 from biip.gs1 import checksums
@@ -76,7 +76,7 @@ class Rcn(Gtin):
     def _parse_with_regional_rules(
         self,
         *,
-        region: RcnRegion,
+        region: Union[RcnRegion, str],
         verify_variable_measure: bool,
     ) -> None:
         if self.usage == RcnUsage.COMPANY:

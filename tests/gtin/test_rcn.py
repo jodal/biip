@@ -71,10 +71,7 @@ def test_gtin_14_with_rcn_prefix_is_not_an_rcn() -> None:
 def test_rcn_region_can_be_specified_as_string(
     value: str, rcn_region: RcnRegion
 ) -> None:
-    rcn = Gtin.parse(
-        "0211111111114",
-        rcn_region=value,  # type: ignore[arg-type]
-    )
+    rcn = Gtin.parse("0211111111114", rcn_region=value)
 
     assert isinstance(rcn, Rcn)
     assert rcn.region == rcn_region
@@ -85,10 +82,7 @@ def test_fails_when_rcn_region_is_unknown_string() -> None:
         ValueError,
         match=r"^'foo' is not a valid RcnRegion$",
     ):
-        Gtin.parse(
-            "2311111112345",
-            rcn_region="foo",  # type: ignore[arg-type]
-        )
+        Gtin.parse("2311111112345", rcn_region="foo")
 
 
 def test_rcn_usage_repr() -> None:
