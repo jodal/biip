@@ -192,9 +192,11 @@ class GS1Message:
         result = []
 
         for element_string in self.element_strings:
-            if ai is not None and element_string.ai.ai.startswith(ai):
-                result.append(element_string)
-            elif data_title is not None and data_title in element_string.ai.data_title:
+            ai_match = ai is not None and element_string.ai.ai.startswith(ai)
+            data_title_match = (
+                data_title is not None and data_title in element_string.ai.data_title
+            )
+            if ai_match or data_title_match:
                 result.append(element_string)
 
         return result
