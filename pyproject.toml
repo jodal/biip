@@ -106,6 +106,7 @@ select = [
     "PIE", # flake8-pie
     "PT",  # flake8-pytest-style
     "Q",   # flake8-quotes
+    "RET", # flake8-return
     "RSE", # flake8-raise
     "RUF", # ruff
     "SIM", # flake8-simplify
@@ -119,6 +120,7 @@ ignore = [
     "A003",   # builtin-attribute-shadowing
     "ANN101", # missing-type-self
     "ANN102", # missing-type-cls
+    "RET504", # unnecessary-assign
     #
     # Equivalent to `pyupgrade --keep-runtime-typing`:
     "UP006", # deprecated-collection-type

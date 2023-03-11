@@ -199,7 +199,7 @@ class _Strategy:
 
     def verify_check_digit(self, rcn: Rcn) -> None:
         if self.check_digit_slice is None:
-            return None
+            return
 
         rcn_13 = rcn.as_gtin_13()
         value = rcn_13[self.value_slice]

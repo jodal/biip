@@ -297,14 +297,17 @@ def _get_century(two_digit_year: int) -> int:
     current_century = current_year - current_year % 100
     two_digit_current_year = current_year - current_century
 
+    # Previous century
     if 51 <= two_digit_year - two_digit_current_year <= 99:
-        return current_century - 100  # Previous century
-    elif -99 <= two_digit_year - two_digit_current_year <= -50:
-        # Next century
+        return current_century - 100
+
+    # Next century
+    if -99 <= two_digit_year - two_digit_current_year <= -50:
         # Skipping coverage as this code won't run until year 2051
         return current_century + 100  # pragma: no cover
-    else:
-        return current_century  # Current century
+
+    # Current century
+    return current_century
 
 
 def _get_last_day_of_month(year: int, month: int) -> int:

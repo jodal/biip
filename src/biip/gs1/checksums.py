@@ -65,10 +65,11 @@ def price_check_digit(value: str) -> int:
 
     if len(value) == 4:
         return _four_digit_price_check_digit(value)
-    elif len(value) == 5:
+
+    if len(value) == 5:
         return _five_digit_price_check_digit(value)
-    else:
-        raise ValueError(f"Expected input of length 4 or 5, got {value!r}.")
+
+    raise ValueError(f"Expected input of length 4 or 5, got {value!r}.")
 
 
 def _four_digit_price_check_digit(value: str) -> int:

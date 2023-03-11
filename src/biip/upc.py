@@ -121,7 +121,8 @@ class Upc:
 
         if length == 12:
             return cls._parse_upc_a(value)
-        elif length in (6, 7, 8):
+
+        if length in (6, 7, 8):
             return cls._parse_upc_e(value)
 
         raise Exception("Unhandled UPC length. This is a bug.")  # pragma: no cover

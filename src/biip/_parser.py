@@ -92,8 +92,8 @@ def parse(
 
     if result._has_result():
         return result
-    else:
-        raise ParseError(f"Failed to parse {value!r}:\n{result._get_errors_list()}")
+
+    raise ParseError(f"Failed to parse {value!r}:\n{result._get_errors_list()}")
 
 
 @dataclass
