@@ -36,7 +36,8 @@ All UPC-E values can be expanded to an UPC-A.
     >>> upc_e.as_upc_a()
     '042100005264'
 
-UPC is a subset of the later GTIN standard: An UPC-A value is also a valid GTIN-12 value.
+UPC is a subset of the later GTIN standard: An UPC-A value is also a valid
+GTIN-12 value.
 
     >>> upc_e.as_gtin_12()
     '042100005264'

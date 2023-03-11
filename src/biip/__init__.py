@@ -55,7 +55,7 @@ raised with a reason from each parser.
 try:
     from importlib.metadata import PackageNotFoundError, version  # type: ignore
 except ImportError:  # pragma: no cover
-    from importlib_metadata import version, PackageNotFoundError  # type: ignore
+    from importlib_metadata import PackageNotFoundError, version  # type: ignore
 
 from biip._exceptions import BiipException, EncodeError, ParseError
 from biip._parser import ParseResult, parse

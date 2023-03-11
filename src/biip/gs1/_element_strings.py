@@ -208,10 +208,10 @@ class GS1ElementString:
 
         try:
             self.date = _parse_date(self.value)
-        except ValueError:
+        except ValueError as exc:
             raise ParseError(
                 f"Failed to parse GS1 AI {self.ai} date from {self.value!r}."
-            )
+            ) from exc
 
     def _set_decimal(self) -> None:
         variable_measure = self.ai.ai[:2] in (

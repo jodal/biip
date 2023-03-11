@@ -178,11 +178,11 @@ class SymbologyIdentifier:
 
         try:
             symbology = Symbology(value[1])
-        except ValueError:
+        except ValueError as exc:
             raise ParseError(
                 f"Failed to get Symbology Identifier from {value!r}. "
                 f"{value[1]!r} is not a recognized code character."
-            )
+            ) from exc
 
         if symbology == Symbology.SYSTEM_EXPANSION:
             modifiers_length = int(value[2]) + 1
