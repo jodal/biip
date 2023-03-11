@@ -1,3 +1,4 @@
+import datetime
 from datetime import date
 from decimal import Decimal
 
@@ -175,7 +176,7 @@ def test_extract_fails_with_invalid_date(ai_code: str, bad_value: str) -> None:
     )
 
 
-THIS_YEAR = date.today().year
+THIS_YEAR = datetime.datetime.now(tz=datetime.timezone.utc).year
 THIS_YEAR_SHORT = str(THIS_YEAR)[2:]
 MIN_YEAR = THIS_YEAR - 49
 MIN_YEAR_SHORT = str(MIN_YEAR)[2:]

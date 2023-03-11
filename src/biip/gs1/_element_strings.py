@@ -293,7 +293,7 @@ def _get_century(two_digit_year: int) -> int:
     References:
         GS1 General Specifications, section 7.12
     """
-    current_year = datetime.date.today().year
+    current_year = datetime.datetime.now(tz=datetime.timezone.utc).year
     current_century = current_year - current_year % 100
     two_digit_current_year = current_year - current_century
 
