@@ -82,7 +82,7 @@ class GS1ElementString:
 
     #: A Money value created from the element string, if the AI represents a
     #: currency and an amount. Only set if py-moneyed is installed.
-    money: Optional["moneyed.Money"] = None
+    money: Optional["moneyed.Money"] = None  # noqa: UP037
 
     @classmethod
     def extract(

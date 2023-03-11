@@ -57,7 +57,7 @@ class Rcn(Gtin):
 
     #: A Money value created from the variable weight price.
     #: Only set if py-moneyed is installed and the currency is known.
-    money: Optional["moneyed.Money"] = field(default=None)
+    money: Optional["moneyed.Money"] = field(default=None)  # noqa: UP037
 
     def __post_init__(self) -> None:
         """Initialize derivated fields."""

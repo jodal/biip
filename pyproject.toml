@@ -104,11 +104,16 @@ select = [
     "T20", # flake8-print
     "TCH", # flake8-type-checking
     "TID", # flake8-tidy-imports
+    "UP",  # pyupgrade
     "W",   # pycodestyle
 ]
 ignore = [
     "ANN101", # missing-type-self
     "ANN102", # missing-type-cls
+    #
+    # Equivalent to `pyupgrade --keep-runtime-typing`:
+    "UP006", # deprecated-collection-type
+    "UP007", # typing-union
 ]
 target-version = "py37"
 
