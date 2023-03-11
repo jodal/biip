@@ -14,14 +14,23 @@ docs_python = "3.11"
 def tests(session: nox.Session) -> None:
     """Run the test suite."""
     args = session.posargs or ["--cov"]
-    session.run("poetry", "install", "--all-extras", "--only=main,tests", external=True)
+    session.run(
+        "poetry",
+        "install",
+        "--quiet",
+        "--all-extras",
+        "--only=main,tests",
+        external=True,
+    )
     session.run("pytest", *args)
 
 
 @nox.session(python=coverage_python)
 def coverage(session: nox.Session) -> None:
     """Upload test coverage data."""
-    session.run("poetry", "install", "--no-root", "--only=tests", external=True)
+    session.run(
+        "poetry", "install", "--quiet", "--no-root", "--only=tests", external=True
+    )
     session.run("coverage", "xml", "--fail-under=0")
     session.run("codecov", *session.posargs)
 
@@ -30,7 +39,9 @@ def coverage(session: nox.Session) -> None:
 def black(session: nox.Session) -> None:
     """Check formatting using Black."""
     args = session.posargs or locations
-    session.run("poetry", "install", "--no-root", "--only=black", external=True)
+    session.run(
+        "poetry", "install", "--quiet", "--no-root", "--only=black", external=True
+    )
     session.run("black", *args)
 
 
@@ -38,7 +49,9 @@ def black(session: nox.Session) -> None:
 def ruff(session: nox.Session) -> None:
     """Lint using ruff."""
     args = session.posargs or locations
-    session.run("poetry", "install", "--no-root", "--only=ruff", external=True)
+    session.run(
+        "poetry", "install", "--quiet", "--no-root", "--only=ruff", external=True
+    )
     session.run("ruff", *args)
 
 
@@ -46,7 +59,9 @@ def ruff(session: nox.Session) -> None:
 def darglint(session: nox.Session) -> None:
     """Check docstrings using darglint."""
     args = session.posargs or ["src"]
-    session.run("poetry", "install", "--no-root", "--only=darglint", external=True)
+    session.run(
+        "poetry", "install", "--quiet", "--no-root", "--only=darglint", external=True
+    )
     session.run("darglint", *args)
 
 
@@ -57,6 +72,7 @@ def mypy(session: nox.Session) -> None:
     session.run(
         "poetry",
         "install",
+        "--quiet",
         "--all-extras",
         "--only=main,dev,docs,tests,mypy",
         external=True,
@@ -71,6 +87,7 @@ def pyright(session: nox.Session) -> None:
     session.run(
         "poetry",
         "install",
+        "--quiet",
         "--all-extras",
         "--only=main,dev,docs,tests,pyright",
         external=True,
@@ -81,5 +98,12 @@ def pyright(session: nox.Session) -> None:
 @nox.session(python=docs_python)
 def docs(session: nox.Session) -> None:
     """Build the documentation."""
-    session.run("poetry", "install", "--all-extras", "--only=main,docs", external=True)
+    session.run(
+        "poetry",
+        "install",
+        "--quiet",
+        "--all-extras",
+        "--only=main,docs",
+        external=True,
+    )
     session.run("sphinx-build", "docs", "docs/_build")
