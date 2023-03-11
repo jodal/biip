@@ -3,7 +3,7 @@
 __all__ = ["BiipException", "EncodeError", "ParseError"]
 
 
-class BiipException(Exception):
+class BiipException(Exception):  # noqa: N818
     """Base class for all custom exceptions raised by the library."""
 
     pass
