@@ -96,6 +96,7 @@ select = [
     "D",   # pydocstyle
     "E",   # pycodestyle
     "F",   # pyflakes
+    "FBT", # flake8-boolean-trap
     "I",   # isort
     "N",   # pep8-naming
     "Q",   # flake8-quotes
