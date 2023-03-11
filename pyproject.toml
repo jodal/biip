@@ -105,6 +105,7 @@ select = [
     "INP", # flake8-no-pep420
     "ISC", # flake8-implicit-str-concat
     "N",   # pep8-naming
+    "PGH", # pygrep-hooks
     "PIE", # flake8-pie
     "PT",  # flake8-pytest-style
     "PTH", # flake8-use-pathlib

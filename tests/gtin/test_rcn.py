@@ -73,7 +73,7 @@ def test_rcn_region_can_be_specified_as_string(
 ) -> None:
     rcn = Gtin.parse(
         "0211111111114",
-        rcn_region=value,  # type: ignore
+        rcn_region=value,  # type: ignore[arg-type]
     )
 
     assert isinstance(rcn, Rcn)
@@ -87,7 +87,7 @@ def test_fails_when_rcn_region_is_unknown_string() -> None:
     ):
         Gtin.parse(
             "2311111112345",
-            rcn_region="foo",  # type: ignore
+            rcn_region="foo",  # type: ignore[arg-type]
         )
 
 
