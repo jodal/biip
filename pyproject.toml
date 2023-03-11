@@ -107,6 +107,10 @@ select = [
     "N",   # pep8-naming
     "PGH", # pygrep-hooks
     "PIE", # flake8-pie
+    "PLC", # pylint convention
+    "PLE", # pylint error
+    "PLR", # pylint refactor
+    "PLW", # pylint warning
     "PT",  # flake8-pytest-style
     "PTH", # flake8-use-pathlib
     "Q",   # flake8-quotes
@@ -122,10 +126,11 @@ select = [
     "W",   # pycodestyle
 ]
 ignore = [
-    "A003",   # builtin-attribute-shadowing
-    "ANN101", # missing-type-self
-    "ANN102", # missing-type-cls
-    "RET504", # unnecessary-assign
+    "A003",    # builtin-attribute-shadowing
+    "ANN101",  # missing-type-self
+    "ANN102",  # missing-type-cls
+    "PLR2004", # magic-value-comparison
+    "RET504",  # unnecessary-assign
     #
     # Equivalent to `pyupgrade --keep-runtime-typing`:
     "UP006", # deprecated-collection-type
