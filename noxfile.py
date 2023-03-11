@@ -41,10 +41,7 @@ def flake8(session):
 def mypy(session):
     """Type-check using mypy."""
     args = session.posargs or locations
-    session.install(
-        "mypy",
-        "types-dataclasses",
-    )
+    session.run("poetry", "install", "--only=mypy", external=True)
     session.run("mypy", *args)
 
 
