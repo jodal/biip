@@ -59,6 +59,8 @@ class GS1Prefix:
         Raises:
             ParseError: If the parsing fails.
         """
+        prefix = ""
+
         for prefix_range in _GS1_PREFIX_RANGES:
             prefix = value[: prefix_range.length]
 
