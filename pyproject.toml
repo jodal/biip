@@ -96,11 +96,12 @@ select = [
     "E",   # pycodestyle
     "F",   # pyflakes
     "I",   # isort
-    "SIM", # flake8-simplify
+    "Q",   # flake8-quotes
     "RUF", # ruff
+    "SIM", # flake8-simplify
+    "T20", # flake8-print
     "TCH", # flake8-type-checking
     "TID", # flake8-tidy-imports
-    "Q",   # flake8-quotes
     "W",   # pycodestyle
 ]
 ignore = [
@@ -111,6 +112,7 @@ target-version = "py37"
 
 [tool.ruff.per-file-ignores]
 "noxfile.py" = ["ANN"]
+"scripts/*" = ["T20"]
 "tests/*" = ["D"]
 
 [tool.ruff.isort]
