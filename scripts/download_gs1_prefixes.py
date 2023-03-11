@@ -26,7 +26,7 @@ def download(url: str) -> bytes:
 
 def parse(html_content: bytes) -> List[_GS1PrefixRange]:
     """Parse the data from HTML to _GS1PrefixRange objects."""
-    result = []
+    result: List[_GS1PrefixRange] = []
 
     page = BeautifulSoup(html_content, "html.parser")
     datatable = page.find("table", {"class": ["table"]})

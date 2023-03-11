@@ -26,7 +26,7 @@ def download(url: str) -> bytes:
 
 def parse(html_content: bytes) -> List[GS1ApplicationIdentifier]:
     """Parse the data from HTML to GS1ApplicationIdentifier objects."""
-    result = []
+    result: List[GS1ApplicationIdentifier] = []
 
     page = BeautifulSoup(html_content, "html.parser")
     datatable = page.find("table", {"class": ["datatable"]})
@@ -65,7 +65,7 @@ def _fix_pattern(value: str) -> str:
 
     if "x" in value:
         parts = value.split("x")
-        new_parts = []
+        new_parts: List[str] = []
         for part in parts[:-1]:
             if part.endswith("\\"):
                 new_parts.append(part)

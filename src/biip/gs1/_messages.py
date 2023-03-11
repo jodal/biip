@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from itertools import chain
-from typing import TYPE_CHECKING, Iterable, List, Optional, Union
+from typing import TYPE_CHECKING, Iterable, List, Optional, Tuple, Union
 
 from biip import ParseError
 from biip.gs1 import (
@@ -69,7 +69,7 @@ class GS1Message:
             ParseError: If a fixed-length field ends with a separator character.
         """
         value = value.strip()
-        element_strings = []
+        element_strings: List[GS1ElementString] = []
         rest = value[:]
 
         while rest:
@@ -129,14 +129,14 @@ class GS1Message:
             )
 
         pattern = r"\((\d+)\)(\w+)"
-        matches = re.findall(pattern, value)
+        matches: List[Tuple[str, str]] = re.findall(pattern, value)
         if not matches:
             raise ParseError(
                 f"Could not find any GS1 Application Identifiers in {value!r}. "
                 "Expected format: '(AI)DATA(AI)DATA'."
             )
 
-        pairs = []
+        pairs: List[Tuple[GS1ApplicationIdentifier, str]] = []
         for ai_number, ai_data in matches:
             if ai_number not in _GS1_APPLICATION_IDENTIFIERS:
                 raise ParseError(
@@ -191,7 +191,7 @@ class GS1Message:
         if isinstance(ai, GS1ApplicationIdentifier):
             ai = ai.ai
 
-        result = []
+        result: List[GS1ElementString] = []
 
         for element_string in self.element_strings:
             ai_match = ai is not None and element_string.ai.ai.startswith(ai)
