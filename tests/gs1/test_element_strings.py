@@ -1,6 +1,7 @@
 import datetime
 from datetime import date
 from decimal import Decimal
+from typing import Optional
 
 import pytest
 
@@ -312,7 +313,7 @@ def test_extract_amount_payable(value: str, expected: Decimal) -> None:
     ],
 )
 def test_extract_amount_payable_and_currency(
-    value: str, expected_currency: str, expected_decimal: Decimal
+    value: str, expected_currency: Optional[str], expected_decimal: Optional[Decimal]
 ) -> None:
     element_string = GS1ElementString.extract(value)
 
