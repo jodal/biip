@@ -12,8 +12,6 @@ from biip.sscc import Sscc
 from biip.symbology import SymbologyIdentifier
 from biip.upc import Upc
 
-ParseQueue = List[Tuple[Callable, str]]
-
 
 def parse(
     value: str,
@@ -88,7 +86,7 @@ def parse(
     # add additional work to the queue. Only the first result for a field is kept.
     while queue:
         (parse_func, val) = queue.pop(0)
-        parse_func(val, config=config, queue=queue, result=result)
+        parse_func(val, config, queue, result)
 
     if result._has_result():  # noqa: SLF001
         return result
@@ -160,9 +158,12 @@ class ParseResult:
         )
 
 
+ParseQueue = List[Tuple["Parser", str]]
+Parser = Callable[[str, ParseConfig, ParseQueue, ParseResult], None]
+
+
 def _parse_gtin(
     value: str,
-    *,
     config: ParseConfig,
     queue: ParseQueue,
     result: ParseResult,
@@ -188,7 +189,6 @@ def _parse_gtin(
 
 def _parse_upc(
     value: str,
-    *,
     config: ParseConfig,  # noqa: ARG001
     queue: ParseQueue,
     result: ParseResult,
@@ -209,7 +209,6 @@ def _parse_upc(
 
 def _parse_sscc(
     value: str,
-    *,
     config: ParseConfig,  # noqa: ARG001
     queue: ParseQueue,  # noqa: ARG001
     result: ParseResult,
@@ -227,7 +226,6 @@ def _parse_sscc(
 
 def _parse_gs1_message(
     value: str,
-    *,
     config: ParseConfig,
     queue: ParseQueue,
     result: ParseResult,

@@ -4,8 +4,8 @@ import dataclasses
 import json
 from typing import List
 
+import bs4
 import httpx
-from bs4 import BeautifulSoup
 
 from biip.gs1 import GS1ApplicationIdentifier
 
@@ -26,11 +26,13 @@ def download(url: str) -> bytes:
 
 def parse(html_content: bytes) -> List[GS1ApplicationIdentifier]:
     """Parse the data from HTML to GS1ApplicationIdentifier objects."""
-    result = []
+    result: List[GS1ApplicationIdentifier] = []
 
-    page = BeautifulSoup(html_content, "html.parser")
+    page = bs4.BeautifulSoup(html_content, "html.parser")
     datatable = page.find("table", {"class": ["datatable"]})
+    assert isinstance(datatable, bs4.element.Tag)
     tbody = datatable.find("tbody")
+    assert isinstance(tbody, bs4.element.Tag)
 
     for row in tbody.find_all("tr"):
         columns = row.find_all("td")
@@ -65,7 +67,7 @@ def _fix_pattern(value: str) -> str:
 
     if "x" in value:
         parts = value.split("x")
-        new_parts = []
+        new_parts: List[str] = []
         for part in parts[:-1]:
             if part.endswith("\\"):
                 new_parts.append(part)

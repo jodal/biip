@@ -1,6 +1,6 @@
 from datetime import date
 from decimal import Decimal
-from typing import Iterable, List
+from typing import Iterable, List, Optional
 
 import pytest
 
@@ -356,7 +356,7 @@ def test_filter_element_strings_by_data_title(
         ("7230EM123\x1d7231EM456\x1d7232EM789", "723", "EM123"),
     ],
 )
-def test_get_element_string_by_ai(value: str, ai: str, expected: str) -> None:
+def test_get_element_string_by_ai(value: str, ai: str, expected: Optional[str]) -> None:
     element_string = GS1Message.parse(value).get(ai=ai)
 
     if expected is None:
@@ -378,7 +378,7 @@ def test_get_element_string_by_ai(value: str, ai: str, expected: str) -> None:
     ],
 )
 def test_get_element_string_by_data_title(
-    value: str, data_title: str, expected: str
+    value: str, data_title: str, expected: Optional[str]
 ) -> None:
     element_string = GS1Message.parse(value).get(data_title=data_title)
 

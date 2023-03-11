@@ -51,7 +51,7 @@ class Gtin:
         cls,
         value: str,
         *,
-        rcn_region: Optional[RcnRegion] = None,
+        rcn_region: Optional[Union[RcnRegion, str]] = None,
         rcn_verify_variable_measure: bool = True,
     ) -> Gtin:
         """Parse the given value into a :class:`Gtin` object.

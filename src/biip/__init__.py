@@ -55,10 +55,10 @@ raised with a reason from each parser.
 try:
     from importlib.metadata import (  # type: ignore[import]
         PackageNotFoundError,
-        version,
+        version,  # pyright: reportUnknownVariableType=false
     )
 except ImportError:  # pragma: no cover
-    from importlib_metadata import (  # type: ignore[import,no-redef]
+    from importlib_metadata import (  # type: ignore[import,no-redef,assignment]
         PackageNotFoundError,
         version,
     )
@@ -76,6 +76,6 @@ __all__ = [
 
 
 try:
-    __version__ = version(__name__)
+    __version__: str = version(__name__)
 except PackageNotFoundError:  # pragma: no cover
     __version__ = "unknown"

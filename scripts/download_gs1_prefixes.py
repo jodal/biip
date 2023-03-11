@@ -4,8 +4,8 @@ import dataclasses
 import json
 from typing import List
 
+import bs4
 import httpx
-from bs4 import BeautifulSoup
 
 from biip.gs1._prefixes import _GS1PrefixRange
 
@@ -26,11 +26,13 @@ def download(url: str) -> bytes:
 
 def parse(html_content: bytes) -> List[_GS1PrefixRange]:
     """Parse the data from HTML to _GS1PrefixRange objects."""
-    result = []
+    result: List[_GS1PrefixRange] = []
 
-    page = BeautifulSoup(html_content, "html.parser")
+    page = bs4.BeautifulSoup(html_content, "html.parser")
     datatable = page.find("table", {"class": ["table"]})
+    assert isinstance(datatable, bs4.element.Tag)
     tbody = datatable.find("tbody")
+    assert isinstance(tbody, bs4.element.Tag)
 
     for row in tbody.find_all("tr"):
         columns = row.find_all("td")
