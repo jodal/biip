@@ -24,7 +24,6 @@ py-moneyed = { version = ">=0.8", optional = true }
 money = ["py-moneyed"]
 
 [tool.poetry.group.dev.dependencies]
-darglint = "^1.8.1"
 flake8 = "^5.0.4"
 flake8-annotations = "^2.9.1"
 flake8-bugbear = "^23.2.13"
@@ -34,6 +33,9 @@ isort = "^5.11.5"
 
 [tool.poetry.group.black.dependencies]
 black = "^23.1.0"
+
+[tool.poetry.group.darglint.dependencies]
+darglint = "^1.8.1"
 
 [tool.poetry.group.docs.dependencies]
 sphinx = "^4.0.0"
