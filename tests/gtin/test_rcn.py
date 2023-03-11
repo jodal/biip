@@ -4,7 +4,7 @@ from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
 
 
 @pytest.mark.parametrize(
-    "value, format, usage",
+    "value, gtin_format, rcn_usage",
     [
         # RCN-8
         ("00011112", GtinFormat.GTIN_8, RcnUsage.COMPANY),
@@ -20,14 +20,14 @@ from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
     ],
 )
 def test_gtin_parse_may_return_rcn_instance(
-    value: str, format: GtinFormat, usage: RcnUsage
+    value: str, gtin_format: GtinFormat, rcn_usage: RcnUsage
 ) -> None:
     rcn = Gtin.parse(value, rcn_region=RcnRegion.SWEDEN)
 
     assert isinstance(rcn, Rcn)
-    assert rcn.format == format
-    assert rcn.usage == usage
-    if usage == RcnUsage.GEOGRAPHICAL:
+    assert rcn.format == gtin_format
+    assert rcn.usage == rcn_usage
+    if rcn_usage == RcnUsage.GEOGRAPHICAL:
         assert rcn.region == RcnRegion.SWEDEN
     else:
         assert rcn.region is None

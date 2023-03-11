@@ -89,6 +89,7 @@ ignore_missing_imports = true
 
 [tool.ruff]
 select = [
+    "A",   # flake8-builtins
     "ANN", # flake8-annotations
     "B",   # flake8-bugbear
     "C4",  # flake8-comprehensions
@@ -109,6 +110,7 @@ select = [
     "W",   # pycodestyle
 ]
 ignore = [
+    "A003",   # builtin-attribute-shadowing
     "ANN101", # missing-type-self
     "ANN102", # missing-type-cls
     #

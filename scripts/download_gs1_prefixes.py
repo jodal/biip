@@ -49,11 +49,11 @@ def parse(html_content: bytes) -> List[_GS1PrefixRange]:
             note_start = usage.index(", see")
             usage = usage[:note_start]
 
-        for range in prefixes.split("&"):
-            if "-" in range:
-                start, end = map(str.strip, range.split("-"))
+        for range_ in prefixes.split("&"):
+            if "-" in range_:
+                start, end = map(str.strip, range_.split("-"))
             else:
-                start, end = range.strip(), range.strip()
+                start, end = range_.strip(), range_.strip()
 
             length = len(start)
             min_value = int(start)
