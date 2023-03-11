@@ -10,7 +10,7 @@ def test_symbology_enum() -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         (
             "]E0abc",

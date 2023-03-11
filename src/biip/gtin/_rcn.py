@@ -14,7 +14,7 @@ from biip.gtin import Gtin, RcnRegion, RcnUsage
 try:
     import moneyed
 except ImportError:  # pragma: no cover
-    moneyed = None  # type: ignore
+    moneyed = None  # type: ignore[assignment]
 
 
 @dataclass
@@ -57,7 +57,7 @@ class Rcn(Gtin):
 
     #: A Money value created from the variable weight price.
     #: Only set if py-moneyed is installed and the currency is known.
-    money: Optional["moneyed.Money"] = field(default=None)
+    money: Optional["moneyed.Money"] = field(default=None)  # noqa: UP037
 
     def __post_init__(self) -> None:
         """Initialize derivated fields."""
@@ -168,7 +168,7 @@ class _Strategy:
 
         region_rules = _RCN_RULES.get(rcn.region)
         if region_rules is None:
-            raise Exception(  # pragma: no cover
+            raise Exception(  # noqa: TRY002  # pragma: no cover
                 "RCN region defined without defining rules. This is a bug."
             )
 
@@ -199,7 +199,7 @@ class _Strategy:
 
     def verify_check_digit(self, rcn: Rcn) -> None:
         if self.check_digit_slice is None:
-            return None
+            return
 
         rcn_13 = rcn.as_gtin_13()
         value = rcn_13[self.value_slice]

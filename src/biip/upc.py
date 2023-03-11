@@ -36,7 +36,8 @@ All UPC-E values can be expanded to an UPC-A.
     >>> upc_e.as_upc_a()
     '042100005264'
 
-UPC is a subset of the later GTIN standard: An UPC-A value is also a valid GTIN-12 value.
+UPC is a subset of the later GTIN standard: An UPC-A value is also a valid
+GTIN-12 value.
 
     >>> upc_e.as_gtin_12()
     '042100005264'
@@ -120,10 +121,13 @@ class Upc:
 
         if length == 12:
             return cls._parse_upc_a(value)
-        elif length in (6, 7, 8):
+
+        if length in (6, 7, 8):
             return cls._parse_upc_e(value)
 
-        raise Exception("Unhandled UPC length. This is a bug.")  # pragma: no cover
+        raise Exception(  # noqa: TRY002  # pragma: no cover
+            "Unhandled UPC length. This is a bug."
+        )
 
     @classmethod
     def _parse_upc_a(cls, value: str) -> Upc:
@@ -171,7 +175,7 @@ class Upc:
             payload = value[:-1]
             check_digit = int(value[-1])
         else:
-            raise Exception(  # pragma: no cover
+            raise Exception(  # noqa: TRY002  # pragma: no cover
                 "Unhandled UPC-E length. This is a bug."
             )
 
@@ -214,7 +218,7 @@ class Upc:
         if self.format == UpcFormat.UPC_E:
             return _upc_e_to_upc_a_expansion(f"{self.payload}{self.check_digit}")
 
-        raise Exception(  # pragma: no cover
+        raise Exception(  # noqa: TRY002  # pragma: no cover
             "Unhandled case while formatting as UPC-A. This is a bug."
         )
 
@@ -236,7 +240,7 @@ class Upc:
         if self.format == UpcFormat.UPC_E:
             return f"{self.payload}{self.check_digit}"
 
-        raise Exception(  # pragma: no cover
+        raise Exception(  # noqa: TRY002  # pragma: no cover
             "Unhandled case while formatting as UPC-E. This is a bug."
         )
 
@@ -278,7 +282,7 @@ def _upc_e_to_upc_a_expansion(value: str) -> str:
     if last_digit in (5, 6, 7, 8, 9):
         return f"{value[:6]}0000{last_digit}{check_digit}"
 
-    raise Exception(  # pragma: no cover
+    raise Exception(  # noqa: TRY002  # pragma: no cover
         "Unhandled case while expanding UPC-E to UPC-A. This is a bug."
     )
 

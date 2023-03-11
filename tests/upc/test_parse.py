@@ -19,7 +19,7 @@ def test_parse_upc_a() -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         (
             "425261",  # Length is 6: Implicit number system 0, no check digit.

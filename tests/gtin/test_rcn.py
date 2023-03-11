@@ -4,7 +4,7 @@ from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
 
 
 @pytest.mark.parametrize(
-    "value, format, usage",
+    ("value", "gtin_format", "rcn_usage"),
     [
         # RCN-8
         ("00011112", GtinFormat.GTIN_8, RcnUsage.COMPANY),
@@ -20,14 +20,14 @@ from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
     ],
 )
 def test_gtin_parse_may_return_rcn_instance(
-    value: str, format: GtinFormat, usage: RcnUsage
+    value: str, gtin_format: GtinFormat, rcn_usage: RcnUsage
 ) -> None:
     rcn = Gtin.parse(value, rcn_region=RcnRegion.SWEDEN)
 
     assert isinstance(rcn, Rcn)
-    assert rcn.format == format
-    assert rcn.usage == usage
-    if usage == RcnUsage.GEOGRAPHICAL:
+    assert rcn.format == gtin_format
+    assert rcn.usage == rcn_usage
+    if rcn_usage == RcnUsage.GEOGRAPHICAL:
         assert rcn.region == RcnRegion.SWEDEN
     else:
         assert rcn.region is None
@@ -55,7 +55,7 @@ def test_gtin_14_with_rcn_prefix_is_not_an_rcn() -> None:
 
 
 @pytest.mark.parametrize(
-    "value, rcn_region",
+    ("value", "rcn_region"),
     [
         ("de", RcnRegion.GERMANY),
         ("dk", RcnRegion.DENMARK),
@@ -73,7 +73,7 @@ def test_rcn_region_can_be_specified_as_string(
 ) -> None:
     rcn = Gtin.parse(
         "0211111111114",
-        rcn_region=value,  # type: ignore
+        rcn_region=value,  # type: ignore[arg-type]
     )
 
     assert isinstance(rcn, Rcn)
@@ -81,13 +81,14 @@ def test_rcn_region_can_be_specified_as_string(
 
 
 def test_fails_when_rcn_region_is_unknown_string() -> None:
-    with pytest.raises(ValueError) as exc_info:
+    with pytest.raises(
+        ValueError,
+        match=r"^'foo' is not a valid RcnRegion$",
+    ):
         Gtin.parse(
             "2311111112345",
-            rcn_region="foo",  # type: ignore
+            rcn_region="foo",  # type: ignore[arg-type]
         )
-
-    assert str(exc_info.value) == "'foo' is not a valid RcnRegion"
 
 
 def test_rcn_usage_repr() -> None:

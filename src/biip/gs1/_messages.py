@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from itertools import chain
-from typing import Iterable, List, Optional, Union
+from typing import TYPE_CHECKING, Iterable, List, Optional, Union
 
 from biip import ParseError
 from biip.gs1 import (
@@ -15,7 +15,9 @@ from biip.gs1 import (
     GS1ElementString,
 )
 from biip.gs1._application_identifiers import _GS1_APPLICATION_IDENTIFIERS
-from biip.gtin import RcnRegion
+
+if TYPE_CHECKING:  # pragma: no cover
+    from biip.gtin import RcnRegion
 
 
 @dataclass
@@ -192,9 +194,11 @@ class GS1Message:
         result = []
 
         for element_string in self.element_strings:
-            if ai is not None and element_string.ai.ai.startswith(ai):
-                result.append(element_string)
-            elif data_title is not None and data_title in element_string.ai.data_title:
+            ai_match = ai is not None and element_string.ai.ai.startswith(ai)
+            data_title_match = (
+                data_title is not None and data_title in element_string.ai.data_title
+            )
+            if ai_match or data_title_match:
                 result.append(element_string)
 
         return result

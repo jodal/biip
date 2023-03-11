@@ -15,7 +15,7 @@ def test_invalid_gs1_prefix(bad_value: str) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         (
             "0000001999",
@@ -49,7 +49,7 @@ def test_invalid_gs1_company_prefix(bad_value: str) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         (
             # Undefined prefix

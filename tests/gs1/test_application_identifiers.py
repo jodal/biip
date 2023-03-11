@@ -16,7 +16,7 @@ def test_extract_unknown_gs1_ai(unknown_ai: str) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         (
             "0195012345678903",

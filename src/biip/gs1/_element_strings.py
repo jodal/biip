@@ -18,7 +18,7 @@ from biip.sscc import Sscc
 try:
     import moneyed
 except ImportError:  # pragma: no cover
-    moneyed = None  # type: ignore
+    moneyed = None  # type: ignore[assignment]
 
 
 @dataclass
@@ -82,7 +82,7 @@ class GS1ElementString:
 
     #: A Money value created from the element string, if the AI represents a
     #: currency and an amount. Only set if py-moneyed is installed.
-    money: Optional["moneyed.Money"] = None
+    money: Optional["moneyed.Money"] = None  # noqa: UP037
 
     @classmethod
     def extract(
@@ -149,14 +149,14 @@ class GS1ElementString:
         value = "".join(pattern_groups)
 
         element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
-        element._set_gln()
-        element._set_gtin(
+        element._set_gln()  # noqa: SLF001
+        element._set_gtin(  # noqa: SLF001
             rcn_region=rcn_region,
             rcn_verify_variable_measure=rcn_verify_variable_measure,
         )
-        element._set_sscc()
-        element._set_date()
-        element._set_decimal()
+        element._set_sscc()  # noqa: SLF001
+        element._set_date()  # noqa: SLF001
+        element._set_decimal()  # noqa: SLF001
 
         return element
 
@@ -208,10 +208,10 @@ class GS1ElementString:
 
         try:
             self.date = _parse_date(self.value)
-        except ValueError:
+        except ValueError as exc:
             raise ParseError(
                 f"Failed to parse GS1 AI {self.ai} date from {self.value!r}."
-            )
+            ) from exc
 
     def _set_decimal(self) -> None:
         variable_measure = self.ai.ai[:2] in (
@@ -293,18 +293,21 @@ def _get_century(two_digit_year: int) -> int:
     References:
         GS1 General Specifications, section 7.12
     """
-    current_year = datetime.date.today().year
+    current_year = datetime.datetime.now(tz=datetime.timezone.utc).year
     current_century = current_year - current_year % 100
     two_digit_current_year = current_year - current_century
 
+    # Previous century
     if 51 <= two_digit_year - two_digit_current_year <= 99:
-        return current_century - 100  # Previous century
-    elif -99 <= two_digit_year - two_digit_current_year <= -50:
-        # Next century
+        return current_century - 100
+
+    # Next century
+    if -99 <= two_digit_year - two_digit_current_year <= -50:
         # Skipping coverage as this code won't run until year 2051
         return current_century + 100  # pragma: no cover
-    else:
-        return current_century  # Current century
+
+    # Current century
+    return current_century
 
 
 def _get_last_day_of_month(year: int, month: int) -> int:

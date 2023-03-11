@@ -141,7 +141,7 @@ class Gtin:
         )
 
         if isinstance(gtin, Rcn) and rcn_region is not None:
-            gtin._parse_with_regional_rules(
+            gtin._parse_with_regional_rules(  # noqa: SLF001
                 region=rcn_region,
                 verify_variable_measure=rcn_verify_variable_measure,
             )

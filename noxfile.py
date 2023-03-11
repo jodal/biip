@@ -10,58 +10,52 @@ locations = ["src", "tests", "noxfile.py", "docs/conf.py"]
 def tests(session):
     """Run the test suite."""
     args = session.posargs or ["--cov"]
-    session.run("poetry", "install", external=True)
+    session.run("poetry", "install", "--all-extras", "--only=main,tests", external=True)
     session.run("pytest", *args)
 
 
+@nox.session(python="3.11")
+def coverage(session):
+    """Upload test coverage data."""
+    session.run("poetry", "install", "--no-root", "--only=tests", external=True)
+    session.run("coverage", "xml", "--fail-under=0")
+    session.run("codecov", *session.posargs)
+
+
 @nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
-def flake8(session):
-    """Lint using flake8."""
+def black(session):
+    """Check formatting using Black."""
     args = session.posargs or locations
-    session.install(
-        "darglint",
-        "flake8",
-        "flake8-annotations",
-        "flake8-black",
-        "flake8-bugbear",
-        "flake8-docstrings",
-        "flake8-isort",
-    )
-    session.run("flake8", *args)
+    session.run("poetry", "install", "--no-root", "--only=black", external=True)
+    session.run("black", *args)
+
+
+@nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
+def ruff(session):
+    """Lint using ruff."""
+    args = session.posargs or locations
+    session.run("poetry", "install", "--no-root", "--only=ruff", external=True)
+    session.run("ruff", *args)
+
+
+@nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
+def darglint(session):
+    """Check docstrings using darglint."""
+    args = session.posargs or ["src"]
+    session.run("poetry", "install", "--no-root", "--only=darglint", external=True)
+    session.run("darglint", *args)
 
 
 @nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
 def mypy(session):
     """Type-check using mypy."""
     args = session.posargs or locations
-    session.install(
-        "mypy",
-        "types-dataclasses",
-    )
+    session.run("poetry", "install", "--only=mypy", external=True)
     session.run("mypy", *args)
 
 
 @nox.session(python="3.11")
 def docs(session):
     """Build the documentation."""
-    session.run(
-        "poetry",
-        "install",
-        "--no-dev",
-        "--extras=money",
-        external=True,
-    )
-    session.install(
-        "sphinx",
-        "sphinx-rtd-theme",
-        "sphinx-autodoc-typehints",
-    )
+    session.run("poetry", "install", "--all-extras", "--only=main,docs", external=True)
     session.run("sphinx-build", "docs", "docs/_build")
-
-
-@nox.session(python="3.11")
-def coverage(session):
-    """Upload test coverage data."""
-    session.install("coverage[toml]", "codecov")
-    session.run("coverage", "xml", "--fail-under=0")
-    session.run("codecov", *session.posargs)

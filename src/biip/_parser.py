@@ -90,10 +90,12 @@ def parse(
         (parse_func, val) = queue.pop(0)
         parse_func(val, config=config, queue=queue, result=result)
 
-    if result._has_result():
+    if result._has_result():  # noqa: SLF001
         return result
-    else:
-        raise ParseError(f"Failed to parse {value!r}:\n{result._get_errors_list()}")
+
+    raise ParseError(
+        f"Failed to parse {value!r}:\n{result._get_errors_list()}"  # noqa: SLF001
+    )
 
 
 @dataclass
@@ -187,7 +189,7 @@ def _parse_gtin(
 def _parse_upc(
     value: str,
     *,
-    config: ParseConfig,
+    config: ParseConfig,  # noqa: ARG001
     queue: ParseQueue,
     result: ParseResult,
 ) -> None:
@@ -208,8 +210,8 @@ def _parse_upc(
 def _parse_sscc(
     value: str,
     *,
-    config: ParseConfig,
-    queue: ParseQueue,
+    config: ParseConfig,  # noqa: ARG001
+    queue: ParseQueue,  # noqa: ARG001
     result: ParseResult,
 ) -> None:
     if result.sscc is not None:

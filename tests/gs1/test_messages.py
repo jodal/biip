@@ -17,7 +17,7 @@ from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         (
             "010703206980498815210526100329",
@@ -71,7 +71,7 @@ def test_parse(value: str, expected: GS1Message) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, separator_chars, expected_hri",
+    ("value", "separator_chars", "expected_hri"),
     [
         (
             # Variable-length lot number field last, all OK.
@@ -104,7 +104,7 @@ def test_parse(value: str, expected: GS1Message) -> None:
             # Unrealistic corner case just to exercise the code:
             # Two variable-length fields marked with different separators
             "0107032069804988100329|2112345\x1d15210526",
-            ["|"] + list(DEFAULT_SEPARATOR_CHARS),
+            ["|", *DEFAULT_SEPARATOR_CHARS],
             "(01)07032069804988(10)0329(21)12345(15)210526",
         ),
     ],
@@ -119,13 +119,14 @@ def test_parse_with_separator_char(
 
 
 def test_parse_with_too_long_separator_char_fails() -> None:
-    with pytest.raises(ValueError) as exc_info:
+    with pytest.raises(
+        ValueError,
+        match=(
+            r"^All separator characters must be exactly 1 character long, "
+            r"got \['--'\].$"
+        ),
+    ):
         GS1Message.parse("10222--15210526", separator_chars=["--"])
-
-    assert (
-        str(exc_info.value)
-        == "All separator characters must be exactly 1 character long, got ['--']."
-    )
 
 
 def test_parse_fails_if_unparsed_data_left() -> None:
@@ -163,7 +164,7 @@ def test_parse_strips_surrounding_whitespace() -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         (
             "(17)221231",
@@ -291,7 +292,7 @@ def test_parse_hri_fails_if_ai_is_unknown(value: str) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         (
             "010703206980498815210526100329",
@@ -304,7 +305,7 @@ def test_as_hri(value: str, expected: str) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, ai, expected",
+    ("value", "ai", "expected"),
     [
         ("010703206980498815210526100329", "01", ["07032069804988"]),
         ("010703206980498815210526100329", "15", ["210526"]),
@@ -324,7 +325,7 @@ def test_filter_element_strings_by_ai(value: str, ai: str, expected: List[str]) 
 
 
 @pytest.mark.parametrize(
-    "value, data_title, expected",
+    ("value", "data_title", "expected"),
     [
         ("010703206980498815210526100329", "GTIN", ["07032069804988"]),
         ("010703206980498815210526100329", "BEST BY", ["210526"]),
@@ -345,7 +346,7 @@ def test_filter_element_strings_by_data_title(
 
 
 @pytest.mark.parametrize(
-    "value, ai, expected",
+    ("value", "ai", "expected"),
     [
         ("010703206980498815210526100329", "01", "07032069804988"),
         ("010703206980498815210526100329", "15", "210526"),
@@ -366,7 +367,7 @@ def test_get_element_string_by_ai(value: str, ai: str, expected: str) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, data_title, expected",
+    ("value", "data_title", "expected"),
     [
         ("010703206980498815210526100329", "GTIN", "07032069804988"),
         ("010703206980498815210526100329", "BEST BY", "210526"),

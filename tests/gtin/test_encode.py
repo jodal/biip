@@ -7,7 +7,7 @@ from biip.gtin import Gtin
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         # GTIN-8
         ("96385074", "00000096385074"),
@@ -29,7 +29,7 @@ def test_as_gtin_14(value: str, expected: str) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         # GTIN-8
         ("96385074", "0000096385074"),
@@ -65,7 +65,7 @@ def test_as_gtin_13_fails_for_too_long_values(value: str) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         # GTIN-8
         ("96385074", "000096385074"),
@@ -102,7 +102,7 @@ def test_as_gtin_12_fails_for_too_long_values(value: str) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         # GTIN-8
         ("96385074", "96385074"),
