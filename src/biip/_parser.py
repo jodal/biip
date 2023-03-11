@@ -189,7 +189,7 @@ def _parse_gtin(
 def _parse_upc(
     value: str,
     *,
-    config: ParseConfig,
+    config: ParseConfig,  # noqa: ARG001
     queue: ParseQueue,
     result: ParseResult,
 ) -> None:
@@ -210,8 +210,8 @@ def _parse_upc(
 def _parse_sscc(
     value: str,
     *,
-    config: ParseConfig,
-    queue: ParseQueue,
+    config: ParseConfig,  # noqa: ARG001
+    queue: ParseQueue,  # noqa: ARG001
     result: ParseResult,
 ) -> None:
     if result.sscc is not None:
