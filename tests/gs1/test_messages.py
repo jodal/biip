@@ -104,7 +104,7 @@ def test_parse(value: str, expected: GS1Message) -> None:
             # Unrealistic corner case just to exercise the code:
             # Two variable-length fields marked with different separators
             "0107032069804988100329|2112345\x1d15210526",
-            ["|"] + list(DEFAULT_SEPARATOR_CHARS),
+            ["|", *DEFAULT_SEPARATOR_CHARS],
             "(01)07032069804988(10)0329(21)12345(15)210526",
         ),
     ],
