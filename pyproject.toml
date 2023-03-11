@@ -98,6 +98,7 @@ select = [
     "I",   # isort
     "SIM", # flake8-simplify
     "RUF", # ruff
+    "TCH", # flake8-type-checking
     "Q",   # flake8-quotes
     "W",   # pycodestyle
 ]

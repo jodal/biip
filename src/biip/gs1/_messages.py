@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from itertools import chain
-from typing import Iterable, List, Optional, Union
+from typing import TYPE_CHECKING, Iterable, List, Optional, Union
 
 from biip import ParseError
 from biip.gs1 import (
@@ -15,7 +15,9 @@ from biip.gs1 import (
     GS1ElementString,
 )
 from biip.gs1._application_identifiers import _GS1_APPLICATION_IDENTIFIERS
-from biip.gtin import RcnRegion
+
+if TYPE_CHECKING:  # pragma: no cover
+    from biip.gtin import RcnRegion
 
 
 @dataclass
