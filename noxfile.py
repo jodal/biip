@@ -10,7 +10,7 @@ locations = ["src", "tests", "noxfile.py", "docs/conf.py"]
 def tests(session):
     """Run the test suite."""
     args = session.posargs or ["--cov"]
-    session.run("poetry", "install", external=True)
+    session.run("poetry", "install", "--all-extras", "--only=main,tests", external=True)
     session.run("pytest", *args)
 
 
