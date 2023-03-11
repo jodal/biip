@@ -8,7 +8,7 @@ from biip.gtin import Gtin, Rcn, RcnRegion
 
 
 @pytest.mark.parametrize(
-    "rcn_region, value, expected",
+    ("rcn_region", "value", "expected"),
     [
         (RcnRegion.DENMARK, "2712341002251", "2712341000004"),  # GTIN-13
         (RcnRegion.DENMARK, "02712341002251", "2712341000004"),  # GTIN-14
@@ -37,7 +37,7 @@ def test_without_variable_measure_strips_variable_parts(
 
 
 @pytest.mark.parametrize(
-    "rcn_region, nonvariable_prefixes",
+    ("rcn_region", "nonvariable_prefixes"),
     [
         (
             RcnRegion.DENMARK,
@@ -94,7 +94,7 @@ def test_without_variable_measure_keeps_nonvariable_rcn_unchanged(
 
 
 @pytest.mark.parametrize(
-    "rcn_region, value",
+    ("rcn_region", "value"),
     [
         (RcnRegion.NORWAY, "00012348"),  # GTIN-8
         (RcnRegion.NORWAY, "412345678903"),  # GTIN-12

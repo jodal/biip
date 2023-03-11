@@ -7,7 +7,7 @@ from biip.upc import Upc
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         (  # UPC-A to UPC-A
             "123456789012",
@@ -36,7 +36,7 @@ def test_as_upc_a(value: str, expected: str) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         (  # 6-digit UPC-E, implicit number system 0, no check digit.
             "425261",
@@ -80,7 +80,7 @@ def test_as_upc_e_when_suppression_is_not_possible() -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         ("425261", "042100005264"),  # UPC-E, 6 digit
         ("0425261", "042100005264"),  # UPC-E, 7 digit
@@ -93,7 +93,7 @@ def test_as_gtin_12(value: str, expected: str) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         ("425261", "0042100005264"),  # UPC-E, 6 digit
         ("0425261", "0042100005264"),  # UPC-E, 7 digit
@@ -106,7 +106,7 @@ def test_as_gtin_13(value: str, expected: str) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         ("425261", "00042100005264"),  # UPC-E, 6 digit
         ("0425261", "00042100005264"),  # UPC-E, 7 digit

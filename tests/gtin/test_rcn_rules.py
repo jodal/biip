@@ -10,7 +10,7 @@ from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
 
 
 @pytest.mark.parametrize(
-    "rcn_region, value, weight, price, money",
+    ("rcn_region", "value", "weight", "price", "money"),
     [
         # NOTE: These examples are constructed from a template. This should be
         # extended with actual examples from either specifications or real
@@ -55,7 +55,7 @@ def test_region_baltics(
 
 
 @pytest.mark.parametrize(
-    "value, weight, price, money",
+    ("value", "weight", "price", "money"),
     [
         ("2135040039753", None, Decimal("39.75"), Money("39.75", "DKK")),
         ("2235040039750", None, Decimal("39.75"), Money("39.75", "DKK")),
@@ -87,7 +87,7 @@ def test_region_denmark(
 
 
 @pytest.mark.parametrize(
-    "value, weight, price, money",
+    ("value", "weight", "price", "money"),
     [
         ("2388060112344", Decimal("1.234"), None, None),
         ("2488060112341", Decimal("12.34"), None, None),
@@ -114,7 +114,7 @@ def test_region_finland(
 
 
 @pytest.mark.parametrize(
-    "value, weight, count, price, money",
+    ("value", "weight", "count", "price", "money"),
     [
         # Money
         ("2211114002394", None, None, Decimal("2.39"), Money("2.39", "EUR")),
@@ -190,7 +190,7 @@ def test_region_germany_when_not_verifying_invalid_check_digit() -> None:
 
 
 @pytest.mark.parametrize(
-    "value, weight, price, money",
+    ("value", "weight", "price", "money"),
     [
         # NOTE: These examples are constructed from a template. This should be
         # extended with actual examples from either specifications or real
@@ -254,7 +254,7 @@ def test_region_great_britain_when_not_verifying_invalid_check_digit() -> None:
 
 
 @pytest.mark.parametrize(
-    "value, weight, price, money",
+    ("value", "weight", "price", "money"),
     [
         ("2302148210869", Decimal("1.086"), None, None),  # Norvegia 1kg
         ("2368091402263", Decimal("0.226"), None, None),  # Stange kyllingbryst
@@ -279,7 +279,7 @@ def test_region_norway(
 
 
 @pytest.mark.parametrize(
-    "value, weight, price, money",
+    ("value", "weight", "price", "money"),
     [
         ("2088060112343", None, Decimal("12.34"), Money("12.34", "SEK")),
         ("2188060112340", None, Decimal("123.4"), Money("123.4", "SEK")),

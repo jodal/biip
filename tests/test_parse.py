@@ -19,7 +19,7 @@ from biip.upc import Upc, UpcFormat
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         (
             # GTIN-8

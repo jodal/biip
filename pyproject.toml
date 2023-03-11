@@ -104,6 +104,7 @@ select = [
     "ISC", # flake8-implicit-str-concat
     "N",   # pep8-naming
     "PIE", # flake8-pie
+    "PT",  # flake8-pytest-style
     "Q",   # flake8-quotes
     "RUF", # ruff
     "SIM", # flake8-simplify

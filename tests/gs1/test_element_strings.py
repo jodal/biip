@@ -17,7 +17,7 @@ from biip.sscc import Sscc
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         (
             "00373400306809981733",
@@ -89,7 +89,7 @@ def test_extract(value: str, expected: GS1ElementString) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         (  # GS1 element string with invalid GLN
             "4101234567890127",
@@ -136,7 +136,7 @@ def test_extract_with_nested_error(value: str, expected: GS1ElementString) -> No
 
 
 @pytest.mark.parametrize(
-    "ai_code, bad_value",
+    ("ai_code", "bad_value"),
     [
         # Too short product number
         ("01", "01123"),
@@ -157,7 +157,7 @@ def test_extract_fails_when_not_matching_pattern(ai_code: str, bad_value: str) -
 
 
 @pytest.mark.parametrize(
-    "ai_code, bad_value",
+    ("ai_code", "bad_value"),
     [
         # Bad production date
         ("11", "131313"),
@@ -185,7 +185,7 @@ MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         (
             # Best before date, around the current date
@@ -226,7 +226,7 @@ def test_extract_handles_min_and_max_year_correctly(
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         ("15200200", date(2020, 2, 29)),
         ("15210200", date(2021, 2, 28)),
@@ -240,7 +240,7 @@ def test_extract_handles_zero_day_as_last_day_of_month(
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         # Trade measures (GS1 General Specifications, section 3.6.2)
         ("3105123456", Decimal("1.23456")),  # Net weight (kg)
@@ -273,7 +273,7 @@ def test_extract_variable_measures(value: str, expected: Decimal) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         # Amount payable or coupon value (GS1 General Specifications, section 3.6.6)
         ("3901123", Decimal("12.3")),
@@ -295,7 +295,7 @@ def test_extract_amount_payable(value: str, expected: Decimal) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected_currency, expected_decimal",
+    ("value", "expected_currency", "expected_decimal"),
     [
         # Amount payable and ISO currency code (section 3.6.7)
         ("39127101230", "ZAR", Decimal("12.30")),
@@ -328,7 +328,7 @@ def test_extract_amount_payable_and_currency(
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         ("39400010", Decimal("10")),
         ("39410055", Decimal("5.5")),
@@ -339,7 +339,7 @@ def test_extract_percentage_discount(value: str, expected: Decimal) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected", [("0107032069804988", "(01)07032069804988")]
+    ("value", "expected"), [("0107032069804988", "(01)07032069804988")]
 )
 def test_as_hri(value: str, expected: str) -> None:
     assert GS1ElementString.extract(value).as_hri() == expected

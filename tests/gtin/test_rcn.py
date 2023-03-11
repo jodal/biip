@@ -4,7 +4,7 @@ from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
 
 
 @pytest.mark.parametrize(
-    "value, gtin_format, rcn_usage",
+    ("value", "gtin_format", "rcn_usage"),
     [
         # RCN-8
         ("00011112", GtinFormat.GTIN_8, RcnUsage.COMPANY),
@@ -55,7 +55,7 @@ def test_gtin_14_with_rcn_prefix_is_not_an_rcn() -> None:
 
 
 @pytest.mark.parametrize(
-    "value, rcn_region",
+    ("value", "rcn_region"),
     [
         ("de", RcnRegion.GERMANY),
         ("dk", RcnRegion.DENMARK),
@@ -81,13 +81,14 @@ def test_rcn_region_can_be_specified_as_string(
 
 
 def test_fails_when_rcn_region_is_unknown_string() -> None:
-    with pytest.raises(ValueError) as exc_info:
+    with pytest.raises(
+        ValueError,
+        match=r"^'foo' is not a valid RcnRegion$",
+    ):
         Gtin.parse(
             "2311111112345",
             rcn_region="foo",  # type: ignore
         )
-
-    assert str(exc_info.value) == "'foo' is not a valid RcnRegion"
 
 
 def test_rcn_usage_repr() -> None:

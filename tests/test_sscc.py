@@ -58,7 +58,7 @@ def test_parse_with_invalid_check_digit() -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    ("value", "expected"),
     [
         ("157035381410375177", "1 5703538 141037517 7"),
         ("357081300469846950", "3 5708130 046984695 0"),
@@ -76,21 +76,18 @@ def test_as_hri(value: str, expected: str) -> None:
 def test_as_hri_with_too_low_company_prefix_length() -> None:
     sscc = Sscc.parse("376130321109103420")
 
-    with pytest.raises(ValueError) as exc_info:
+    with pytest.raises(
+        ValueError,
+        match=r"^Expected company prefix length between 7 and 10, got 6.$",
+    ):
         sscc.as_hri(company_prefix_length=6)
-
-    assert (
-        str(exc_info.value) == "Expected company prefix length between 7 and 10, got 6."
-    )
 
 
 def test_as_hri_with_too_high_company_prefix_length() -> None:
     sscc = Sscc.parse("376130321109103420")
 
-    with pytest.raises(ValueError) as exc_info:
+    with pytest.raises(
+        ValueError,
+        match=r"^Expected company prefix length between 7 and 10, got 11.$",
+    ):
         sscc.as_hri(company_prefix_length=11)
-
-    assert (
-        str(exc_info.value)
-        == "Expected company prefix length between 7 and 10, got 11."
-    )
