@@ -110,6 +110,7 @@ select = [
     "RSE", # flake8-raise
     "RUF", # ruff
     "SIM", # flake8-simplify
+    "SLF", # flake8-self
     "T20", # flake8-print
     "TCH", # flake8-type-checking
     "TID", # flake8-tidy-imports

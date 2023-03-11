@@ -90,10 +90,12 @@ def parse(
         (parse_func, val) = queue.pop(0)
         parse_func(val, config=config, queue=queue, result=result)
 
-    if result._has_result():
+    if result._has_result():  # noqa: SLF001
         return result
 
-    raise ParseError(f"Failed to parse {value!r}:\n{result._get_errors_list()}")
+    raise ParseError(
+        f"Failed to parse {value!r}:\n{result._get_errors_list()}"  # noqa: SLF001
+    )
 
 
 @dataclass

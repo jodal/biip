@@ -149,14 +149,14 @@ class GS1ElementString:
         value = "".join(pattern_groups)
 
         element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
-        element._set_gln()
-        element._set_gtin(
+        element._set_gln()  # noqa: SLF001
+        element._set_gtin(  # noqa: SLF001
             rcn_region=rcn_region,
             rcn_verify_variable_measure=rcn_verify_variable_measure,
         )
-        element._set_sscc()
-        element._set_date()
-        element._set_decimal()
+        element._set_sscc()  # noqa: SLF001
+        element._set_date()  # noqa: SLF001
+        element._set_decimal()  # noqa: SLF001
 
         return element
 
