@@ -44,18 +44,7 @@ def mypy(session):
 @nox.session(python="3.11")
 def docs(session):
     """Build the documentation."""
-    session.run(
-        "poetry",
-        "install",
-        "--no-dev",
-        "--extras=money",
-        external=True,
-    )
-    session.install(
-        "sphinx",
-        "sphinx-rtd-theme",
-        "sphinx-autodoc-typehints",
-    )
+    session.run("poetry", "install", "--all-extras", "--only=main,docs", external=True)
     session.run("sphinx-build", "docs", "docs/_build")
 
 
