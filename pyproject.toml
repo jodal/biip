@@ -97,6 +97,7 @@ select = [
     "F",   # pyflakes
     "I",   # isort
     "RUF", # ruff
+    "Q",   # flake8-quotes
     "W",   # pycodestyle
 ]
 ignore = [
