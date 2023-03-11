@@ -99,6 +99,7 @@ select = [
     "SIM", # flake8-simplify
     "RUF", # ruff
     "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
     "Q",   # flake8-quotes
     "W",   # pycodestyle
 ]
