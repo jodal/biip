@@ -5,8 +5,12 @@ import nox
 package = "biip"
 locations = ["src", "tests", "noxfile.py", "docs/conf.py"]
 
+supported_pythons = ["3.7", "3.8", "3.9", "3.10", "3.11"]
+coverage_python = "3.11"
+docs_python = "3.11"
 
-@nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
+
+@nox.session(python=supported_pythons)
 def tests(session: nox.Session) -> None:
     """Run the test suite."""
     args = session.posargs or ["--cov"]
@@ -14,7 +18,7 @@ def tests(session: nox.Session) -> None:
     session.run("pytest", *args)
 
 
-@nox.session(python="3.11")
+@nox.session(python=coverage_python)
 def coverage(session: nox.Session) -> None:
     """Upload test coverage data."""
     session.run("poetry", "install", "--no-root", "--only=tests", external=True)
@@ -22,7 +26,7 @@ def coverage(session: nox.Session) -> None:
     session.run("codecov", *session.posargs)
 
 
-@nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
+@nox.session(python=supported_pythons)
 def black(session: nox.Session) -> None:
     """Check formatting using Black."""
     args = session.posargs or locations
@@ -30,7 +34,7 @@ def black(session: nox.Session) -> None:
     session.run("black", *args)
 
 
-@nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
+@nox.session(python=supported_pythons)
 def ruff(session: nox.Session) -> None:
     """Lint using ruff."""
     args = session.posargs or locations
@@ -38,7 +42,7 @@ def ruff(session: nox.Session) -> None:
     session.run("ruff", *args)
 
 
-@nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
+@nox.session(python=supported_pythons)
 def darglint(session: nox.Session) -> None:
     """Check docstrings using darglint."""
     args = session.posargs or ["src"]
@@ -46,7 +50,7 @@ def darglint(session: nox.Session) -> None:
     session.run("darglint", *args)
 
 
-@nox.session(python=["3.7", "3.8", "3.9", "3.10", "3.11"])
+@nox.session(python=supported_pythons)
 def mypy(session: nox.Session) -> None:
     """Type-check using mypy."""
     args = session.posargs or locations
@@ -54,7 +58,7 @@ def mypy(session: nox.Session) -> None:
     session.run("mypy", *args)
 
 
-@nox.session(python="3.11")
+@nox.session(python=docs_python)
 def docs(session: nox.Session) -> None:
     """Build the documentation."""
     session.run("poetry", "install", "--all-extras", "--only=main,docs", external=True)
