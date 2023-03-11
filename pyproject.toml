@@ -31,6 +31,7 @@ darglint = "^1.8.1"
 
 [tool.poetry.group.dev.dependencies]
 nox = "^2022.11.21"
+py-moneyed = "^3.0"
 
 [tool.poetry.group.docs.dependencies]
 sphinx = "^4.0.0"
