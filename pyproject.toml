@@ -122,6 +122,7 @@ select = [
     "T20", # flake8-print
     "TCH", # flake8-type-checking
     "TID", # flake8-tidy-imports
+    "TRY", # tryceratops
     "UP",  # pyupgrade
     "W",   # pycodestyle
 ]
@@ -131,6 +132,7 @@ ignore = [
     "ANN102",  # missing-type-cls
     "PLR2004", # magic-value-comparison
     "RET504",  # unnecessary-assign
+    "TRY003",  # raise-vanilla-args
     #
     # Equivalent to `pyupgrade --keep-runtime-typing`:
     "UP006", # deprecated-collection-type

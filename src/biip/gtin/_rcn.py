@@ -168,7 +168,7 @@ class _Strategy:
 
         region_rules = _RCN_RULES.get(rcn.region)
         if region_rules is None:
-            raise Exception(  # pragma: no cover
+            raise Exception(  # noqa: TRY002  # pragma: no cover
                 "RCN region defined without defining rules. This is a bug."
             )
 
