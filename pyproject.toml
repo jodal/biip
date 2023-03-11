@@ -29,6 +29,9 @@ black = "^23.1.0"
 [tool.poetry.group.darglint.dependencies]
 darglint = "^1.8.1"
 
+[tool.poetry.group.dev.dependencies]
+nox = "^2022.11.21"
+
 [tool.poetry.group.docs.dependencies]
 sphinx = "^4.0.0"
 sphinx-rtd-theme = "^1.1.1"
