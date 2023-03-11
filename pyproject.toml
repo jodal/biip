@@ -30,8 +30,11 @@ black = "^23.1.0"
 darglint = "^1.8.1"
 
 [tool.poetry.group.dev.dependencies]
+beautifulsoup4 = "^4.11.2"
+httpx = "^0.23.3"
 nox = "^2022.11.21"
 py-moneyed = "^3.0"
+types-beautifulsoup4 = "^4.11.6.7"
 
 [tool.poetry.group.docs.dependencies]
 sphinx = "^4.0.0"
@@ -46,10 +49,6 @@ pyright = "^1.1.298"
 
 [tool.poetry.group.ruff.dependencies]
 ruff = "^0.0.254"
-
-[tool.poetry.group.scripts.dependencies]
-beautifulsoup4 = "^4.11.2"
-httpx = "^0.23.3"
 
 [tool.poetry.group.tests.dependencies]
 codecov = "^2.1.12"
@@ -86,10 +85,6 @@ strict_equality = true
 [[tool.mypy.overrides]]
 module = "biip.*"
 disallow_untyped_defs = true
-
-[[tool.mypy.overrides]]
-module = ["bs4.*", "moneyed.*", "nox.*", "pytest.*"]
-ignore_missing_imports = true
 
 [tool.ruff]
 select = [
