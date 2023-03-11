@@ -24,14 +24,12 @@ py-moneyed = { version = ">=0.8", optional = true }
 money = ["py-moneyed"]
 
 [tool.poetry.group.dev.dependencies]
-beautifulsoup4 = "^4.11.2"
 darglint = "^1.8.1"
 flake8 = "^5.0.4"
 flake8-annotations = "^2.9.1"
 flake8-bugbear = "^23.2.13"
 flake8-docstrings = "^1.7.0"
 flake8-isort = "^6.0.0"
-httpx = "^0.23.3"
 isort = "^5.11.5"
 
 [tool.poetry.group.black.dependencies]
@@ -44,6 +42,10 @@ sphinx-autodoc-typehints = "^1.12.0"
 
 [tool.poetry.group.mypy.dependencies]
 mypy = "^1.1.1"
+
+[tool.poetry.group.scripts.dependencies]
+beautifulsoup4 = "^4.11.2"
+httpx = "^0.23.3"
 
 [tool.poetry.group.tests.dependencies]
 codecov = "^2.1.12"
