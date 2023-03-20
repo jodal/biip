@@ -48,7 +48,7 @@ mypy = "^1.1.1"
 pyright = "^1.1.298"
 
 [tool.poetry.group.ruff.dependencies]
-ruff = ">=0.0.254,<0.0.257"
+ruff = ">=0.0.254,<0.0.258"
 
 [tool.poetry.group.tests.dependencies]
 codecov = "^2.1.12"
