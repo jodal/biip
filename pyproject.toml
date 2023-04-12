@@ -24,35 +24,35 @@ py-moneyed = { version = ">=0.8", optional = true }
 money = ["py-moneyed"]
 
 [tool.poetry.group.black.dependencies]
-black = "^23.1.0"
+black = "^23.3.0"
 
 [tool.poetry.group.darglint.dependencies]
 darglint = "^1.8.1"
 
 [tool.poetry.group.dev.dependencies]
-beautifulsoup4 = "^4.11.2"
-httpx = "^0.23.3"
+beautifulsoup4 = "^4.12.2"
+httpx = "^0.24.0"
 nox = "^2022.11.21"
 py-moneyed = "^3.0"
-types-beautifulsoup4 = "^4.11.6.7"
+types-beautifulsoup4 = "^4.12.0.3"
 
 [tool.poetry.group.docs.dependencies]
 sphinx = ">=4,<6"
-sphinx-rtd-theme = "^1.1.1"
-sphinx-autodoc-typehints = "^1.12.0"
+sphinx-rtd-theme = "^1.2.0"
+sphinx-autodoc-typehints = "^1.22"
 
 [tool.poetry.group.mypy.dependencies]
-mypy = "^1.1.1"
+mypy = "^1.2.0"
 
 [tool.poetry.group.pyright.dependencies]
-pyright = "^1.1.298"
+pyright = "^1.1.302"
 
 [tool.poetry.group.ruff.dependencies]
-ruff = ">=0.0.254,<0.0.262"
+ruff = "^0.0.261"
 
 [tool.poetry.group.tests.dependencies]
-coverage = { extras = ["toml"], version = "^7.2.1" }
-pytest = "^7.2.2"
+coverage = { extras = ["toml"], version = "^7.2.3" }
+pytest = "^7.3.0"
 pytest-cov = "^4.0.0"
 xdoctest = "^1.1.1"
 
