@@ -6,14 +6,13 @@ package = "biip"
 locations = ["src", "tests", "noxfile.py", "docs/conf.py", "scripts"]
 
 supported_pythons = ["3.7", "3.8", "3.9", "3.10", "3.11"]
-coverage_python = "3.11"
 docs_python = "3.11"
 
 
 @nox.session(python=supported_pythons)
 def tests(session: nox.Session) -> None:
     """Run the test suite."""
-    args = session.posargs or ["--cov"]
+    args = session.posargs or ["--cov", "--cov-report=xml"]
     session.run(
         "poetry",
         "install",
@@ -23,16 +22,6 @@ def tests(session: nox.Session) -> None:
         external=True,
     )
     session.run("pytest", *args)
-
-
-@nox.session(python=coverage_python)
-def coverage(session: nox.Session) -> None:
-    """Upload test coverage data."""
-    session.run(
-        "poetry", "install", "--quiet", "--no-root", "--only=tests", external=True
-    )
-    session.run("coverage", "xml", "--fail-under=0")
-    session.run("codecov", *session.posargs)
 
 
 @nox.session(python=supported_pythons)
