@@ -31,7 +31,7 @@ darglint = "^1.8.1"
 
 [tool.poetry.group.dev.dependencies]
 beautifulsoup4 = "^4.11.2"
-httpx = "^0.23.3"
+httpx = ">=0.23.3,<0.25.0"
 nox = "^2022.11.21"
 py-moneyed = "^3.0"
 types-beautifulsoup4 = "^4.11.6.7"
