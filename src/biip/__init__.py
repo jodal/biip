@@ -54,13 +54,13 @@ raised with a reason from each parser.
 
 try:
     from importlib.metadata import (  # type: ignore[import]
-        PackageNotFoundError,
-        version,  # pyright: reportUnknownVariableType=false
+        PackageNotFoundError,  # pyright: ignore[reportUnknownVariableType]
+        version,  # pyright: ignore[reportUnknownVariableType]
     )
 except ImportError:  # pragma: no cover
     from importlib_metadata import (  # type: ignore[import,no-redef,assignment]
-        PackageNotFoundError,
-        version,
+        PackageNotFoundError,  # pyright: ignore[reportUnknownVariableType]
+        version,  # pyright: ignore[reportUnknownVariableType]
     )
 
 from biip._exceptions import BiipException, EncodeError, ParseError
@@ -76,6 +76,6 @@ __all__ = [
 
 
 try:
-    __version__: str = version(__name__)
+    __version__: str = version(__name__)  # pyright: ignore[reportUnknownVariableType]
 except PackageNotFoundError:  # pragma: no cover
     __version__ = "unknown"
