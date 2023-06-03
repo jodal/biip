@@ -52,16 +52,10 @@ raised with a reason from each parser.
     - GS1: Failed to match '123' with GS1 AI (12) pattern '^12(\d{6})$'.
 """
 
-try:
-    from importlib.metadata import (  # type: ignore[import]
-        PackageNotFoundError,  # pyright: ignore[reportUnknownVariableType]
-        version,  # pyright: ignore[reportUnknownVariableType]
-    )
-except ImportError:  # pragma: no cover
-    from importlib_metadata import (  # type: ignore[import,no-redef,assignment]
-        PackageNotFoundError,  # pyright: ignore[reportUnknownVariableType]
-        version,  # pyright: ignore[reportUnknownVariableType]
-    )
+from importlib.metadata import (  # pyright: ignore[reportMissingImports]
+    PackageNotFoundError,  # pyright: ignore[reportUnknownVariableType]
+    version,  # pyright: ignore[reportUnknownVariableType]
+)
 
 from biip._exceptions import BiipException, EncodeError, ParseError
 from biip._parser import ParseResult, parse

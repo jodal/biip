@@ -16,8 +16,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7.0"
-importlib_metadata = { version = ">=1.6,<6.0", python = "<3.8" }
+python = "^3.8.0"
 py-moneyed = { version = ">=0.8", optional = true }
 
 [tool.poetry.extras]
@@ -57,7 +56,7 @@ pytest-cov = "^4.0.0"
 xdoctest = "^1.1.1"
 
 [tool.black]
-target-version = ["py37", "py38", "py39", "py310", "py311"]
+target-version = ["py38", "py39", "py310", "py311"]
 
 [tool.coverage.paths]
 source = ["src"]
@@ -136,7 +135,7 @@ ignore = [
     "UP006", # deprecated-collection-type
     "UP007", # typing-union
 ]
-target-version = "py37"
+target-version = "py38"
 
 [tool.ruff.per-file-ignores]
 "docs/*" = ["INP001"]
@@ -150,7 +149,7 @@ known-first-party = ["biip"]
 convention = "google"
 
 [tool.pyright]
-pythonVersion = "3.7"
+pythonVersion = "3.8"
 venvPath = "."
 venv = ".venv"
 typeCheckingMode = "strict"
