@@ -16,8 +16,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7.0"
-importlib_metadata = { version = ">=1.6,<6.0", python = "<3.8" }
+python = "^3.8.0"
 py-moneyed = { version = ">=0.8", optional = true }
 
 [tool.poetry.extras]
@@ -31,10 +30,10 @@ darglint = "^1.8.1"
 
 [tool.poetry.group.dev.dependencies]
 beautifulsoup4 = "^4.12.2"
-httpx = "^0.24.0"
-nox = "^2022.11.21"
+httpx = "^0.24.1"
+nox = "^2023.4.22"
 py-moneyed = "^3.0"
-types-beautifulsoup4 = "^4.12.0.3"
+types-beautifulsoup4 = "^4.12.0.5"
 
 [tool.poetry.group.docs.dependencies]
 sphinx = ">=4,<6"
@@ -42,13 +41,13 @@ sphinx-rtd-theme = "^1.2.0"
 sphinx-autodoc-typehints = "^1.22"
 
 [tool.poetry.group.mypy.dependencies]
-mypy = "^1.2.0"
+mypy = "^1.3.0"
 
 [tool.poetry.group.pyright.dependencies]
-pyright = "^1.1.302"
+pyright = "^1.1.311"
 
 [tool.poetry.group.ruff.dependencies]
-ruff = "^0.0.261"
+ruff = "^0.0.270"
 
 [tool.poetry.group.tests.dependencies]
 coverage = { extras = ["toml"], version = "^7.2.3" }
@@ -57,7 +56,7 @@ pytest-cov = "^4.0.0"
 xdoctest = "^1.1.1"
 
 [tool.black]
-target-version = ["py37", "py38", "py39", "py310", "py311"]
+target-version = ["py38", "py39", "py310", "py311"]
 
 [tool.coverage.paths]
 source = ["src"]
@@ -136,7 +135,7 @@ ignore = [
     "UP006", # deprecated-collection-type
     "UP007", # typing-union
 ]
-target-version = "py37"
+target-version = "py38"
 
 [tool.ruff.per-file-ignores]
 "docs/*" = ["INP001"]
@@ -150,7 +149,7 @@ known-first-party = ["biip"]
 convention = "google"
 
 [tool.pyright]
-pythonVersion = "3.7"
+pythonVersion = "3.8"
 venvPath = "."
 venv = ".venv"
 typeCheckingMode = "strict"
