@@ -138,7 +138,7 @@ def test_parse_gtin_12_with_1_leading_zero(value: str) -> None:
         # 0-padded to GTIN-13
         "00006000291455",
         # 0-padded to GTIN-14
-        "00006000291455",
+        "00006000291455",  # noqa: PT014
     ],
 )
 def test_parse_gtin_12_with_2_leading_zero(value: str) -> None:
