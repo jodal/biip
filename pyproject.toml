@@ -23,7 +23,7 @@ py-moneyed = { version = ">=0.8", optional = true }
 money = ["py-moneyed"]
 
 [tool.poetry.group.black.dependencies]
-black = "^23.3.0"
+black = "^23.9.1"
 
 [tool.poetry.group.darglint.dependencies]
 darglint = "^1.8.1"
@@ -56,7 +56,7 @@ pytest-cov = "^4.0.0"
 xdoctest = "^1.1.1"
 
 [tool.black]
-target-version = ["py38", "py39", "py310", "py311"]
+target-version = ["py38", "py39", "py310", "py311", "py312"]
 
 [tool.coverage.paths]
 source = ["src"]
