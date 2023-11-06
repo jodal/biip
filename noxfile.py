@@ -25,18 +25,18 @@ def tests(session: nox.Session) -> None:
 
 
 @nox.session(python=supported_pythons)
-def black(session: nox.Session) -> None:
-    """Check formatting using Black."""
+def ruff_format(session: nox.Session) -> None:
+    """Check formatting using Ruff."""
     args = session.posargs or locations
     session.run(
-        "poetry", "install", "--quiet", "--no-root", "--only=black", external=True
+        "poetry", "install", "--quiet", "--no-root", "--only=ruff", external=True
     )
-    session.run("black", *args)
+    session.run("ruff", "format", "--check", *args)
 
 
 @nox.session(python=supported_pythons)
-def ruff(session: nox.Session) -> None:
-    """Lint using ruff."""
+def ruff_lint(session: nox.Session) -> None:
+    """Lint using Ruff."""
     args = session.posargs or locations
     session.run(
         "poetry", "install", "--quiet", "--no-root", "--only=ruff", external=True

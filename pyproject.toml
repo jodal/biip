@@ -22,9 +22,6 @@ py-moneyed = { version = ">=0.8", optional = true }
 [tool.poetry.extras]
 money = ["py-moneyed"]
 
-[tool.poetry.group.black.dependencies]
-black = "^23.9.1"
-
 [tool.poetry.group.darglint.dependencies]
 darglint = "^1.8.1"
 
@@ -47,16 +44,13 @@ mypy = "^1.5.1"
 pyright = "^1.1.329"
 
 [tool.poetry.group.ruff.dependencies]
-ruff = "^0.0.292"
+ruff = "^0.1.4"
 
 [tool.poetry.group.tests.dependencies]
 coverage = { extras = ["toml"], version = "^7.3.2" }
 pytest = "^7.4.2"
 pytest-cov = "^4.1.0"
 xdoctest = "^1.1.1"
-
-[tool.black]
-target-version = ["py38", "py39", "py310", "py311", "py312"]
 
 [tool.coverage.paths]
 source = ["src"]
@@ -127,6 +121,7 @@ ignore = [
     "A003",    # builtin-attribute-shadowing
     "ANN101",  # missing-type-self
     "ANN102",  # missing-type-cls
+    "ISC001",  # single-line-implicit-string-concatenation
     "PLR2004", # magic-value-comparison
     "RET504",  # unnecessary-assign
     "TRY003",  # raise-vanilla-args
