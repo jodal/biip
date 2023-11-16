@@ -1,11 +1,9 @@
 *.egg-info/
+/.*_cache/
 /.coverage
 /.dmypy.json
-/.mypy_cache/
 /.nox/
-/.pytest_cache/
-/.python-version
-/.ruff_cache/
+/.tox/
 /.venv/
 /coverage.xml
 /dist/
