@@ -2,7 +2,6 @@
 
 import nox
 
-package = "biip"
 locations = ["src", "tests", "noxfile.py", "docs/conf.py", "scripts"]
 
 supported_pythons = ["3.8", "3.9", "3.10", "3.11", "3.12"]
