@@ -41,7 +41,7 @@ sphinx-autodoc-typehints = "^1.22"
 mypy = "^1.7.0"
 
 [tool.poetry.group.pyright.dependencies]
-pyright = "1.1.335" # 1.1.336 regresses on download_gs1_company_prefixes
+pyright = "1.1.344" # 1.1.336 regresses on download_gs1_company_prefixes
 
 [tool.poetry.group.ruff.dependencies]
 ruff = "^0.1.4"
