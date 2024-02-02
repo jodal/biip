@@ -23,6 +23,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: pip install nox==2023.4.22 poetry==1.7.0
       - run: nox --python ${{ matrix.python-version }}
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
