@@ -44,7 +44,7 @@ mypy = "^1.7.0"
 pyright = "1.1.335" # 1.1.336 regresses on download_gs1_company_prefixes
 
 [tool.poetry.group.ruff.dependencies]
-ruff = "^0.1.4"
+ruff = ">=0.1.4,<0.3.0"
 
 [tool.poetry.group.tests.dependencies]
 coverage = { extras = ["toml"], version = "^7.3.2" }
