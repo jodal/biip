@@ -16,7 +16,7 @@ from biip.gtin import Gtin, RcnRegion
 from biip.sscc import Sscc
 
 try:
-    import moneyed
+    import moneyed  # noqa: TCH002
 
     have_moneyed = True
 except ImportError:  # pragma: no cover
