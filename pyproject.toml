@@ -33,9 +33,9 @@ py-moneyed = "^3.0"
 types-beautifulsoup4 = "^4.12.0.6"
 
 [tool.poetry.group.docs.dependencies]
-sphinx = ">=4,<7"
-sphinx-rtd-theme = "^1.2.0"
-sphinx-autodoc-typehints = "^1.22"
+sphinx = ">=5,<7"               # 7 requires Python 3.9+
+sphinx-rtd-theme = ">1.2"
+sphinx-autodoc-typehints = "<2" # 2 requires Sphinx 7+, which requires Python 3.9+
 
 [tool.poetry.group.mypy.dependencies]
 mypy = "^1.7.0"
