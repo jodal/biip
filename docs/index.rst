@@ -73,6 +73,6 @@ Project resources
 License
 =======
 
-Biip is copyright 2020-2023 Stein Magnus Jodal and contributors.
-Biip is licensed under the
+Copyright 2020-2024 Stein Magnus Jodal and contributors.
+Licensed under the
 `Apache License, Version 2.0 <https://www.apache.org/licenses/LICENSE-2.0>`_.
