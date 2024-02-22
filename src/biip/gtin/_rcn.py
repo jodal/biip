@@ -109,6 +109,8 @@ class Rcn(Gtin):
 
         currency_code = self.region.get_currency_code()
         if self.price is not None and have_moneyed and currency_code is not None:
+            import moneyed
+
             self.money = moneyed.Money(amount=self.price, currency=currency_code)
 
     def without_variable_measure(self) -> Gtin:

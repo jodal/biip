@@ -254,6 +254,8 @@ class GS1ElementString:
             self.decimal = Decimal(f"{units}.{decimals}")
 
         if amount_payable_with_currency and have_moneyed:
+            import moneyed
+
             currency = moneyed.get_currency(iso=self.pattern_groups[0])
             self.money = moneyed.Money(amount=self.decimal, currency=currency)
 
