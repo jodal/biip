@@ -41,7 +41,7 @@ sphinx-autodoc-typehints = "<2" # 2 requires Sphinx 7+, which requires Python 3.
 mypy = "1.10.0"
 
 [tool.poetry.group.pyright.dependencies]
-pyright = "1.1.367"
+pyright = "1.1.368"
 
 [tool.poetry.group.ruff.dependencies]
 ruff = ">=0.2.2,<0.5.0"
