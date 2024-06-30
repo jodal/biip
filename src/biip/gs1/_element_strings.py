@@ -239,11 +239,6 @@ class GS1ElementString:
             # Second and last group for amount_payable_with_currency.
             value = self.pattern_groups[-1]
 
-            # Some AI patterns allow the group to be empty, in which case we
-            # have nothing to interpret.
-            if not value:
-                return
-
             num_decimals = int(self.ai.ai[3])
             num_units = len(value) - num_decimals
 

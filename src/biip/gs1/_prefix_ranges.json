@@ -445,6 +445,12 @@
   },
   {
     "length": 3,
+    "min_value": 623,
+    "max_value": 623,
+    "usage": "Managed by GS1 Global Office for future MO"
+  },
+  {
+    "length": 3,
     "min_value": 624,
     "max_value": 624,
     "usage": "GS1 Libya"
@@ -496,6 +502,12 @@
     "min_value": 640,
     "max_value": 649,
     "usage": "GS1 Finland"
+  },
+  {
+    "length": 3,
+    "min_value": 680,
+    "max_value": 681,
+    "usage": "GS1 China"
   },
   {
     "length": 3,
@@ -591,7 +603,7 @@
     "length": 3,
     "min_value": 760,
     "max_value": 769,
-    "usage": "GS1 Schweiz, Suisse, Svizzera"
+    "usage": "GS1 Switzerland"
   },
   {
     "length": 3,
@@ -710,7 +722,7 @@
   {
     "length": 3,
     "min_value": 880,
-    "max_value": 880,
+    "max_value": 881,
     "usage": "GS1 South Korea"
   },
   {
@@ -813,7 +825,7 @@
     "length": 3,
     "min_value": 958,
     "max_value": 958,
-    "usage": "GS1 Macao, China"
+    "usage": "GS1 Macau, China"
   },
   {
     "length": 3,
