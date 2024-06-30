@@ -76,7 +76,7 @@ def parse(html_content: bytes) -> List[_GS1PrefixRange]:
     # Order prefixes
     result = sorted(result, key=lambda pr: str(pr.min_value).zfill(pr.length))
 
-    return result
+    return result  # noqa: RET504
 
 
 def output(prefixes: List[_GS1PrefixRange]) -> None:

@@ -74,7 +74,8 @@ class GS1Prefix:
         if not prefix.isdecimal():
             # `prefix` is now the shortest prefix possible, and should be
             # numeric even if the prefix assignment is unknown.
-            raise ParseError(f"Failed to get GS1 Prefix from {value!r}.")
+            msg = f"Failed to get GS1 Prefix from {value!r}."
+            raise ParseError(msg)
 
         return None
 
@@ -109,7 +110,8 @@ class GS1CompanyPrefix:
             ParseError: If the parsing fails.
         """
         if not value.isdecimal():
-            raise ParseError(f"Failed to get GS1 Company Prefix from {value!r}.")
+            msg = f"Failed to get GS1 Company Prefix from {value!r}."
+            raise ParseError(msg)
 
         node = _GS1_COMPANY_PREFIX_TRIE
         digits = list(value)

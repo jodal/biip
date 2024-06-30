@@ -75,15 +75,15 @@ class Gln:
         value = value.strip()
 
         if len(value) != 13:
-            raise ParseError(
+            msg = (
                 f"Failed to parse {value!r} as GLN: "
                 f"Expected 13 digits, got {len(value)}."
             )
+            raise ParseError(msg)
 
         if not value.isdecimal():
-            raise ParseError(
-                f"Failed to parse {value!r} as GLN: Expected a numerical value."
-            )
+            msg = f"Failed to parse {value!r} as GLN: Expected a numerical value."
+            raise ParseError(msg)
 
         prefix = GS1Prefix.extract(value)
         company_prefix = GS1CompanyPrefix.extract(value)
@@ -92,10 +92,11 @@ class Gln:
 
         calculated_check_digit = numeric_check_digit(payload)
         if check_digit != calculated_check_digit:
-            raise ParseError(
+            msg = (
                 f"Invalid GLN check digit for {value!r}: "
                 f"Expected {calculated_check_digit!r}, got {check_digit!r}."
             )
+            raise ParseError(msg)
 
         return cls(
             value=value,

@@ -80,15 +80,15 @@ class Gtin:
         value = value.strip()
 
         if len(value) not in (8, 12, 13, 14):
-            raise ParseError(
+            msg = (
                 f"Failed to parse {value!r} as GTIN: "
                 f"Expected 8, 12, 13, or 14 digits, got {len(value)}."
             )
+            raise ParseError(msg)
 
         if not value.isdecimal():
-            raise ParseError(
-                f"Failed to parse {value!r} as GTIN: Expected a numerical value."
-            )
+            msg = f"Failed to parse {value!r} as GTIN: Expected a numerical value."
+            raise ParseError(msg)
 
         stripped_value = _strip_leading_zeros(value)
         assert len(stripped_value) in (8, 12, 13, 14)
@@ -115,10 +115,11 @@ class Gtin:
 
         calculated_check_digit = numeric_check_digit(payload)
         if check_digit != calculated_check_digit:
-            raise ParseError(
+            msg = (
                 f"Invalid GTIN check digit for {value!r}: "
                 f"Expected {calculated_check_digit!r}, got {check_digit!r}."
             )
+            raise ParseError(msg)
 
         gtin_type: Type[Union[Gtin, Rcn]]
         if (
@@ -166,7 +167,8 @@ class Gtin:
 
     def _as_format(self, gtin_format: GtinFormat) -> str:
         if self.format.length > gtin_format.length:
-            raise EncodeError(f"Failed encoding {self.value!r} as {gtin_format!s}.")
+            msg = f"Failed encoding {self.value!r} as {gtin_format!s}."
+            raise EncodeError(msg)
         return f"{self.payload}{self.check_digit}".zfill(gtin_format.length)
 
     def without_variable_measure(self) -> Gtin:

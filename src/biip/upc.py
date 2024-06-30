@@ -109,15 +109,15 @@ class Upc:
 
         length = len(value)
         if length not in (6, 7, 8, 12):
-            raise ParseError(
+            msg = (
                 f"Failed to parse {value!r} as UPC: "
                 f"Expected 6, 7, 8, or 12 digits, got {length}."
             )
+            raise ParseError(msg)
 
         if not value.isdecimal():
-            raise ParseError(
-                f"Failed to parse {value!r} as UPC: Expected a numerical value."
-            )
+            msg = f"Failed to parse {value!r} as UPC: Expected a numerical value."
+            raise ParseError(msg)
 
         if length == 12:
             return cls._parse_upc_a(value)
@@ -125,9 +125,8 @@ class Upc:
         if length in (6, 7, 8):
             return cls._parse_upc_e(value)
 
-        raise Exception(  # noqa: TRY002  # pragma: no cover
-            "Unhandled UPC length. This is a bug."
-        )
+        msg = "Unhandled UPC length. This is a bug."  # pragma: no cover
+        raise Exception(msg)  # noqa: TRY002  # pragma: no cover
 
     @classmethod
     def _parse_upc_a(cls, value: str) -> Upc:
@@ -139,10 +138,11 @@ class Upc:
 
         calculated_check_digit = numeric_check_digit(payload)
         if check_digit != calculated_check_digit:
-            raise ParseError(
+            msg = (
                 f"Invalid UPC-A check digit for {value!r}: "
                 f"Expected {calculated_check_digit!r}, got {check_digit!r}."
             )
+            raise ParseError(msg)
 
         return cls(
             value=value,
@@ -175,25 +175,26 @@ class Upc:
             payload = value[:-1]
             check_digit = int(value[-1])
         else:
-            raise Exception(  # noqa: TRY002  # pragma: no cover
-                "Unhandled UPC-E length. This is a bug."
-            )
+            msg = "Unhandled UPC-E length. This is a bug."  # pragma: no cover
+            raise Exception(msg)  # noqa: TRY002  # pragma: no cover
 
         # Control that the number system digit is correct.
         if number_system_digit not in (0, 1):
-            raise ParseError(
+            msg = (
                 f"Invalid UPC-E number system for {value!r}: "
                 f"Expected 0 or 1, got {number_system_digit!r}."
             )
+            raise ParseError(msg)
 
         # Control that check digit is correct.
         upc_a_payload = _upc_e_to_upc_a_expansion(f"{payload}{check_digit}")[:-1]
         calculated_check_digit = numeric_check_digit(upc_a_payload)
         if check_digit != calculated_check_digit:
-            raise ParseError(
+            msg = (
                 f"Invalid UPC-E check digit for {value!r}: "
                 f"Expected {calculated_check_digit!r}, got {check_digit!r}."
             )
+            raise ParseError(msg)
 
         return cls(
             value=value,
@@ -218,9 +219,10 @@ class Upc:
         if self.format == UpcFormat.UPC_E:
             return _upc_e_to_upc_a_expansion(f"{self.payload}{self.check_digit}")
 
-        raise Exception(  # noqa: TRY002  # pragma: no cover
+        msg = (  # pragma: no cover
             "Unhandled case while formatting as UPC-A. This is a bug."
         )
+        raise Exception(msg)  # noqa: TRY002  # pragma: no cover
 
     def as_upc_e(self) -> str:
         """Format as UPC-E.
@@ -240,9 +242,10 @@ class Upc:
         if self.format == UpcFormat.UPC_E:
             return f"{self.payload}{self.check_digit}"
 
-        raise Exception(  # noqa: TRY002  # pragma: no cover
+        msg = (  # pragma: no cover
             "Unhandled case while formatting as UPC-E. This is a bug."
         )
+        raise Exception(msg)  # noqa: TRY002  # pragma: no cover
 
     def as_gtin_12(self) -> str:
         """Format as GTIN-12."""
@@ -282,9 +285,10 @@ def _upc_e_to_upc_a_expansion(value: str) -> str:
     if last_digit in (5, 6, 7, 8, 9):
         return f"{value[:6]}0000{last_digit}{check_digit}"
 
-    raise Exception(  # noqa: TRY002  # pragma: no cover
+    msg = (  # pragma: no cover
         "Unhandled case while expanding UPC-E to UPC-A. This is a bug."
     )
+    raise Exception(msg)  # noqa: TRY002  # pragma: no cover
 
 
 def _upc_a_to_upc_e_suppression(value: str) -> str:
@@ -309,4 +313,5 @@ def _upc_a_to_upc_e_suppression(value: str) -> str:
         # UPC-E suppression, condition D
         return f"{value[:4]}{value[9:11]}3{check_digit}"
 
-    raise EncodeError(f"UPC-A {value!r} cannot be represented as UPC-E.")
+    msg = f"UPC-A {value!r} cannot be represented as UPC-E."
+    raise EncodeError(msg)

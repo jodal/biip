@@ -135,10 +135,11 @@ class Rcn(Gtin):
             return self
 
         if self.region is None:
-            raise EncodeError(
+            msg = (
                 f"Cannot zero out the variable measure part of {self.value!r} as the "
                 f"RCN rules for the geographical region {self.region!r} are unknown."
             )
+            raise EncodeError(msg)
 
         strategy = _Strategy.get_for_rcn(self)
         if strategy is None:
@@ -171,10 +172,9 @@ class _Strategy:
         assert rcn.region is not None
 
         region_rules = _RCN_RULES.get(rcn.region)
-        if region_rules is None:
-            raise Exception(  # noqa: TRY002  # pragma: no cover
-                "RCN region defined without defining rules. This is a bug."
-            )
+        if region_rules is None:  # pragma: no cover
+            msg = "RCN region defined without defining rules. This is a bug."
+            raise Exception(msg)  # noqa: TRY002
 
         # Classification as RCN depends on the prefix being known, so we won't
         # get here unless it is known.
@@ -211,11 +211,12 @@ class _Strategy:
         calculated_check_digit = checksums.price_check_digit(value)
 
         if check_digit != calculated_check_digit:
-            raise ParseError(
+            msg = (
                 f"Invalid check digit for variable measure value {value!r} "
                 f"in RCN {rcn.value!r}: "
                 f"Expected {calculated_check_digit!r}, got {check_digit!r}."
             )
+            raise ParseError(msg)
 
     def get_variable_measure(self, rcn: Rcn) -> Decimal:
         rcn_13 = rcn.as_gtin_13()

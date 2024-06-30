@@ -78,15 +78,15 @@ class Sscc:
         value = value.strip()
 
         if len(value) != 18:
-            raise ParseError(
+            msg = (
                 f"Failed to parse {value!r} as SSCC: "
                 f"Expected 18 digits, got {len(value)}."
             )
+            raise ParseError(msg)
 
         if not value.isdecimal():
-            raise ParseError(
-                f"Failed to parse {value!r} as SSCC: Expected a numerical value."
-            )
+            msg = f"Failed to parse {value!r} as SSCC: Expected a numerical value."
+            raise ParseError(msg)
 
         value_without_extension_digit = value[1:]
         prefix = GS1Prefix.extract(value_without_extension_digit)
@@ -97,10 +97,11 @@ class Sscc:
 
         calculated_check_digit = numeric_check_digit(payload)
         if check_digit != calculated_check_digit:
-            raise ParseError(
+            msg = (
                 f"Invalid SSCC check digit for {value!r}: "
                 f"Expected {calculated_check_digit!r}, got {check_digit!r}."
             )
+            raise ParseError(msg)
 
         return cls(
             value=value,
@@ -137,10 +138,11 @@ class Sscc:
         if company_prefix_length is not None:
             # Using override of GS1 Company Prefix length
             if not (7 <= company_prefix_length <= 10):
-                raise ValueError(
+                msg = (
                     "Expected company prefix length between 7 and 10, "
                     f"got {company_prefix_length!r}."
                 )
+                raise ValueError(msg)
         elif self.company_prefix is not None:
             # Using auto-detected GS1 Company Prefix length
             company_prefix_length = len(self.company_prefix.value)

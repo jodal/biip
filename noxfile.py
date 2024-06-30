@@ -40,7 +40,7 @@ def ruff_lint(session: nox.Session) -> None:
     session.run(
         "poetry", "install", "--quiet", "--no-root", "--only=ruff", external=True
     )
-    session.run("ruff", *args)
+    session.run("ruff", "check", *args)
 
 
 @nox.session(python=supported_pythons)

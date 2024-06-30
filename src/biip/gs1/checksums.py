@@ -26,7 +26,8 @@ def numeric_check_digit(value: str) -> int:
         6
     """
     if not value.isdecimal():
-        raise ValueError(f"Expected numeric value, got {value!r}.")
+        msg = f"Expected numeric value, got {value!r}."
+        raise ValueError(msg)
 
     digits = list(map(int, list(value)))
     reversed_digits = reversed(digits)
@@ -61,7 +62,8 @@ def price_check_digit(value: str) -> int:
         6
     """
     if not value.isdecimal():
-        raise ValueError(f"Expected numeric value, got {value!r}.")
+        msg = f"Expected numeric value, got {value!r}."
+        raise ValueError(msg)
 
     if len(value) == 4:
         return _four_digit_price_check_digit(value)
@@ -69,7 +71,8 @@ def price_check_digit(value: str) -> int:
     if len(value) == 5:
         return _five_digit_price_check_digit(value)
 
-    raise ValueError(f"Expected input of length 4 or 5, got {value!r}.")
+    msg = f"Expected input of length 4 or 5, got {value!r}."
+    raise ValueError(msg)
 
 
 def _four_digit_price_check_digit(value: str) -> int:

@@ -91,9 +91,8 @@ def parse(
     if result._has_result():  # noqa: SLF001
         return result
 
-    raise ParseError(
-        f"Failed to parse {value!r}:\n{result._get_errors_list()}"  # noqa: SLF001
-    )
+    msg = f"Failed to parse {value!r}:\n{result._get_errors_list()}"  # noqa: SLF001
+    raise ParseError(msg)
 
 
 @dataclass

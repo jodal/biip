@@ -131,10 +131,11 @@ class GS1ElementString:
             ParseError: If the parsing fails.
         """
         if any(len(char) != 1 for char in separator_chars):
-            raise ValueError(
+            msg = (
                 "All separator characters must be exactly 1 character long, "
                 f"got {list(separator_chars)!r}."
             )
+            raise ValueError(msg)
 
         ai = GS1ApplicationIdentifier.extract(value)
 
@@ -144,9 +145,8 @@ class GS1ElementString:
         pattern = ai.pattern[:-1] if ai.pattern.endswith("$") else ai.pattern
         matches = re.match(pattern, value)
         if not matches:
-            raise ParseError(
-                f"Failed to match {value!r} with GS1 AI {ai} pattern '{ai.pattern}'."
-            )
+            msg = f"Failed to match {value!r} with GS1 AI {ai} pattern '{ai.pattern}'."
+            raise ParseError(msg)
         pattern_groups = list(matches.groups())
         value = "".join(pattern_groups)
 
@@ -211,9 +211,8 @@ class GS1ElementString:
         try:
             self.date = _parse_date(self.value)
         except ValueError as exc:
-            raise ParseError(
-                f"Failed to parse GS1 AI {self.ai} date from {self.value!r}."
-            ) from exc
+            msg = f"Failed to parse GS1 AI {self.ai} date from {self.value!r}."
+            raise ParseError(msg) from exc
 
     def _set_decimal(self) -> None:
         variable_measure = self.ai.ai[:2] in (
