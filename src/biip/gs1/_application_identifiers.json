@@ -29,7 +29,7 @@
     "data_title": "BATCH/LOT",
     "fnc1_required": true,
     "format": "N2+X..20",
-    "pattern": "^10([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^10([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "11",
@@ -37,7 +37,7 @@
     "data_title": "PROD DATE",
     "fnc1_required": false,
     "format": "N2+N6",
-    "pattern": "^11(\\d{6})$"
+    "pattern": "^11(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$"
   },
   {
     "ai": "12",
@@ -45,7 +45,7 @@
     "data_title": "DUE DATE",
     "fnc1_required": false,
     "format": "N2+N6",
-    "pattern": "^12(\\d{6})$"
+    "pattern": "^12(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$"
   },
   {
     "ai": "13",
@@ -53,7 +53,7 @@
     "data_title": "PACK DATE",
     "fnc1_required": false,
     "format": "N2+N6",
-    "pattern": "^13(\\d{6})$"
+    "pattern": "^13(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$"
   },
   {
     "ai": "15",
@@ -61,7 +61,7 @@
     "data_title": "BEST BEFORE or BEST BY",
     "fnc1_required": false,
     "format": "N2+N6",
-    "pattern": "^15(\\d{6})$"
+    "pattern": "^15(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$"
   },
   {
     "ai": "16",
@@ -69,15 +69,15 @@
     "data_title": "SELL BY",
     "fnc1_required": false,
     "format": "N2+N6",
-    "pattern": "^16(\\d{6})$"
+    "pattern": "^16(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$"
   },
   {
     "ai": "17",
     "description": "Expiration date (YYMMDD)",
-    "data_title": "USE BY OR EXPIRY",
+    "data_title": "USE BY or EXPIRY",
     "fnc1_required": false,
     "format": "N2+N6",
-    "pattern": "^17(\\d{6})$"
+    "pattern": "^17(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$"
   },
   {
     "ai": "20",
@@ -93,7 +93,7 @@
     "data_title": "SERIAL",
     "fnc1_required": true,
     "format": "N2+X..20",
-    "pattern": "^21([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^21([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "22",
@@ -101,7 +101,7 @@
     "data_title": "CPV",
     "fnc1_required": true,
     "format": "N2+X..20",
-    "pattern": "^22([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^22([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "235",
@@ -109,7 +109,7 @@
     "data_title": "TPX",
     "fnc1_required": true,
     "format": "N3+X..28",
-    "pattern": "^235([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,28})$"
+    "pattern": "^235([!%-?A-Z_a-z\\x22]{1,28})$"
   },
   {
     "ai": "240",
@@ -117,15 +117,15 @@
     "data_title": "ADDITIONAL ID",
     "fnc1_required": true,
     "format": "N3+X..30",
-    "pattern": "^240([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+    "pattern": "^240([!%-?A-Z_a-z\\x22]{1,30})$"
   },
   {
     "ai": "241",
     "description": "Customer part number",
-    "data_title": "CUST. PART NO.",
+    "data_title": "CUST. PART No.",
     "fnc1_required": true,
     "format": "N3+X..30",
-    "pattern": "^241([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+    "pattern": "^241([!%-?A-Z_a-z\\x22]{1,30})$"
   },
   {
     "ai": "242",
@@ -133,7 +133,7 @@
     "data_title": "MTO VARIANT",
     "fnc1_required": true,
     "format": "N3+N..6",
-    "pattern": "^242(\\d{0,6})$"
+    "pattern": "^242(\\d{1,6})$"
   },
   {
     "ai": "243",
@@ -141,7 +141,7 @@
     "data_title": "PCN",
     "fnc1_required": true,
     "format": "N3+X..20",
-    "pattern": "^243([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^243([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "250",
@@ -149,7 +149,7 @@
     "data_title": "SECONDARY SERIAL",
     "fnc1_required": true,
     "format": "N3+X..30",
-    "pattern": "^250([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+    "pattern": "^250([!%-?A-Z_a-z\\x22]{1,30})$"
   },
   {
     "ai": "251",
@@ -157,15 +157,15 @@
     "data_title": "REF. TO SOURCE",
     "fnc1_required": true,
     "format": "N3+X..30",
-    "pattern": "^251([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+    "pattern": "^251([!%-?A-Z_a-z\\x22]{1,30})$"
   },
   {
     "ai": "253",
     "description": "Global Document Type Identifier (GDTI)",
     "data_title": "GDTI",
     "fnc1_required": true,
-    "format": "N3+N13+X..17",
-    "pattern": "^253(\\d{13})([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,17})$"
+    "format": "N3+N13[+X..17]",
+    "pattern": "^253(\\d{13})([!%-?A-Z_a-z\\x22]{0,17})$"
   },
   {
     "ai": "254",
@@ -173,14 +173,14 @@
     "data_title": "GLN EXTENSION COMPONENT",
     "fnc1_required": true,
     "format": "N3+X..20",
-    "pattern": "^254([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^254([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "255",
     "description": "Global Coupon Number (GCN)",
     "data_title": "GCN",
     "fnc1_required": true,
-    "format": "N3+N13+N..12",
+    "format": "N3+N13[+N..12]",
     "pattern": "^255(\\d{13})(\\d{0,12})$"
   },
   {
@@ -386,7 +386,7 @@
   {
     "ai": "3140",
     "description": "Area, square metres (variable measure trade item)",
-    "data_title": "AREA (m2)",
+    "data_title": "AREA (m\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3140(\\d{6})$"
@@ -394,7 +394,7 @@
   {
     "ai": "3141",
     "description": "Area, square metres (variable measure trade item)",
-    "data_title": "AREA (m2)",
+    "data_title": "AREA (m\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3141(\\d{6})$"
@@ -402,7 +402,7 @@
   {
     "ai": "3142",
     "description": "Area, square metres (variable measure trade item)",
-    "data_title": "AREA (m2)",
+    "data_title": "AREA (m\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3142(\\d{6})$"
@@ -410,7 +410,7 @@
   {
     "ai": "3143",
     "description": "Area, square metres (variable measure trade item)",
-    "data_title": "AREA (m2)",
+    "data_title": "AREA (m\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3143(\\d{6})$"
@@ -418,7 +418,7 @@
   {
     "ai": "3144",
     "description": "Area, square metres (variable measure trade item)",
-    "data_title": "AREA (m2)",
+    "data_title": "AREA (m\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3144(\\d{6})$"
@@ -426,7 +426,7 @@
   {
     "ai": "3145",
     "description": "Area, square metres (variable measure trade item)",
-    "data_title": "AREA (m2)",
+    "data_title": "AREA (m\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3145(\\d{6})$"
@@ -482,7 +482,7 @@
   {
     "ai": "3160",
     "description": "Net volume, cubic metres (variable measure trade item)",
-    "data_title": "NET VOLUME (m3)",
+    "data_title": "NET VOLUME (m\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3160(\\d{6})$"
@@ -490,7 +490,7 @@
   {
     "ai": "3161",
     "description": "Net volume, cubic metres (variable measure trade item)",
-    "data_title": "NET VOLUME (m3)",
+    "data_title": "NET VOLUME (m\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3161(\\d{6})$"
@@ -498,7 +498,7 @@
   {
     "ai": "3162",
     "description": "Net volume, cubic metres (variable measure trade item)",
-    "data_title": "NET VOLUME (m3)",
+    "data_title": "NET VOLUME (m\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3162(\\d{6})$"
@@ -506,7 +506,7 @@
   {
     "ai": "3163",
     "description": "Net volume, cubic metres (variable measure trade item)",
-    "data_title": "NET VOLUME (m3)",
+    "data_title": "NET VOLUME (m\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3163(\\d{6})$"
@@ -514,7 +514,7 @@
   {
     "ai": "3164",
     "description": "Net volume, cubic metres (variable measure trade item)",
-    "data_title": "NET VOLUME (m3)",
+    "data_title": "NET VOLUME (m\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3164(\\d{6})$"
@@ -522,7 +522,7 @@
   {
     "ai": "3165",
     "description": "Net volume, cubic metres (variable measure trade item)",
-    "data_title": "NET VOLUME (m3)",
+    "data_title": "NET VOLUME (m\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3165(\\d{6})$"
@@ -1202,7 +1202,7 @@
   {
     "ai": "3340",
     "description": "Area, square metres",
-    "data_title": "AREA (m2), log",
+    "data_title": "AREA (m\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3340(\\d{6})$"
@@ -1210,7 +1210,7 @@
   {
     "ai": "3341",
     "description": "Area, square metres",
-    "data_title": "AREA (m2), log",
+    "data_title": "AREA (m\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3341(\\d{6})$"
@@ -1218,7 +1218,7 @@
   {
     "ai": "3342",
     "description": "Area, square metres",
-    "data_title": "AREA (m2), log",
+    "data_title": "AREA (m\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3342(\\d{6})$"
@@ -1226,7 +1226,7 @@
   {
     "ai": "3343",
     "description": "Area, square metres",
-    "data_title": "AREA (m2), log",
+    "data_title": "AREA (m\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3343(\\d{6})$"
@@ -1234,7 +1234,7 @@
   {
     "ai": "3344",
     "description": "Area, square metres",
-    "data_title": "AREA (m2), log",
+    "data_title": "AREA (m\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3344(\\d{6})$"
@@ -1242,7 +1242,7 @@
   {
     "ai": "3345",
     "description": "Area, square metres",
-    "data_title": "AREA (m2), log",
+    "data_title": "AREA (m\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3345(\\d{6})$"
@@ -1298,7 +1298,7 @@
   {
     "ai": "3360",
     "description": "Logistic volume, cubic metres",
-    "data_title": "VOLUME (m3), log",
+    "data_title": "VOLUME (m\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3360(\\d{6})$"
@@ -1306,7 +1306,7 @@
   {
     "ai": "3361",
     "description": "Logistic volume, cubic metres",
-    "data_title": "VOLUME (m3), log",
+    "data_title": "VOLUME (m\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3361(\\d{6})$"
@@ -1314,7 +1314,7 @@
   {
     "ai": "3362",
     "description": "Logistic volume, cubic metres",
-    "data_title": "VOLUME (m3), log",
+    "data_title": "VOLUME (m\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3362(\\d{6})$"
@@ -1322,7 +1322,7 @@
   {
     "ai": "3363",
     "description": "Logistic volume, cubic metres",
-    "data_title": "VOLUME (m3), log",
+    "data_title": "VOLUME (m\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3363(\\d{6})$"
@@ -1330,7 +1330,7 @@
   {
     "ai": "3364",
     "description": "Logistic volume, cubic metres",
-    "data_title": "VOLUME (m3), log",
+    "data_title": "VOLUME (m\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3364(\\d{6})$"
@@ -1338,7 +1338,7 @@
   {
     "ai": "3365",
     "description": "Logistic volume, cubic metres",
-    "data_title": "VOLUME (m3), log",
+    "data_title": "VOLUME (m\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3365(\\d{6})$"
@@ -1346,7 +1346,7 @@
   {
     "ai": "3370",
     "description": "Kilograms per square metre",
-    "data_title": "KG PER m2",
+    "data_title": "KG PER m\u00b2",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3370(\\d{6})$"
@@ -1354,7 +1354,7 @@
   {
     "ai": "3371",
     "description": "Kilograms per square metre",
-    "data_title": "KG PER m2",
+    "data_title": "KG PER m\u00b2",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3371(\\d{6})$"
@@ -1362,7 +1362,7 @@
   {
     "ai": "3372",
     "description": "Kilograms per square metre",
-    "data_title": "KG PER m2",
+    "data_title": "KG PER m\u00b2",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3372(\\d{6})$"
@@ -1370,7 +1370,7 @@
   {
     "ai": "3373",
     "description": "Kilograms per square metre",
-    "data_title": "KG PER m2",
+    "data_title": "KG PER m\u00b2",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3373(\\d{6})$"
@@ -1378,7 +1378,7 @@
   {
     "ai": "3374",
     "description": "Kilograms per square metre",
-    "data_title": "KG PER m2",
+    "data_title": "KG PER m\u00b2",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3374(\\d{6})$"
@@ -1386,7 +1386,7 @@
   {
     "ai": "3375",
     "description": "Kilograms per square metre",
-    "data_title": "KG PER m2",
+    "data_title": "KG PER m\u00b2",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3375(\\d{6})$"
@@ -1874,7 +1874,7 @@
   {
     "ai": "3500",
     "description": "Area, square inches (variable measure trade item)",
-    "data_title": "AREA (in2)",
+    "data_title": "AREA (in\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3500(\\d{6})$"
@@ -1882,7 +1882,7 @@
   {
     "ai": "3501",
     "description": "Area, square inches (variable measure trade item)",
-    "data_title": "AREA (in2)",
+    "data_title": "AREA (in\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3501(\\d{6})$"
@@ -1890,7 +1890,7 @@
   {
     "ai": "3502",
     "description": "Area, square inches (variable measure trade item)",
-    "data_title": "AREA (in2)",
+    "data_title": "AREA (in\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3502(\\d{6})$"
@@ -1898,7 +1898,7 @@
   {
     "ai": "3503",
     "description": "Area, square inches (variable measure trade item)",
-    "data_title": "AREA (in2)",
+    "data_title": "AREA (in\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3503(\\d{6})$"
@@ -1906,7 +1906,7 @@
   {
     "ai": "3504",
     "description": "Area, square inches (variable measure trade item)",
-    "data_title": "AREA (in2)",
+    "data_title": "AREA (in\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3504(\\d{6})$"
@@ -1914,7 +1914,7 @@
   {
     "ai": "3505",
     "description": "Area, square inches (variable measure trade item)",
-    "data_title": "AREA (in2)",
+    "data_title": "AREA (in\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3505(\\d{6})$"
@@ -1922,7 +1922,7 @@
   {
     "ai": "3510",
     "description": "Area, square feet (variable measure trade item)",
-    "data_title": "AREA (ft2)",
+    "data_title": "AREA (ft\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3510(\\d{6})$"
@@ -1930,7 +1930,7 @@
   {
     "ai": "3511",
     "description": "Area, square feet (variable measure trade item)",
-    "data_title": "AREA (ft2)",
+    "data_title": "AREA (ft\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3511(\\d{6})$"
@@ -1938,7 +1938,7 @@
   {
     "ai": "3512",
     "description": "Area, square feet (variable measure trade item)",
-    "data_title": "AREA (ft2)",
+    "data_title": "AREA (ft\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3512(\\d{6})$"
@@ -1946,7 +1946,7 @@
   {
     "ai": "3513",
     "description": "Area, square feet (variable measure trade item)",
-    "data_title": "AREA (ft2)",
+    "data_title": "AREA (ft\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3513(\\d{6})$"
@@ -1954,7 +1954,7 @@
   {
     "ai": "3514",
     "description": "Area, square feet (variable measure trade item)",
-    "data_title": "AREA (ft2)",
+    "data_title": "AREA (ft\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3514(\\d{6})$"
@@ -1962,7 +1962,7 @@
   {
     "ai": "3515",
     "description": "Area, square feet (variable measure trade item)",
-    "data_title": "AREA (ft2)",
+    "data_title": "AREA (ft\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3515(\\d{6})$"
@@ -1970,7 +1970,7 @@
   {
     "ai": "3520",
     "description": "Area, square yards (variable measure trade item)",
-    "data_title": "AREA (yd2)",
+    "data_title": "AREA (yd\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3520(\\d{6})$"
@@ -1978,7 +1978,7 @@
   {
     "ai": "3521",
     "description": "Area, square yards (variable measure trade item)",
-    "data_title": "AREA (yd2)",
+    "data_title": "AREA (yd\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3521(\\d{6})$"
@@ -1986,7 +1986,7 @@
   {
     "ai": "3522",
     "description": "Area, square yards (variable measure trade item)",
-    "data_title": "AREA (yd2)",
+    "data_title": "AREA (yd\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3522(\\d{6})$"
@@ -1994,7 +1994,7 @@
   {
     "ai": "3523",
     "description": "Area, square yards (variable measure trade item)",
-    "data_title": "AREA (yd2)",
+    "data_title": "AREA (yd\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3523(\\d{6})$"
@@ -2002,7 +2002,7 @@
   {
     "ai": "3524",
     "description": "Area, square yards (variable measure trade item)",
-    "data_title": "AREA (yd2)",
+    "data_title": "AREA (yd\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3524(\\d{6})$"
@@ -2010,7 +2010,7 @@
   {
     "ai": "3525",
     "description": "Area, square yards (variable measure trade item)",
-    "data_title": "AREA (yd2)",
+    "data_title": "AREA (yd\u00b2)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3525(\\d{6})$"
@@ -2018,7 +2018,7 @@
   {
     "ai": "3530",
     "description": "Area, square inches",
-    "data_title": "AREA (in2), log",
+    "data_title": "AREA (in\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3530(\\d{6})$"
@@ -2026,7 +2026,7 @@
   {
     "ai": "3531",
     "description": "Area, square inches",
-    "data_title": "AREA (in2), log",
+    "data_title": "AREA (in\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3531(\\d{6})$"
@@ -2034,7 +2034,7 @@
   {
     "ai": "3532",
     "description": "Area, square inches",
-    "data_title": "AREA (in2), log",
+    "data_title": "AREA (in\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3532(\\d{6})$"
@@ -2042,7 +2042,7 @@
   {
     "ai": "3533",
     "description": "Area, square inches",
-    "data_title": "AREA (in2), log",
+    "data_title": "AREA (in\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3533(\\d{6})$"
@@ -2050,7 +2050,7 @@
   {
     "ai": "3534",
     "description": "Area, square inches",
-    "data_title": "AREA (in2), log",
+    "data_title": "AREA (in\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3534(\\d{6})$"
@@ -2058,7 +2058,7 @@
   {
     "ai": "3535",
     "description": "Area, square inches",
-    "data_title": "AREA (in2), log",
+    "data_title": "AREA (in\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3535(\\d{6})$"
@@ -2066,7 +2066,7 @@
   {
     "ai": "3540",
     "description": "Area, square feet",
-    "data_title": "AREA (ft2), log",
+    "data_title": "AREA (ft\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3540(\\d{6})$"
@@ -2074,7 +2074,7 @@
   {
     "ai": "3541",
     "description": "Area, square feet",
-    "data_title": "AREA (ft2), log",
+    "data_title": "AREA (ft\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3541(\\d{6})$"
@@ -2082,7 +2082,7 @@
   {
     "ai": "3542",
     "description": "Area, square feet",
-    "data_title": "AREA (ft2), log",
+    "data_title": "AREA (ft\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3542(\\d{6})$"
@@ -2090,7 +2090,7 @@
   {
     "ai": "3543",
     "description": "Area, square feet",
-    "data_title": "AREA (ft2), log",
+    "data_title": "AREA (ft\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3543(\\d{6})$"
@@ -2098,7 +2098,7 @@
   {
     "ai": "3544",
     "description": "Area, square feet",
-    "data_title": "AREA (ft2), log",
+    "data_title": "AREA (ft\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3544(\\d{6})$"
@@ -2106,7 +2106,7 @@
   {
     "ai": "3545",
     "description": "Area, square feet",
-    "data_title": "AREA (ft2), log",
+    "data_title": "AREA (ft\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3545(\\d{6})$"
@@ -2114,7 +2114,7 @@
   {
     "ai": "3550",
     "description": "Area, square yards",
-    "data_title": "AREA (yd2), log",
+    "data_title": "AREA (yd\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3550(\\d{6})$"
@@ -2122,7 +2122,7 @@
   {
     "ai": "3551",
     "description": "Area, square yards",
-    "data_title": "AREA (yd2), log",
+    "data_title": "AREA (yd\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3551(\\d{6})$"
@@ -2130,7 +2130,7 @@
   {
     "ai": "3552",
     "description": "Area, square yards",
-    "data_title": "AREA (yd2), log",
+    "data_title": "AREA (yd\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3552(\\d{6})$"
@@ -2138,7 +2138,7 @@
   {
     "ai": "3553",
     "description": "Area, square yards",
-    "data_title": "AREA (yd2), log",
+    "data_title": "AREA (yd\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3553(\\d{6})$"
@@ -2146,7 +2146,7 @@
   {
     "ai": "3554",
     "description": "Area, square yards",
-    "data_title": "AREA (yd2), log",
+    "data_title": "AREA (yd\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3554(\\d{6})$"
@@ -2154,7 +2154,7 @@
   {
     "ai": "3555",
     "description": "Area, square yards",
-    "data_title": "AREA (yd2), log",
+    "data_title": "AREA (yd\u00b2), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3555(\\d{6})$"
@@ -2450,7 +2450,7 @@
   {
     "ai": "3640",
     "description": "Net volume, cubic inches (variable measure trade item)",
-    "data_title": "VOLUME (in3)",
+    "data_title": "VOLUME (in\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3640(\\d{6})$"
@@ -2458,7 +2458,7 @@
   {
     "ai": "3641",
     "description": "Net volume, cubic inches (variable measure trade item)",
-    "data_title": "VOLUME (in3)",
+    "data_title": "VOLUME (in\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3641(\\d{6})$"
@@ -2466,7 +2466,7 @@
   {
     "ai": "3642",
     "description": "Net volume, cubic inches (variable measure trade item)",
-    "data_title": "VOLUME (in3)",
+    "data_title": "VOLUME (in\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3642(\\d{6})$"
@@ -2474,7 +2474,7 @@
   {
     "ai": "3643",
     "description": "Net volume, cubic inches (variable measure trade item)",
-    "data_title": "VOLUME (in3)",
+    "data_title": "VOLUME (in\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3643(\\d{6})$"
@@ -2482,7 +2482,7 @@
   {
     "ai": "3644",
     "description": "Net volume, cubic inches (variable measure trade item)",
-    "data_title": "VOLUME (in3)",
+    "data_title": "VOLUME (in\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3644(\\d{6})$"
@@ -2490,7 +2490,7 @@
   {
     "ai": "3645",
     "description": "Net volume, cubic inches (variable measure trade item)",
-    "data_title": "VOLUME (in3)",
+    "data_title": "VOLUME (in\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3645(\\d{6})$"
@@ -2498,7 +2498,7 @@
   {
     "ai": "3650",
     "description": "Net volume, cubic feet (variable measure trade item)",
-    "data_title": "VOLUME (ft3)",
+    "data_title": "VOLUME (ft\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3650(\\d{6})$"
@@ -2506,7 +2506,7 @@
   {
     "ai": "3651",
     "description": "Net volume, cubic feet (variable measure trade item)",
-    "data_title": "VOLUME (ft3)",
+    "data_title": "VOLUME (ft\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3651(\\d{6})$"
@@ -2514,7 +2514,7 @@
   {
     "ai": "3652",
     "description": "Net volume, cubic feet (variable measure trade item)",
-    "data_title": "VOLUME (ft3)",
+    "data_title": "VOLUME (ft\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3652(\\d{6})$"
@@ -2522,7 +2522,7 @@
   {
     "ai": "3653",
     "description": "Net volume, cubic feet (variable measure trade item)",
-    "data_title": "VOLUME (ft3)",
+    "data_title": "VOLUME (ft\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3653(\\d{6})$"
@@ -2530,7 +2530,7 @@
   {
     "ai": "3654",
     "description": "Net volume, cubic feet (variable measure trade item)",
-    "data_title": "VOLUME (ft3)",
+    "data_title": "VOLUME (ft\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3654(\\d{6})$"
@@ -2538,7 +2538,7 @@
   {
     "ai": "3655",
     "description": "Net volume, cubic feet (variable measure trade item)",
-    "data_title": "VOLUME (ft3)",
+    "data_title": "VOLUME (ft\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3655(\\d{6})$"
@@ -2546,7 +2546,7 @@
   {
     "ai": "3660",
     "description": "Net volume, cubic yards (variable measure trade item)",
-    "data_title": "VOLUME (yd3)",
+    "data_title": "VOLUME (yd\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3660(\\d{6})$"
@@ -2554,7 +2554,7 @@
   {
     "ai": "3661",
     "description": "Net volume, cubic yards (variable measure trade item)",
-    "data_title": "VOLUME (yd3)",
+    "data_title": "VOLUME (yd\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3661(\\d{6})$"
@@ -2562,7 +2562,7 @@
   {
     "ai": "3662",
     "description": "Net volume, cubic yards (variable measure trade item)",
-    "data_title": "VOLUME (yd3)",
+    "data_title": "VOLUME (yd\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3662(\\d{6})$"
@@ -2570,7 +2570,7 @@
   {
     "ai": "3663",
     "description": "Net volume, cubic yards (variable measure trade item)",
-    "data_title": "VOLUME (yd3)",
+    "data_title": "VOLUME (yd\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3663(\\d{6})$"
@@ -2578,7 +2578,7 @@
   {
     "ai": "3664",
     "description": "Net volume, cubic yards (variable measure trade item)",
-    "data_title": "VOLUME (yd3)",
+    "data_title": "VOLUME (yd\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3664(\\d{6})$"
@@ -2586,7 +2586,7 @@
   {
     "ai": "3665",
     "description": "Net volume, cubic yards (variable measure trade item)",
-    "data_title": "VOLUME (yd3)",
+    "data_title": "VOLUME (yd\u00b3)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3665(\\d{6})$"
@@ -2594,7 +2594,7 @@
   {
     "ai": "3670",
     "description": "Logistic volume, cubic inches",
-    "data_title": "VOLUME (in3), log",
+    "data_title": "VOLUME (in\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3670(\\d{6})$"
@@ -2602,7 +2602,7 @@
   {
     "ai": "3671",
     "description": "Logistic volume, cubic inches",
-    "data_title": "VOLUME (in3), log",
+    "data_title": "VOLUME (in\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3671(\\d{6})$"
@@ -2610,7 +2610,7 @@
   {
     "ai": "3672",
     "description": "Logistic volume, cubic inches",
-    "data_title": "VOLUME (in3), log",
+    "data_title": "VOLUME (in\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3672(\\d{6})$"
@@ -2618,7 +2618,7 @@
   {
     "ai": "3673",
     "description": "Logistic volume, cubic inches",
-    "data_title": "VOLUME (in3), log",
+    "data_title": "VOLUME (in\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3673(\\d{6})$"
@@ -2626,7 +2626,7 @@
   {
     "ai": "3674",
     "description": "Logistic volume, cubic inches",
-    "data_title": "VOLUME (in3), log",
+    "data_title": "VOLUME (in\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3674(\\d{6})$"
@@ -2634,7 +2634,7 @@
   {
     "ai": "3675",
     "description": "Logistic volume, cubic inches",
-    "data_title": "VOLUME (in3), log",
+    "data_title": "VOLUME (in\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3675(\\d{6})$"
@@ -2642,7 +2642,7 @@
   {
     "ai": "3680",
     "description": "Logistic volume, cubic feet",
-    "data_title": "VOLUME (ft3), log",
+    "data_title": "VOLUME (ft\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3680(\\d{6})$"
@@ -2650,7 +2650,7 @@
   {
     "ai": "3681",
     "description": "Logistic volume, cubic feet",
-    "data_title": "VOLUME (ft3), log",
+    "data_title": "VOLUME (ft\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3681(\\d{6})$"
@@ -2658,7 +2658,7 @@
   {
     "ai": "3682",
     "description": "Logistic volume, cubic feet",
-    "data_title": "VOLUME (ft3), log",
+    "data_title": "VOLUME (ft\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3682(\\d{6})$"
@@ -2666,7 +2666,7 @@
   {
     "ai": "3683",
     "description": "Logistic volume, cubic feet",
-    "data_title": "VOLUME (ft3), log",
+    "data_title": "VOLUME (ft\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3683(\\d{6})$"
@@ -2674,7 +2674,7 @@
   {
     "ai": "3684",
     "description": "Logistic volume, cubic feet",
-    "data_title": "VOLUME (ft3), log",
+    "data_title": "VOLUME (ft\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3684(\\d{6})$"
@@ -2682,7 +2682,7 @@
   {
     "ai": "3685",
     "description": "Logistic volume, cubic feet",
-    "data_title": "VOLUME (ft3), log",
+    "data_title": "VOLUME (ft\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3685(\\d{6})$"
@@ -2690,7 +2690,7 @@
   {
     "ai": "3690",
     "description": "Logistic volume, cubic yards",
-    "data_title": "VOLUME (yd3), log",
+    "data_title": "VOLUME (yd\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3690(\\d{6})$"
@@ -2698,7 +2698,7 @@
   {
     "ai": "3691",
     "description": "Logistic volume, cubic yards",
-    "data_title": "VOLUME (yd3), log",
+    "data_title": "VOLUME (yd\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3691(\\d{6})$"
@@ -2706,7 +2706,7 @@
   {
     "ai": "3692",
     "description": "Logistic volume, cubic yards",
-    "data_title": "VOLUME (yd3), log",
+    "data_title": "VOLUME (yd\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3692(\\d{6})$"
@@ -2714,7 +2714,7 @@
   {
     "ai": "3693",
     "description": "Logistic volume, cubic yards",
-    "data_title": "VOLUME (yd3), log",
+    "data_title": "VOLUME (yd\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3693(\\d{6})$"
@@ -2722,7 +2722,7 @@
   {
     "ai": "3694",
     "description": "Logistic volume, cubic yards",
-    "data_title": "VOLUME (yd3), log",
+    "data_title": "VOLUME (yd\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3694(\\d{6})$"
@@ -2730,7 +2730,7 @@
   {
     "ai": "3695",
     "description": "Logistic volume, cubic yards",
-    "data_title": "VOLUME (yd3), log",
+    "data_title": "VOLUME (yd\u00b3), log",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3695(\\d{6})$"
@@ -2741,7 +2741,7 @@
     "data_title": "COUNT",
     "fnc1_required": true,
     "format": "N2+N..8",
-    "pattern": "^37(\\d{0,8})$"
+    "pattern": "^37(\\d{1,8})$"
   },
   {
     "ai": "3900",
@@ -2749,7 +2749,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3900(\\d{0,15})$"
+    "pattern": "^3900(\\d{1,15})$"
   },
   {
     "ai": "3901",
@@ -2757,7 +2757,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3901(\\d{0,15})$"
+    "pattern": "^3901(\\d{1,15})$"
   },
   {
     "ai": "3902",
@@ -2765,7 +2765,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3902(\\d{0,15})$"
+    "pattern": "^3902(\\d{1,15})$"
   },
   {
     "ai": "3903",
@@ -2773,7 +2773,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3903(\\d{0,15})$"
+    "pattern": "^3903(\\d{1,15})$"
   },
   {
     "ai": "3904",
@@ -2781,7 +2781,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3904(\\d{0,15})$"
+    "pattern": "^3904(\\d{1,15})$"
   },
   {
     "ai": "3905",
@@ -2789,7 +2789,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3905(\\d{0,15})$"
+    "pattern": "^3905(\\d{1,15})$"
   },
   {
     "ai": "3906",
@@ -2797,7 +2797,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3906(\\d{0,15})$"
+    "pattern": "^3906(\\d{1,15})$"
   },
   {
     "ai": "3907",
@@ -2805,7 +2805,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3907(\\d{0,15})$"
+    "pattern": "^3907(\\d{1,15})$"
   },
   {
     "ai": "3908",
@@ -2813,7 +2813,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3908(\\d{0,15})$"
+    "pattern": "^3908(\\d{1,15})$"
   },
   {
     "ai": "3909",
@@ -2821,7 +2821,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3909(\\d{0,15})$"
+    "pattern": "^3909(\\d{1,15})$"
   },
   {
     "ai": "3910",
@@ -2829,7 +2829,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3910(\\d{3})(\\d{0,15})$"
+    "pattern": "^3910(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3911",
@@ -2837,7 +2837,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3911(\\d{3})(\\d{0,15})$"
+    "pattern": "^3911(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3912",
@@ -2845,7 +2845,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3912(\\d{3})(\\d{0,15})$"
+    "pattern": "^3912(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3913",
@@ -2853,7 +2853,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3913(\\d{3})(\\d{0,15})$"
+    "pattern": "^3913(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3914",
@@ -2861,7 +2861,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3914(\\d{3})(\\d{0,15})$"
+    "pattern": "^3914(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3915",
@@ -2869,7 +2869,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3915(\\d{3})(\\d{0,15})$"
+    "pattern": "^3915(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3916",
@@ -2877,7 +2877,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3916(\\d{3})(\\d{0,15})$"
+    "pattern": "^3916(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3917",
@@ -2885,7 +2885,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3917(\\d{3})(\\d{0,15})$"
+    "pattern": "^3917(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3918",
@@ -2893,7 +2893,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3918(\\d{3})(\\d{0,15})$"
+    "pattern": "^3918(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3919",
@@ -2901,7 +2901,7 @@
     "data_title": "AMOUNT",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3919(\\d{3})(\\d{0,15})$"
+    "pattern": "^3919(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3920",
@@ -2909,7 +2909,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3920(\\d{0,15})$"
+    "pattern": "^3920(\\d{1,15})$"
   },
   {
     "ai": "3921",
@@ -2917,7 +2917,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3921(\\d{0,15})$"
+    "pattern": "^3921(\\d{1,15})$"
   },
   {
     "ai": "3922",
@@ -2925,7 +2925,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3922(\\d{0,15})$"
+    "pattern": "^3922(\\d{1,15})$"
   },
   {
     "ai": "3923",
@@ -2933,7 +2933,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3923(\\d{0,15})$"
+    "pattern": "^3923(\\d{1,15})$"
   },
   {
     "ai": "3924",
@@ -2941,7 +2941,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3924(\\d{0,15})$"
+    "pattern": "^3924(\\d{1,15})$"
   },
   {
     "ai": "3925",
@@ -2949,7 +2949,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3925(\\d{0,15})$"
+    "pattern": "^3925(\\d{1,15})$"
   },
   {
     "ai": "3926",
@@ -2957,7 +2957,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3926(\\d{0,15})$"
+    "pattern": "^3926(\\d{1,15})$"
   },
   {
     "ai": "3927",
@@ -2965,7 +2965,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3927(\\d{0,15})$"
+    "pattern": "^3927(\\d{1,15})$"
   },
   {
     "ai": "3928",
@@ -2973,7 +2973,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3928(\\d{0,15})$"
+    "pattern": "^3928(\\d{1,15})$"
   },
   {
     "ai": "3929",
@@ -2981,7 +2981,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N..15",
-    "pattern": "^3929(\\d{0,15})$"
+    "pattern": "^3929(\\d{1,15})$"
   },
   {
     "ai": "3930",
@@ -2989,7 +2989,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3930(\\d{3})(\\d{0,15})$"
+    "pattern": "^3930(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3931",
@@ -2997,7 +2997,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3931(\\d{3})(\\d{0,15})$"
+    "pattern": "^3931(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3932",
@@ -3005,7 +3005,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3932(\\d{3})(\\d{0,15})$"
+    "pattern": "^3932(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3933",
@@ -3013,7 +3013,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3933(\\d{3})(\\d{0,15})$"
+    "pattern": "^3933(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3934",
@@ -3021,7 +3021,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3934(\\d{3})(\\d{0,15})$"
+    "pattern": "^3934(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3935",
@@ -3029,7 +3029,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3935(\\d{3})(\\d{0,15})$"
+    "pattern": "^3935(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3936",
@@ -3037,7 +3037,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3936(\\d{3})(\\d{0,15})$"
+    "pattern": "^3936(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3937",
@@ -3045,7 +3045,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3937(\\d{3})(\\d{0,15})$"
+    "pattern": "^3937(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3938",
@@ -3053,7 +3053,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3938(\\d{3})(\\d{0,15})$"
+    "pattern": "^3938(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3939",
@@ -3061,7 +3061,7 @@
     "data_title": "PRICE",
     "fnc1_required": true,
     "format": "N4+N3+N..15",
-    "pattern": "^3939(\\d{3})(\\d{0,15})$"
+    "pattern": "^3939(\\d{3})(\\d{1,15})$"
   },
   {
     "ai": "3940",
@@ -3101,7 +3101,7 @@
     "data_title": "PRICE/UoM",
     "fnc1_required": true,
     "format": "N4+N6",
-    "pattern": "^3950(\\d{0,6})$"
+    "pattern": "^3950(\\d{6})$"
   },
   {
     "ai": "3951",
@@ -3109,7 +3109,7 @@
     "data_title": "PRICE/UoM",
     "fnc1_required": true,
     "format": "N4+N6",
-    "pattern": "^3951(\\d{0,6})$"
+    "pattern": "^3951(\\d{6})$"
   },
   {
     "ai": "3952",
@@ -3117,7 +3117,7 @@
     "data_title": "PRICE/UoM",
     "fnc1_required": true,
     "format": "N4+N6",
-    "pattern": "^3952(\\d{0,6})$"
+    "pattern": "^3952(\\d{6})$"
   },
   {
     "ai": "3953",
@@ -3125,7 +3125,7 @@
     "data_title": "PRICE/UoM",
     "fnc1_required": true,
     "format": "N4+N6",
-    "pattern": "^3953(\\d{0,6})$"
+    "pattern": "^3953(\\d{6})$"
   },
   {
     "ai": "3954",
@@ -3133,7 +3133,7 @@
     "data_title": "PRICE/UoM",
     "fnc1_required": true,
     "format": "N4+N6",
-    "pattern": "^3954(\\d{0,6})$"
+    "pattern": "^3954(\\d{6})$"
   },
   {
     "ai": "3955",
@@ -3141,39 +3141,7 @@
     "data_title": "PRICE/UoM",
     "fnc1_required": true,
     "format": "N4+N6",
-    "pattern": "^3955(\\d{0,6})$"
-  },
-  {
-    "ai": "3956",
-    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
-    "data_title": "PRICE/UoM",
-    "fnc1_required": true,
-    "format": "N4+N6",
-    "pattern": "^3956(\\d{0,6})$"
-  },
-  {
-    "ai": "3957",
-    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
-    "data_title": "PRICE/UoM",
-    "fnc1_required": true,
-    "format": "N4+N6",
-    "pattern": "^3957(\\d{0,6})$"
-  },
-  {
-    "ai": "3958",
-    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
-    "data_title": "PRICE/UoM",
-    "fnc1_required": true,
-    "format": "N4+N6",
-    "pattern": "^3958(\\d{0,6})$"
-  },
-  {
-    "ai": "3959",
-    "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
-    "data_title": "PRICE/UoM",
-    "fnc1_required": true,
-    "format": "N4+N6",
-    "pattern": "^3959(\\d{0,6})$"
+    "pattern": "^3955(\\d{6})$"
   },
   {
     "ai": "400",
@@ -3181,7 +3149,7 @@
     "data_title": "ORDER NUMBER",
     "fnc1_required": true,
     "format": "N3+X..30",
-    "pattern": "^400([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+    "pattern": "^400([!%-?A-Z_a-z\\x22]{1,30})$"
   },
   {
     "ai": "401",
@@ -3189,7 +3157,7 @@
     "data_title": "GINC",
     "fnc1_required": true,
     "format": "N3+X..30",
-    "pattern": "^401([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+    "pattern": "^401([!%-?A-Z_a-z\\x22]{1,30})$"
   },
   {
     "ai": "402",
@@ -3205,7 +3173,7 @@
     "data_title": "ROUTE",
     "fnc1_required": true,
     "format": "N3+X..30",
-    "pattern": "^403([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+    "pattern": "^403([!%-?A-Z_a-z\\x22]{1,30})$"
   },
   {
     "ai": "410",
@@ -3242,7 +3210,7 @@
   {
     "ai": "414",
     "description": "Identification of a physical location - Global Location Number (GLN)",
-    "data_title": "LOC No",
+    "data_title": "Loc No.",
     "fnc1_required": false,
     "format": "N3+N13",
     "pattern": "^414(\\d{13})$"
@@ -3277,7 +3245,7 @@
     "data_title": "SHIP TO POST",
     "fnc1_required": true,
     "format": "N3+X..20",
-    "pattern": "^420([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^420([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "421",
@@ -3285,7 +3253,7 @@
     "data_title": "SHIP TO POST",
     "fnc1_required": true,
     "format": "N3+N3+X..9",
-    "pattern": "^421(\\d{3})([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,9})$"
+    "pattern": "^421(\\d{3})([!%-?A-Z_a-z\\x22]{1,9})$"
   },
   {
     "ai": "422",
@@ -3298,15 +3266,15 @@
   {
     "ai": "423",
     "description": "Country of initial processing",
-    "data_title": "COUNTRY - INITIAL PROCESS.",
+    "data_title": "COUNTRY - INITIAL PROCESS",
     "fnc1_required": true,
     "format": "N3+N3+N..12",
-    "pattern": "^423(\\d{3})(\\d{0,12})$"
+    "pattern": "^423((?:\\d{3}){1,5})$"
   },
   {
     "ai": "424",
     "description": "Country of processing",
-    "data_title": "COUNTRY - PROCESS.",
+    "data_title": "COUNTRY - PROCESS",
     "fnc1_required": true,
     "format": "N3+N3",
     "pattern": "^424(\\d{3})$"
@@ -3317,7 +3285,7 @@
     "data_title": "COUNTRY - DISASSEMBLY",
     "fnc1_required": true,
     "format": "N3+N3+N..12",
-    "pattern": "^425(\\d{3})(\\d{0,12})$"
+    "pattern": "^425((?:\\d{3}){1,5})$"
   },
   {
     "ai": "426",
@@ -3333,7 +3301,7 @@
     "data_title": "ORIGIN SUBDIVISION",
     "fnc1_required": true,
     "format": "N3+X..3",
-    "pattern": "^427([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,3})$"
+    "pattern": "^427([!%-?A-Z_a-z\\x22]{1,3})$"
   },
   {
     "ai": "4300",
@@ -3341,7 +3309,7 @@
     "data_title": "SHIP TO COMP",
     "fnc1_required": true,
     "format": "N4+X..35",
-    "pattern": "^4300([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,35})$"
+    "pattern": "^4300((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,35})$"
   },
   {
     "ai": "4301",
@@ -3349,7 +3317,7 @@
     "data_title": "SHIP TO NAME",
     "fnc1_required": true,
     "format": "N4+X..35",
-    "pattern": "^4301([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,35})$"
+    "pattern": "^4301((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,35})$"
   },
   {
     "ai": "4302",
@@ -3357,7 +3325,7 @@
     "data_title": "SHIP TO ADD1",
     "fnc1_required": true,
     "format": "N4+X..70",
-    "pattern": "^4302([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+    "pattern": "^4302((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
   {
     "ai": "4303",
@@ -3365,7 +3333,7 @@
     "data_title": "SHIP TO ADD2",
     "fnc1_required": true,
     "format": "N4+X..70",
-    "pattern": "^4303([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+    "pattern": "^4303((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
   {
     "ai": "4304",
@@ -3373,7 +3341,7 @@
     "data_title": "SHIP TO SUB",
     "fnc1_required": true,
     "format": "N4+X..70",
-    "pattern": "^4304([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+    "pattern": "^4304((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
   {
     "ai": "4305",
@@ -3381,7 +3349,7 @@
     "data_title": "SHIP TO LOC",
     "fnc1_required": true,
     "format": "N4+X..70",
-    "pattern": "^4305([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+    "pattern": "^4305((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
   {
     "ai": "4306",
@@ -3389,7 +3357,7 @@
     "data_title": "SHIP TO REG",
     "fnc1_required": true,
     "format": "N4+X..70",
-    "pattern": "^4306([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+    "pattern": "^4306((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
   {
     "ai": "4307",
@@ -3397,7 +3365,7 @@
     "data_title": "SHIP TO COUNTRY",
     "fnc1_required": true,
     "format": "N4+X2",
-    "pattern": "^4307([A-Z]{2})$"
+    "pattern": "^4307([A-Z0-9]{2})$"
   },
   {
     "ai": "4308",
@@ -3405,7 +3373,15 @@
     "data_title": "SHIP TO PHONE",
     "fnc1_required": true,
     "format": "N4+X..30",
-    "pattern": "^4308([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+    "pattern": "^4308([!%-?A-Z_a-z\\x22]{1,30})$"
+  },
+  {
+    "ai": "4309",
+    "description": "Ship-to / Deliver-to GEO location",
+    "data_title": "SHIP TO GEO",
+    "fnc1_required": true,
+    "format": "N4+N20",
+    "pattern": "^4309(\\d{20})$"
   },
   {
     "ai": "4310",
@@ -3413,7 +3389,7 @@
     "data_title": "RTN TO COMP",
     "fnc1_required": true,
     "format": "N4+X..35",
-    "pattern": "^4310([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,35})$"
+    "pattern": "^4310((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,35})$"
   },
   {
     "ai": "4311",
@@ -3421,7 +3397,7 @@
     "data_title": "RTN TO NAME",
     "fnc1_required": true,
     "format": "N4+X..35",
-    "pattern": "^4311([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,35})$"
+    "pattern": "^4311((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,35})$"
   },
   {
     "ai": "4312",
@@ -3429,7 +3405,7 @@
     "data_title": "RTN TO ADD1",
     "fnc1_required": true,
     "format": "N4+X..70",
-    "pattern": "^4312([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+    "pattern": "^4312((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
   {
     "ai": "4313",
@@ -3437,7 +3413,7 @@
     "data_title": "RTN TO ADD2",
     "fnc1_required": true,
     "format": "N4+X..70",
-    "pattern": "^4313([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+    "pattern": "^4313((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
   {
     "ai": "4314",
@@ -3445,7 +3421,7 @@
     "data_title": "RTN TO SUB",
     "fnc1_required": true,
     "format": "N4+X..70",
-    "pattern": "^4314([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+    "pattern": "^4314((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
   {
     "ai": "4315",
@@ -3453,7 +3429,7 @@
     "data_title": "RTN TO LOC",
     "fnc1_required": true,
     "format": "N4+X..70",
-    "pattern": "^4315([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+    "pattern": "^4315((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
   {
     "ai": "4316",
@@ -3461,7 +3437,7 @@
     "data_title": "RTN TO REG",
     "fnc1_required": true,
     "format": "N4+X..70",
-    "pattern": "^4316([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+    "pattern": "^4316((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
   {
     "ai": "4317",
@@ -3469,7 +3445,7 @@
     "data_title": "RTN TO COUNTRY",
     "fnc1_required": true,
     "format": "N4+X2",
-    "pattern": "^4317([A-Z]{2})$"
+    "pattern": "^4317([A-Z0-9]{2})$"
   },
   {
     "ai": "4318",
@@ -3477,7 +3453,7 @@
     "data_title": "RTN TO POST",
     "fnc1_required": true,
     "format": "N4+X..20",
-    "pattern": "^4318([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^4318([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "4319",
@@ -3485,7 +3461,7 @@
     "data_title": "RTN TO PHONE",
     "fnc1_required": true,
     "format": "N4+X..30",
-    "pattern": "^4319([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+    "pattern": "^4319([!%-?A-Z_a-z\\x22]{1,30})$"
   },
   {
     "ai": "4320",
@@ -3493,7 +3469,7 @@
     "data_title": "SRV DESCRIPTION",
     "fnc1_required": true,
     "format": "N4+X..35",
-    "pattern": "^4320([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,35})$"
+    "pattern": "^4320((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,35})$"
   },
   {
     "ai": "4321",
@@ -3506,7 +3482,7 @@
   {
     "ai": "4322",
     "description": "Authority to leave",
-    "data_title": "AUTH TO LEAVE",
+    "data_title": "AUTH LEAVE",
     "fnc1_required": true,
     "format": "N4+N1",
     "pattern": "^4322([01])$"
@@ -3544,6 +3520,38 @@
     "pattern": "^4326(\\d{6})$"
   },
   {
+    "ai": "4330",
+    "description": "Maximum temperature in Fahrenheit (expressed in hundredths of degrees)",
+    "data_title": "MAX TEMP F",
+    "fnc1_required": true,
+    "format": "N4+N6+[-]",
+    "pattern": "^4330(\\d{6}[-]?)$"
+  },
+  {
+    "ai": "4331",
+    "description": "Maximum temperature in Celsius (expressed in hundredths of degrees)",
+    "data_title": "MAX TEMP C",
+    "fnc1_required": true,
+    "format": "N4+N6+[-]",
+    "pattern": "^4331(\\d{6}[-]?)$"
+  },
+  {
+    "ai": "4332",
+    "description": "Minimum temperature in Fahrenheit (expressed in hundredths of degrees)",
+    "data_title": "MIN TEMP F",
+    "fnc1_required": true,
+    "format": "N4+N6+[-]",
+    "pattern": "^4332(\\d{6}[-]?)$"
+  },
+  {
+    "ai": "4333",
+    "description": "Minimum temperature in Celsius (expressed in hundredths of degrees)",
+    "data_title": "MIN TEMP C",
+    "fnc1_required": true,
+    "format": "N4+N6+[-]",
+    "pattern": "^4333(\\d{6}[-]?)$"
+  },
+  {
     "ai": "7001",
     "description": "NATO Stock Number (NSN)",
     "data_title": "NSN",
@@ -3557,7 +3565,7 @@
     "data_title": "MEAT CUT",
     "fnc1_required": true,
     "format": "N4+X..30",
-    "pattern": "^7002([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+    "pattern": "^7002([!%-?A-Z_a-z\\x22]{1,30})$"
   },
   {
     "ai": "7003",
@@ -3581,7 +3589,7 @@
     "data_title": "CATCH AREA",
     "fnc1_required": true,
     "format": "N4+X..12",
-    "pattern": "^7005([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,12})$"
+    "pattern": "^7005([!%-?A-Z_a-z\\x22]{1,12})$"
   },
   {
     "ai": "7006",
@@ -3596,8 +3604,8 @@
     "description": "Harvest date",
     "data_title": "HARVEST DATE",
     "fnc1_required": true,
-    "format": "N4+N6..12",
-    "pattern": "^7007(\\d{6,12})$"
+    "format": "N4+N6[+N6]",
+    "pattern": "^7007(\\d{6})(\\d{6})?$"
   },
   {
     "ai": "7008",
@@ -3605,7 +3613,7 @@
     "data_title": "AQUATIC SPECIES",
     "fnc1_required": true,
     "format": "N4+X..3",
-    "pattern": "^7008([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,3})$"
+    "pattern": "^7008([!%-?A-Z_a-z\\x22]{1,3})$"
   },
   {
     "ai": "7009",
@@ -3613,7 +3621,7 @@
     "data_title": "FISHING GEAR TYPE",
     "fnc1_required": true,
     "format": "N4+X..10",
-    "pattern": "^7009([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,10})$"
+    "pattern": "^7009([!%-?A-Z_a-z\\x22]{1,10})$"
   },
   {
     "ai": "7010",
@@ -3621,7 +3629,15 @@
     "data_title": "PROD METHOD",
     "fnc1_required": true,
     "format": "N4+X..2",
-    "pattern": "^7010([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,2})$"
+    "pattern": "^7010([!%-?A-Z_a-z\\x22]{1,2})$"
+  },
+  {
+    "ai": "7011",
+    "description": "Test by date",
+    "data_title": "TEST BY DATE",
+    "fnc1_required": true,
+    "format": "N4+N6[+N4]",
+    "pattern": "^7011(\\d{6})(\\d{4})?$"
   },
   {
     "ai": "7020",
@@ -3629,7 +3645,7 @@
     "data_title": "REFURB LOT",
     "fnc1_required": true,
     "format": "N4+X..20",
-    "pattern": "^7020([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^7020([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "7021",
@@ -3637,7 +3653,7 @@
     "data_title": "FUNC STAT",
     "fnc1_required": true,
     "format": "N4+X..20",
-    "pattern": "^7021([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^7021([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "7022",
@@ -3645,7 +3661,7 @@
     "data_title": "REV STAT",
     "fnc1_required": true,
     "format": "N4+X..20",
-    "pattern": "^7022([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^7022([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "7023",
@@ -3653,87 +3669,87 @@
     "data_title": "GIAI - ASSEMBLY",
     "fnc1_required": true,
     "format": "N4+X..30",
-    "pattern": "^7023([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+    "pattern": "^7023([!%-?A-Z_a-z\\x22]{1,30})$"
   },
   {
     "ai": "7030",
-    "description": "Number of processor with ISO Country Code",
+    "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 0",
     "fnc1_required": true,
-    "format": "N4+N3+X..27",
-    "pattern": "^7030(\\d{3})([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,27})$"
+    "format": "N3+X..27",
+    "pattern": "^7030(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7031",
-    "description": "Number of processor with ISO Country Code",
+    "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 1",
     "fnc1_required": true,
-    "format": "N4+N3+X..27",
-    "pattern": "^7031(\\d{3})([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,27})$"
+    "format": "N3+X..27",
+    "pattern": "^7031(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7032",
-    "description": "Number of processor with ISO Country Code",
+    "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 2",
     "fnc1_required": true,
-    "format": "N4+N3+X..27",
-    "pattern": "^7032(\\d{3})([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,27})$"
+    "format": "N3+X..27",
+    "pattern": "^7032(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7033",
-    "description": "Number of processor with ISO Country Code",
+    "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 3",
     "fnc1_required": true,
-    "format": "N4+N3+X..27",
-    "pattern": "^7033(\\d{3})([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,27})$"
+    "format": "N3+X..27",
+    "pattern": "^7033(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7034",
-    "description": "Number of processor with ISO Country Code",
+    "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 4",
     "fnc1_required": true,
-    "format": "N4+N3+X..27",
-    "pattern": "^7034(\\d{3})([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,27})$"
+    "format": "N3+X..27",
+    "pattern": "^7034(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7035",
-    "description": "Number of processor with ISO Country Code",
+    "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 5",
     "fnc1_required": true,
-    "format": "N4+N3+X..27",
-    "pattern": "^7035(\\d{3})([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,27})$"
+    "format": "N3+X..27",
+    "pattern": "^7035(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7036",
-    "description": "Number of processor with ISO Country Code",
+    "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 6",
     "fnc1_required": true,
-    "format": "N4+N3+X..27",
-    "pattern": "^7036(\\d{3})([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,27})$"
+    "format": "N3+X..27",
+    "pattern": "^7036(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7037",
-    "description": "Number of processor with ISO Country Code",
+    "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 7",
     "fnc1_required": true,
-    "format": "N4+N3+X..27",
-    "pattern": "^7037(\\d{3})([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,27})$"
+    "format": "N3+X..27",
+    "pattern": "^7037(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7038",
-    "description": "Number of processor with ISO Country Code",
+    "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 8",
     "fnc1_required": true,
-    "format": "N4+N3+X..27",
-    "pattern": "^7038(\\d{3})([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,27})$"
+    "format": "N3+X..27",
+    "pattern": "^7038(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7039",
-    "description": "Number of processor with ISO Country Code",
+    "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 9",
     "fnc1_required": true,
-    "format": "N4+N3+X..27",
-    "pattern": "^7039(\\d{3})([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,27})$"
+    "format": "N3+X..27",
+    "pattern": "^7039(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7040",
@@ -3741,7 +3757,7 @@
     "data_title": "UIC+EXT",
     "fnc1_required": true,
     "format": "N4+N1+X3",
-    "pattern": "^7040(\\d[\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x41-\\x5A\\x5F\\x61-\\x7A]{3})$"
+    "pattern": "^7040(\\d)([!%-?A-Z_a-z\\x22])([!%-?A-Z_a-z\\x22])([!%-?A-Z_a-z\\x22])$"
   },
   {
     "ai": "710",
@@ -3749,7 +3765,7 @@
     "data_title": "NHRN PZN",
     "fnc1_required": true,
     "format": "N3+X..20",
-    "pattern": "^710([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^710([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "711",
@@ -3757,7 +3773,7 @@
     "data_title": "NHRN CIP",
     "fnc1_required": true,
     "format": "N3+X..20",
-    "pattern": "^711([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^711([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "712",
@@ -3765,7 +3781,7 @@
     "data_title": "NHRN CN",
     "fnc1_required": true,
     "format": "N3+X..20",
-    "pattern": "^712([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^712([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "713",
@@ -3773,7 +3789,7 @@
     "data_title": "NHRN DRN",
     "fnc1_required": true,
     "format": "N3+X..20",
-    "pattern": "^713([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^713([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "714",
@@ -3781,7 +3797,7 @@
     "data_title": "NHRN AIM",
     "fnc1_required": true,
     "format": "N3+X..20",
-    "pattern": "^714([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^714([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "715",
@@ -3789,87 +3805,87 @@
     "data_title": "NHRN NDC",
     "fnc1_required": true,
     "format": "N3+X..20",
-    "pattern": "^714([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^715([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "7230",
-    "description": "Certification reference",
-    "data_title": "CERT #1",
+    "description": "Certification Reference",
+    "data_title": "CERT # 0",
     "fnc1_required": true,
-    "format": "N4+X2+X..28",
-    "pattern": "^7230([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{2,30})$"
+    "format": "X2+X..28",
+    "pattern": "^7230([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
     "ai": "7231",
-    "description": "Certification reference",
-    "data_title": "CERT #2",
+    "description": "Certification Reference",
+    "data_title": "CERT # 1",
     "fnc1_required": true,
-    "format": "N4+X2+X..28",
-    "pattern": "^7231([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{2,30})$"
+    "format": "X2+X..28",
+    "pattern": "^7231([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
     "ai": "7232",
-    "description": "Certification reference",
-    "data_title": "CERT #3",
+    "description": "Certification Reference",
+    "data_title": "CERT # 2",
     "fnc1_required": true,
-    "format": "N4+X2+X..28",
-    "pattern": "^7232([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{2,30})$"
+    "format": "X2+X..28",
+    "pattern": "^7232([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
     "ai": "7233",
-    "description": "Certification reference",
-    "data_title": "CERT #4",
+    "description": "Certification Reference",
+    "data_title": "CERT # 3",
     "fnc1_required": true,
-    "format": "N4+X2+X..28",
-    "pattern": "^7233([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{2,30})$"
+    "format": "X2+X..28",
+    "pattern": "^7233([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
     "ai": "7234",
-    "description": "Certification reference",
-    "data_title": "CERT #5",
+    "description": "Certification Reference",
+    "data_title": "CERT # 4",
     "fnc1_required": true,
-    "format": "N4+X2+X..28",
-    "pattern": "^7234([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{2,30})$"
+    "format": "X2+X..28",
+    "pattern": "^7234([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
     "ai": "7235",
-    "description": "Certification reference",
-    "data_title": "CERT #6",
+    "description": "Certification Reference",
+    "data_title": "CERT # 5",
     "fnc1_required": true,
-    "format": "N4+X2+X..28",
-    "pattern": "^7235([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{2,30})$"
+    "format": "X2+X..28",
+    "pattern": "^7235([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
     "ai": "7236",
-    "description": "Certification reference",
-    "data_title": "CERT #7",
+    "description": "Certification Reference",
+    "data_title": "CERT # 6",
     "fnc1_required": true,
-    "format": "N4+X2+X..28",
-    "pattern": "^7236([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{2,30})$"
+    "format": "X2+X..28",
+    "pattern": "^7236([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
     "ai": "7237",
-    "description": "Certification reference",
-    "data_title": "CERT #8",
+    "description": "Certification Reference",
+    "data_title": "CERT # 7",
     "fnc1_required": true,
-    "format": "N4+X2+X..28",
-    "pattern": "^7237([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{2,30})$"
+    "format": "X2+X..28",
+    "pattern": "^7237([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
     "ai": "7238",
-    "description": "Certification reference",
-    "data_title": "CERT #9",
+    "description": "Certification Reference",
+    "data_title": "CERT # 8",
     "fnc1_required": true,
-    "format": "N4+X2+X..28",
-    "pattern": "^7238([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{2,30})$"
+    "format": "X2+X..28",
+    "pattern": "^7238([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
     "ai": "7239",
-    "description": "Certification reference",
-    "data_title": "CERT #10",
+    "description": "Certification Reference",
+    "data_title": "CERT # 9",
     "fnc1_required": true,
-    "format": "N4+X2+X..28",
-    "pattern": "^7239([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{2,30})$"
+    "format": "X2+X..28",
+    "pattern": "^7239([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
     "ai": "7240",
@@ -3877,7 +3893,23 @@
     "data_title": "PROTOCOL",
     "fnc1_required": true,
     "format": "N4+X..20",
-    "pattern": "^7240 ([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^7240([!%-?A-Z_a-z\\x22]{1,20})$"
+  },
+  {
+    "ai": "7241",
+    "description": "AIDC media type",
+    "data_title": "AIDC MEDIA TYPE",
+    "fnc1_required": true,
+    "format": "N4+N2",
+    "pattern": "^7241(\\d{2})$"
+  },
+  {
+    "ai": "7242",
+    "description": "Version Control Number (VCN)",
+    "data_title": "VCN",
+    "fnc1_required": true,
+    "format": "N4+X..25",
+    "pattern": "^7242([!%-?A-Z_a-z\\x22]{1,25})$"
   },
   {
     "ai": "8001",
@@ -3885,23 +3917,23 @@
     "data_title": "DIMENSIONS",
     "fnc1_required": true,
     "format": "N4+N14",
-    "pattern": "^8001(\\d{14})$"
+    "pattern": "^8001(\\d{4})(\\d{5})(\\d{3})(\\d{1})(\\d{1})$"
   },
   {
     "ai": "8002",
     "description": "Cellular mobile telephone identifier",
-    "data_title": "CMT No",
+    "data_title": "CMT NO.",
     "fnc1_required": true,
     "format": "N4+X..20",
-    "pattern": "^8002([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^8002([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "8003",
     "description": "Global Returnable Asset Identifier (GRAI)",
     "data_title": "GRAI",
     "fnc1_required": true,
-    "format": "N4+N14+X..16",
-    "pattern": "^8003(\\d{14})([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,16})$"
+    "format": "N4+N14[+X..16]",
+    "pattern": "^8003(0)(\\d{13})([!%-?A-Z_a-z\\x22]{0,16})$"
   },
   {
     "ai": "8004",
@@ -3909,7 +3941,7 @@
     "data_title": "GIAI",
     "fnc1_required": true,
     "format": "N4+X..30",
-    "pattern": "^8004([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+    "pattern": "^8004([!%-?A-Z_a-z\\x22]{1,30})$"
   },
   {
     "ai": "8005",
@@ -3925,7 +3957,7 @@
     "data_title": "ITIP",
     "fnc1_required": true,
     "format": "N4+N14+N2+N2",
-    "pattern": "^8006(\\d{14})(\\d{2})(\\d{2})$"
+    "pattern": "^8006(\\d{14})(\\d{4})$"
   },
   {
     "ai": "8007",
@@ -3933,15 +3965,15 @@
     "data_title": "IBAN",
     "fnc1_required": true,
     "format": "N4+X..34",
-    "pattern": "^8007([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,34})$"
+    "pattern": "^8007([!%-?A-Z_a-z\\x22]{1,34})$"
   },
   {
     "ai": "8008",
     "description": "Date and time of production",
     "data_title": "PROD TIME",
     "fnc1_required": true,
-    "format": "N4+N8+N..4",
-    "pattern": "^8008(\\d{8})(\\d{0,4})$"
+    "format": "N4+N8[+N..4]",
+    "pattern": "^8008(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01])(?:[01]\\d|2[0-4]))((?:[0-5]\\d)(?:[0-5]\\d)?)?$"
   },
   {
     "ai": "8009",
@@ -3949,7 +3981,7 @@
     "data_title": "OPTSEN",
     "fnc1_required": true,
     "format": "N4+X..50",
-    "pattern": "^8009([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,50})$"
+    "pattern": "^8009([!%-?A-Z_a-z\\x22]{1,50})$"
   },
   {
     "ai": "8010",
@@ -3957,7 +3989,7 @@
     "data_title": "CPID",
     "fnc1_required": true,
     "format": "N4+Y..30",
-    "pattern": "^8010([\\x23\\x2D\\x2F\\x30-\\x39\\x41-\\x5A]{5,30})$"
+    "pattern": "^8010([A-Z0-9/#-]{5,30})$"
   },
   {
     "ai": "8011",
@@ -3965,7 +3997,7 @@
     "data_title": "CPID SERIAL",
     "fnc1_required": true,
     "format": "N4+N..12",
-    "pattern": "^8011(\\d{0,12})$"
+    "pattern": "^8011(\\d{1,12})$"
   },
   {
     "ai": "8012",
@@ -3973,15 +4005,15 @@
     "data_title": "VERSION",
     "fnc1_required": true,
     "format": "N4+X..20",
-    "pattern": "^8012([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,20})$"
+    "pattern": "^8012([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "8013",
     "description": "Global Model Number (GMN)",
-    "data_title": "GMN (for medical devices, the default, global data title is BUDI-DI)",
+    "data_title": "GMN",
     "fnc1_required": true,
     "format": "N4+X..25",
-    "pattern": "^8013([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,25})$"
+    "pattern": "^8013([!%-?A-Z_a-z\\x22]{1,25})$"
   },
   {
     "ai": "8017",
@@ -4005,15 +4037,15 @@
     "data_title": "SRIN",
     "fnc1_required": true,
     "format": "N4+N..10",
-    "pattern": "^8019(\\d{0,10})$"
+    "pattern": "^8019(\\d{1,10})$"
   },
   {
     "ai": "8020",
     "description": "Payment slip reference number",
-    "data_title": "REF No",
+    "data_title": "Ref No.",
     "fnc1_required": true,
     "format": "N4+X..25",
-    "pattern": "^8020([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,25})$"
+    "pattern": "^8020([!%-?A-Z_a-z\\x22]{1,25})$"
   },
   {
     "ai": "8026",
@@ -4021,7 +4053,15 @@
     "data_title": "ITIP CONTENT",
     "fnc1_required": true,
     "format": "N4+N14+N2+N2",
-    "pattern": "^8026(\\d{14})(\\d{2})(\\d{2})$"
+    "pattern": "^8026(\\d{14})(\\d{4})$"
+  },
+  {
+    "ai": "8030",
+    "description": "Digital Signature (DigSig)",
+    "data_title": "DIGSIG",
+    "fnc1_required": true,
+    "format": "N4+Z..90",
+    "pattern": "^8030([0-9A-Za-z_-]{1,90})$"
   },
   {
     "ai": "8110",
@@ -4029,7 +4069,7 @@
     "data_title": "",
     "fnc1_required": true,
     "format": "N4+X..70",
-    "pattern": "^8110([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+    "pattern": "^8110([!%-?A-Z_a-z\\x22]{1,70})$"
   },
   {
     "ai": "8111",
@@ -4041,11 +4081,11 @@
   },
   {
     "ai": "8112",
-    "description": "Paperless coupon code identification for use in North America",
+    "description": "Positive offer file coupon code identification for use in North America",
     "data_title": "",
     "fnc1_required": true,
     "format": "N4+X..70",
-    "pattern": "^8112([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+    "pattern": "^8112([!%-?A-Z_a-z\\x22]{1,70})$"
   },
   {
     "ai": "8200",
@@ -4053,7 +4093,7 @@
     "data_title": "PRODUCT URL",
     "fnc1_required": true,
     "format": "N4+X..70",
-    "pattern": "^8200([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,70})$"
+    "pattern": "^8200([!%-?A-Z_a-z\\x22]{1,70})$"
   },
   {
     "ai": "90",
@@ -4061,7 +4101,7 @@
     "data_title": "INTERNAL",
     "fnc1_required": true,
     "format": "N2+X..30",
-    "pattern": "^90([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,30})$"
+    "pattern": "^90([!%-?A-Z_a-z\\x22]{1,30})$"
   },
   {
     "ai": "91",
@@ -4069,7 +4109,7 @@
     "data_title": "INTERNAL",
     "fnc1_required": true,
     "format": "N2+X..90",
-    "pattern": "^91([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,90})$"
+    "pattern": "^91([!%-?A-Z_a-z\\x22]{1,90})$"
   },
   {
     "ai": "92",
@@ -4077,7 +4117,7 @@
     "data_title": "INTERNAL",
     "fnc1_required": true,
     "format": "N2+X..90",
-    "pattern": "^92([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,90})$"
+    "pattern": "^92([!%-?A-Z_a-z\\x22]{1,90})$"
   },
   {
     "ai": "93",
@@ -4085,7 +4125,7 @@
     "data_title": "INTERNAL",
     "fnc1_required": true,
     "format": "N2+X..90",
-    "pattern": "^93([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,90})$"
+    "pattern": "^93([!%-?A-Z_a-z\\x22]{1,90})$"
   },
   {
     "ai": "94",
@@ -4093,7 +4133,7 @@
     "data_title": "INTERNAL",
     "fnc1_required": true,
     "format": "N2+X..90",
-    "pattern": "^94([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,90})$"
+    "pattern": "^94([!%-?A-Z_a-z\\x22]{1,90})$"
   },
   {
     "ai": "95",
@@ -4101,7 +4141,7 @@
     "data_title": "INTERNAL",
     "fnc1_required": true,
     "format": "N2+X..90",
-    "pattern": "^95([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,90})$"
+    "pattern": "^95([!%-?A-Z_a-z\\x22]{1,90})$"
   },
   {
     "ai": "96",
@@ -4109,7 +4149,7 @@
     "data_title": "INTERNAL",
     "fnc1_required": true,
     "format": "N2+X..90",
-    "pattern": "^96([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,90})$"
+    "pattern": "^96([!%-?A-Z_a-z\\x22]{1,90})$"
   },
   {
     "ai": "97",
@@ -4117,7 +4157,7 @@
     "data_title": "INTERNAL",
     "fnc1_required": true,
     "format": "N2+X..90",
-    "pattern": "^97([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,90})$"
+    "pattern": "^97([!%-?A-Z_a-z\\x22]{1,90})$"
   },
   {
     "ai": "98",
@@ -4125,7 +4165,7 @@
     "data_title": "INTERNAL",
     "fnc1_required": true,
     "format": "N2+X..90",
-    "pattern": "^98([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,90})$"
+    "pattern": "^98([!%-?A-Z_a-z\\x22]{1,90})$"
   },
   {
     "ai": "99",
@@ -4133,6 +4173,6 @@
     "data_title": "INTERNAL",
     "fnc1_required": true,
     "format": "N2+X..90",
-    "pattern": "^99([\\x21-\\x22\\x25-\\x2F\\x30-\\x39\\x3A-\\x3F\\x41-\\x5A\\x5F\\x61-\\x7A]{0,90})$"
+    "pattern": "^99([!%-?A-Z_a-z\\x22]{1,90})$"
   }
 ]
