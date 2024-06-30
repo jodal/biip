@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install nox==2023.4.22 poetry==1.7.0
+      - run: pip install nox==2024.4.15 poetry==1.8.2
       - run: nox --python 3.12
       - run: poetry build
       - run: poetry publish --username=__token__ --password=${{ secrets.PYPI_TOKEN }}
