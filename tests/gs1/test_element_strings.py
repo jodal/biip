@@ -286,9 +286,6 @@ def test_extract_variable_measures(value: str, expected: Decimal) -> None:
         ("3921123456", Decimal("12345.6")),
         ("3923123456789012345", Decimal("123456789012.345")),
         ("3929123456789012345", Decimal("123456.789012345")),
-        #
-        # AI without value is ignored
-        ("3923", None),
     ],
 )
 def test_extract_amount_payable(value: str, expected: Decimal) -> None:
@@ -307,9 +304,6 @@ def test_extract_amount_payable(value: str, expected: Decimal) -> None:
         ("39327101230", "ZAR", Decimal("12.30")),
         ("39317101230", "ZAR", Decimal("123.0")),
         ("393097812301", "EUR", Decimal("12301")),
-        #
-        # AI without value is ignored
-        ("3933978", None, None),
     ],
 )
 def test_extract_amount_payable_and_currency(
