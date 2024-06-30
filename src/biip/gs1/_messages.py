@@ -88,11 +88,12 @@ class GS1Message:
                     rest = rest[1:]
                 else:
                     separator_char = rest[0]
-                    raise ParseError(
+                    msg = (
                         f"Element String {element_string.as_hri()!r} has fixed length "
                         "and should not end with a separator character. "
                         f"Separator character {separator_char!r} found in {value!r}."
                     )
+                    raise ParseError(msg)
 
         return cls(value=value, element_strings=element_strings)
 
@@ -124,24 +125,23 @@ class GS1Message:
         """
         value = value.strip()
         if not value.startswith("("):
-            raise ParseError(
-                f"Expected HRI string {value!r} to start with a parenthesis."
-            )
+            msg = f"Expected HRI string {value!r} to start with a parenthesis."
+            raise ParseError(msg)
 
         pattern = r"\((\d+)\)(\w+)"
         matches: List[Tuple[str, str]] = re.findall(pattern, value)
         if not matches:
-            raise ParseError(
+            msg = (
                 f"Could not find any GS1 Application Identifiers in {value!r}. "
                 "Expected format: '(AI)DATA(AI)DATA'."
             )
+            raise ParseError(msg)
 
         pairs: List[Tuple[GS1ApplicationIdentifier, str]] = []
         for ai_number, ai_data in matches:
             if ai_number not in _GS1_APPLICATION_IDENTIFIERS:
-                raise ParseError(
-                    f"Unknown GS1 Application Identifier {ai_number!r} in {value!r}."
-                )
+                msg = f"Unknown GS1 Application Identifier {ai_number!r} in {value!r}."
+                raise ParseError(msg)
             pairs.append((_GS1_APPLICATION_IDENTIFIERS[ai_number], ai_data))
 
         parts = chain(

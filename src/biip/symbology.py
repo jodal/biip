@@ -171,18 +171,20 @@ class SymbologyIdentifier:
             ParseError: If the parsing fails.
         """
         if not value.startswith("]"):
-            raise ParseError(
+            msg = (
                 f"Failed to get Symbology Identifier from {value!r}. "
                 "No initial ']' flag character found."
             )
+            raise ParseError(msg)
 
         try:
             symbology = Symbology(value[1])
         except ValueError as exc:
-            raise ParseError(
+            msg = (
                 f"Failed to get Symbology Identifier from {value!r}. "
                 f"{value[1]!r} is not a recognized code character."
-            ) from exc
+            )
+            raise ParseError(msg) from exc
 
         if symbology == Symbology.SYSTEM_EXPANSION:
             modifiers_length = int(value[2]) + 1

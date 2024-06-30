@@ -109,15 +109,15 @@ class Upc:
 
         length = len(value)
         if length not in (6, 7, 8, 12):
-            raise ParseError(
+            msg = (
                 f"Failed to parse {value!r} as UPC: "
                 f"Expected 6, 7, 8, or 12 digits, got {length}."
             )
+            raise ParseError(msg)
 
         if not value.isdecimal():
-            raise ParseError(
-                f"Failed to parse {value!r} as UPC: Expected a numerical value."
-            )
+            msg = f"Failed to parse {value!r} as UPC: Expected a numerical value."
+            raise ParseError(msg)
 
         if length == 12:
             return cls._parse_upc_a(value)
@@ -138,10 +138,11 @@ class Upc:
 
         calculated_check_digit = numeric_check_digit(payload)
         if check_digit != calculated_check_digit:
-            raise ParseError(
+            msg = (
                 f"Invalid UPC-A check digit for {value!r}: "
                 f"Expected {calculated_check_digit!r}, got {check_digit!r}."
             )
+            raise ParseError(msg)
 
         return cls(
             value=value,
@@ -179,19 +180,21 @@ class Upc:
 
         # Control that the number system digit is correct.
         if number_system_digit not in (0, 1):
-            raise ParseError(
+            msg = (
                 f"Invalid UPC-E number system for {value!r}: "
                 f"Expected 0 or 1, got {number_system_digit!r}."
             )
+            raise ParseError(msg)
 
         # Control that check digit is correct.
         upc_a_payload = _upc_e_to_upc_a_expansion(f"{payload}{check_digit}")[:-1]
         calculated_check_digit = numeric_check_digit(upc_a_payload)
         if check_digit != calculated_check_digit:
-            raise ParseError(
+            msg = (
                 f"Invalid UPC-E check digit for {value!r}: "
                 f"Expected {calculated_check_digit!r}, got {check_digit!r}."
             )
+            raise ParseError(msg)
 
         return cls(
             value=value,
@@ -310,4 +313,5 @@ def _upc_a_to_upc_e_suppression(value: str) -> str:
         # UPC-E suppression, condition D
         return f"{value[:4]}{value[9:11]}3{check_digit}"
 
-    raise EncodeError(f"UPC-A {value!r} cannot be represented as UPC-E.")
+    msg = f"UPC-A {value!r} cannot be represented as UPC-E."
+    raise EncodeError(msg)

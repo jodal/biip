@@ -77,7 +77,8 @@ class GS1ApplicationIdentifier:
             if value.startswith(application_identifier.ai):
                 return application_identifier
 
-        raise ParseError(f"Failed to get GS1 Application Identifier from {value!r}.")
+        msg = f"Failed to get GS1 Application Identifier from {value!r}."
+        raise ParseError(msg)
 
     def __len__(self) -> int:
         """Get the length of the Application Identifier code."""
