@@ -4,12 +4,11 @@ import dataclasses
 import json
 from typing import List
 
-import bs4
 import httpx
 
 from biip.gs1 import GS1ApplicationIdentifier
 
-AI_URL = "https://www.gs1.org/standards/barcodes/application-identifiers"
+AI_URL = "https://ref.gs1.org/ai/GS1_Application_Identifiers.jsonld"
 
 
 def main() -> None:
@@ -24,58 +23,34 @@ def download(url: str) -> bytes:
     return httpx.get(url, timeout=30).content
 
 
-def parse(html_content: bytes) -> List[GS1ApplicationIdentifier]:
+def parse(json_content: bytes) -> List[GS1ApplicationIdentifier]:
     """Parse the data from HTML to GS1ApplicationIdentifier objects."""
     result: List[GS1ApplicationIdentifier] = []
 
-    page = bs4.BeautifulSoup(html_content, "html.parser")
-    datatable = page.find("table", {"class": ["datatable"]})
-    assert isinstance(datatable, bs4.element.Tag)
-    tbody = datatable.find("tbody")
-    assert isinstance(tbody, bs4.element.Tag)
+    data = json.loads(json_content)
 
-    for row in tbody.find_all("tr"):
-        columns = row.find_all("td")
+    for row in data["applicationIdentifiers"]:
+        if "applicationIdentifier" not in row:
+            continue
         result.append(
             GS1ApplicationIdentifier(
-                ai=columns[0].text.strip(),
-                description=columns[1].text.strip(),
-                format=columns[2].text.strip(),
-                data_title=_fix_data_title(columns[3].text.strip()),
-                fnc1_required=columns[4].text.strip() == "Yes",
-                pattern=_fix_pattern(columns[5].text.strip()),
+                ai=row["applicationIdentifier"],
+                description=row["description"],
+                format=row["formatString"],
+                data_title=row["title"],
+                fnc1_required=row["fnc1required"],
+                pattern=rf"^{row['applicationIdentifier']}{_fix_pattern(row['regex'])}$",
             )
         )
 
     return result
 
 
-def _fix_data_title(value: str) -> str:
-    """Remove HTML elements from the data title."""
-    if "<sup>" in value:
-        value = value.replace("<sup>", "")
-    if "</sup>" in value:
-        value = value.replace("</sup>", "")
-
-    return value
-
-
 def _fix_pattern(value: str) -> str:
-    """Fix regular expression metacharacters that are missing their slash prefix."""
-    if r"(d" in value:
-        value = value.replace(r"(d", r"(\d")
-
-    if "x" in value:
-        parts = value.split("x")
-        new_parts: List[str] = []
-        for part in parts[:-1]:
-            if part.endswith("\\"):
-                new_parts.append(part)
-            else:
-                new_parts.append(part + "\\")
-        new_parts.append(parts[-1])
-        value = "x".join(new_parts)
-
+    """Fix errors in regex patterns."""
+    # Add missing opening square bracket to the regex for AI 723x
+    if value == r"(!%-?A-Z_a-z\x22]{3,30})":
+        return r"([!%-?A-Z_a-z\x22]{3,30})"
     return value
 
 
