@@ -76,11 +76,11 @@ from biip.sscc import Sscc
             ),
         ),
         (
-            "800370713240010220085952",
+            "800307071324001022085952",
             GS1ElementString(
                 ai=GS1ApplicationIdentifier.extract("8003"),
-                value="70713240010220085952",
-                pattern_groups=["70713240010220", "085952"],
+                value="07071324001022085952",
+                pattern_groups=["0", "7071324001022", "085952"],
             ),
         ),
     ],
@@ -161,9 +161,9 @@ def test_extract_fails_when_not_matching_pattern(ai_code: str, bad_value: str) -
     ("ai_code", "bad_value"),
     [
         # Bad production date
-        ("11", "131313"),
+        ("11", "120230"),
         # Bad best before date
-        ("15", "999999"),
+        ("15", "990229"),
     ],
 )
 def test_extract_fails_with_invalid_date(ai_code: str, bad_value: str) -> None:

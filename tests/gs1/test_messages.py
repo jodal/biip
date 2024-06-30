@@ -52,14 +52,14 @@ from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion
             ),
         ),
         (
-            "800370713240010220085952",
+            "800307071324001022085952",
             GS1Message(
-                value="800370713240010220085952",
+                value="800307071324001022085952",
                 element_strings=[
                     GS1ElementString(
                         ai=GS1ApplicationIdentifier.extract("8003"),
-                        value="70713240010220085952",
-                        pattern_groups=["70713240010220", "085952"],
+                        value="07071324001022085952",
+                        pattern_groups=["0", "7071324001022", "085952"],
                     )
                 ],
             ),
@@ -158,9 +158,9 @@ def test_parse_fails_if_fixed_length_field_ends_with_separator_char() -> None:
 
 
 def test_parse_strips_surrounding_whitespace() -> None:
-    message = GS1Message.parse("  \t 800370713240010220085952 \n  ")
+    message = GS1Message.parse("  \t 800307071324001022085952 \n  ")
 
-    assert message.value == "800370713240010220085952"
+    assert message.value == "800307071324001022085952"
 
 
 @pytest.mark.parametrize(
@@ -373,7 +373,7 @@ def test_get_element_string_by_ai(value: str, ai: str, expected: Optional[str]) 
         ("010703206980498815210526100329", "BEST BY", "210526"),
         ("010703206980498815210526100329", "BATCH", "0329"),
         ("010703206980498815210526100329", "COUNT", None),
-        ("7230EM123\x1d7231EM456\x1d7232EM789", "CERT #2", "EM456"),
+        ("7230EM123\x1d7231EM456\x1d7232EM789", "CERT # 1", "EM456"),
         ("7230EM123\x1d7231EM456\x1d7232EM789", "CERT", "EM123"),
     ],
 )

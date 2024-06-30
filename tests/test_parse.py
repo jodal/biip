@@ -98,7 +98,10 @@ from biip.upc import Upc, UpcFormat
                 sscc_error=(
                     "Failed to parse '12345670' as SSCC: Expected 18 digits, got 8."
                 ),
-                gs1_message_error="Failed to parse GS1 AI (12) date from '345670'.",
+                gs1_message_error=(
+                    "Failed to match '12345670' with GS1 AI (12) pattern "
+                    r"'^12(\d{2}(?:0\d|1[0-2])(?:[0-2]\d|3[01]))$'."
+                ),
             ),
         ),
         (
@@ -283,7 +286,7 @@ from biip.upc import Upc, UpcFormat
                         GS1ElementString(
                             ai=GS1ApplicationIdentifier.extract("425"),
                             value="261",
-                            pattern_groups=["261", ""],
+                            pattern_groups=["261"],
                             gtin=None,
                             sscc=None,
                             date=None,
@@ -315,7 +318,10 @@ from biip.upc import Upc, UpcFormat
                     payload="15703538141037517",
                     check_digit=7,
                 ),
-                gs1_message_error="Failed to parse GS1 AI (15) date from '703538'.",
+                gs1_message_error=(
+                    "Failed to match '157035381410375177' with GS1 AI (15) pattern "
+                    r"'^15(\d{2}(?:0\d|1[0-2])(?:[0-2]\d|3[01]))$'."
+                ),
             ),
         ),
         (

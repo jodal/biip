@@ -37,10 +37,7 @@ def test_extract_unknown_gs1_ai(unknown_ai: str) -> None:
                 data_title="INTERNAL",
                 fnc1_required=True,
                 format="N2+X..30",
-                pattern=(
-                    r"^90([\x21-\x22\x25-\x2F\x30-\x39\x3A-\x3F\x41-"
-                    r"\x5A\x5F\x61-\x7A]{0,30})$"
-                ),
+                pattern=r"^90([!%-?A-Z_a-z\x22]{1,30})$",
             ),
         ),
     ],
