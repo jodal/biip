@@ -27,7 +27,7 @@ def parse(xml_content: bytes) -> TrieNode:
     """Parse the data from XML to a trie to make prefix length lookup easy."""
     trie: TrieNode = {}
 
-    doc = ElementTree.fromstring(xml_content)
+    doc = ElementTree.fromstring(xml_content)  # noqa: S314
     for entry in doc.findall("entry"):
         shared_prefix = entry.attrib["prefix"]
         company_prefix_length = int(entry.attrib["gcpLength"])
