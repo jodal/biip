@@ -171,10 +171,9 @@ class _Strategy:
         assert rcn.region is not None
 
         region_rules = _RCN_RULES.get(rcn.region)
-        if region_rules is None:
-            raise Exception(  # noqa: TRY002  # pragma: no cover
-                "RCN region defined without defining rules. This is a bug."
-            )
+        if region_rules is None:  # pragma: no cover
+            msg = "RCN region defined without defining rules. This is a bug."
+            raise Exception(msg)  # noqa: TRY002
 
         # Classification as RCN depends on the prefix being known, so we won't
         # get here unless it is known.
