@@ -140,7 +140,7 @@ def test_parse_with_too_long_separator_char_fails() -> None:
             "Failed to get GS1 Application Identifier from 'aaa'.",
         ),
         # Too short to match optional time group (as this is really a GTIN-13)
-        ("701197206489", "Failed to get GS1 Application Identifier from '89'."),
+        ("701103020185", "Failed to get GS1 Application Identifier from '85'."),
     ],
 )
 def test_parse_fails_if_unparsed_data_left(value: str, error: str) -> None:

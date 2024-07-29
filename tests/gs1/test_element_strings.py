@@ -80,6 +80,8 @@ from biip.sscc import Sscc
                 ai=GS1ApplicationIdentifier.extract("7011"),
                 value="030102",
                 pattern_groups=["030102"],
+                date=dt.date(2003, 1, 2),
+                datetime=None,
             ),
         ),
         (
@@ -88,6 +90,8 @@ from biip.sscc import Sscc
                 ai=GS1ApplicationIdentifier.extract("7011"),
                 value="0301021430",
                 pattern_groups=["030102", "1430"],
+                date=dt.date(2003, 1, 2),
+                datetime=dt.datetime(2003, 1, 2, 14, 30),  # noqa: DTZ001
             ),
         ),
         (
@@ -173,6 +177,39 @@ def test_extract_fails_when_not_matching_pattern(ai_code: str, bad_value: str) -
 
 
 @pytest.mark.parametrize(
+    ("value", "expected_date", "expected_datetime"),
+    [
+        ("11030201", dt.date(2003, 2, 1), None),
+        ("12030201", dt.date(2003, 2, 1), None),
+        ("13030201", dt.date(2003, 2, 1), None),
+        ("15030201", dt.date(2003, 2, 1), None),
+        ("16030201", dt.date(2003, 2, 1), None),
+        ("17030201", dt.date(2003, 2, 1), None),
+        ("43240701029999", dt.date(2007, 1, 2), None),
+        ("43240701021430", dt.date(2007, 1, 2), dt.datetime(2007, 1, 2, 14, 30)),  # noqa: DTZ001
+        ("43250701029999", dt.date(2007, 1, 2), None),
+        ("43250701021430", dt.date(2007, 1, 2), dt.datetime(2007, 1, 2, 14, 30)),  # noqa: DTZ001
+        ("4326070102", dt.date(2007, 1, 2), None),
+        ("70030701021415", dt.date(2007, 1, 2), dt.datetime(2007, 1, 2, 14, 15)),  # noqa: DTZ001
+        ("7006030102", dt.date(2003, 1, 2), None),
+        ("7007030102", dt.date(2003, 1, 2), None),
+        ("7011030102", dt.date(2003, 1, 2), None),
+        ("70110301021430", dt.date(2003, 1, 2), dt.datetime(2003, 1, 2, 14, 30)),  # noqa: DTZ001
+        ("800800010214", dt.date(2000, 1, 2), dt.datetime(2000, 1, 2, 14, 0)),  # noqa: DTZ001
+        ("80080001021415", dt.date(2000, 1, 2), dt.datetime(2000, 1, 2, 14, 15)),  # noqa: DTZ001
+        ("8008000102141516", dt.date(2000, 1, 2), dt.datetime(2000, 1, 2, 14, 15, 16)),  # noqa: DTZ001
+    ],
+)
+def test_extract_date_and_datetime(
+    value: str, expected_date: dt.date, expected_datetime: Optional[dt.datetime]
+) -> None:
+    element_string = GS1ElementString.extract(value)
+
+    assert element_string.date == expected_date
+    assert element_string.datetime == expected_datetime
+
+
+@pytest.mark.parametrize(
     ("ai_code", "bad_value"),
     [
         # Bad production date
@@ -188,7 +225,8 @@ def test_extract_fails_with_invalid_date(ai_code: str, bad_value: str) -> None:
         GS1ElementString.extract(f"{ai_code}{bad_value}")
 
     assert (
-        str(exc_info.value) == f"Failed to parse GS1 AI {ai} date from {bad_value!r}."
+        str(exc_info.value)
+        == f"Failed to parse GS1 AI {ai} date/time from {bad_value!r}."
     )
 
 
