@@ -17,8 +17,8 @@ example, the value can be interpreted as either a GTIN or a GS1 Message.
     description='Company internal information', data_title='INTERNAL',
     fnc1_required=True, format='N2+X..90'), value='385074',
     pattern_groups=['385074'], gln=None, gln_error=None, gtin=None,
-    gtin_error=None, sscc=None, sscc_error=None, date=None, decimal=None,
-    money=None)])
+    gtin_error=None, sscc=None, sscc_error=None, date=None, datetime=None,
+    decimal=None, money=None)])
 
 In the next example, the value is only valid as a GS1 Message and the GTIN
 parser returns an error explaining why the value cannot be interpreted as a
@@ -37,7 +37,7 @@ the check digits are incorrect.
     BY', fnc1_required=False, format='N2+N6'), value='210527',
     pattern_groups=['210527'], gln=None, gln_error=None, gtin=None,
     gtin_error=None, sscc=None, sscc_error=None, date=datetime.date(2021, 5,
-    27), decimal=None, money=None)])
+    27), datetime=None, decimal=None, money=None)])
 
 If a value cannot be interpreted as any supported format, an exception is
 raised with a reason from each parser.

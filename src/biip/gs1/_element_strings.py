@@ -44,7 +44,7 @@ class GS1ElementString:
         prefix=GS1Prefix(value='703', usage='GS1 Norway'),
         company_prefix=GS1CompanyPrefix(value='703206'), payload='703206980498',
         check_digit=8, packaging_level=None), gtin_error=None, sscc=None,
-        sscc_error=None, date=None, decimal=None, money=None)
+        sscc_error=None, date=None, datetime=None, decimal=None, money=None)
         >>> element_string.as_hri()
         '(01)07032069804988'
     """
@@ -78,6 +78,9 @@ class GS1ElementString:
 
     #: A date created from the element string, if the AI represents a date.
     date: Optional[dt.date] = None
+
+    #: A datetime created from the element string, if the AI represents a datetime.
+    datetime: Optional[dt.datetime] = None
 
     #: A decimal value created from the element string, if the AI represents a number.
     decimal: Optional[Decimal] = None
