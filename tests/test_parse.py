@@ -1,4 +1,4 @@
-from datetime import date
+import datetime as dt
 from decimal import Decimal
 
 import pytest
@@ -539,7 +539,7 @@ from biip.upc import Upc, UpcFormat
                             ai=GS1ApplicationIdentifier.extract("15"),
                             value="210527",
                             pattern_groups=["210527"],
-                            date=date(2021, 5, 27),
+                            date=dt.date(2021, 5, 27),
                         )
                     ],
                 ),
@@ -584,7 +584,7 @@ from biip.upc import Upc, UpcFormat
                             ai=GS1ApplicationIdentifier.extract("15"),
                             value="210526",
                             pattern_groups=["210526"],
-                            date=date(2021, 5, 26),
+                            date=dt.date(2021, 5, 26),
                         ),
                     ],
                 ),

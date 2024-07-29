@@ -1,5 +1,4 @@
-import datetime
-from datetime import date
+import datetime as dt
 from decimal import Decimal
 from typing import Optional
 
@@ -193,7 +192,7 @@ def test_extract_fails_with_invalid_date(ai_code: str, bad_value: str) -> None:
     )
 
 
-THIS_YEAR = datetime.datetime.now(tz=datetime.timezone.utc).year
+THIS_YEAR = dt.datetime.now(tz=dt.timezone.utc).year
 THIS_YEAR_SHORT = str(THIS_YEAR)[2:]
 MIN_YEAR = THIS_YEAR - 49
 MIN_YEAR_SHORT = str(MIN_YEAR)[2:]
@@ -211,7 +210,7 @@ MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
                 ai=GS1ApplicationIdentifier.extract("15"),
                 value=f"{THIS_YEAR_SHORT}0526",
                 pattern_groups=[f"{THIS_YEAR_SHORT}0526"],
-                date=date(THIS_YEAR, 5, 26),
+                date=dt.date(THIS_YEAR, 5, 26),
             ),
         ),
         (
@@ -221,7 +220,7 @@ MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
                 ai=GS1ApplicationIdentifier.extract("15"),
                 value=f"{MIN_YEAR_SHORT}0526",
                 pattern_groups=[f"{MIN_YEAR_SHORT}0526"],
-                date=date(MIN_YEAR, 5, 26),
+                date=dt.date(MIN_YEAR, 5, 26),
             ),
         ),
         (
@@ -231,7 +230,7 @@ MAX_YEAR_SHORT = str(MAX_YEAR)[2:]
                 ai=GS1ApplicationIdentifier.extract("15"),
                 value=f"{MAX_YEAR_SHORT}0526",
                 pattern_groups=[f"{MAX_YEAR_SHORT}0526"],
-                date=date(MAX_YEAR, 5, 26),
+                date=dt.date(MAX_YEAR, 5, 26),
             ),
         ),
     ],
@@ -245,13 +244,13 @@ def test_extract_handles_min_and_max_year_correctly(
 @pytest.mark.parametrize(
     ("value", "expected"),
     [
-        ("15200200", date(2020, 2, 29)),
-        ("15210200", date(2021, 2, 28)),
-        ("17211200", date(2021, 12, 31)),
+        ("15200200", dt.date(2020, 2, 29)),
+        ("15210200", dt.date(2021, 2, 28)),
+        ("17211200", dt.date(2021, 12, 31)),
     ],
 )
 def test_extract_handles_zero_day_as_last_day_of_month(
-    value: str, expected: date
+    value: str, expected: dt.date
 ) -> None:
     assert GS1ElementString.extract(value).date == expected
 

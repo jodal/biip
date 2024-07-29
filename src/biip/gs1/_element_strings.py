@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import calendar
-import datetime
+import datetime as dt
 import re
 from dataclasses import dataclass
 from decimal import Decimal
@@ -77,7 +77,7 @@ class GS1ElementString:
     sscc_error: Optional[str] = None
 
     #: A date created from the element string, if the AI represents a date.
-    date: Optional[datetime.date] = None
+    date: Optional[dt.date] = None
 
     #: A decimal value created from the element string, if the AI represents a number.
     decimal: Optional[Decimal] = None
@@ -268,12 +268,12 @@ class GS1ElementString:
         return f"{self.ai}{self.value}"
 
 
-def _parse_date(value: str) -> datetime.date:
+def _parse_date(value: str) -> dt.date:
     year, month, day = int(value[0:2]), int(value[2:4]), int(value[4:6])
     year += _get_century(year)
     if day == 0:
         day = _get_last_day_of_month(year, month)
-    return datetime.date(year, month, day)
+    return dt.date(year, month, day)
 
 
 def _get_century(two_digit_year: int) -> int:
@@ -291,7 +291,7 @@ def _get_century(two_digit_year: int) -> int:
     References:
         GS1 General Specifications, section 7.12
     """
-    current_year = datetime.datetime.now(tz=datetime.timezone.utc).year
+    current_year = dt.datetime.now(tz=dt.timezone.utc).year
     current_century = current_year - current_year % 100
     two_digit_current_year = current_year - current_century
 
