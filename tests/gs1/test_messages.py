@@ -1,4 +1,4 @@
-from datetime import date
+import datetime as dt
 from decimal import Decimal
 from typing import Iterable, List, Optional
 
@@ -41,7 +41,7 @@ from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion
                         ai=GS1ApplicationIdentifier.extract("15"),
                         value="210526",
                         pattern_groups=["210526"],
-                        date=date(2021, 5, 26),
+                        date=dt.date(2021, 5, 26),
                     ),
                     GS1ElementString(
                         ai=GS1ApplicationIdentifier.extract("10"),
@@ -140,7 +140,7 @@ def test_parse_with_too_long_separator_char_fails() -> None:
             "Failed to get GS1 Application Identifier from 'aaa'.",
         ),
         # Too short to match optional time group (as this is really a GTIN-13)
-        ("701197206489", "Failed to get GS1 Application Identifier from '89'."),
+        ("701103020185", "Failed to get GS1 Application Identifier from '85'."),
     ],
 )
 def test_parse_fails_if_unparsed_data_left(value: str, error: str) -> None:
@@ -184,7 +184,7 @@ def test_parse_strips_surrounding_whitespace() -> None:
                         ai=GS1ApplicationIdentifier.extract("17"),
                         value="221231",
                         pattern_groups=["221231"],
-                        date=date(2022, 12, 31),
+                        date=dt.date(2022, 12, 31),
                     )
                 ],
             ),
@@ -203,7 +203,7 @@ def test_parse_strips_surrounding_whitespace() -> None:
                         ai=GS1ApplicationIdentifier.extract("17"),
                         value="221231",
                         pattern_groups=["221231"],
-                        date=date(2022, 12, 31),
+                        date=dt.date(2022, 12, 31),
                     ),
                 ],
             ),
@@ -217,7 +217,7 @@ def test_parse_strips_surrounding_whitespace() -> None:
                         ai=GS1ApplicationIdentifier.extract("17"),
                         value="221231",
                         pattern_groups=["221231"],
-                        date=date(2022, 12, 31),
+                        date=dt.date(2022, 12, 31),
                     ),
                     GS1ElementString(
                         ai=GS1ApplicationIdentifier.extract("10"),

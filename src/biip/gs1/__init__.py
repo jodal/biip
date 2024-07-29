@@ -48,8 +48,8 @@ In this example, the first element string is a GTIN.
     format=GtinFormat.GTIN_13, prefix=GS1Prefix(value='703', usage='GS1
     Norway'), company_prefix=GS1CompanyPrefix(value='703206'),
     payload='703206980498', check_digit=8, packaging_level=None),
-    gtin_error=None, sscc=None, sscc_error=None, date=None, decimal=None,
-    money=None)
+    gtin_error=None, sscc=None, sscc_error=None, date=None, datetime=None,
+    decimal=None, money=None)
 
 The message object has :meth:`~GS1Message.get` and :meth:`~GS1Message.filter`
 methods to lookup element strings either by the Application Identifier's
@@ -61,13 +61,13 @@ methods to lookup element strings either by the Application Identifier's
     fnc1_required=False, format='N2+N6'), value='210526',
     pattern_groups=['210526'], gln=None, gln_error=None, gtin=None,
     gtin_error=None, sscc=None, sscc_error=None, date=datetime.date(2021, 5,
-    26), decimal=None, money=None)
+    26), datetime=None, decimal=None, money=None)
     >>> msg.get(ai="10")
     GS1ElementString(ai=GS1ApplicationIdentifier(ai='10', description='Batch
     or lot number', data_title='BATCH/LOT', fnc1_required=True,
     format='N2+X..20'), value='0329', pattern_groups=['0329'], gln=None,
     gln_error=None, gtin=None, gtin_error=None, sscc=None, sscc_error=None,
-    date=None, decimal=None, money=None)
+    date=None, datetime=None, decimal=None, money=None)
 """
 
 from typing import Tuple

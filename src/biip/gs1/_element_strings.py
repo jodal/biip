@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 import calendar
-import datetime
+import datetime as dt
 import re
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import Iterable, List, Optional
+from typing import Iterable, List, Optional, Tuple
 
 from biip import ParseError
 from biip.gln import Gln
@@ -44,7 +44,7 @@ class GS1ElementString:
         prefix=GS1Prefix(value='703', usage='GS1 Norway'),
         company_prefix=GS1CompanyPrefix(value='703206'), payload='703206980498',
         check_digit=8, packaging_level=None), gtin_error=None, sscc=None,
-        sscc_error=None, date=None, decimal=None, money=None)
+        sscc_error=None, date=None, datetime=None, decimal=None, money=None)
         >>> element_string.as_hri()
         '(01)07032069804988'
     """
@@ -77,7 +77,10 @@ class GS1ElementString:
     sscc_error: Optional[str] = None
 
     #: A date created from the element string, if the AI represents a date.
-    date: Optional[datetime.date] = None
+    date: Optional[dt.date] = None
+
+    #: A datetime created from the element string, if the AI represents a datetime.
+    datetime: Optional[dt.datetime] = None
 
     #: A decimal value created from the element string, if the AI represents a number.
     decimal: Optional[Decimal] = None
@@ -157,7 +160,7 @@ class GS1ElementString:
             rcn_verify_variable_measure=rcn_verify_variable_measure,
         )
         element._set_sscc()  # noqa: SLF001
-        element._set_date()  # noqa: SLF001
+        element._set_date_and_datetime()  # noqa: SLF001
         element._set_decimal()  # noqa: SLF001
 
         return element
@@ -204,14 +207,29 @@ class GS1ElementString:
             self.sscc = None
             self.sscc_error = str(exc)
 
-    def _set_date(self) -> None:
-        if self.ai.ai not in ("11", "12", "13", "15", "16", "17"):
+    def _set_date_and_datetime(self) -> None:
+        if self.ai.ai not in (
+            "11",
+            "12",
+            "13",
+            "15",
+            "16",
+            "17",
+            "4324",
+            "4325",
+            "4326",
+            "7003",
+            "7006",
+            "7007",
+            "7011",
+            "8008",
+        ):
             return
 
         try:
-            self.date = _parse_date(self.value)
+            self.date, self.datetime = _parse_date_and_datetime(self.value)
         except ValueError as exc:
-            msg = f"Failed to parse GS1 AI {self.ai} date from {self.value!r}."
+            msg = f"Failed to parse GS1 AI {self.ai} date/time from {self.value!r}."
             raise ParseError(msg) from exc
 
     def _set_decimal(self) -> None:
@@ -268,12 +286,26 @@ class GS1ElementString:
         return f"{self.ai}{self.value}"
 
 
-def _parse_date(value: str) -> datetime.date:
-    year, month, day = int(value[0:2]), int(value[2:4]), int(value[4:6])
+def _parse_date_and_datetime(value: str) -> Tuple[dt.date, Optional[dt.datetime]]:
+    pairs = [value[i : i + 2] for i in range(0, len(value), 2)]
+
+    year = int(pairs[0])
     year += _get_century(year)
+    month = int(pairs[1])
+    day = int(pairs[2])
     if day == 0:
         day = _get_last_day_of_month(year, month)
-    return datetime.date(year, month, day)
+    date = dt.date(year, month, day)
+    if not pairs[3:]:
+        return date, None
+
+    hour = int(pairs[3])
+    minute = int(pairs[4] if pairs[4:] else 0)
+    seconds = int(pairs[5] if pairs[5:] else 0)
+    if hour == 99 and minute == 99:
+        return date, None
+
+    return date, dt.datetime(year, month, day, hour, minute, seconds)  # noqa: DTZ001
 
 
 def _get_century(two_digit_year: int) -> int:
@@ -291,7 +323,7 @@ def _get_century(two_digit_year: int) -> int:
     References:
         GS1 General Specifications, section 7.12
     """
-    current_year = datetime.datetime.now(tz=datetime.timezone.utc).year
+    current_year = dt.datetime.now(tz=dt.timezone.utc).year
     current_century = current_year - current_year % 100
     two_digit_current_year = current_year - current_century
 
