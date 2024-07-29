@@ -129,16 +129,25 @@ def test_parse_with_too_long_separator_char_fails() -> None:
         GS1Message.parse("10222--15210526", separator_chars=["--"])
 
 
-def test_parse_fails_if_unparsed_data_left() -> None:
-    # 10 = AI for BATCH/LOT
-    # 222... = Max length BATCH/LOT
-    # aaa = Superflous data
-    value = "1022222222222222222222aaa"
-
+@pytest.mark.parametrize(
+    ("value", "error"),
+    [
+        # 10 = AI for BATCH/LOT
+        # 222... = Max length BATCH/LOT
+        # aaa = Superflous data
+        (
+            "1022222222222222222222aaa",
+            "Failed to get GS1 Application Identifier from 'aaa'.",
+        ),
+        # Too short to match optional time group (as this is really a GTIN-13)
+        ("701197206489", "Failed to get GS1 Application Identifier from '89'."),
+    ],
+)
+def test_parse_fails_if_unparsed_data_left(value: str, error: str) -> None:
     with pytest.raises(ParseError) as exc_info:
         GS1Message.parse(value)
 
-    assert str(exc_info.value) == "Failed to get GS1 Application Identifier from 'aaa'."
+    assert str(exc_info.value) == error
 
 
 def test_parse_fails_if_fixed_length_field_ends_with_separator_char() -> None:

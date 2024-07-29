@@ -147,7 +147,7 @@ class GS1ElementString:
         if not matches:
             msg = f"Failed to match {value!r} with GS1 AI {ai} pattern '{ai.pattern}'."
             raise ParseError(msg)
-        pattern_groups = list(matches.groups())
+        pattern_groups = [group for group in matches.groups() if group is not None]
         value = "".join(pattern_groups)
 
         element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
