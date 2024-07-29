@@ -76,6 +76,22 @@ from biip.sscc import Sscc
             ),
         ),
         (
+            "7011030102",  # Without optional pattern group for time
+            GS1ElementString(
+                ai=GS1ApplicationIdentifier.extract("7011"),
+                value="030102",
+                pattern_groups=["030102"],
+            ),
+        ),
+        (
+            "70110301021430",  # With optional pattern group for time
+            GS1ElementString(
+                ai=GS1ApplicationIdentifier.extract("7011"),
+                value="0301021430",
+                pattern_groups=["030102", "1430"],
+            ),
+        ),
+        (
             "800307071324001022085952",
             GS1ElementString(
                 ai=GS1ApplicationIdentifier.extract("8003"),
