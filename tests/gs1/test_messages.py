@@ -150,20 +150,22 @@ def test_parse_fails_if_unparsed_data_left(value: str, error: str) -> None:
     assert str(exc_info.value) == error
 
 
-def test_parse_fails_if_fixed_length_field_ends_with_separator_char() -> None:
-    # 15... is a fixed length date.
-    # \x1d is the default separator character in an illegal position.
-    # 10... is any other field.
-    value = "15210526\x1d100329"
-
-    with pytest.raises(ParseError) as exc_info:
-        GS1Message.parse(value)
-
-    assert str(exc_info.value) == (
-        r"Element String '(15)210526' has fixed length and "
-        r"should not end with a separator character. "
-        r"Separator character '\x1d' found in '15210526\x1d100329'."
-    )
+@pytest.mark.parametrize(
+    ("value", "expected_hri"),
+    [
+        # A separator at the end of the string is never needed.
+        ("15210526100329\x1d", "(15)210526(10)0329"),
+        # 15... is a fixed length date, and should not end with a separator.
+        ("15210526\x1d100329", "(15)210526(10)0329"),
+        # Double separator chars are ignored.
+        (
+            "0107032069804988100329\x1d\x1d15210526",
+            "(01)07032069804988(10)0329(15)210526",
+        ),
+    ],
+)
+def test_parse_ignores_redundant_separator_chars(value: str, expected_hri: str) -> None:
+    assert GS1Message.parse(value).as_hri() == expected_hri
 
 
 def test_parse_strips_surrounding_whitespace() -> None:
