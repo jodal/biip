@@ -66,7 +66,8 @@ class GS1Message:
             A message object with one or more element strings.
 
         Raises:
-            ParseError: If a fixed-length field ends with a separator character.
+            ValueError: If the ``separator_char`` isn't exactly 1 character long.
+            ParseError: If the parsing fails.
         """
         value = value.strip()
         element_strings: List[GS1ElementString] = []
@@ -83,17 +84,11 @@ class GS1Message:
 
             rest = rest[len(element_string) :]
 
-            if rest.startswith(tuple(separator_chars)):
-                if element_string.ai.fnc1_required:
-                    rest = rest[1:]
-                else:
-                    separator_char = rest[0]
-                    msg = (
-                        f"Element String {element_string.as_hri()!r} has fixed length "
-                        "and should not end with a separator character. "
-                        f"Separator character {separator_char!r} found in {value!r}."
-                    )
-                    raise ParseError(msg)
+            # Separator characters are accepted inbetween any element string,
+            # even if the AI doesn't require it. See GS1 General Specifications,
+            # section 7.8.6 for details.
+            while rest.startswith(tuple(separator_chars)):
+                rest = rest[1:]
 
         return cls(value=value, element_strings=element_strings)
 
