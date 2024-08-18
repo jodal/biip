@@ -2,7 +2,7 @@
 
 import json
 from typing import Dict, Union
-from xml.etree import ElementTree as ET
+from xml.etree import ElementTree  # noqa: ICN001
 
 import httpx
 
@@ -27,7 +27,7 @@ def parse(xml_content: bytes) -> TrieNode:
     """Parse the data from XML to a trie to make prefix length lookup easy."""
     trie: TrieNode = {}
 
-    doc = ET.fromstring(xml_content)  # noqa: S314
+    doc = ElementTree.fromstring(xml_content)  # noqa: S314
     for entry in doc.findall("entry"):
         shared_prefix = entry.attrib["prefix"]
         company_prefix_length = int(entry.attrib["gcpLength"])
