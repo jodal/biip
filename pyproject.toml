@@ -78,6 +78,16 @@ strict_equality = true
 module = "biip.*"
 disallow_untyped_defs = true
 
+[tool.pyright]
+pythonVersion = "3.8"
+venvPath = "."
+venv = ".venv"
+typeCheckingMode = "strict"
+# Already covered by tests and careful import ordering:
+reportImportCycles = false
+# Already covered by flake8-self:
+reportPrivateUsage = false
+
 [tool.ruff]
 target-version = "py38"
 
@@ -113,16 +123,6 @@ convention = "google"
 
 [tool.ruff.lint.pyupgrade]
 keep-runtime-typing = true
-
-[tool.pyright]
-pythonVersion = "3.8"
-venvPath = "."
-venv = ".venv"
-typeCheckingMode = "strict"
-# Already covered by tests and careful import ordering:
-reportImportCycles = false
-# Already covered by flake8-self:
-reportPrivateUsage = false
 
 [build-system]
 requires = ["poetry-core>=1.0"]
