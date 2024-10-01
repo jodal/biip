@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import json
-import pathlib
 from dataclasses import dataclass, field
+from importlib import resources
 
 from biip import ParseError
 
@@ -89,14 +89,12 @@ class GS1ApplicationIdentifier:
         return f"({self.ai})"
 
 
-_GS1_APPLICATION_IDENTIFIERS_FILE = (
-    pathlib.Path(__file__).parent / "_application_identifiers.json"
-)
+def _load_application_identifiers():
+    with resources.open_text(__package__, '_application_identifiers.json') as f:
+        data = json.load(f)
+    return {
+        entry['ai']: GS1ApplicationIdentifier(**entry)
+        for entry in data
+    }
 
-_GS1_APPLICATION_IDENTIFIERS = {
-    entry.ai: entry
-    for entry in [
-        GS1ApplicationIdentifier(**kwargs)
-        for kwargs in json.loads(_GS1_APPLICATION_IDENTIFIERS_FILE.read_text())
-    ]
-}
+_GS1_APPLICATION_IDENTIFIERS = _load_application_identifiers()
