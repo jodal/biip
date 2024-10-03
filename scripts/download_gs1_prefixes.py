@@ -2,7 +2,6 @@
 
 import dataclasses
 import json
-from typing import List
 
 import bs4
 import httpx
@@ -15,7 +14,7 @@ PREFIX_URL = "https://www.gs1.org/standards/id-keys/company-prefix"
 def main() -> None:
     """The script's main function."""
     html_content = download(PREFIX_URL)
-    prefixes: List[_GS1PrefixRange] = parse(html_content)
+    prefixes: list[_GS1PrefixRange] = parse(html_content)
     output(prefixes)
 
 
@@ -24,9 +23,9 @@ def download(url: str) -> bytes:
     return httpx.get(url, timeout=30).content
 
 
-def parse(html_content: bytes) -> List[_GS1PrefixRange]:
+def parse(html_content: bytes) -> list[_GS1PrefixRange]:
     """Parse the data from HTML to _GS1PrefixRange objects."""
-    result: List[_GS1PrefixRange] = []
+    result: list[_GS1PrefixRange] = []
 
     page = bs4.BeautifulSoup(html_content, "html.parser")
     datatable = page.find("table", {"class": ["table"]})
@@ -79,7 +78,7 @@ def parse(html_content: bytes) -> List[_GS1PrefixRange]:
     return result  # noqa: RET504
 
 
-def output(prefixes: List[_GS1PrefixRange]) -> None:
+def output(prefixes: list[_GS1PrefixRange]) -> None:
     """Output the _GS1PrefixRange objects as JSON to stdout."""
     print(json.dumps([dataclasses.asdict(cp) for cp in prefixes], indent=2))
 

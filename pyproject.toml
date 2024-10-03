@@ -16,7 +16,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8.0"
+python = "^3.9.0"
 py-moneyed = { version = ">=0.8", optional = true }
 
 [tool.poetry.extras]
@@ -33,7 +33,7 @@ py-moneyed = "^3.0"
 types-beautifulsoup4 = "^4.12.0.6"
 
 [tool.poetry.group.docs.dependencies]
-sphinx = ">=7"                   # Requires Python 3.9+
+sphinx = ">=7"
 sphinx-rtd-theme = ">=2"
 sphinx-autodoc-typehints = ">=2"
 
@@ -60,6 +60,7 @@ branch = true
 source = ["biip"]
 
 [tool.coverage.report]
+exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:"]
 fail_under = 100
 show_missing = true
 
@@ -80,7 +81,7 @@ module = "biip.*"
 disallow_untyped_defs = true
 
 [tool.pyright]
-pythonVersion = "3.8"
+pythonVersion = "3.9"
 venvPath = "."
 venv = ".venv"
 typeCheckingMode = "strict"
@@ -90,7 +91,7 @@ reportImportCycles = false
 reportPrivateUsage = false
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 
 [tool.ruff.lint]
 select = ["ALL"]

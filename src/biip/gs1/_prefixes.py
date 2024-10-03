@@ -14,11 +14,11 @@ import json
 import lzma
 import pathlib
 from dataclasses import dataclass
-from typing import Dict, Optional, Union
+from typing import Optional, Union
 
 from biip import ParseError
 
-_TrieNode = Union[Dict[str, "_TrieNode"], int]
+_TrieNode = Union[dict[str, "_TrieNode"], int]
 
 
 @dataclass(frozen=True)

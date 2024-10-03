@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from decimal import Decimal
 from enum import Enum
-from typing import Dict, Optional, Union
+from typing import Optional, Union
 
 from biip import EncodeError, ParseError
 from biip.gs1 import checksums
@@ -244,7 +244,7 @@ class _Strategy:
         return Gtin.parse(gtin, rcn_region=rcn.region)
 
 
-_RCN_RULES: Dict[RcnRegion, Dict[str, _Strategy]] = {
+_RCN_RULES: dict[RcnRegion, dict[str, _Strategy]] = {
     RcnRegion.DENMARK: {
         # References:
         #   https://www.gs1.dk/om-gs1/overblik-over-gs1-standarder/gtin-13-pris

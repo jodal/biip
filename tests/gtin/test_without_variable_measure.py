@@ -1,5 +1,3 @@
-from typing import List
-
 import pytest
 
 from biip import EncodeError
@@ -78,7 +76,7 @@ def test_without_variable_measure_strips_variable_parts(
     ],
 )
 def test_without_variable_measure_keeps_nonvariable_rcn_unchanged(
-    rcn_region: RcnRegion, nonvariable_prefixes: List[str]
+    rcn_region: RcnRegion, nonvariable_prefixes: list[str]
 ) -> None:
     for prefix in nonvariable_prefixes:
         payload = f"{prefix}1111111111"

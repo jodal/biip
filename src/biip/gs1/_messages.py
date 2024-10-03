@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from itertools import chain
-from typing import TYPE_CHECKING, Iterable, List, Optional, Tuple, Union
+from typing import TYPE_CHECKING, Optional, Union
 
 from biip import ParseError
 from biip.gs1 import (
@@ -16,7 +16,9 @@ from biip.gs1 import (
 )
 from biip.gs1._application_identifiers import _GS1_APPLICATION_IDENTIFIERS
 
-if TYPE_CHECKING:  # pragma: no cover
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
     from biip.gtin import RcnRegion
 
 
@@ -34,7 +36,7 @@ class GS1Message:
     value: str
 
     #: List of Element Strings found in the message.
-    element_strings: List[GS1ElementString]
+    element_strings: list[GS1ElementString]
 
     @classmethod
     def parse(
@@ -70,7 +72,7 @@ class GS1Message:
             ParseError: If the parsing fails.
         """
         value = value.strip()
-        element_strings: List[GS1ElementString] = []
+        element_strings: list[GS1ElementString] = []
         rest = value[:]
 
         while rest:
@@ -124,7 +126,7 @@ class GS1Message:
             raise ParseError(msg)
 
         pattern = r"\((\d+)\)(\w+)"
-        matches: List[Tuple[str, str]] = re.findall(pattern, value)
+        matches: list[tuple[str, str]] = re.findall(pattern, value)
         if not matches:
             msg = (
                 f"Could not find any GS1 Application Identifiers in {value!r}. "
@@ -132,7 +134,7 @@ class GS1Message:
             )
             raise ParseError(msg)
 
-        pairs: List[Tuple[GS1ApplicationIdentifier, str]] = []
+        pairs: list[tuple[GS1ApplicationIdentifier, str]] = []
         for ai_number, ai_data in matches:
             if ai_number not in _GS1_APPLICATION_IDENTIFIERS:
                 msg = f"Unknown GS1 Application Identifier {ai_number!r} in {value!r}."
@@ -171,7 +173,7 @@ class GS1Message:
         *,
         ai: Optional[Union[str, GS1ApplicationIdentifier]] = None,
         data_title: Optional[str] = None,
-    ) -> List[GS1ElementString]:
+    ) -> list[GS1ElementString]:
         """Filter Element Strings by AI or data title.
 
         Args:
@@ -186,7 +188,7 @@ class GS1Message:
         if isinstance(ai, GS1ApplicationIdentifier):
             ai = ai.ai
 
-        result: List[GS1ElementString] = []
+        result: list[GS1ElementString] = []
 
         for element_string in self.element_strings:
             ai_match = ai is not None and element_string.ai.ai.startswith(ai)
