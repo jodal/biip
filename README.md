@@ -26,7 +26,7 @@ see the [documentation](https://biip.readthedocs.io/).
 
 ## Installation
 
-Biip requires Python 3.8 or newer.
+Biip requires Python 3.9 or newer.
 
 Biip is available from [PyPI](https://pypi.org/project/biip/):
 
