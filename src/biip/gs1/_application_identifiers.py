@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import json
-import pathlib
 from dataclasses import dataclass, field
+from importlib import resources
 
 from biip import ParseError
 
@@ -90,9 +90,8 @@ class GS1ApplicationIdentifier:
 
 
 _GS1_APPLICATION_IDENTIFIERS_FILE = (
-    pathlib.Path(__file__).parent / "_application_identifiers.json"
+    resources.files("biip") / "gs1" / "_application_identifiers.json"
 )
-
 _GS1_APPLICATION_IDENTIFIERS = {
     entry.ai: entry
     for entry in [

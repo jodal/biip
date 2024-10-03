@@ -12,8 +12,8 @@ from __future__ import annotations
 
 import json
 import lzma
-import pathlib
 from dataclasses import dataclass
+from importlib import resources
 from typing import Optional, Union
 
 from biip import ParseError
@@ -142,16 +142,15 @@ class _GS1PrefixRange:
     usage: str
 
 
-_GS1_PREFIX_RANGES_FILE = pathlib.Path(__file__).parent / "_prefix_ranges.json"
-
+_GS1_PREFIX_RANGES_FILE = resources.files("biip") / "gs1" / "_prefix_ranges.json"
 _GS1_PREFIX_RANGES = [
     _GS1PrefixRange(**kwargs)
     for kwargs in json.loads(_GS1_PREFIX_RANGES_FILE.read_text())
 ]
 
 _GS1_COMPANY_PREFIX_TRIE_FILE = (
-    pathlib.Path(__file__).parent / "_company_prefix_trie.json.lzma"
+    resources.files("biip") / "gs1" / "_company_prefix_trie.json.lzma"
 )
-
-with lzma.open(_GS1_COMPANY_PREFIX_TRIE_FILE) as fh:
-    _GS1_COMPANY_PREFIX_TRIE: _TrieNode = json.load(fh)
+_GS1_COMPANY_PREFIX_TRIE: _TrieNode = json.loads(
+    lzma.decompress(_GS1_COMPANY_PREFIX_TRIE_FILE.read_bytes()).decode()
+)
