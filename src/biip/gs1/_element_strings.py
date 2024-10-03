@@ -7,7 +7,7 @@ import datetime as dt
 import re
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import TYPE_CHECKING, List, Optional, Tuple
+from typing import TYPE_CHECKING, Optional
 
 from biip import ParseError
 from biip.gln import Gln
@@ -59,7 +59,7 @@ class GS1ElementString:
     value: str
 
     #: List of pattern groups extracted from the Element String.
-    pattern_groups: List[str]
+    pattern_groups: list[str]
 
     #: A GLN created from the element string, if the AI represents a GLN.
     gln: Optional[Gln] = None
@@ -289,7 +289,7 @@ class GS1ElementString:
         return f"{self.ai}{self.value}"
 
 
-def _parse_date_and_datetime(value: str) -> Tuple[dt.date, Optional[dt.datetime]]:
+def _parse_date_and_datetime(value: str) -> tuple[dt.date, Optional[dt.datetime]]:
     pairs = [value[i : i + 2] for i in range(0, len(value), 2)]
 
     year = int(pairs[0])

@@ -1,7 +1,7 @@
 import datetime as dt
 from collections.abc import Iterable
 from decimal import Decimal
-from typing import List, Optional
+from typing import Optional
 
 import pytest
 
@@ -330,7 +330,7 @@ def test_as_hri(value: str, expected: str) -> None:
         ),
     ],
 )
-def test_filter_element_strings_by_ai(value: str, ai: str, expected: List[str]) -> None:
+def test_filter_element_strings_by_ai(value: str, ai: str, expected: list[str]) -> None:
     matches = GS1Message.parse(value).filter(ai=ai)
 
     assert [element_string.value for element_string in matches] == expected
@@ -350,7 +350,7 @@ def test_filter_element_strings_by_ai(value: str, ai: str, expected: List[str]) 
     ],
 )
 def test_filter_element_strings_by_data_title(
-    value: str, data_title: str, expected: List[str]
+    value: str, data_title: str, expected: list[str]
 ) -> None:
     matches = GS1Message.parse(value).filter(data_title=data_title)
 

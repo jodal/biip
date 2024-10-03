@@ -70,15 +70,13 @@ methods to lookup element strings either by the Application Identifier's
     date=None, datetime=None, decimal=None, money=None)
 """
 
-from typing import Tuple
-
 ASCII_GROUP_SEPARATOR = "\x1d"
 
 #: The default separator character is <GS>, ASCII value 29.
 #:
 #: References:
 #:   GS1 General Specifications, section 7.8.3.
-DEFAULT_SEPARATOR_CHARS: Tuple[str] = (ASCII_GROUP_SEPARATOR,)
+DEFAULT_SEPARATOR_CHARS: tuple[str] = (ASCII_GROUP_SEPARATOR,)
 
 # The following must be imported in this specific order.
 # ruff: noqa: E402, I001

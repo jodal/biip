@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional, Type, Union
+from typing import Optional, Union
 
 from biip import EncodeError, ParseError
 from biip.gs1 import GS1CompanyPrefix, GS1Prefix
@@ -121,7 +121,7 @@ class Gtin:
             )
             raise ParseError(msg)
 
-        gtin_type: Type[Union[Gtin, Rcn]]
+        gtin_type: type[Union[Gtin, Rcn]]
         if (
             gtin_format <= GtinFormat.GTIN_13
             and prefix is not None

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Callable, List, Optional, Tuple
+from typing import TYPE_CHECKING, Callable, Optional
 
 from biip import ParseError
 from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1Message, GS1Symbology
@@ -160,7 +160,7 @@ class ParseResult:
         )
 
 
-ParseQueue = List[Tuple["Parser", str]]
+ParseQueue = list[tuple["Parser", str]]
 Parser = Callable[[str, ParseConfig, ParseQueue, ParseResult], None]
 
 

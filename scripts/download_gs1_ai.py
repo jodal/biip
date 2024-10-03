@@ -2,7 +2,6 @@
 
 import dataclasses
 import json
-from typing import List
 
 import httpx
 
@@ -23,9 +22,9 @@ def download(url: str) -> bytes:
     return httpx.get(url, timeout=30).content
 
 
-def parse(json_content: bytes) -> List[GS1ApplicationIdentifier]:
+def parse(json_content: bytes) -> list[GS1ApplicationIdentifier]:
     """Parse the data from HTML to GS1ApplicationIdentifier objects."""
-    result: List[GS1ApplicationIdentifier] = []
+    result: list[GS1ApplicationIdentifier] = []
 
     data = json.loads(json_content)
 
@@ -54,7 +53,7 @@ def _fix_pattern(value: str) -> str:
     return value
 
 
-def output(application_identifiers: List[GS1ApplicationIdentifier]) -> None:
+def output(application_identifiers: list[GS1ApplicationIdentifier]) -> None:
     """Output the GS1ApplicationIdentifier objects as JSON to stdout."""
     print(
         json.dumps([dataclasses.asdict(ai) for ai in application_identifiers], indent=2)

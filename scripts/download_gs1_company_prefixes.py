@@ -1,12 +1,12 @@
 """Script to download and extract Company Prefix data from GS1."""
 
 import json
-from typing import Dict, Union
+from typing import Union
 from xml.etree import ElementTree  # noqa: ICN001
 
 import httpx
 
-TrieNode = Union[Dict[str, "TrieNode"], int]
+TrieNode = Union[dict[str, "TrieNode"], int]
 
 COMPANY_PREFIX_URL = "https://www.gs1.org/docs/gcp_length/gcpprefixformatlist.xml"
 
