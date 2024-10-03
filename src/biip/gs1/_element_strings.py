@@ -7,13 +7,16 @@ import datetime as dt
 import re
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import Iterable, List, Optional, Tuple
+from typing import TYPE_CHECKING, List, Optional, Tuple
 
 from biip import ParseError
 from biip.gln import Gln
 from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1ApplicationIdentifier
 from biip.gtin import Gtin, RcnRegion
 from biip.sscc import Sscc
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 try:
     import moneyed  # noqa: TCH002

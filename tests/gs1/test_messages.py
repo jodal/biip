@@ -1,6 +1,7 @@
 import datetime as dt
+from collections.abc import Iterable
 from decimal import Decimal
-from typing import Iterable, List, Optional
+from typing import List, Optional
 
 import pytest
 
