@@ -16,7 +16,7 @@ from biip.gs1 import (
 )
 from biip.gs1._application_identifiers import _GS1_APPLICATION_IDENTIFIERS
 
-if TYPE_CHECKING:  # pragma: no cover
+if TYPE_CHECKING:
     from collections.abc import Iterable
 
     from biip.gtin import RcnRegion
