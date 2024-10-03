@@ -142,22 +142,15 @@ class _GS1PrefixRange:
     usage: str
 
 
-def _load_prefix_ranges():
-    with resources.open_text(__package__, "_prefix_ranges.json") as f:
-        data = json.load(f)
-    return [_GS1PrefixRange(**kwargs) for kwargs in data]
+_GS1_PREFIX_RANGES_FILE = resources.files("biip") / "gs1" / "_prefix_ranges.json"
+_GS1_PREFIX_RANGES = [
+    _GS1PrefixRange(**kwargs)
+    for kwargs in json.loads(_GS1_PREFIX_RANGES_FILE.read_text())
+]
 
-
-_GS1_PREFIX_RANGES = _load_prefix_ranges()
-
-
-def _load_company_prefix_trie():
-    with resources.open_binary(
-        __package__, "_company_prefix_trie.json.lzma"
-    ) as compressed_file:
-        decompressed_data = lzma.decompress(compressed_file.read())
-        data = json.loads(decompressed_data.decode("utf-8"))
-    return data
-
-
-_GS1_COMPANY_PREFIX_TRIE: _TrieNode = _load_company_prefix_trie()
+_GS1_COMPANY_PREFIX_TRIE_FILE = (
+    resources.files("biip") / "gs1" / "_company_prefix_trie.json.lzma"
+)
+_GS1_COMPANY_PREFIX_TRIE: _TrieNode = json.loads(
+    lzma.decompress(_GS1_COMPANY_PREFIX_TRIE_FILE.read_bytes()).decode()
+)

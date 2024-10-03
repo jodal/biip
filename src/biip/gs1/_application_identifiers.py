@@ -89,12 +89,13 @@ class GS1ApplicationIdentifier:
         return f"({self.ai})"
 
 
-def _load_application_identifiers():
-    with resources.open_text(__package__, '_application_identifiers.json') as f:
-        data = json.load(f)
-    return {
-        entry['ai']: GS1ApplicationIdentifier(**entry)
-        for entry in data
-    }
-
-_GS1_APPLICATION_IDENTIFIERS = _load_application_identifiers()
+_GS1_APPLICATION_IDENTIFIERS_FILE = (
+    resources.files("biip") / "gs1" / "_application_identifiers.json"
+)
+_GS1_APPLICATION_IDENTIFIERS = {
+    entry.ai: entry
+    for entry in [
+        GS1ApplicationIdentifier(**kwargs)
+        for kwargs in json.loads(_GS1_APPLICATION_IDENTIFIERS_FILE.read_text())
+    ]
+}
