@@ -5,7 +5,7 @@ import nox
 locations = ["src", "tests", "noxfile.py", "docs/conf.py", "scripts"]
 
 supported_pythons = ["3.9", "3.10", "3.11", "3.12", "3.13"]
-docs_python = "3.12"
+docs_python = "3.13"
 
 
 @nox.session(python=supported_pythons)
