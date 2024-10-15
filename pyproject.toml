@@ -38,7 +38,7 @@ sphinx-rtd-theme = ">=2"
 sphinx-autodoc-typehints = ">=2"
 
 [tool.poetry.group.mypy.dependencies]
-mypy = "1.11.2"
+mypy = "1.12.0"
 
 [tool.poetry.group.pyright.dependencies]
 pyright = "1.1.384"
