@@ -44,7 +44,7 @@ mypy = "1.13.0"
 pyright = "1.1.386"
 
 [tool.poetry.group.ruff.dependencies]
-ruff = "0.7.0"
+ruff = "0.7.1"
 
 [tool.poetry.group.tests.dependencies]
 coverage = { extras = ["toml"], version = "^7.3.2" }
