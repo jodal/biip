@@ -24,6 +24,6 @@ jobs:
           allow-prereleases: true
       - run: python -Im pip install nox==2024.4.15 poetry==1.8.3
       - run: python -Im nox --python ${{ matrix.python-version }}
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
