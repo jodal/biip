@@ -2,7 +2,7 @@
 
 _Biip interprets the data in barcodes._
 
-[![Tests](https://img.shields.io/github/actions/workflow/status/jodal/biip/tests.yml?branch=main)](https://github.com/jodal/biip/actions/workflows/tests.yml)
+[![CI](https://img.shields.io/github/actions/workflow/status/jodal/biip/ci.yml?branch=main)](https://github.com/jodal/biip/actions/workflows/ci.yml)
 [![Docs](https://img.shields.io/readthedocs/biip)](https://biip.readthedocs.io/en/latest/)
 [![Coverage](https://img.shields.io/codecov/c/gh/jodal/biip)](https://codecov.io/gh/jodal/biip)
 [![PyPI](https://img.shields.io/pypi/v/biip)](https://pypi.org/project/biip/)
