@@ -3677,7 +3677,7 @@
     "data_title": "PROCESSOR # 0",
     "fnc1_required": true,
     "format": "N3+X..27",
-    "pattern": "^7030(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
+    "pattern": "^7030(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7031",
@@ -3685,7 +3685,7 @@
     "data_title": "PROCESSOR # 1",
     "fnc1_required": true,
     "format": "N3+X..27",
-    "pattern": "^7031(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
+    "pattern": "^7031(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7032",
@@ -3693,7 +3693,7 @@
     "data_title": "PROCESSOR # 2",
     "fnc1_required": true,
     "format": "N3+X..27",
-    "pattern": "^7032(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
+    "pattern": "^7032(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7033",
@@ -3701,7 +3701,7 @@
     "data_title": "PROCESSOR # 3",
     "fnc1_required": true,
     "format": "N3+X..27",
-    "pattern": "^7033(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
+    "pattern": "^7033(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7034",
@@ -3709,7 +3709,7 @@
     "data_title": "PROCESSOR # 4",
     "fnc1_required": true,
     "format": "N3+X..27",
-    "pattern": "^7034(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
+    "pattern": "^7034(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7035",
@@ -3717,7 +3717,7 @@
     "data_title": "PROCESSOR # 5",
     "fnc1_required": true,
     "format": "N3+X..27",
-    "pattern": "^7035(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
+    "pattern": "^7035(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7036",
@@ -3725,7 +3725,7 @@
     "data_title": "PROCESSOR # 6",
     "fnc1_required": true,
     "format": "N3+X..27",
-    "pattern": "^7036(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
+    "pattern": "^7036(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7037",
@@ -3733,7 +3733,7 @@
     "data_title": "PROCESSOR # 7",
     "fnc1_required": true,
     "format": "N3+X..27",
-    "pattern": "^7037(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
+    "pattern": "^7037(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7038",
@@ -3741,7 +3741,7 @@
     "data_title": "PROCESSOR # 8",
     "fnc1_required": true,
     "format": "N3+X..27",
-    "pattern": "^7038(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
+    "pattern": "^7038(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7039",
@@ -3749,7 +3749,7 @@
     "data_title": "PROCESSOR # 9",
     "fnc1_required": true,
     "format": "N3+X..27",
-    "pattern": "^7039(\\d{3})(!%-?A-Z_a-z\\x22]{1,27})$"
+    "pattern": "^7039(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
     "ai": "7040",
