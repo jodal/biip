@@ -47,6 +47,9 @@ def parse(json_content: bytes) -> list[GS1ApplicationIdentifier]:
 
 def _fix_pattern(value: str) -> str:
     """Fix errors in regex patterns."""
+    # Add missing opening square bracket to the regex for AI 703x
+    if value == r"(\d{3})(!%-?A-Z_a-z\x22]{1,27})":
+        return r"(\d{3})([!%-?A-Z_a-z\x22]{1,27})"
     # Add missing opening square bracket to the regex for AI 723x
     if value == r"(!%-?A-Z_a-z\x22]{3,30})":
         return r"([!%-?A-Z_a-z\x22]{3,30})"
