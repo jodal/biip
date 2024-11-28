@@ -41,4 +41,4 @@ from biip.gtin._enums import GtinFormat, RcnRegion, RcnUsage
 from biip.gtin._gtin import Gtin
 from biip.gtin._rcn import Rcn
 
-__all__ = ["Gtin", "GtinFormat", "Rcn", "RcnUsage", "RcnRegion"]
+__all__ = ["Gtin", "GtinFormat", "Rcn", "RcnRegion", "RcnUsage"]

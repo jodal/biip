@@ -61,11 +61,11 @@ from biip._exceptions import BiipException, EncodeError, ParseError
 from biip._parser import ParseResult, parse
 
 __all__ = [
-    "parse",
-    "ParseResult",
     "BiipException",
     "EncodeError",
     "ParseError",
+    "ParseResult",
+    "parse",
 ]
 
 

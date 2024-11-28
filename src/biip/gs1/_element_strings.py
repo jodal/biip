@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterable
 
 try:
-    import moneyed  # noqa: TCH002
+    import moneyed  # noqa: TC002
 
     have_moneyed = True
 except ImportError:  # pragma: no cover

@@ -87,11 +87,11 @@ from biip.gs1._element_strings import GS1ElementString
 from biip.gs1._messages import GS1Message
 
 __all__ = [
-    "GS1CompanyPrefix",
-    "GS1Message",
-    "GS1ElementString",
+    "DEFAULT_SEPARATOR_CHARS",
     "GS1ApplicationIdentifier",
+    "GS1CompanyPrefix",
+    "GS1ElementString",
+    "GS1Message",
     "GS1Prefix",
     "GS1Symbology",
-    "DEFAULT_SEPARATOR_CHARS",
 ]

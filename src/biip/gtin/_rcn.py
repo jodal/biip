@@ -12,7 +12,7 @@ from biip.gs1 import checksums
 from biip.gtin import Gtin, RcnRegion, RcnUsage
 
 try:
-    import moneyed  # noqa: TCH002
+    import moneyed  # noqa: TC002
 
     have_moneyed = True
 except ImportError:  # pragma: no cover
