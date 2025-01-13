@@ -491,8 +491,7 @@ from biip.upc import Upc, UpcFormat
             ParseResult(
                 value="0105901234123458",
                 gtin_error=(
-                    "Invalid GTIN check digit for '05901234123458': "
-                    "Expected 7, got 8."
+                    "Invalid GTIN check digit for '05901234123458': Expected 7, got 8."
                 ),
                 upc_error=(
                     "Failed to parse '0105901234123458' as UPC: "

@@ -148,7 +148,7 @@ class GS1ElementString:
         for separator_char in separator_chars:
             value = value.split(separator_char, maxsplit=1)[0]
 
-        pattern = ai.pattern[:-1] if ai.pattern.endswith("$") else ai.pattern
+        pattern = ai.pattern.removesuffix("$")
         matches = re.match(pattern, value)
         if not matches:
             msg = f"Failed to match {value!r} with GS1 AI {ai} pattern '{ai.pattern}'."
