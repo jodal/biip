@@ -131,8 +131,7 @@ def test_extract(value: str, expected: GS1ElementString) -> None:
                 pattern_groups=["07032069804987"],
                 gtin=None,  # Not set, because GTIN is invalid.
                 gtin_error=(
-                    "Invalid GTIN check digit for '07032069804987': "
-                    "Expected 8, got 7."
+                    "Invalid GTIN check digit for '07032069804987': Expected 8, got 7."
                 ),
             ),
         ),
