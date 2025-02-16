@@ -1,4 +1,5 @@
 *.egg-info/
+/*.lock
 /.*_cache/
 /.coverage
 /.dmypy.json
@@ -8,5 +9,4 @@
 /coverage.xml
 /dist/
 /docs/_build/
-/poetry.lock
 __pycache__/
