@@ -2,7 +2,7 @@
 
 project = "biip"
 author = "Stein Magnus Jodal"
-copyright = f"2020-2024, {author}"  # noqa: A001
+copyright = f"2020-2025, {author}"  # noqa: A001
 
 extensions = [
     "sphinx.ext.autodoc",

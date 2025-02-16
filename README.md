@@ -138,6 +138,6 @@ Please open an issue if you have any barcode parsing related needs that are not 
 
 ## License
 
-Copyright 2020-2024 Stein Magnus Jodal and contributors.
+Copyright 2020-2025 Stein Magnus Jodal and contributors.
 Licensed under the
 [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).
