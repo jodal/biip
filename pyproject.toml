@@ -24,22 +24,25 @@ Documentation = "https://biip.readthedocs.io"
 [dependency-groups]
 darglint = ["darglint>=1.8.1"]
 dev = [
-    "beautifulsoup4>=4.13.3",
-    "httpx>=0.28.1",
-    "nox>=2024.10.9",
-    "py-moneyed~=3.0",
-    "types-beautifulsoup4>=4.12.0.6,<5",
+    "tox>=4.21.2",
+    "tox-uv>=1.23.2",
     { include-group = "darglint" },
     { include-group = "docs" },
     { include-group = "mypy" },
     { include-group = "pyright" },
     { include-group = "ruff" },
     { include-group = "tests" },
+    { include-group = "scripts" },
 ]
 docs = ["sphinx>=7", "sphinx-rtd-theme>=2", "sphinx-autodoc-typehints>=2"]
 mypy = ["mypy==1.15.0"]
 pyright = ["pyright==1.1.394"]
 ruff = ["ruff==0.9.6"]
+scripts = [
+    "beautifulsoup4>=4.13.3",
+    "httpx>=0.28.1",
+    "types-beautifulsoup4>=4.12.0.20250204",
+]
 tests = [
     "coverage>=7.6.12",
     "pytest>=8.3.4",
@@ -123,6 +126,86 @@ convention = "google"
 
 [tool.ruff.lint.pyupgrade]
 keep-runtime-typing = true
+
+
+[tool.tox]
+requires = ["tox >= 4.21"]
+env_list = [
+    "3.9",
+    "3.10",
+    "3.11",
+    "3.12",
+    "3.13",
+    "docs",
+    "mypy",
+    "pyright",
+    "ruff-format",
+    "ruff-lint",
+]
+
+[tool.tox.env_run_base]
+dependency_groups = ["tests"]
+extras = ["money"]
+commands = [
+    [
+        "pytest",
+        "--basetemp={envtmpdir}",
+        "--cov=biip",
+        "--cov-report=term-missing",
+        "{posargs}",
+    ],
+]
+
+[tool.tox.env.docs]
+dependency_groups = ["docs"]
+extras = ["money"]
+commands = [
+    [
+        "sphinx-build",
+        "--builder",
+        "html",
+        "--doctree-dir",
+        "{envtmpdir}{/}doctrees",
+        "docs",
+        "{envtmpdir}{/}html",
+    ],
+]
+
+[tool.tox.env.mypy]
+dependency_groups = ["scripts", "tests", "mypy"]
+extras = ["money"]
+commands = [
+    [
+        "mypy",
+        { replace = "posargs", default = [
+            "src",
+            "tests",
+        ], extend = true },
+    ],
+]
+
+[tool.tox.env.pyright]
+dependency_groups = ["scripts", "tests", "pyright"]
+extras = ["money"]
+commands = [
+    [
+        "pyright",
+        { replace = "posargs", default = [
+            "src",
+            "tests",
+        ], extend = true },
+    ],
+]
+
+[tool.tox.env.ruff-format]
+skip_install = true
+dependency_groups = ["ruff"]
+commands = [["ruff", "format", "--check", "{posargs:.}"]]
+
+[tool.tox.env.ruff-lint]
+skip_install = true
+dependency_groups = ["ruff"]
+commands = [["ruff", "check", "{posargs:.}"]]
 
 
 [build-system]
