@@ -22,11 +22,9 @@ Repository = "https://github.com/jodal/biip"
 Documentation = "https://biip.readthedocs.io"
 
 [dependency-groups]
-darglint = ["darglint>=1.8.1"]
 dev = [
     "tox>=4.21.2",
     "tox-uv>=1.23.2",
-    { include-group = "darglint" },
     { include-group = "docs" },
     { include-group = "mypy" },
     { include-group = "pyright" },
