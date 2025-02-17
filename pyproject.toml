@@ -22,11 +22,9 @@ Repository = "https://github.com/jodal/biip"
 Documentation = "https://biip.readthedocs.io"
 
 [dependency-groups]
-darglint = ["darglint>=1.8.1"]
 dev = [
     "tox>=4.21.2",
     "tox-uv>=1.23.2",
-    { include-group = "darglint" },
     { include-group = "docs" },
     { include-group = "mypy" },
     { include-group = "pyright" },
@@ -95,7 +93,18 @@ reportPrivateUsage = false
 target-version = "py39"
 
 [tool.ruff.lint]
-select = ["ALL"]
+preview = true
+explicit-preview-rules = true
+select = [
+    "ALL",
+    #
+    # Preview rules
+    "DOC201", # docstring-missing-returns
+    "DOC202", # docstring-extraneous-returns
+    "DOC402", # docstring-missing-yields
+    "DOC403", # docstring-extraneous-yields
+    "DOC501", # docstring-missing-exception
+]
 ignore = [
     "PLR2004", # magic-value-comparison
     "S101",    # assert
@@ -120,6 +129,9 @@ ignore = [
 
 [tool.ruff.lint.isort]
 known-first-party = ["biip"]
+
+[tool.ruff.lint.pydoclint]
+ignore-one-line-docstrings = true
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"

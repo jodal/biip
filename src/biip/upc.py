@@ -126,7 +126,7 @@ class Upc:
             return cls._parse_upc_e(value)
 
         msg = "Unhandled UPC length. This is a bug."  # pragma: no cover
-        raise Exception(msg)  # noqa: TRY002  # pragma: no cover
+        raise NotImplementedError(msg)  # pragma: no cover
 
     @classmethod
     def _parse_upc_a(cls, value: str) -> Upc:
@@ -222,7 +222,7 @@ class Upc:
         msg = (  # pragma: no cover
             "Unhandled case while formatting as UPC-A. This is a bug."
         )
-        raise Exception(msg)  # noqa: TRY002  # pragma: no cover
+        raise NotImplementedError(msg)  # pragma: no cover
 
     def as_upc_e(self) -> str:
         """Format as UPC-E.
@@ -245,7 +245,7 @@ class Upc:
         msg = (  # pragma: no cover
             "Unhandled case while formatting as UPC-E. This is a bug."
         )
-        raise Exception(msg)  # noqa: TRY002  # pragma: no cover
+        raise NotImplementedError(msg)  # pragma: no cover
 
     def as_gtin_12(self) -> str:
         """Format as GTIN-12."""
