@@ -95,7 +95,18 @@ reportPrivateUsage = false
 target-version = "py39"
 
 [tool.ruff.lint]
-select = ["ALL"]
+preview = true
+explicit-preview-rules = true
+select = [
+    "ALL",
+    #
+    # Preview rules
+    "DOC201", # docstring-missing-returns
+    "DOC202", # docstring-extraneous-returns
+    "DOC402", # docstring-missing-yields
+    "DOC403", # docstring-extraneous-yields
+    "DOC501", # docstring-missing-exception
+]
 ignore = [
     "PLR2004", # magic-value-comparison
     "S101",    # assert
@@ -120,6 +131,9 @@ ignore = [
 
 [tool.ruff.lint.isort]
 known-first-party = ["biip"]
+
+[tool.ruff.lint.pydoclint]
+ignore-one-line-docstrings = true
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
