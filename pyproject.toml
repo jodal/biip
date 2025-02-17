@@ -127,9 +127,6 @@ ignore = [
     "S101", # assert
 ]
 
-[tool.ruff.lint.isort]
-known-first-party = ["biip"]
-
 [tool.ruff.lint.pydoclint]
 ignore-one-line-docstrings = true
 
