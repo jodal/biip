@@ -21,6 +21,12 @@ Homepage = "https://github.com/jodal/biip"
 Repository = "https://github.com/jodal/biip"
 Documentation = "https://biip.readthedocs.io"
 
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+
 [dependency-groups]
 dev = [
     "tox>=4.21.2",
@@ -217,8 +223,3 @@ commands = [["ruff", "format", "--check", "{posargs:.}"]]
 skip_install = true
 dependency_groups = ["ruff"]
 commands = [["ruff", "check", "{posargs:.}"]]
-
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
