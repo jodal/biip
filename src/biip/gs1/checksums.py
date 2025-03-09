@@ -18,7 +18,7 @@ def numeric_check_digit(value: str) -> int:
     References:
         GS1 General Specification, section 7.9
 
-    Example:
+    Examples:
         >>> from biip.gs1.checksums import numeric_check_digit
         >>> numeric_check_digit("950110153100")  # GTIN-13
         0
@@ -54,7 +54,7 @@ def price_check_digit(value: str) -> int:
     References:
         GS1 General Specification, section 7.9.2-7.9.4
 
-    Example:
+    Examples:
         >>> from biip.gs1.checksums import price_check_digit
         >>> price_check_digit("2875")
         9

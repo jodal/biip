@@ -35,7 +35,7 @@ class GS1ElementString:
     A single barcode can contain multiple Element Strings. Together these are
     called a "message."
 
-    Example:
+    Examples:
         >>> from biip.gs1 import GS1ElementString
         >>> element_string = GS1ElementString.extract("0107032069804988")
         >>> element_string
@@ -52,45 +52,49 @@ class GS1ElementString:
         '(01)07032069804988'
     """
 
-    #: The element's Application Identifier (AI).
     ai: GS1ApplicationIdentifier
+    """The element's Application Identifier (AI)."""
 
-    #: Raw data field of the Element String. Does not include the AI.
     value: str
+    """Raw data field of the Element String. Does not include the AI."""
 
-    #: List of pattern groups extracted from the Element String.
     pattern_groups: list[str]
+    """List of pattern groups extracted from the Element String."""
 
-    #: A GLN created from the element string, if the AI represents a GLN.
     gln: Optional[Gln] = None
+    """A GLN created from the element string, if the AI represents a GLN."""
 
-    #: The GLN parse error, if parsing as a GLN was attempted and failed.
     gln_error: Optional[str] = None
+    """The GLN parse error, if parsing as a GLN was attempted and failed."""
 
-    #: A GTIN created from the element string, if the AI represents a GTIN.
     gtin: Optional[Gtin] = None
+    """A GTIN created from the element string, if the AI represents a GTIN."""
 
-    #: The GTIN parse error, if parsing as a GTIN was attempted and failed.
     gtin_error: Optional[str] = None
+    """The GTIN parse error, if parsing as a GTIN was attempted and failed."""
 
-    #: An SSCC created from the element string, if the AI represents a SSCC.
     sscc: Optional[Sscc] = None
+    """An SSCC created from the element string, if the AI represents a SSCC."""
 
-    #: The SSCC parse error, if parsing as an SSCC was attempted and failed.
     sscc_error: Optional[str] = None
+    """The SSCC parse error, if parsing as an SSCC was attempted and failed."""
 
-    #: A date created from the element string, if the AI represents a date.
     date: Optional[dt.date] = None
+    """A date created from the element string, if the AI represents a date."""
 
-    #: A datetime created from the element string, if the AI represents a datetime.
     datetime: Optional[dt.datetime] = None
+    """A datetime created from the element string, if the AI represents a datetime."""
 
-    #: A decimal value created from the element string, if the AI represents a number.
     decimal: Optional[Decimal] = None
+    """A decimal value created from the element string, if the AI represents a
+    number."""
 
-    #: A Money value created from the element string, if the AI represents a
-    #: currency and an amount. Only set if py-moneyed is installed.
     money: Optional["moneyed.Money"] = None  # noqa: UP037
+    """A Money value created from the element string, if the AI represents a
+    currency and an amount.
+
+    Only set if `py-moneyed` is installed.
+    """
 
     @classmethod
     def extract(
@@ -105,14 +109,14 @@ class GS1ElementString:
 
         If the element string contains a primitive data type, like a date,
         decimal number, or currency, it will be parsed and stored in the
-        ``date``, ``decimal``, or ``money`` field respectively. If parsing of
-        a primitive data type fails, a ``ParseError`` will be raised.
+        `date`, `decimal`, or `money` field respectively. If parsing of a
+        primitive data type fails, a `ParseError` will be raised.
 
         If the element string contains another supported format, like a GLN,
         GTIN, or SSCC, it will parsed and validated, and the result stored in
-        the fields ``gln``, ``gtin``, or ``sscc`` respectively. If parsing or
-        validation of an inner format fails, the ``gln_error``, ``gtin_error``,
-        or ``sscc_error`` field will be set. No ``ParseError`` will be raised.
+        the fields `gln`, `gtin`, or `sscc` respectively. If parsing or
+        validation of an inner format fails, the `gln_error`, `gtin_error`, or
+        `sscc_error` field will be set. No `ParseError` will be raised.
 
         Args:
             value: The string to extract an Element String from. May contain
@@ -133,7 +137,7 @@ class GS1ElementString:
             A data class with the Element String's parts and data extracted from it.
 
         Raises:
-            ValueError: If the ``separator_char`` isn't exactly 1 character long.
+            ValueError: If the `separator_char` isn't exactly 1 character long.
             ParseError: If the parsing fails.
         """
         if any(len(char) != 1 for char in separator_chars):

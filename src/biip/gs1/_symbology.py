@@ -9,48 +9,48 @@ class GS1Symbology(Enum):
     """Enum of Symbology Identifiers used in the GS1 system.
 
     References:
-        GS1 General Specifications, figure 5.1.2-2.
-        ISO/IEC 15424:2008.
+        - GS1 General Specifications, figure 5.1.2-2.
+        - ISO/IEC 15424:2008.
     """
 
-    #: EAN-13, UPC-A, or UPC-E.
     EAN_13 = "E0"
+    """EAN-13, UPC-A, or UPC-E."""
 
-    #: Two-digit add-on symbol for EAN-13.
     EAN_TWO_DIGIT_ADD_ON = "E1"
+    """Two-digit add-on symbol for EAN-13."""
 
-    #: Five-digit add-on symbol for EAN-13.
     EAN_FIVE_DIGIT_ADD_ON = "E2"
+    """Five-digit add-on symbol for EAN-13."""
 
-    #: EAN-13, UPC-A, or UPC-E with add-on symbol.
     EAN_13_WITH_ADD_ON = "E3"
+    """EAN-13, UPC-A, or UPC-E with add-on symbol."""
 
-    #: EAN-8
     EAN_8 = "E4"
+    """EAN-8"""
 
-    #: ITF-14
     ITF_14 = "I1"
+    """ITF-14"""
 
-    #: GS1-128
     GS1_128 = "C1"
+    """GS1-128"""
 
-    #: GS1 DataBar
     GS1_DATABAR = "e0"
+    """GS1 DataBar"""
 
-    #: GS1 Composite. Data packet follows an encoded symbol separator character.
     GS1_COMPOSITE_WITH_SEPARATOR_CHAR = "e1"
+    """GS1 Composite. Data packet follows an encoded symbol separator character."""
 
-    #: GS1 Composite. Data packet follows an escape mechanism character.
     GS1_COMPOSITE_WITH_ESCAPE_CHAR = "e2"
+    """GS1 Composite. Data packet follows an escape mechanism character."""
 
-    #: GS1 DataMatrix
     GS1_DATAMATRIX = "d2"
+    """GS1 DataMatrix"""
 
-    #: GS1 QR Code
     GS1_QR_CODE = "Q3"
+    """GS1 QR Code"""
 
-    #: GS1 DotCode
     GS1_DOTCODE = "J1"
+    """GS1 DotCode"""
 
     @classmethod
     def with_ai_element_strings(cls) -> set[GS1Symbology]:

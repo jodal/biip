@@ -4,11 +4,11 @@ SSCCs are used to identify logistic units, e.g. a pallet shipped between two
 parties.
 
 If you only want to parse SSCCs, you can import the SSCC parser directly
-instead of using :func:`biip.parse`.
+instead of using `biip.parse()`.
 
     >>> from biip.sscc import Sscc
 
-If parsing succeeds, it returns a :class:`Sscc` object.
+If parsing succeeds, it returns a `Sscc` object.
 
     >>> sscc = Sscc.parse("157035381410375177")
     >>> sscc
@@ -41,29 +41,37 @@ from biip.gs1.checksums import numeric_check_digit
 class Sscc:
     """Data class containing an SSCC."""
 
-    #: Raw unprocessed value.
     value: str
+    """Raw unprocessed value."""
 
-    #: The GS1 Prefix, indicating what GS1 country organization that assigned
-    #: code range.
     prefix: Optional[GS1Prefix]
+    """The GS1 Prefix.
 
-    #: The GS1 Company Prefix, identifying the company that issued the SSCC.
+    Indicating what GS1 country organization that assigned code range.
+    """
+
     company_prefix: Optional[GS1CompanyPrefix]
+    """The GS1 Company Prefix.
 
-    #: Extension digit used to increase the capacity of the serial reference.
+    Identifying the company that issued the SSCC.
+    """
+
     extension_digit: int
+    """Extension digit used to increase the capacity of the serial reference."""
 
-    #: The actual payload, including extension digit, company prefix, and item
-    #: reference. Excludes the check digit.
     payload: str
+    """The actual payload.
 
-    #: Check digit used to check if the SSCC as a whole is valid.
+    Including extension digit, company prefix, and item reference. Excludes the
+    check digit.
+    """
+
     check_digit: int
+    """Check digit used to check if the SSCC as a whole is valid."""
 
     @classmethod
     def parse(cls, value: str) -> Sscc:
-        """Parse the given value into a :class:`Sscc` object.
+        """Parse the given value into a `Sscc` object.
 
         Args:
             value: The value to parse.

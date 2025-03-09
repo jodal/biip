@@ -23,7 +23,7 @@ class GS1ApplicationIdentifier:
     References:
         https://www.gs1.org/standards/barcodes/application-identifiers
 
-    Example:
+    Examples:
         >>> from biip.gs1 import GS1ApplicationIdentifier
         >>> ai = GS1ApplicationIdentifier.extract("01")
         >>> ai
@@ -34,24 +34,26 @@ class GS1ApplicationIdentifier:
         '^01(\\d{14})$'
     """
 
-    #: The Application Identifier (AI) itself.
     ai: str
+    """The Application Identifier (AI) itself."""
 
-    #: Description of the AIs use.
     description: str
+    """Description of the AIs use."""
 
-    #: Commonly used label/abbreviation for the AI.
     data_title: str
+    """Commonly used label/abbreviation for the AI."""
 
-    #: Whether a FNC1 character is required after element strings of this type.
-    #: This is the case for all AIs that have a variable length.
     fnc1_required: bool
+    """Whether a FNC1 character is required after element strings of this type.
 
-    #: Human readable format of the AIs element string.
+    This is the case for all AIs that have a variable length.
+    """
+
     format: str
+    """Human readable format of the AIs element string."""
 
-    #: Regular expression for parsing the AIs element string.
     pattern: str = field(repr=False)
+    """Regular expression for parsing the AIs element string."""
 
     @classmethod
     def extract(cls, value: str) -> GS1ApplicationIdentifier:
@@ -66,7 +68,7 @@ class GS1ApplicationIdentifier:
         Raises:
             ParseError: If the parsing fails.
 
-        Example:
+        Examples:
             >>> from biip.gs1 import GS1ApplicationIdentifier
             >>> GS1ApplicationIdentifier.extract("010703206980498815210526100329")
             GS1ApplicationIdentifier(ai='01', description='Global Trade Item

@@ -28,15 +28,15 @@ class GS1Message:
 
     It may contain one or more GS1 Element Strings.
 
-    Example:
-        See :mod:`biip.gs1` for a usage example.
+    Examples:
+        See `biip.gs1` for a usage example.
     """
 
-    #: Raw unprocessed value.
     value: str
+    """Raw unprocessed value."""
 
-    #: List of Element Strings found in the message.
     element_strings: list[GS1ElementString]
+    """List of Element Strings found in the message."""
 
     @classmethod
     def parse(
@@ -68,7 +68,7 @@ class GS1Message:
             A message object with one or more element strings.
 
         Raises:
-            ValueError: If the ``separator_char`` isn't exactly 1 character long.
+            ValueError: If the `separator_char` isn't exactly 1 character long.
             ParseError: If the parsing fails.
         """
         value = value.strip()

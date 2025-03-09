@@ -40,26 +40,29 @@ class Rcn(Gtin):
         GS1 General Specifications, section 2.1.11-2.1.12
     """
 
-    #: Where the RCN can be circulated,
-    #: in a geographical region or within a company.
     usage: Optional[RcnUsage] = field(default=None)
+    """Where the RCN can be circulated, in a geographical region or within a company."""
 
-    #: The geographical region whose rules are used to interpret the contents
-    #: of  the RCN.
     region: Optional[RcnRegion] = field(default=None)
+    """The geographical region.
 
-    #: A variable weight value extracted from the GTIN.
+    The region's rules are used to interpret the contents of the RCN.
+    """
+
     weight: Optional[Decimal] = field(default=None)
+    """A variable weight value extracted from the GTIN."""
 
-    #: A variable count extracted from the GTIN.
     count: Optional[int] = field(default=None)
+    """A variable count extracted from the GTIN."""
 
-    #: A variable weight price extracted from the GTIN.
     price: Optional[Decimal] = field(default=None)
+    """A variable weight price extracted from the GTIN."""
 
-    #: A Money value created from the variable weight price.
-    #: Only set if py-moneyed is installed and the currency is known.
     money: Optional["moneyed.Money"] = field(default=None)  # noqa: UP037
+    """A Money value created from the variable weight price.
+
+    Only set if `py-moneyed` is installed and the currency is known.
+    """
 
     def __post_init__(self) -> None:
         """Initialize derivated fields."""

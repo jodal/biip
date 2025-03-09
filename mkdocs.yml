@@ -1,0 +1,89 @@
+site_name: Biip
+site_description: Biip interprets the data in barcodes.
+site_url: !ENV READTHEDOCS_CANONICAL_URL
+
+copyright: Copyright © 2020-2025 Stein Magnus Jodal
+repo_name: jodal/biip
+repo_url: https://github.com/jodal/biip
+edit_uri: edit/main/docs/
+
+nav:
+  - index.md
+  - quickstart.md
+  - Reference:
+      - api/biip.md
+      - api/gln.md
+      - api/gs1.md
+      - api/gs1-checksums.md
+      - api/gtin.md
+      - api/sscc.md
+      - api/symbology.md
+      - api/upc.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/jodal/biip
+
+extra_javascript:
+  - javascript/readthedocs.js
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      default_lang: python
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+plugins:
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          inventories:
+            - https://docs.python.org/3/objects.inv
+          options:
+            docstring_style: google
+            docstring_section_style: list
+            filters:
+              - "!^__post_init__"
+              - "!^__len__"
+              - "!^__repr__"
+              - "!^__str__"
+            separate_signature: true
+            show_docstring_examples: true
+            show_root_toc_entry: false
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            show_signature_annotations: true
+  - search
+
+theme:
+  name: material
+  features:
+    - content.action.edit
+    - navigation.footer
+  icon:
+    logo: fontawesome/solid/barcode
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: red
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: red
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode

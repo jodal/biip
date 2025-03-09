@@ -39,7 +39,11 @@ dev = [
     { include-group = "tests" },
     { include-group = "scripts" },
 ]
-docs = ["sphinx>=7", "sphinx-rtd-theme>=2", "sphinx-autodoc-typehints>=2"]
+docs = [
+    "mkdocs-material>=9.4",
+    "mkdocstrings[python]>=0.24",
+    { include-group = "ruff" },
+]
 mypy = ["mypy==1.15.0"]
 pyright = ["pyright==1.1.394"]
 ruff = ["ruff==0.9.6"]
@@ -176,7 +180,7 @@ commands = [
 [tool.tox.env.docs]
 dependency_groups = ["docs"]
 extras = ["money"]
-commands = [["sphinx-build", "docs", "{envtmpdir}"]]
+commands = [["mkdocs", "build", "--site-dir={envtmpdir}"]]
 
 [tool.tox.env.mypy]
 dependency_groups = ["scripts", "tests", "mypy"]

@@ -1,6 +1,6 @@
 """Prefixes allocated by GS1.
 
-Example:
+Examples:
     >>> from biip.gs1 import GS1CompanyPrefix, GS1Prefix
     >>> GS1Prefix.extract("7044610873466")
     GS1Prefix(value='704', usage='GS1 Norway')
@@ -34,17 +34,17 @@ class GS1Prefix:
     References:
         https://www.gs1.org/standards/id-keys/company-prefix
 
-    Example:
+    Examples:
         >>> from biip.gs1 import GS1Prefix
         >>> GS1Prefix.extract("978-1-492-05374-3")
         GS1Prefix(value='978', usage='Bookland (ISBN)')
     """
 
-    #: The prefix itself.
     value: str
+    """The prefix itself."""
 
-    #: Description of who is using the prefix.
     usage: str
+    """Description of who is using the prefix."""
 
     @classmethod
     def extract(cls, value: str) -> Optional[GS1Prefix]:
@@ -86,14 +86,14 @@ class GS1CompanyPrefix:
 
     The prefix assigned to a single company.
 
-    Example:
+    Examples:
         >>> from biip.gs1 import GS1CompanyPrefix
         >>> GS1CompanyPrefix.extract("7044610873466")
         GS1CompanyPrefix(value='704461')
     """
 
-    #: The company prefix itself.
     value: str
+    """The company prefix itself."""
 
     @classmethod
     def extract(cls, value: str) -> Optional[GS1CompanyPrefix]:

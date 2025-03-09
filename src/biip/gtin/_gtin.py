@@ -15,36 +15,48 @@ from biip.gtin import GtinFormat, RcnRegion
 class Gtin:
     """Data class containing a GTIN."""
 
-    #: Raw unprocessed value.
-    #:
-    #: May include leading zeros.
     value: str
+    """Raw unprocessed value.
 
-    #: GTIN format, either GTIN-8, GTIN-12, GTIN-13, or GTIN-14.
-    #:
-    #: Classification is done after stripping leading zeros.
+    May include leading zeros.
+    """
+
     format: GtinFormat
+    """GTIN format, either GTIN-8, GTIN-12, GTIN-13, or GTIN-14.
 
-    #: The GS1 Prefix, indicating what GS1 country organization that assigned
-    #: code range.
+    Classification is done after stripping leading zeros.
+    """
+
     prefix: Optional[GS1Prefix]
+    """The GS1 Prefix.
 
-    #: The GS1 Company Prefix, identifying the company that issued the GTIN.
+    Indicating what GS1 country organization that assigned
+    code range.
+    """
+
     company_prefix: Optional[GS1CompanyPrefix]
+    """The GS1 Company Prefix.
 
-    #: The actual payload, including packaging level if any, company prefix,
-    #: and item reference. Excludes the check digit.
+    Identifying the company that issued the GTIN.
+    """
+
     payload: str
+    """The actual payload.
 
-    #: Check digit used to check if the GTIN as a whole is valid.
+    Including packaging level if any, company prefix, and item reference.
+    Excludes the check digit.
+    """
+
     check_digit: int
+    """Check digit used to check if the GTIN as a whole is valid."""
 
-    #: Packaging level is the first digit in GTIN-14 codes.
-    #:
-    #: This digit is used for wholesale shipments, e.g. the GTIN-14 product
-    #: identifier in GS1-128 barcodes, but not in the GTIN-13 barcodes used for
-    #: retail products.
     packaging_level: Optional[int] = None
+    """Packaging level is the first digit in GTIN-14 codes.
+
+    This digit is used for wholesale shipments, e.g. the GTIN-14 product
+    identifier in GS1-128 barcodes, but not in the GTIN-13 barcodes used for
+    retail products.
+    """
 
     @classmethod
     def parse(
@@ -54,7 +66,7 @@ class Gtin:
         rcn_region: Optional[Union[RcnRegion, str]] = None,
         rcn_verify_variable_measure: bool = True,
     ) -> Gtin:
-        """Parse the given value into a :class:`Gtin` object.
+        """Parse the given value into a `Gtin` object.
 
         Both GTIN-8, GTIN-12, GTIN-13, and GTIN-14 are supported.
 
