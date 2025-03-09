@@ -29,6 +29,7 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
+    "biip[money]",
     "tox>=4.21.2",
     "tox-uv>=1.23.2",
     { include-group = "docs" },
