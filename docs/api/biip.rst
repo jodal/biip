@@ -1,6 +1,0 @@
-====
-biip
-====
-
-.. automodule:: biip
-    :members:

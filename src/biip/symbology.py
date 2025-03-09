@@ -9,7 +9,7 @@ the barcode may use the Symbology Identifier to differentiate how to handle
 the barcode, but must at the very least be able to strip and ignore the extra
 characters.
 
-Example:
+Examples:
     >>> from biip.symbology import SymbologyIdentifier
     >>> SymbologyIdentifier.extract("]E05901234123457")
     SymbologyIdentifier(value=']E0', symbology=Symbology.EAN_UPC,
@@ -44,95 +44,95 @@ class Symbology(Enum):
         ISO/IEC 15424:2008, table 1.
     """
 
-    #: Code 39
     CODE_39 = "A"
+    """Code 39"""
 
-    #: Telepen
     TELEPEN = "B"
+    """Telepen"""
 
-    #: Code 128
     CODE_128 = "C"
+    """Code 128"""
 
-    #: Code One
     CODE_ONE = "D"
+    """Code One"""
 
-    #: EAN/UPC
     EAN_UPC = "E"
+    """EAN/UPC"""
 
-    #: Codabar
     CODABAR = "F"
+    """Codabar"""
 
-    #: Code 93
     CODE_93 = "G"
+    """Code 93"""
 
-    #: Code 11
     CODE_11 = "H"
+    """Code 11"""
 
-    #: ITF (Interleaved 2 of 5)
     ITF = "I"
+    """ITF (Interleaved 2 of 5)"""
 
-    #: Code 16K
     CODE_16K = "K"
+    """Code 16K"""
 
-    #: PDF417 and MicroPDF417
     PDF417 = "L"
+    """PDF417 and MicroPDF417"""
 
-    #: MSI
     MSI = "M"
+    """MSI"""
 
-    #: Anker
     ANKER = "N"
+    """Anker"""
 
-    #: Codablock
     CODABLOCK = "O"
+    """Codablock"""
 
-    #: Plessey Code
     PLESSEY_CODE = "P"
+    """Plessey Code"""
 
-    #: QR Code and QR Code 2005
     QR_CODE = "Q"
+    """QR Code and QR Code 2005"""
 
-    #: Straigt 2 of 5 (with two bar start/stop codes)
     STRAIGHT_2_OF_5_WITH_2_BAR_START_STOP_CODE = "R"
+    """Straigt 2 of 5 (with two bar start/stop codes)"""
 
-    #: Straigt 2 of 5 (with three bar start/stop codes)
     STRAIGHT_2_OF_5_WITH_3_BAR_START_STOP_CODE = "S"
+    """Straigt 2 of 5 (with three bar start/stop codes)"""
 
-    #: Code 49
     CODE_49 = "T"
+    """Code 49"""
 
-    #: MaxiCode
     MAXICODE = "U"
+    """MaxiCode"""
 
-    #: Other barcode
     OTHER_BARCODE = "X"
+    """Other barcode"""
 
-    #: System expansion
     SYSTEM_EXPANSION = "Y"
+    """System expansion"""
 
-    #: Non-barcode
     NON_BARCODE = "Z"
+    """Non-barcode"""
 
-    #: Channel Code
     CHANNEL_CODE = "c"
+    """Channel Code"""
 
-    #: Data Matrix
     DATA_MATRIX = "d"
+    """Data Matrix"""
 
-    #: RSS and EAN.UCC Composite
     RSS_EAN_UCC_COMPOSITE = "e"
+    """RSS and EAN.UCC Composite"""
 
-    #: OCR (Optical Character Recognition)
     OCR = "o"
+    """OCR (Optical Character Recognition)"""
 
-    #: PosiCode
     POSICODE = "p"
+    """PosiCode"""
 
-    #: SuperCode
     SUPERCODE = "s"
+    """SuperCode"""
 
-    #: Aztec Code
     AZTEC_CODE = "z"
+    """Aztec Code"""
 
     def __repr__(self) -> str:
         """Canonical string representation of format."""
@@ -143,19 +143,22 @@ class Symbology(Enum):
 class SymbologyIdentifier:
     """Data class containing a Symbology Identifier."""
 
-    #: Raw unprocessed value.
     value: str
+    """Raw unprocessed value."""
 
-    #: The recognized symbology.
     symbology: Symbology
+    """The recognized symbology."""
 
-    #: Symbology modifiers.
-    #: Refer to :attr:`gs1_symbology` or ISO/IEC 15424 for interpretation.
     modifiers: str
+    """Symbology modifiers.
 
-    #: If the Symbology Identifier is used in the GS1 system,
-    #: this field is set to indicate how to interpret the following data.
+    Refer to `gs1_symbology` or ISO/IEC 15424 for interpretation.
+    """
+
     gs1_symbology: Optional[GS1Symbology] = None
+    """If the Symbology Identifier is used in the GS1 system,
+    this field is set to indicate how to interpret the following data.
+    """
 
     @classmethod
     def extract(cls, value: str) -> SymbologyIdentifier:

@@ -111,38 +111,43 @@ class ParseConfig:
 class ParseResult:
     """Results from a successful barcode parsing."""
 
-    #: The raw value. Only stripped of surrounding whitespace.
     value: str
+    """The raw value. Only stripped of surrounding whitespace."""
 
-    #: The Symbology Identifier, if any.
     symbology_identifier: Optional[SymbologyIdentifier] = None
+    """The Symbology Identifier, if any."""
 
-    #: The extracted GTIN, if any.
-    #: Is also set if a GS1 Message containing a GTIN was successfully parsed.
     gtin: Optional[Gtin] = None
+    """The extracted GTIN, if any.
 
-    #: The GTIN parse error, if parsing as a GTIN was attempted and failed.
+    Is also set if a GS1 Message containing a GTIN was successfully parsed."""
+
     gtin_error: Optional[str] = None
+    """The GTIN parse error, if parsing as a GTIN was attempted and failed."""
 
-    #: The extracted UPC, if any.
     upc: Optional[Upc] = None
+    """The extracted UPC, if any."""
 
-    #: The UPC parse error, if parsing as an UPC was attempted and failed.
     upc_error: Optional[str] = None
+    """The UPC parse error, if parsing as an UPC was attempted and failed."""
 
-    #: The extracted SSCC, if any.
-    #: Is also set if a GS1 Message containing an SSCC was successfully parsed.
     sscc: Optional[Sscc] = None
+    """The extracted SSCC, if any.
 
-    #: The SSCC parse error, if parsing as an SSCC was attempted and failed.
+    Is also set if a GS1 Message containing an SSCC was successfully parsed.
+    """
+
     sscc_error: Optional[str] = None
+    """The SSCC parse error, if parsing as an SSCC was attempted and failed."""
 
-    #: The extracted GS1 Message, if any.
     gs1_message: Optional[GS1Message] = None
+    """The extracted GS1 Message, if any."""
 
-    #: The GS1 Message parse error,
-    #: if parsing as a GS1 Message was attempted and failed.
     gs1_message_error: Optional[str] = None
+    """The GS1 Message parse error.
+
+    If parsing as a GS1 Message was attempted and failed.
+    """
 
     def _has_result(self) -> bool:
         return any([self.gtin, self.upc, self.sscc, self.gs1_message])

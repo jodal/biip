@@ -9,17 +9,17 @@ from typing import Optional
 class GtinFormat(IntEnum):
     """Enum of GTIN formats."""
 
-    #: GTIN-8
     GTIN_8 = 8
+    """GTIN-8"""
 
-    #: GTIN-12
     GTIN_12 = 12
+    """GTIN-12"""
 
-    #: GTIN-13
     GTIN_13 = 13
+    """GTIN-13"""
 
-    #: GTIN-14
     GTIN_14 = 14
+    """GTIN-14"""
 
     def __str__(self) -> str:
         """Pretty string representation of format."""
@@ -38,11 +38,11 @@ class GtinFormat(IntEnum):
 class RcnUsage(Enum):
     """Enum of RCN usage restrictions."""
 
-    #: Usage of RCN restricted to geopgraphical area.
     GEOGRAPHICAL = "geo"
+    """Usage of RCN restricted to geopgraphical area."""
 
-    #: Usage of RCN restricted to internally in a company.
     COMPANY = "company"
+    """Usage of RCN restricted to internally in a company."""
 
     def __repr__(self) -> str:
         """Canonical string representation of format."""
@@ -55,32 +55,32 @@ class RcnRegion(Enum):
     The value of the enum is the lowercase ISO 3166-1 Alpha-2 code.
     """
 
-    #: Denmark
     DENMARK = "dk"
+    """Denmark"""
 
-    #: Estonia
     ESTONIA = "ee"
+    """Estonia"""
 
-    #: Finland
     FINLAND = "fi"
+    """Finland"""
 
-    #: Germany
     GERMANY = "de"
+    """Germany"""
 
-    #: Great Britain
     GREAT_BRITAIN = "gb"
+    """Great Britain"""
 
-    #: Latvia
     LATVIA = "lv"
+    """Latvia"""
 
-    #: Lithuania
     LITHUANIA = "lt"
+    """Lithuania"""
 
-    #: Norway
     NORWAY = "no"
+    """Norway"""
 
-    #: Sweden
     SWEDEN = "se"
+    """Sweden"""
 
     def __repr__(self) -> str:
         """Canonical string representation of format."""

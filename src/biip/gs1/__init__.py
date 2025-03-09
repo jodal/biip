@@ -1,8 +1,8 @@
 """Support for barcode data with GS1 element strings.
 
-The :mod:`biip.gs1` module contains Biip's support for parsing data
-consisting of GS1 Element Strings. Each Element String is identified by a GS1
-Application Identifier (AI) prefix.
+The `biip.gs1` module contains Biip's support for parsing data consisting of GS1
+Element Strings. Each Element String is identified by a GS1 Application
+Identifier (AI) prefix.
 
 Data of this format is found in the following types of barcodes:
 
@@ -12,15 +12,15 @@ Data of this format is found in the following types of barcodes:
 - GS1 QR Code
 
 If you only want to parse GS1 Messages, you can import the GS1 Message parser
-directly instead of using :func:`biip.parse`.
+directly instead of using `biip.parse()`.
 
     >>> from biip.gs1 import GS1Message
 
-If the parsing succeeds, it returns a :class:`GS1Message` object.
+If the parsing succeeds, it returns a `GS1Message` object.
 
     >>> msg = GS1Message.parse("010703206980498815210526100329")
 
-The ``GS1Message`` has a raw value as well as an HRI, short for "human readable
+The `GS1Message` has a raw value as well as an HRI, short for "human readable
 interpretation". The HRI is the text usually printed below or next to the
 barcode.
 
@@ -51,7 +51,7 @@ In this example, the first element string is a GTIN.
     gtin_error=None, sscc=None, sscc_error=None, date=None, datetime=None,
     decimal=None, money=None)
 
-The message object has :meth:`~GS1Message.get` and :meth:`~GS1Message.filter`
+The message object has `GS1Message.get()` and `GS1Message.filter()`
 methods to lookup element strings either by the Application Identifier's
 "data title" or its AI number.
 
@@ -72,11 +72,12 @@ methods to lookup element strings either by the Application Identifier's
 
 ASCII_GROUP_SEPARATOR = "\x1d"
 
-#: The default separator character is <GS>, ASCII value 29.
-#:
-#: References:
-#:   GS1 General Specifications, section 7.8.3.
 DEFAULT_SEPARATOR_CHARS: tuple[str] = (ASCII_GROUP_SEPARATOR,)
+"""The default separator character is `<GS>`, ASCII value 29.
+
+References:
+   GS1 General Specifications, section 7.8.3.
+"""
 
 # The following must be imported in this specific order.
 # ruff: noqa: E402, I001

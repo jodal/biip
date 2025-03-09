@@ -1,6 +1,6 @@
 """Support for Global Trade Item Number (GTIN).
 
-The :mod:`biip.gtin` module contains Biip's support for parsing GTIN formats.
+The `biip.gtin` module contains Biip's support for parsing GTIN formats.
 
 A GTIN is a number that uniquely identifies a trade item.
 
@@ -12,11 +12,11 @@ This class can interpet the following GTIN formats:
 - GTIN-14, found in ITF-14 barcodes, as well as a data field in GS1 barcodes.
 
 If you only want to parse GTINs, you can import the GTIN parser directly
-instead of using :func:`biip.parse`.
+instead of using `biip.parse()`.
 
     >>> from biip.gtin import Gtin
 
-If parsing succeeds, it returns a :class:`Gtin` object.
+If parsing succeeds, it returns a `Gtin` object.
 
     >>> gtin = Gtin.parse("7032069804988")
     >>> gtin

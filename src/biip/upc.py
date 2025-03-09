@@ -1,6 +1,6 @@
 """Universal Product Code (UPC).
 
-The :mod:`biip.upc` module contains Biip's support for parsing UPC formats.
+The `biip.upc` module contains Biip's support for parsing UPC formats.
 
 This class can interpret the following UPC formats:
 
@@ -10,11 +10,11 @@ This class can interpret the following UPC formats:
 - UPC-E, 8 digits, with explicit number system and a check digit.
 
 If you only want to parse UPCs, you can import the UPC parser directly
-instead of using :func:`biip.parse`
+instead of using `biip.parse()`.
 
     >>> from biip.upc import Upc
 
-If parsing succeds, it returns a :class:`Upc` object.
+If parsing succeds, it returns a `Upc` object.
 
     >>> upc_a = Upc.parse("042100005264")
     >>> upc_a
@@ -62,7 +62,10 @@ class UpcFormat(Enum):
     """Enum of UPC formats."""
 
     UPC_A = "upc_a"
+    """UPC-A"""
+
     UPC_E = "upc_e"
+    """UPC-E"""
 
     def __repr__(self) -> str:
         """Canonical string representation of format."""
@@ -73,27 +76,31 @@ class UpcFormat(Enum):
 class Upc:
     """Data class containing an UPC."""
 
-    #: Raw unprocessed value.
     value: str
+    """Raw unprocessed value."""
 
-    #: UPC format, either UPC-A or UPC-E.
     format: UpcFormat
+    """UPC format, either UPC-A or UPC-E."""
 
-    #: Number system digit.
     number_system_digit: int
+    """Number system digit."""
 
-    #: The actual payload, including number system digit, manufacturer code,
-    #: and product code. Excludes the check digit.
     payload: str
+    """The actual payload.
 
-    #: Check digit used to check if the UPC-A as a whole is valid.
-    #:
-    #: Set for UPC-A, but not set for UPC-E.
+    Including number system digit, manufacturer code, and product code. Excludes
+    the check digit.
+    """
+
     check_digit: Optional[int] = None
+    """Check digit used to check if the UPC-A as a whole is valid.
+
+    Set for UPC-A, but not set for UPC-E.
+    """
 
     @classmethod
     def parse(cls, value: str) -> Upc:
-        """Parse the given value into a :class:`Upc` object.
+        """Parse the given value into a `Upc` object.
 
         Args:
             value: The value to parse.
