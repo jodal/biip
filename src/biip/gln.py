@@ -10,10 +10,19 @@ If you only want to parse GLNs, you can import the GLN parser directly.
 If parsing succeeds, it returns a `Gln` object.
 
     >>> gln = Gln.parse("1234567890128")
-    >>> gln
-    Gln(value='1234567890128', prefix=GS1Prefix(value='123',
-    usage='GS1 US'), company_prefix=GS1CompanyPrefix(value='1234567890'),
-    payload='123456789012', check_digit=8)
+    >>> pprint(gln)
+    Gln(
+        value='1234567890128',
+        prefix=GS1Prefix(
+            value='123',
+            usage='GS1 US'
+        ),
+        company_prefix=GS1CompanyPrefix(
+            value='1234567890'
+        ),
+        payload='123456789012',
+        check_digit=8
+    )
 
 As GLNs do not appear independently in barcodes, the GLN parser is not a part of
 the top-level parser `biip.parse()`. However, if you are parsing a barcode with
@@ -21,10 +30,24 @@ GS1 element strings including a GLN, the GLN will be parsed and validated using
 the `Gln` class.
 
     >>> import biip
-    >>> biip.parse("4101234567890128").gs1_message.get(data_title="SHIP TO").gln
-    Gln(value='1234567890128', prefix=GS1Prefix(value='123', usage='GS1 US'),
-    company_prefix=GS1CompanyPrefix(value='1234567890'), payload='123456789012',
-    check_digit=8)
+    >>> gln = (
+    ...     biip.parse("4101234567890128")
+    ...     .gs1_message.get(data_title="SHIP TO")
+    ...     .gln
+    ... )
+    >>> pprint(gln)
+    Gln(
+        value='1234567890128',
+        prefix=GS1Prefix(
+            value='123',
+            usage='GS1 US'
+        ),
+        company_prefix=GS1CompanyPrefix(
+            value='1234567890'
+        ),
+        payload='123456789012',
+        check_digit=8
+    )
 """
 
 from __future__ import annotations

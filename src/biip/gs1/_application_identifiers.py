@@ -26,10 +26,14 @@ class GS1ApplicationIdentifier:
     Examples:
         >>> from biip.gs1 import GS1ApplicationIdentifier
         >>> ai = GS1ApplicationIdentifier.extract("01")
-        >>> ai
-        GS1ApplicationIdentifier(ai='01', description='Global Trade Item
-        Number (GTIN)', data_title='GTIN', fnc1_required=False,
-        format='N2+N14')
+        >>> pprint(ai)
+        GS1ApplicationIdentifier(
+            ai='01',
+            description='Global Trade Item Number (GTIN)',
+            data_title='GTIN',
+            fnc1_required=False,
+            format='N2+N14'
+        )
         >>> ai.pattern
         '^01(\\d{14})$'
     """
@@ -70,10 +74,15 @@ class GS1ApplicationIdentifier:
 
         Examples:
             >>> from biip.gs1 import GS1ApplicationIdentifier
-            >>> GS1ApplicationIdentifier.extract("010703206980498815210526100329")
-            GS1ApplicationIdentifier(ai='01', description='Global Trade Item
-            Number (GTIN)', data_title='GTIN', fnc1_required=False,
-            format='N2+N14')
+            >>> ai = GS1ApplicationIdentifier.extract("010703206980498815210526100329")
+            >>> pprint(ai)
+            GS1ApplicationIdentifier(
+                ai='01',
+                description='Global Trade Item Number (GTIN)',
+                data_title='GTIN',
+                fnc1_required=False,
+                format='N2+N14'
+            )
         """
         for application_identifier in _GS1_APPLICATION_IDENTIFIERS.values():
             if value.startswith(application_identifier.ai):

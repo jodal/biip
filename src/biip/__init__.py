@@ -6,19 +6,50 @@ An ambiguous value may be interpreted as different formats. In the following
 example, the value can be interpreted as either a GTIN or a GS1 Message.
 
     >>> result = biip.parse("96385074")
-    >>> result.gtin
-    Gtin(value='96385074', format=GtinFormat.GTIN_8,
-    prefix=GS1Prefix(value='00009', usage='GS1 US'),
-    company_prefix=GS1CompanyPrefix(value='0000963'), payload='9638507',
-    check_digit=4, packaging_level=None)
-    >>> result.gs1_message
-    GS1Message(value='96385074',
-    element_strings=[GS1ElementString(ai=GS1ApplicationIdentifier(ai='96',
-    description='Company internal information', data_title='INTERNAL',
-    fnc1_required=True, format='N2+X..90'), value='385074',
-    pattern_groups=['385074'], gln=None, gln_error=None, gtin=None,
-    gtin_error=None, sscc=None, sscc_error=None, date=None, datetime=None,
-    decimal=None, money=None)])
+    >>> pprint(result.gtin)
+    Gtin(
+        value='96385074',
+        format=GtinFormat.GTIN_8,
+        prefix=GS1Prefix(
+            value='00009',
+            usage='GS1 US'
+        ),
+        company_prefix=GS1CompanyPrefix(
+            value='0000963'
+        ),
+        payload='9638507',
+        check_digit=4,
+        packaging_level=None
+    )
+    >>> pprint(result.gs1_message)
+    GS1Message(
+        value='96385074',
+        element_strings=[
+            GS1ElementString(
+                ai=GS1ApplicationIdentifier(
+                    ai='96',
+                    description='Company internal information',
+                    data_title='INTERNAL',
+                    fnc1_required=True,
+                    format='N2+X..90'
+                ),
+                value='385074',
+                pattern_groups=[
+                    '385074'
+                ],
+                gln=None,
+                gln_error=None,
+                gtin=None,
+                gtin_error=None,
+                sscc=None,
+                sscc_error=None,
+                date=None,
+                datetime=None,
+                decimal=None,
+                money=None
+            )
+        ]
+    )
 
 In the next example, the value is only valid as a GS1 Message and the GTIN
 parser returns an error explaining why the value cannot be interpreted as a
@@ -26,18 +57,39 @@ GTIN. If a format includes check digits, Biip always control them and fail if
 the check digits are incorrect.
 
     >>> result = biip.parse("15210527")
-    >>> result.gtin
+    >>> print(result.gtin)
     None
     >>> result.gtin_error
     "Invalid GTIN check digit for '15210527': Expected 4, got 7."
-    >>> result.gs1_message
-    GS1Message(value='15210527',
-    element_strings=[GS1ElementString(ai=GS1ApplicationIdentifier(ai='15',
-    description='Best before date (YYMMDD)', data_title='BEST BEFORE or BEST
-    BY', fnc1_required=False, format='N2+N6'), value='210527',
-    pattern_groups=['210527'], gln=None, gln_error=None, gtin=None,
-    gtin_error=None, sscc=None, sscc_error=None, date=datetime.date(2021, 5,
-    27), datetime=None, decimal=None, money=None)])
+    >>> pprint(result.gs1_message)
+    GS1Message(
+        value='15210527',
+        element_strings=[
+            GS1ElementString(
+                ai=GS1ApplicationIdentifier(
+                    ai='15',
+                    description='Best before date (YYMMDD)',
+                    data_title='BEST BEFORE or BEST BY',
+                    fnc1_required=False,
+                    format='N2+N6'
+                ),
+                value='210527',
+                pattern_groups=[
+                    '210527'
+                ],
+                gln=None,
+                gln_error=None,
+                gtin=None,
+                gtin_error=None,
+                sscc=None,
+                sscc_error=None,
+                date=datetime.date(2021, 5, 27),
+                datetime=None,
+                decimal=None,
+                money=None
+            )
+        ]
+    )
 
 If a value cannot be interpreted as any supported format, an exception is
 raised with a reason from each parser.
