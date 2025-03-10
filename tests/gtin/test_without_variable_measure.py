@@ -1,7 +1,7 @@
 import pytest
 
 from biip import EncodeError
-from biip.gs1.checksums import numeric_check_digit
+from biip.checksums import gs1_standard_check_digit
 from biip.gtin import Gtin, Rcn, RcnRegion
 
 
@@ -80,7 +80,7 @@ def test_without_variable_measure_keeps_nonvariable_rcn_unchanged(
 ) -> None:
     for prefix in nonvariable_prefixes:
         payload = f"{prefix}1111111111"
-        value = f"{payload}{numeric_check_digit(payload)}"
+        value = f"{payload}{gs1_standard_check_digit(payload)}"
         original_rcn = Gtin.parse(value, rcn_region=rcn_region)
         assert isinstance(original_rcn, Rcn)
 

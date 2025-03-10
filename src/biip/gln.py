@@ -56,8 +56,8 @@ from dataclasses import dataclass
 from typing import Optional
 
 from biip import ParseError
+from biip.checksums import gs1_standard_check_digit
 from biip.gs1 import GS1CompanyPrefix, GS1Prefix
-from biip.gs1.checksums import numeric_check_digit
 
 
 @dataclass
@@ -121,7 +121,7 @@ class Gln:
         payload = value[:-1]
         check_digit = int(value[-1])
 
-        calculated_check_digit = numeric_check_digit(payload)
+        calculated_check_digit = gs1_standard_check_digit(payload)
         if check_digit != calculated_check_digit:
             msg = (
                 f"Invalid GLN check digit for {value!r}: "

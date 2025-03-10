@@ -3,7 +3,7 @@
 import itertools
 
 
-def numeric_check_digit(value: str) -> int:
+def gs1_standard_check_digit(value: str) -> int:
     """Get GS1 check digit for numeric string.
 
     Args:
@@ -16,13 +16,13 @@ def numeric_check_digit(value: str) -> int:
         ValueError: If the value isn't numeric.
 
     References:
-        GS1 General Specification, section 7.9
+        GS1 General Specification, section 7.9.1
 
     Examples:
-        >>> from biip.gs1.checksums import numeric_check_digit
-        >>> numeric_check_digit("950110153100")  # GTIN-13
+        >>> from biip.checksums import gs1_standard_check_digit
+        >>> gs1_standard_check_digit("950110153100")  # GTIN-13
         0
-        >>> numeric_check_digit("9501234")  # GTIN-8
+        >>> gs1_standard_check_digit("9501234")  # GTIN-8
         6
     """
     if not value.isdecimal():
@@ -39,7 +39,7 @@ def numeric_check_digit(value: str) -> int:
     return (10 - weighted_sum % 10) % 10
 
 
-def price_check_digit(value: str) -> int:
+def gs1_price_weight_check_digit(value: str) -> int:
     """Get GS1 check digit for a price or weight field.
 
     Args:
@@ -55,10 +55,10 @@ def price_check_digit(value: str) -> int:
         GS1 General Specification, section 7.9.2-7.9.4
 
     Examples:
-        >>> from biip.gs1.checksums import price_check_digit
-        >>> price_check_digit("2875")
+        >>> from biip.checksums import gs1_price_weight_check_digit
+        >>> gs1_price_weight_check_digit("2875")
         9
-        >>> price_check_digit("14685")
+        >>> gs1_price_weight_check_digit("14685")
         6
     """
     if not value.isdecimal():
@@ -66,16 +66,16 @@ def price_check_digit(value: str) -> int:
         raise ValueError(msg)
 
     if len(value) == 4:
-        return _four_digit_price_check_digit(value)
+        return _four_digit_price_weight_check_digit(value)
 
     if len(value) == 5:
-        return _five_digit_price_check_digit(value)
+        return _five_digit_price_weight_check_digit(value)
 
     msg = f"Expected input of length 4 or 5, got {value!r}."
     raise ValueError(msg)
 
 
-def _four_digit_price_check_digit(value: str) -> int:
+def _four_digit_price_weight_check_digit(value: str) -> int:
     digits = list(map(int, list(value)))
     weight_sum = 0
     for digit, weight_map in zip(digits, _FOUR_DIGIT_POSITION_WEIGHTS):
@@ -84,7 +84,7 @@ def _four_digit_price_check_digit(value: str) -> int:
     return (weight_sum * 3) % 10
 
 
-def _five_digit_price_check_digit(value: str) -> int:
+def _five_digit_price_weight_check_digit(value: str) -> int:
     digits = list(map(int, list(value)))
     weighted_sum = 0
     for digit, weight_map in zip(digits, _FIVE_DIGIT_POSITION_WEIGHTS):

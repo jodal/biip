@@ -65,7 +65,7 @@ from enum import Enum
 from typing import Optional
 
 from biip import EncodeError, ParseError
-from biip.gs1.checksums import numeric_check_digit
+from biip.checksums import gs1_standard_check_digit
 
 
 class UpcFormat(Enum):
@@ -153,7 +153,7 @@ class Upc:
         number_system_digit = int(value[0])
         check_digit = int(value[-1])
 
-        calculated_check_digit = numeric_check_digit(payload)
+        calculated_check_digit = gs1_standard_check_digit(payload)
         if check_digit != calculated_check_digit:
             msg = (
                 f"Invalid UPC-A check digit for {value!r}: "
@@ -179,13 +179,13 @@ class Upc:
             number_system_digit = 0
             payload = f"{number_system_digit}{value}"
             upc_a_payload = _upc_e_to_upc_a_expansion(f"{payload}0")[:-1]
-            check_digit = numeric_check_digit(upc_a_payload)
+            check_digit = gs1_standard_check_digit(upc_a_payload)
         elif length == 7:
             # Explicit number system, no check digit.
             number_system_digit = int(value[0])
             payload = value
             upc_a_payload = _upc_e_to_upc_a_expansion(f"{payload}0")[:-1]
-            check_digit = numeric_check_digit(upc_a_payload)
+            check_digit = gs1_standard_check_digit(upc_a_payload)
         elif length == 8:
             # Explicit number system and check digit.
             number_system_digit = int(value[0])
@@ -205,7 +205,7 @@ class Upc:
 
         # Control that check digit is correct.
         upc_a_payload = _upc_e_to_upc_a_expansion(f"{payload}{check_digit}")[:-1]
-        calculated_check_digit = numeric_check_digit(upc_a_payload)
+        calculated_check_digit = gs1_standard_check_digit(upc_a_payload)
         if check_digit != calculated_check_digit:
             msg = (
                 f"Invalid UPC-E check digit for {value!r}: "

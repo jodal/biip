@@ -1,15 +1,15 @@
 import pytest
 
-from biip.gs1.checksums import numeric_check_digit, price_check_digit
+from biip.checksums import gs1_price_weight_check_digit, gs1_standard_check_digit
 
 
 @pytest.mark.parametrize("value", ["abc", "⁰⁰⁰"])
-def test_numeric_check_digit_with_nonnumeric_value(value: str) -> None:
+def test_gs1_standard_check_digit_with_nonnumeric_value(value: str) -> None:
     with pytest.raises(
         ValueError,
         match=rf"^Expected numeric value, got {value!r}.$",
     ):
-        numeric_check_digit(value)
+        gs1_standard_check_digit(value)
 
 
 @pytest.mark.parametrize(
@@ -27,17 +27,17 @@ def test_numeric_check_digit_with_nonnumeric_value(value: str) -> None:
         ("708000382434", 9),
     ],
 )
-def test_numeric_check_digit(value: str, expected: int) -> None:
-    assert numeric_check_digit(value) == expected
+def test_gs1_standard_check_digit(value: str, expected: int) -> None:
+    assert gs1_standard_check_digit(value) == expected
 
 
 @pytest.mark.parametrize("value", ["abc", "⁰⁰⁰"])
-def test_price_check_digit_with_nonnumeric_value(value: str) -> None:
+def test_gs1_price_weight_check_digit_with_nonnumeric_value(value: str) -> None:
     with pytest.raises(
         ValueError,
         match=rf"^Expected numeric value, got {value!r}.$",
     ):
-        price_check_digit(value)
+        gs1_price_weight_check_digit(value)
 
 
 @pytest.mark.parametrize(
@@ -49,12 +49,12 @@ def test_price_check_digit_with_nonnumeric_value(value: str) -> None:
         "123456",
     ],
 )
-def test_price_check_digit_on_values_with_wrong_length(value: str) -> None:
+def test_gs1_price_weight_check_digit_on_values_with_wrong_length(value: str) -> None:
     with pytest.raises(
         ValueError,
         match=rf"^Expected input of length 4 or 5, got {value!r}.$",
     ):
-        price_check_digit(value)
+        gs1_price_weight_check_digit(value)
 
 
 @pytest.mark.parametrize(
@@ -66,5 +66,5 @@ def test_price_check_digit_on_values_with_wrong_length(value: str) -> None:
         ("14685", 6),
     ],
 )
-def test_price_check_digit(value: str, expected: int) -> None:
-    assert price_check_digit(value) == expected
+def test_gs1_price_weight_check_digit(value: str, expected: int) -> None:
+    assert gs1_price_weight_check_digit(value) == expected
