@@ -31,7 +31,7 @@ barcode.
 
 HRI can also be parsed.
 
-    >>> GS1Message.parse_hri("(01)07032069804988(15)210526(10)0329")
+    >>> msg = GS1Message.parse_hri("(01)07032069804988(15)210526(10)0329")
 
 A message can contain multiple element strings.
 
@@ -40,34 +40,96 @@ A message can contain multiple element strings.
 
 In this example, the first element string is a GTIN.
 
-    >>> msg.element_strings[0]
-    GS1ElementString(ai=GS1ApplicationIdentifier(ai='01', description='Global
-    Trade Item Number (GTIN)', data_title='GTIN', fnc1_required=False,
-    format='N2+N14'), value='07032069804988', pattern_groups=['07032069804988'],
-    gln=None, gln_error=None, gtin=Gtin(value='07032069804988',
-    format=GtinFormat.GTIN_13, prefix=GS1Prefix(value='703', usage='GS1
-    Norway'), company_prefix=GS1CompanyPrefix(value='703206'),
-    payload='703206980498', check_digit=8, packaging_level=None),
-    gtin_error=None, sscc=None, sscc_error=None, date=None, datetime=None,
-    decimal=None, money=None)
+    >>> pprint(msg.element_strings[0])
+    GS1ElementString(
+        ai=GS1ApplicationIdentifier(
+            ai='01',
+            description='Global Trade Item Number (GTIN)',
+            data_title='GTIN',
+            fnc1_required=False,
+            format='N2+N14'
+        ),
+        value='07032069804988',
+        pattern_groups=[
+            '07032069804988'
+        ],
+        gln=None,
+        gln_error=None,
+        gtin=Gtin(
+            value='07032069804988',
+            format=GtinFormat.GTIN_13,
+            prefix=GS1Prefix(
+                value='703',
+                usage='GS1 Norway'
+            ),
+            company_prefix=GS1CompanyPrefix(
+                value='703206'
+            ),
+            payload='703206980498',
+            check_digit=8,
+            packaging_level=None
+        ),
+        gtin_error=None,
+        sscc=None,
+        sscc_error=None,
+        date=None,
+        datetime=None,
+        decimal=None,
+        money=None
+    )
 
 The message object has `GS1Message.get()` and `GS1Message.filter()`
 methods to lookup element strings either by the Application Identifier's
 "data title" or its AI number.
 
-    >>> msg.get(data_title='BEST BY')
-    GS1ElementString(ai=GS1ApplicationIdentifier(ai='15', description='Best
-    before date (YYMMDD)', data_title='BEST BEFORE or BEST BY',
-    fnc1_required=False, format='N2+N6'), value='210526',
-    pattern_groups=['210526'], gln=None, gln_error=None, gtin=None,
-    gtin_error=None, sscc=None, sscc_error=None, date=datetime.date(2021, 5,
-    26), datetime=None, decimal=None, money=None)
-    >>> msg.get(ai="10")
-    GS1ElementString(ai=GS1ApplicationIdentifier(ai='10', description='Batch
-    or lot number', data_title='BATCH/LOT', fnc1_required=True,
-    format='N2+X..20'), value='0329', pattern_groups=['0329'], gln=None,
-    gln_error=None, gtin=None, gtin_error=None, sscc=None, sscc_error=None,
-    date=None, datetime=None, decimal=None, money=None)
+    >>> pprint(msg.get(data_title='BEST BY'))
+    GS1ElementString(
+        ai=GS1ApplicationIdentifier(
+            ai='15',
+            description='Best before date (YYMMDD)',
+            data_title='BEST BEFORE or BEST BY',
+            fnc1_required=False,
+            format='N2+N6'
+        ),
+        value='210526',
+        pattern_groups=[
+            '210526'
+        ],
+        gln=None,
+        gln_error=None,
+        gtin=None,
+        gtin_error=None,
+        sscc=None,
+        sscc_error=None,
+        date=datetime.date(2021, 5, 26),
+        datetime=None,
+        decimal=None,
+        money=None
+    )
+    >>> pprint(msg.get(ai="10"))
+    GS1ElementString(
+        ai=GS1ApplicationIdentifier(
+            ai='10',
+            description='Batch or lot number',
+            data_title='BATCH/LOT',
+            fnc1_required=True,
+            format='N2+X..20'
+        ),
+        value='0329',
+        pattern_groups=[
+            '0329'
+        ],
+        gln=None,
+        gln_error=None,
+        gtin=None,
+        gtin_error=None,
+        sscc=None,
+        sscc_error=None,
+        date=None,
+        datetime=None,
+        decimal=None,
+        money=None
+    )
 """
 
 ASCII_GROUP_SEPARATOR = "\x1d"

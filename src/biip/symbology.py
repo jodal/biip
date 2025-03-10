@@ -11,12 +11,22 @@ characters.
 
 Examples:
     >>> from biip.symbology import SymbologyIdentifier
-    >>> SymbologyIdentifier.extract("]E05901234123457")
-    SymbologyIdentifier(value=']E0', symbology=Symbology.EAN_UPC,
-    modifiers='0', gs1_symbology=GS1Symbology.EAN_13)
-    >>> SymbologyIdentifier.extract("]I198765432109213")
-    SymbologyIdentifier(value=']I1', symbology=Symbology.ITF,
-    modifiers='1', gs1_symbology=GS1Symbology.ITF_14)
+    >>> si = SymbologyIdentifier.extract("]E05901234123457")
+    >>> pprint(si)
+    SymbologyIdentifier(
+        value=']E0',
+        symbology=Symbology.EAN_UPC,
+        modifiers='0',
+        gs1_symbology=GS1Symbology.EAN_13
+    )
+    >>> si = SymbologyIdentifier.extract("]I198765432109213")
+    >>> pprint(si)
+    SymbologyIdentifier(
+        value=']I1',
+        symbology=Symbology.ITF,
+        modifiers='1',
+        gs1_symbology=GS1Symbology.ITF_14
+    )
 
 References:
     ISO/IEC 15424:2008.

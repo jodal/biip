@@ -11,10 +11,20 @@ instead of using `biip.parse()`.
 If parsing succeeds, it returns a `Sscc` object.
 
     >>> sscc = Sscc.parse("157035381410375177")
-    >>> sscc
-    Sscc(value='157035381410375177', prefix=GS1Prefix(value='570', usage='GS1
-    Denmark'), company_prefix=GS1CompanyPrefix(value='5703538'),
-    extension_digit=1, payload='15703538141037517', check_digit=7)
+    >>> pprint(sscc)
+    Sscc(
+        value='157035381410375177',
+        prefix=GS1Prefix(
+            value='570',
+            usage='GS1 Denmark'
+        ),
+        company_prefix=GS1CompanyPrefix(
+            value='5703538'
+        ),
+        extension_digit=1,
+        payload='15703538141037517',
+        check_digit=7
+    )
 
 Biip can format the SSCC in HRI format for printing on a label.
 

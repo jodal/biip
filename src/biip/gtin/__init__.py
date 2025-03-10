@@ -19,11 +19,21 @@ instead of using `biip.parse()`.
 If parsing succeeds, it returns a `Gtin` object.
 
     >>> gtin = Gtin.parse("7032069804988")
-    >>> gtin
-    Gtin(value='7032069804988', format=GtinFormat.GTIN_13,
-    prefix=GS1Prefix(value='703', usage='GS1 Norway'),
-    company_prefix=GS1CompanyPrefix(value='703206'), payload='703206980498',
-    check_digit=8, packaging_level=None)
+    >>> pprint(gtin)
+    Gtin(
+        value='7032069804988',
+        format=GtinFormat.GTIN_13,
+        prefix=GS1Prefix(
+            value='703',
+            usage='GS1 Norway'
+        ),
+        company_prefix=GS1CompanyPrefix(
+            value='703206'
+        ),
+        payload='703206980498',
+        check_digit=8,
+        packaging_level=None
+    )
 
 A GTIN can be converted to any other GTIN format, as long as the target
 format is longer.
