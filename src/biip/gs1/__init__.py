@@ -56,8 +56,6 @@ In this example, the first element string is a GTIN.
         pattern_groups=[
             '07032069804988'
         ],
-        gln=None,
-        gln_error=None,
         gtin=Gtin(
             value='07032069804988',
             format=GtinFormat.GTIN_13,
@@ -69,16 +67,8 @@ In this example, the first element string is a GTIN.
                 value='703206'
             ),
             payload='703206980498',
-            check_digit=8,
-            packaging_level=None
-        ),
-        gtin_error=None,
-        sscc=None,
-        sscc_error=None,
-        date=None,
-        datetime=None,
-        decimal=None,
-        money=None
+            check_digit=8
+        )
     )
 
 The message object has [`msg.get()`][biip.gs1.GS1Message.get] and
@@ -98,16 +88,7 @@ either by the Application Identifier's "data title" or its AI number.
         pattern_groups=[
             '210526'
         ],
-        gln=None,
-        gln_error=None,
-        gtin=None,
-        gtin_error=None,
-        sscc=None,
-        sscc_error=None,
-        date=datetime.date(2021, 5, 26),
-        datetime=None,
-        decimal=None,
-        money=None
+        date=datetime.date(2021, 5, 26)
     )
     >>> pprint(msg.get(ai="10"))
     GS1ElementString(
@@ -121,17 +102,7 @@ either by the Application Identifier's "data title" or its AI number.
         value='0329',
         pattern_groups=[
             '0329'
-        ],
-        gln=None,
-        gln_error=None,
-        gtin=None,
-        gtin_error=None,
-        sscc=None,
-        sscc_error=None,
-        date=None,
-        datetime=None,
-        decimal=None,
-        money=None
+        ]
     )
 """
 

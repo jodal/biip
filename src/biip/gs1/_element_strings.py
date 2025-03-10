@@ -17,7 +17,7 @@ from biip.gtin import Gtin, RcnRegion
 from biip.sscc import Sscc
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Iterable, Iterator
 
 try:
     import moneyed  # noqa: TC002
@@ -52,8 +52,6 @@ class GS1ElementString:
             pattern_groups=[
                 '07032069804988'
             ],
-            gln=None,
-            gln_error=None,
             gtin=Gtin(
                 value='07032069804988',
                 format=GtinFormat.GTIN_13,
@@ -65,16 +63,8 @@ class GS1ElementString:
                     value='703206'
                 ),
                 payload='703206980498',
-                check_digit=8,
-                packaging_level=None
-            ),
-            gtin_error=None,
-            sscc=None,
-            sscc_error=None,
-            date=None,
-            datetime=None,
-            decimal=None,
-            money=None
+                check_digit=8
+            )
         )
         >>> element_string.as_hri()
         '(01)07032069804988'
