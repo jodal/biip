@@ -5,9 +5,10 @@ from __future__ import annotations
 import calendar
 import datetime as dt
 import re
+from collections.abc import Iterator
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 from biip import ParseError
 from biip.gln import Gln
@@ -317,6 +318,22 @@ class GS1ElementString:
     def __len__(self) -> int:
         """Get the length of the element string."""
         return len(self.ai) + len(self.value)
+
+    def __rich_repr__(self) -> Iterator[Union[tuple[str, Any], tuple[str, Any, Any]]]:
+        # Skip printing fields with default values
+        yield "ai", self.ai
+        yield "value", self.value
+        yield "pattern_groups", self.pattern_groups
+        yield "gln", self.gln, None
+        yield "gln_error", self.gln_error, None
+        yield "gtin", self.gtin, None
+        yield "gtin_error", self.gtin_error, None
+        yield "sscc", self.sscc, None
+        yield "sscc_error", self.sscc_error, None
+        yield "date", self.date, None
+        yield "datetime", self.datetime, None
+        yield "decimal", self.decimal, None
+        yield "money", self.money, None
 
     def as_hri(self) -> str:
         """Render as a human readable interpretation (HRI).

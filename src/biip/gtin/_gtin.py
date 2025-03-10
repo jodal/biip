@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterator
 from dataclasses import dataclass
-from typing import Optional, Union
+from typing import Any, Optional, Union
 
 from biip import EncodeError, ParseError
 from biip.checksums import gs1_standard_check_digit
@@ -162,6 +163,16 @@ class Gtin:
             )
 
         return gtin
+
+    def __rich_repr__(self) -> Iterator[Union[tuple[str, Any], tuple[str, Any, Any]]]:
+        # Skip printing fields with default values
+        yield "value", self.value
+        yield "format", self.format
+        yield "prefix", self.prefix
+        yield "company_prefix", self.company_prefix
+        yield "payload", self.payload
+        yield "check_digit", self.check_digit
+        yield "packaging_level", self.packaging_level, None
 
     def as_gtin_8(self) -> str:
         """Format as a GTIN-8."""

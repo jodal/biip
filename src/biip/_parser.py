@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Callable, Optional
+from typing import TYPE_CHECKING, Any, Callable, Optional, Union
 
 from biip import ParseError
 from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1Message, GS1Symbology
@@ -13,7 +13,7 @@ from biip.symbology import SymbologyIdentifier
 from biip.upc import Upc
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Iterable, Iterator
 
 
 def parse(
@@ -141,6 +141,19 @@ class ParseResult:
 
     If parsing as a GS1 Message was attempted and failed.
     """
+
+    def __rich_repr__(self) -> Iterator[Union[tuple[str, Any], tuple[str, Any, Any]]]:
+        # Skip printing fields with default values
+        yield "value", self.value
+        yield "symbology_identifier", self.symbology_identifier, None
+        yield "gtin", self.gtin, None
+        yield "gtin_error", self.gtin_error, None
+        yield "upc", self.upc, None
+        yield "upc_error", self.upc_error, None
+        yield "sscc", self.sscc, None
+        yield "sscc_error", self.sscc_error, None
+        yield "gs1_message", self.gs1_message, None
+        yield "gs1_message_error", self.gs1_message_error, None
 
 
 ParseQueue = list[tuple["Parser", str]]

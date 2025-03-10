@@ -5,11 +5,14 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from decimal import Decimal
 from enum import Enum
-from typing import Optional, Union
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 from biip import EncodeError, ParseError
 from biip.checksums import gs1_price_weight_check_digit, gs1_standard_check_digit
 from biip.gtin import Gtin, RcnRegion, RcnUsage
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 try:
     import moneyed  # noqa: TC002
@@ -68,6 +71,16 @@ class Rcn(Gtin):
     def __post_init__(self) -> None:
         """Initialize derivated fields."""
         self._set_usage()
+
+    def __rich_repr__(self) -> Iterator[Union[tuple[str, Any], tuple[str, Any, Any]]]:
+        # Skip printing fields with default values
+        yield from super().__rich_repr__()
+        yield "usage", self.usage, None
+        yield "region", self.region, None
+        yield "weight", self.weight, None
+        yield "count", self.count, None
+        yield "price", self.price, None
+        yield "money", self.money, None
 
     def _set_usage(self) -> None:
         # Classification as RCN depends on the prefix being known, so we won't
