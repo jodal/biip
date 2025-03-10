@@ -17,9 +17,14 @@ instead of using `biip.parse()`.
 If parsing succeds, it returns a `Upc` object.
 
     >>> upc_a = Upc.parse("042100005264")
-    >>> upc_a
-    Upc(value='042100005264', format=UpcFormat.UPC_A, number_system_digit=0,
-    payload='04210000526', check_digit=4)
+    >>> pprint(upc_a)
+    Upc(
+        value='042100005264',
+        format=UpcFormat.UPC_A,
+        number_system_digit=0,
+        payload='04210000526',
+        check_digit=4
+    )
 
 A subset of the UPC-A values can be converted to a shorter UPC-E format by
 suppressing zeros.
@@ -30,9 +35,14 @@ suppressing zeros.
 All UPC-E values can be expanded to an UPC-A.
 
     >>> upc_e = Upc.parse("04252614")
-    >>> upc_e
-    Upc(value='04252614', format=UpcFormat.UPC_E, number_system_digit=0,
-    payload='0425261', check_digit=4)
+    >>> pprint(upc_e)
+    Upc(
+        value='04252614',
+        format=UpcFormat.UPC_E,
+        number_system_digit=0,
+        payload='0425261',
+        check_digit=4
+    )
     >>> upc_e.as_upc_a()
     '042100005264'
 
