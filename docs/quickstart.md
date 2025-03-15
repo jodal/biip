@@ -10,8 +10,7 @@ examples below.
 
 Biip's primary API is the [`biip.parse()`][biip.parse] function. It accepts a
 string of data from a barcode scanner and returns a
-[`biip.ParseResult`][biip.ParseResult] object with any results or raises a
-[`biip.ParseError`][biip.ParseError] if all parsers fail.
+[`biip.ParseResult`][biip.ParseResult] object with any results.
 
 Nearly all products you can buy in a store are marked with an UPC or
 EAN-13 barcode. These barcodes contain a number called GTIN, short for
@@ -51,19 +50,25 @@ can see that the data is successfully parsed as a GTIN while parsing as
 an SSCC or GS1 Message failed, and Biip returned error messages
 explaining why.
 
-If all parsers fail, Biip raises a [`biip.ParseError`][biip.ParseError]. The
-exception's string representation contains detailed error messages explaining
-why each parser failed to interpret the provided data:
+If all parsers fail, Biip still returns a
+[`biip.ParseResult`][biip.ParseResult]. The result's error fields contains
+detailed error messages explaining why each parser failed to interpret the
+provided data:
 
 ```python
 >>> biip.parse("12345678")
-Traceback (most recent call last):
-    ...
-biip._exceptions.ParseError: Failed to parse '12345678':
-- Invalid GTIN check digit for '12345678': Expected 0, got 8.
-- UPC: Invalid UPC-E check digit for '12345678': Expected 0, got 8.
-- Failed to parse '12345678' as SSCC: Expected 18 digits, got 8.
-- Failed to parse GS1 AI (12) date from '345678'.
+ParseResult(
+    value='12345678',
+    symbology_identifier=None,
+    gtin=None,
+    gtin_error="Invalid GTIN check digit for '12345678': Expected 0, got 8.",
+    upc=None,
+    upc_error="Invalid UPC-E check digit for '12345678': Expected 0, got 8.",
+    sscc=None,
+    sscc_error="Failed to parse '12345678' as SSCC: Expected 18 digits, got 8.",
+    gs1_message=None,
+    gs1_message_error="Failed to match '12345678' with GS1 AI (12) pattern '^12(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$'.",
+)
 ```
 
 Biip always checks that the GTIN check digit is correct. If the check

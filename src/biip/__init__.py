@@ -57,7 +57,7 @@ GTIN. If a format includes check digits, Biip always control them and fail if
 the check digits are incorrect.
 
     >>> result = biip.parse("15210527")
-    >>> print(result.gtin)
+    >>> pprint(result.gtin)
     None
     >>> result.gtin_error
     "Invalid GTIN check digit for '15210527': Expected 4, got 7."
@@ -91,17 +91,23 @@ the check digits are incorrect.
         ]
     )
 
-If a value cannot be interpreted as any supported format, an exception is
-raised with a reason from each parser.
+If a value cannot be interpreted as any supported format, you still get a
+`ParseResult` object with all result fields set to `None`.
 
-    >>> biip.parse("123")
-    Traceback (most recent call last):
-        ...
-    biip._exceptions.ParseError: Failed to parse '123':
-    - GTIN: Failed to parse '123' as GTIN: Expected 8, 12, 13, or 14 digits, got 3.
-    - UPC: Failed to parse '123' as UPC: Expected 6, 7, 8, or 12 digits, got 3.
-    - SSCC: Failed to parse '123' as SSCC: Expected 18 digits, got 3.
-    - GS1: Failed to match '123' with GS1 AI (12) pattern '^12(\d{2}(?:0\d|1[0-2])(?:[0-2]\d|3[01]))$'.
+    >>> result = biip.parse("123")
+    >>> pprint(result)
+    ParseResult(
+        value='123',
+        symbology_identifier=None,
+        gtin=None,
+        gtin_error="Failed to parse '123' as GTIN: Expected 8, 12, 13, or 14 digits, got 3.",
+        upc=None,
+        upc_error="Failed to parse '123' as UPC: Expected 6, 7, 8, or 12 digits, got 3.",
+        sscc=None,
+        sscc_error="Failed to parse '123' as SSCC: Expected 18 digits, got 3.",
+        gs1_message=None,
+        gs1_message_error="Failed to match '123' with GS1 AI (12) pattern '^12(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$'."
+    )
 """  # noqa: E501
 
 from importlib.metadata import (  # pyright: ignore[reportMissingImports]

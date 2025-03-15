@@ -3,7 +3,7 @@ from decimal import Decimal
 
 import pytest
 
-from biip import ParseError, ParseResult, parse
+from biip import ParseResult, parse
 from biip.gs1 import (
     GS1ApplicationIdentifier,
     GS1CompanyPrefix,
@@ -723,15 +723,24 @@ def test_parse_with_separator_char() -> None:
 
 
 def test_parse_invalid_data() -> None:
-    with pytest.raises(ParseError) as exc_info:
-        parse("abc")
+    result = parse("abc")
 
-    assert str(exc_info.value) == (
-        "Failed to parse 'abc':\n"
-        "- GTIN: Failed to parse 'abc' as GTIN: "
-        "Expected 8, 12, 13, or 14 digits, got 3.\n"
-        "- UPC: Failed to parse 'abc' as UPC: "
-        "Expected 6, 7, 8, or 12 digits, got 3.\n"
-        "- SSCC: Failed to parse 'abc' as SSCC: Expected 18 digits, got 3.\n"
-        "- GS1: Failed to get GS1 Application Identifier from 'abc'."
+    assert result.gtin is None
+    assert (
+        result.gtin_error
+        == "Failed to parse 'abc' as GTIN: Expected 8, 12, 13, or 14 digits, got 3."
+    )
+    assert result.gs1_message is None
+    assert (
+        result.gs1_message_error
+        == "Failed to get GS1 Application Identifier from 'abc'."
+    )
+    assert result.sscc is None
+    assert (
+        result.sscc_error == "Failed to parse 'abc' as SSCC: Expected 18 digits, got 3."
+    )
+    assert result.upc is None
+    assert (
+        result.upc_error
+        == "Failed to parse 'abc' as UPC: Expected 6, 7, 8, or 12 digits, got 3."
     )
