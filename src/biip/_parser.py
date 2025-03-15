@@ -48,9 +48,6 @@ def parse(
 
     Returns:
         A data class depending upon what type of data is parsed.
-
-    Raises:
-        ParseError: If parsing of the data fails.
     """
     value = value.strip()
     config = ParseConfig(
@@ -91,11 +88,7 @@ def parse(
         (parse_func, val) = queue.pop(0)
         parse_func(val, config, queue, result)
 
-    if result._has_result():  # noqa: SLF001
-        return result
-
-    msg = f"Failed to parse {value!r}:\n{result._get_errors_list()}"  # noqa: SLF001
-    raise ParseError(msg)
+    return result
 
 
 @dataclass
@@ -148,21 +141,6 @@ class ParseResult:
 
     If parsing as a GS1 Message was attempted and failed.
     """
-
-    def _has_result(self) -> bool:
-        return any([self.gtin, self.upc, self.sscc, self.gs1_message])
-
-    def _get_errors_list(self) -> str:
-        return "\n".join(
-            f"- {parser_name}: {error}"
-            for parser_name, error in [
-                ("GTIN", self.gtin_error),
-                ("UPC", self.upc_error),
-                ("SSCC", self.sscc_error),
-                ("GS1", self.gs1_message_error),
-            ]
-            if error is not None
-        )
 
 
 ParseQueue = list[tuple["Parser", str]]
