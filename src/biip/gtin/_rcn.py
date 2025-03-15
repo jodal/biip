@@ -8,7 +8,7 @@ from enum import Enum
 from typing import Optional, Union
 
 from biip import EncodeError, ParseError
-from biip.gs1 import checksums
+from biip.checksums import gs1_price_weight_check_digit, gs1_standard_check_digit
 from biip.gtin import Gtin, RcnRegion, RcnUsage
 
 try:
@@ -211,7 +211,7 @@ class _Strategy:
         rcn_13 = rcn.as_gtin_13()
         value = rcn_13[self.value_slice]
         check_digit = int(rcn_13[self.check_digit_slice])
-        calculated_check_digit = checksums.price_check_digit(value)
+        calculated_check_digit = gs1_price_weight_check_digit(value)
 
         if check_digit != calculated_check_digit:
             msg = (
@@ -238,11 +238,11 @@ class _Strategy:
         digits[self.value_slice] = list(zeroed_value)
         if self.check_digit_slice is not None:
             digits[self.check_digit_slice] = [
-                str(checksums.price_check_digit(zeroed_value))
+                str(gs1_price_weight_check_digit(zeroed_value))
             ]
 
         gtin_payload = "".join(digits)
-        gtin_check_digit = checksums.numeric_check_digit(gtin_payload)
+        gtin_check_digit = gs1_standard_check_digit(gtin_payload)
         gtin = f"{gtin_payload}{gtin_check_digit}"
         return Gtin.parse(gtin, rcn_region=rcn.region)
 

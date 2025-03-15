@@ -12,9 +12,9 @@ nav:
   - quickstart.md
   - Reference:
       - api/biip.md
+      - api/checksums.md
       - api/gln.md
       - api/gs1.md
-      - api/gs1-checksums.md
       - api/gtin.md
       - api/sscc.md
       - api/symbology.md
