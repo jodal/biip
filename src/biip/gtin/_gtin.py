@@ -22,20 +22,21 @@ class Gtin:
     """
 
     format: GtinFormat
-    """GTIN format, either GTIN-8, GTIN-12, GTIN-13, or GTIN-14.
+    """[GTIN format][biip.gtin.GtinFormat], either GTIN-8, GTIN-12, GTIN-13, or
+    GTIN-14.
 
     Classification is done after stripping leading zeros.
     """
 
     prefix: Optional[GS1Prefix]
-    """The GS1 Prefix.
+    """The [GS1 Prefix][biip.gs1.GS1Prefix].
 
     Indicating what GS1 country organization that assigned
     code range.
     """
 
     company_prefix: Optional[GS1CompanyPrefix]
-    """The GS1 Company Prefix.
+    """The [GS1 Company Prefix][biip.gs1.GS1CompanyPrefix].
 
     Identifying the company that issued the GTIN.
     """
@@ -66,9 +67,11 @@ class Gtin:
         rcn_region: Optional[Union[RcnRegion, str]] = None,
         rcn_verify_variable_measure: bool = True,
     ) -> Gtin:
-        """Parse the given value into a `Gtin` object.
+        """Parse the given value into a [`Gtin`][biip.gtin.Gtin] object.
 
         Both GTIN-8, GTIN-12, GTIN-13, and GTIN-14 are supported.
+
+        The checksum is guaranteed to be valid if a GTIN object is returned.
 
         Args:
             value: The value to parse.
@@ -82,7 +85,6 @@ class Gtin:
 
         Returns:
             GTIN data structure with the successfully extracted data.
-            The checksum is guaranteed to be valid if a GTIN object is returned.
 
         Raises:
             ParseError: If the parsing fails.

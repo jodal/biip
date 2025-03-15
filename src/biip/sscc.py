@@ -4,11 +4,11 @@ SSCCs are used to identify logistic units, e.g. a pallet shipped between two
 parties.
 
 If you only want to parse SSCCs, you can import the SSCC parser directly
-instead of using `biip.parse()`.
+instead of using [`biip.parse()`][biip.parse].
 
     >>> from biip.sscc import Sscc
 
-If parsing succeeds, it returns a `Sscc` object.
+If parsing succeeds, it returns a [`Sscc`][biip.sscc.Sscc] object.
 
     >>> sscc = Sscc.parse("157035381410375177")
     >>> pprint(sscc)
@@ -26,7 +26,8 @@ If parsing succeeds, it returns a `Sscc` object.
         check_digit=7
     )
 
-Biip can format the SSCC in HRI format for printing on a label.
+Biip can format the SSCC in HRI format for printing on a label using
+[`as_hri()`][biip.sscc.Sscc.as_hri].
 
     >>> sscc.as_hri()
     '1 5703538 141037517 7'
@@ -83,12 +84,13 @@ class Sscc:
     def parse(cls, value: str) -> Sscc:
         """Parse the given value into a `Sscc` object.
 
+        The checksum is guaranteed to be valid if an SSCC object is returned.
+
         Args:
             value: The value to parse.
 
         Returns:
             SSCC data structure with the successfully extracted data.
-            The checksum is guaranteed to be valid if an SSCC object is returned.
 
         Raises:
             ParseError: If the parsing fails.

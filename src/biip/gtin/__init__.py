@@ -12,11 +12,11 @@ This class can interpet the following GTIN formats:
 - GTIN-14, found in ITF-14 barcodes, as well as a data field in GS1 barcodes.
 
 If you only want to parse GTINs, you can import the GTIN parser directly
-instead of using `biip.parse()`.
+instead of using [`biip.parse()`][biip.parse].
 
     >>> from biip.gtin import Gtin
 
-If parsing succeeds, it returns a `Gtin` object.
+If parsing succeeds, it returns a [`Gtin`][biip.gtin.Gtin] object.
 
     >>> gtin = Gtin.parse("7032069804988")
     >>> pprint(gtin)
@@ -41,7 +41,8 @@ format is longer.
     >>> gtin.as_gtin_14()
     '07032069804988'
 
-As all GTINs can be converted to GTIN-14, it is the recommended format to use
+As all GTINs can be converted to GTIN-14 using
+[`as_gtin_14()`][biip.gtin.Gtin.as_gtin_14], it is the recommended format to use
 when storing or comparing GTINs. For example, when looking up a product
 associated with a GTIN, the GTIN should first be expanded to a GTIN-14 before
 using it to query the product catalog.

@@ -162,7 +162,8 @@ class SymbologyIdentifier:
     modifiers: str
     """Symbology modifiers.
 
-    Refer to `gs1_symbology` or ISO/IEC 15424 for interpretation.
+    Refer to [`gs1_symbology`][biip.symbology.SymbologyIdentifier.gs1_symbology]
+    or ISO/IEC 15424 for interpretation.
     """
 
     gs1_symbology: Optional[GS1Symbology] = None

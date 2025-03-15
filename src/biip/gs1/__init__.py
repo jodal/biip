@@ -6,30 +6,33 @@ Identifier (AI) prefix.
 
 Data of this format is found in the following types of barcodes:
 
-- GS1-128
-- GS1 DataBar
-- GS1 DataMatrix
-- GS1 QR Code
+- [GS1-128](https://en.wikipedia.org/wiki/Code_128)
+- [GS1 DataBar](https://en.wikipedia.org/wiki/GS1_DataBar_Coupon)
+- [GS1 DataMatrix](https://en.wikipedia.org/wiki/Data_Matrix)
+- [GS1 QR Code](https://en.wikipedia.org/wiki/QR_code)
 
 If you only want to parse GS1 Messages, you can import the GS1 Message parser
-directly instead of using `biip.parse()`.
+directly instead of using [`biip.parse()`][biip.parse].
 
     >>> from biip.gs1 import GS1Message
 
-If the parsing succeeds, it returns a `GS1Message` object.
+If the parsing succeeds, it returns a [`GS1Message`][biip.gs1.GS1Message]
+object.
 
     >>> msg = GS1Message.parse("010703206980498815210526100329")
 
-The `GS1Message` has a raw value as well as an HRI, short for "human readable
-interpretation". The HRI is the text usually printed below or next to the
-barcode.
+The [`GS1Message`][biip.gs1.GS1Message] can be represented as an HRI, short
+for "human readable interpretation", using
+[`msg.as_hri()`][biip.gs1.GS1Message.as_hri]. The HRI is the text usually printed
+below or next to the barcode.
 
     >>> msg.value
     '010703206980498815210526100329'
     >>> msg.as_hri()
     '(01)07032069804988(15)210526(10)0329'
 
-HRI can also be parsed.
+HRI can also be parsed using
+[`GS1Message.parse_hri()`][biip.gs1.GS1Message.parse_hri].
 
     >>> msg = GS1Message.parse_hri("(01)07032069804988(15)210526(10)0329")
 
@@ -78,9 +81,9 @@ In this example, the first element string is a GTIN.
         money=None
     )
 
-The message object has `GS1Message.get()` and `GS1Message.filter()`
-methods to lookup element strings either by the Application Identifier's
-"data title" or its AI number.
+The message object has [`msg.get()`][biip.gs1.GS1Message.get] and
+[`msg.filter()`][biip.gs1.GS1Message.filter] methods to lookup element strings
+either by the Application Identifier's "data title" or its AI number.
 
     >>> pprint(msg.get(data_title='BEST BY'))
     GS1ElementString(

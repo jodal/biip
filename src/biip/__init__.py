@@ -92,7 +92,7 @@ the check digits are incorrect.
     )
 
 If a value cannot be interpreted as any supported format, you still get a
-`ParseResult` object with all result fields set to `None`.
+[`ParseResult`][biip.ParseResult] object with all result fields set to `None`.
 
     >>> result = biip.parse("123")
     >>> pprint(result)

@@ -33,8 +33,8 @@ class Rcn(Gtin):
     RCN-8 with prefix 0 or 2, RCN-12 with prefix 4, and RCN-13 with prefix 04 or
     40-49 have semantics that are only defined within a single company.
 
-    Use :meth:`biip.gtin.Gtin.parse` to parse potential RCNs. This subclass
-    is returned if the GS1 Prefix signifies that the value is an RCN.
+    Use [`Gtin.parse()`][biip.gtin.Gtin.parse] to parse potential RCNs. This
+    subclass is returned if the GS1 Prefix signifies that the value is an RCN.
 
     References:
         GS1 General Specifications, section 2.1.11-2.1.12
@@ -61,7 +61,8 @@ class Rcn(Gtin):
     money: Optional["moneyed.Money"] = field(default=None)  # noqa: UP037
     """A Money value created from the variable weight price.
 
-    Only set if `py-moneyed` is installed and the currency is known.
+    Only set if [`py-moneyed`](https://pypi.org/project/py-moneyed/) is
+    installed and the currency is known.
     """
 
     def __post_init__(self) -> None:

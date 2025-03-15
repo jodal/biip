@@ -136,14 +136,23 @@ class GS1ElementString:
 
         If the element string contains a primitive data type, like a date,
         decimal number, or currency, it will be parsed and stored in the
-        `date`, `decimal`, or `money` field respectively. If parsing of a
-        primitive data type fails, a `ParseError` will be raised.
+        [`date`][biip.gs1.GS1ElementString.date],
+        [`decimal`][biip.gs1.GS1ElementString.decimal], or
+        [`money`][biip.gs1.GS1ElementString.money] field respectively.
+        If parsing of a primitive data type fails, a
+        [`ParseError`][biip.ParseError] will be raised.
 
         If the element string contains another supported format, like a GLN,
         GTIN, or SSCC, it will parsed and validated, and the result stored in
-        the fields `gln`, `gtin`, or `sscc` respectively. If parsing or
-        validation of an inner format fails, the `gln_error`, `gtin_error`, or
-        `sscc_error` field will be set. No `ParseError` will be raised.
+        the fields
+        [`gln`][biip.gs1.GS1ElementString.gln],
+        [`gtin`][biip.gs1.GS1ElementString.gtin], or
+        [`sscc`][biip.gs1.GS1ElementString.sscc] respectively. If parsing or
+        validation of an inner format fails, the
+        [`gln_error`][biip.gs1.GS1ElementString.gln_error],
+        [`gtin_error`][biip.gs1.GS1ElementString.gtin_error], or
+        [`sscc_error`][biip.gs1.GS1ElementString.sscc_error] field will be set.
+        No [`ParseError`][biip.ParseError] will be raised.
 
         Args:
             value: The string to extract an Element String from. May contain

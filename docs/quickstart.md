@@ -3,14 +3,14 @@
 The following examples should get you started with parsing barcode data
 using Biip.
 
-See the API reference for details on the API and data fields used in the
-examples below.
+See the [API reference](api/biip.md) for details on the API and data fields used
+in the examples below.
 
 ## Parsing barcode data
 
 Biip's primary API is the [`biip.parse()`][biip.parse] function. It accepts a
 string of data from a barcode scanner and returns a
-[`biip.ParseResult`][biip.ParseResult] object with any results.
+[`ParseResult`][biip.ParseResult] object with any results.
 
 Nearly all products you can buy in a store are marked with an UPC or
 EAN-13 barcode. These barcodes contain a number called GTIN, short for
@@ -18,8 +18,7 @@ Global Trade Item Number, which can be parsed by Biip:
 
 ```python
 >>> import biip
->>> result = biip.parse("7032069804988")
->>> result
+>>> biip.parse("7032069804988")
 ParseResult(
     value='7032069804988',
     symbology_identifier=None,
@@ -51,7 +50,7 @@ an SSCC or GS1 Message failed, and Biip returned error messages
 explaining why.
 
 If all parsers fail, Biip still returns a
-[`biip.ParseResult`][biip.ParseResult]. The result's error fields contains
+[`ParseResult`][biip.ParseResult]. The result's error fields contains
 detailed error messages explaining why each parser failed to interpret the
 provided data:
 
@@ -80,7 +79,8 @@ rejected `12345678` as a GTIN-8.
 If you're using a barcode scanner which has enabled Symbology
 Identifier prefixes, your data will have a three letter prefix, e.g.
 `]E0` for EAN-13 barcodes. If a Symbology Identifier is detected, Biip
-will detect it and only try the relevant parsers:
+will detect it and use the symbology identifier to only try parsing the payload
+with the parsers relevant for the specified symbology:
 
 ```python
 >>> biip.parse("]E09781492053743")
@@ -114,7 +114,8 @@ ParseResult(
 In this example, we used the ISBN from a book. As ISBNs are a subset of
 GTINs, this worked just like before. Because the data was prefixed by a
 Symbology Identifier, Biip only tried the GTIN parser. This is reflected
-in the lack of error messages from the SSCC and GS1 Message parsers.
+in the lack of both results and error messages from the SSCC and GS1 Message
+parsers.
 
 ## Global Trade Item Number (GTIN)
 
@@ -139,10 +140,13 @@ Gtin(
 )
 ```
 
+### Use GTIN-14 in databases
+
 All GTINs can be encoded as any other GTIN variant that is longer than
 itself. Thus, the canonical way to store a GTIN in a database is as a
-GTIN-14. Similarly, you'll want to convert a GTIN to GTIN-14 before
-using it for a database lookup:
+GTIN-14. Similarly, you'll want to convert a GTIN to GTIN-14 using
+[`as_gtin_14()`][biip.gtin.Gtin.as_gtin_14] before using it for a database
+lookup:
 
 ```python
 >>> result.gtin.value
@@ -185,7 +189,8 @@ Rcn(
 ```
 
 In the example above, the number is detected to be an RCN, and an instance of
-`Rcn`, a subclass of `Gtin` with a few additional fields, is returned.
+[`Rcn`][biip.gtin.Rcn], a subclass of [`Gtin`][biip.gtin.Gtin] with a few
+additional fields, is returned.
 
 The rules for how to encode weight or price into an RCN varies between
 geographical regions. The national GS1 Member Organizations (MO) specify
@@ -219,10 +224,11 @@ Rcn(
 )
 ```
 
-The `price` and `money` fields contain the same data. The difference is
-that while `price` is a simple `Decimal` type, `money` also carries
-currency information. The `money` field is only set if the optional
-dependency `py-moneyed` is installed.
+The [`price`][biip.gtin.Rcn.price] and [`money`][biip.gtin.Rcn.money] fields
+contain the same data. The difference is that while `price` is a simple
+[`Decimal`][decimal.Decimal] type, `money` also carries currency information.
+The `money` field is only set if the optional dependency
+[`py-moneyed`](https://pypi.org/project/py-moneyed/) is installed.
 
 ## GS1 AI Element Strings
 
@@ -242,7 +248,7 @@ throughout the Biip API:
   _Message_.
 
 AI Element Strings can be encoded using several different barcode types,
-but the linear GS1-128 barcode format is the most common.
+but the linear barcode format GS1-128 is the most common.
 
 ### Serial Shipping Container Code (SSCC)
 
@@ -291,11 +297,13 @@ contains a single Element String. The Element String has the AI `00`,
 which is the code for Serial Shipping Container Code, or SSCC for short.
 
 Biip extracts the SSCC payload and validates its check digit. The result
-is an `~biip.sscc.Sscc` instance, with
-fields like `prefix` and `extension_digit`.
+is an [`Sscc`][biip.sscc.Sscc] instance, with fields like
+[`prefix`][biip.sscc.Sscc.prefix] and
+[`extension_digit`][biip.sscc.Sscc.extension_digit].
 
-You can extract the Element String using `~biip.gs1.GS1Message.get` and
-`~biip.gs1.GS1Mesage.filter`:
+You can extract the Element String using
+[`GS1Message.get()`][biip.gs1.GS1Message.get] and
+[`GS1Message.filter()`][biip.gs1.GS1Message.filter]:
 
 ```python
 >>> element_string = result.gs1_message.get(ai="00")
@@ -308,9 +316,8 @@ You can extract the Element String using `~biip.gs1.GS1Message.get` and
 ```
 
 In case SSCCs are what you are primarily working with, the
-`~biip.sscc.Sscc` instance is also
-available directly from `~biip.ParseResult`{.interpreted-text
-role="class"}:
+[`Sscc`][biip.sscc.Sscc] instance is also available directly from
+[`ParseResult`][biip.ParseResult]:
 
 ```python
 >>> result.sscc == element_string.sscc
@@ -319,7 +326,7 @@ True
 
 If you need to display the barcode data in a more human readable way,
 e.g. to print below a barcode, you can use
-`~biip.gs1.GS1Message.as_hri`:
+[`GS1Message.as_hri()`][biip.gs1.GS1Message.as_hri]:
 
 ```python
 >>> result.gs1_message.as_hri()
@@ -417,7 +424,7 @@ data contains three Element Strings:
 
 The first Element String is the GTIN of the trade item inside the
 logistic unit. As with SSCC's, this is also available directly from the
-`~biip.ParseResult` instance:
+[`ParseResult`][biip.ParseResult] instance:
 
 ```python
 >>> result.gtin == result.gs1_message.element_strings[0].gtin
@@ -427,7 +434,7 @@ True
 The second Element String is the expiration date of the contained trade
 items. To save you from interpreting the date value correctly yourself,
 Biip does the job for you and exposes a
-`datetime.date` instance:
+[`datetime.date`][datetime.date] instance:
 
 ```python
 >>> element_string = result.gs1_message.get(data_title="BEST BY")
@@ -448,12 +455,27 @@ The last Element String is the batch or lot number of the items:
 About a third of the specified AIs don't have a fixed length. How do we
 then know where the Element Strings ends, and the next one starts?
 
-In the example above, the batch/lot number, with AI `10`, is a
-variable-length field. You can see this from the AI format, `N2+X...20`,
-which indicates a two-digit AI prefix followed by a payload of up to 20
-alphanumeric characters. In this case, we didn't need to do anything to
-handle the variable-length data field because the batch/lot number
-Element String was the last one in the Message.
+Let's look closer at the batch/lot number in the example in the previous
+section. It has the following AI defintion:
+
+```python
+GS1ApplicationIdentifier(
+    ai='10',
+    description='Batch or lot number',
+    data_title='BATCH/LOT',
+    fnc1_required=True,
+    format='N2+X..20'
+)
+```
+
+The batch/lot number, with AI `10`, is a variable-length field.
+You can see this from the [`format`][biip.gs1.GS1ApplicationIdentifier.format],
+`N2+X...20`, which indicates a two-digit AI prefix followed by a payload of up
+to 20 alphanumeric characters.
+
+In the last example, we didn't need to do anything to handle the variable-length
+data field because the batch/lot number Element String was the last one in the
+Message.
 
 Let's try to reorder the expiration date and batch/lot number, so that
 the batch/lot number comes in the middle of the Message:
@@ -470,11 +492,11 @@ consumed the remainder of the data, including the full expiration date.
 GS1-128 barcodes mark the end of variable-length Element Strings with a
 _Function Code 1_ (FNC1) symbol. When the barcode scanner converts the
 barcode to a string of text, it substitutes the FNC1 symbol with
-something else, often with the \"Group Separator\" or \"GS\" ASCII
+something else, often with the "Group Separator" or "GS" ASCII
 character. The GS ASCII character has a decimal value of 29 or
-hexadecimal value of 0x1D.
+hexadecimal value of `0x1D`.
 
-If we insert a byte with value 0x1D, after the end of the batch/lot
+If we insert a byte with value `0x1D`, after the end of the batch/lot
 number, we get the following result:
 
 ```python
@@ -485,8 +507,10 @@ number, we get the following result:
 
 Once again, we've correctly detected all three Element Strings.
 
-You might need to reconfigure your barcode scanner hardware to use
-another separator character if:
+### Barcode scanner configuration
+
+To make variable-length fields work correctly, you might need to reconfigure
+your barcode scanner hardware to use another separator character if:
 
 - your barcode scanner doesn't insert the GS character, or
 - some part of your scanning data pipeline cannot maintain the
@@ -496,8 +520,9 @@ A reasonable choice for an alternative separator character might be the
 pipe character, `|`, as this character cannot legally be a part of the
 payload in Element Strings.
 
-If we configure the barcode scanner to use an alternative separator
-character, we also need to tell Biip what character to expect:
+If we configure the barcode scanner to use an alternative separator character,
+we also need to tell Biip what character to expect by passing the
+`separator_chars` parameter to the [`parse()`][biip.parse] function:
 
 ```python
 >>> result = biip.parse("0107032069804988100329|15210525", separator_chars=["|"])
