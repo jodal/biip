@@ -10,11 +10,11 @@ This class can interpret the following UPC formats:
 - UPC-E, 8 digits, with explicit number system and a check digit.
 
 If you only want to parse UPCs, you can import the UPC parser directly
-instead of using `biip.parse()`.
+instead of using [`biip.parse()`][biip.parse].
 
     >>> from biip.upc import Upc
 
-If parsing succeds, it returns a `Upc` object.
+If parsing succeeds, it returns a [`Upc`][biip.upc.Upc] object.
 
     >>> upc_a = Upc.parse("042100005264")
     >>> pprint(upc_a)
@@ -27,12 +27,13 @@ If parsing succeds, it returns a `Upc` object.
     )
 
 A subset of the UPC-A values can be converted to a shorter UPC-E format by
-suppressing zeros.
+suppressing zeros using [`as_upc_e()`][biip.upc.Upc.as_upc_e].
 
     >>> upc_a.as_upc_e()
     '04252614'
 
-All UPC-E values can be expanded to an UPC-A.
+All UPC-E values can be expanded to an UPC-A using
+[`as_upc_a()`][biip.upc.Upc.as_upc_a].
 
     >>> upc_e = Upc.parse("04252614")
     >>> pprint(upc_e)
@@ -110,14 +111,15 @@ class Upc:
 
     @classmethod
     def parse(cls, value: str) -> Upc:
-        """Parse the given value into a `Upc` object.
+        """Parse the given value into a [`Upc`][biip.upc.Upc] object.
+
+        The checksum is guaranteed to be valid if an UPC object is returned.
 
         Args:
             value: The value to parse.
 
         Returns:
             UPC data structure with the successfully extracted data.
-            The checksum is guaranteed to be valid if an UPC object is returned.
 
         Raises:
             ParseError: If the parsing fails.

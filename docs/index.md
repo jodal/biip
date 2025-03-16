@@ -17,6 +17,7 @@ The library can interpret the following formats:
 ## Example
 
 ```python
+>>> import biip
 >>> biip.parse("]E09781492053743")
 ParseResult(
     value=']E09781492053743',
@@ -49,31 +50,65 @@ ParseResult(
 
 Biip has no dependencies other than Python 3.9 or newer.
 
-Biip is available from [PyPI](https://pypi.org/project/biip/):
+Biip can be installed from [PyPI](https://pypi.org/project/biip/):
 
 ```sh
 python3 -m pip install biip
 ```
 
-Optionally, with the help of `py-moneyed`, Biip can convert amounts with
-currency information to `moneyed.Money` objects.
-To install Biip with `py-moneyed`, run:
+### Parsing money amounts
+
+Optionally, with the help of
+[`py-moneyed`](https://pypi.org/project/py-moneyed/), Biip can convert amounts
+with currency information to `moneyed.Money` objects. To install Biip with
+`py-moneyed`, run:
 
 ```sh
 python3 -m pip install "biip[money]"
 ```
 
+### Try it out
+
 If you're using [uv](https://docs.astral.sh/uv/), you can try out Biip in a
-Python shell by running:
+Python shell without installing anything by running:
 
 ```sh
 uvx --with biip python
 ```
 
+Once the Python shell is open, import and use Biip:
+
+```python
+>>> import biip
+>>> biip.parse("your-barcode-data")
+```
+
+## Development status
+
+Biip was developed to cover all the barcode parsing needs throughout the
+operations of the online grocery store [oda.com](https://oda.com), including
+registering incoming pallets, restocking shelves, picking items, and tracking
+orders on the way to the customers.
+
+With the features described below, Biip supports all of the above use cases, and
+are considered to be mostly feature complete. That said, we're always open to
+add support for more countries in the RCN parser given that documentation of the
+format is available.
+
+Please [open an issue](https://github.com/jodal/biip/issues) if you have any
+barcode parsing related needs that are not covered by Biip.
 
 ## Features
 
-### GS1 (multiple Element Strings with Application Identifiers)
+### GS1 messages
+
+GS1 messages can encode information about products, shipments, and other
+business entities. They are used in several different barcode symbologies,
+including
+[GS1-128](https://en.wikipedia.org/wiki/Code_128),
+[GS1 DataBar](https://en.wikipedia.org/wiki/GS1_DataBar_Coupon),
+[GS1 DataMatrix](https://en.wikipedia.org/wiki/Data_Matrix), and
+[GS1 QR Code](https://en.wikipedia.org/wiki/QR_code).
 
 - [x] Recognize all specified Application Identifiers.
 - [x] Recognize allocating GS1 Member Organization from the GS1 Company Prefix.
@@ -99,12 +134,18 @@ uvx --with biip python
 
 ### GLN (Global Location Number)
 
+[GLNs](https://en.wikipedia.org/wiki/Global_Location_Number) are used to
+identify locations, such as warehouses and stores.
+
 - [x] Parse.
 - [x] Extract and validate check digit.
 - [x] Extract GS1 Prefix.
 - [x] Extract GS1 Company Prefix.
 
 ### GTIN (Global Trade Item Number)
+
+[GTINs](https://en.wikipedia.org/wiki/Global_Trade_Item_Number) are used to
+identify trade items, such as products or services.
 
 - [x] Parse GTIN-8, e.g. from EAN-8 barcodes.
 - [x] Parse GTIN-12, e.g. from UPC-A and UPC-E barcodes.
@@ -119,6 +160,11 @@ uvx --with biip python
 - [x] Encode GTIN-13 as GTIN-14.
 
 ### RCN (Restricted Circulation Numbers), a subset of GTINs
+
+RCNs are a subset of GTINs that may include additional information about the
+trade item. The rules for parsing geographical RCNs vary from country to
+country. The rules for parsing company RCNs vary from company to company, and
+are thus not standardized.
 
 - [x] Classification of RCN usage to either a geographical region or a company.
 - [x] Parsing of variable measurements (price/weight) into `Decimal`
@@ -141,6 +187,9 @@ uvx --with biip python
 
 ### SSCC (Serial Shipping Container Code)
 
+[SSCCs](https://en.wikipedia.org/wiki/Serial_shipping_container_code) are used
+to uniquely identify a shipping container.
+
 - [x] Extract and validate check digit.
 - [x] Extract GS1 Prefix.
 - [x] Extract GS1 Company Prefix.
@@ -148,6 +197,10 @@ uvx --with biip python
 - [x] Encode for human consumption, with the logical groups separated by whitespace.
 
 ### UPC (Universal Product Code)
+
+[UPCs](https://en.wikipedia.org/wiki/Universal_Product_Code) are used to
+uniquely identify a product. They are commonly used in American products with
+UPC barcodes.
 
 - [x] Parse 12-digit UPC-A.
 - [x] Parse 6-digit UPC-E, with implicit number system 0 and no check digit.
@@ -157,6 +210,10 @@ uvx --with biip python
 - [x] Suppress UPC-A to UPC-E, for the values where it is supported.
 
 ### Symbology Identifiers, e.g. `]EO`
+
+Symbology Identifiers are used by barcode scanners to specify the symbology of a
+the scanned barcode, so that barcode data parsers like Biip can automatically
+select the correct parser.
 
 - [x] Recognize all specified Symbology Identifier code characters.
 - [x] Strip Symbology Identifiers before parsing the remainder.

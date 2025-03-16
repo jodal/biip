@@ -111,7 +111,7 @@ class ParseResult:
     """The Symbology Identifier, if any."""
 
     gtin: Optional[Gtin] = None
-    """The extracted GTIN, if any.
+    """The extracted [GTIN][biip.gtin.Gtin], if any.
 
     Is also set if a GS1 Message containing a GTIN was successfully parsed."""
 
@@ -119,13 +119,13 @@ class ParseResult:
     """The GTIN parse error, if parsing as a GTIN was attempted and failed."""
 
     upc: Optional[Upc] = None
-    """The extracted UPC, if any."""
+    """The extracted [UPC][biip.upc.Upc], if any."""
 
     upc_error: Optional[str] = None
     """The UPC parse error, if parsing as an UPC was attempted and failed."""
 
     sscc: Optional[Sscc] = None
-    """The extracted SSCC, if any.
+    """The extracted [SSCC][biip.sscc.Sscc], if any.
 
     Is also set if a GS1 Message containing an SSCC was successfully parsed.
     """
@@ -134,7 +134,7 @@ class ParseResult:
     """The SSCC parse error, if parsing as an SSCC was attempted and failed."""
 
     gs1_message: Optional[GS1Message] = None
-    """The extracted GS1 Message, if any."""
+    """The extracted [GS1 Message][biip.gs1.GS1Message], if any."""
 
     gs1_message_error: Optional[str] = None
     """The GS1 Message parse error.

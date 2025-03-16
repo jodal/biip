@@ -25,9 +25,9 @@ If parsing succeeds, it returns a `Gln` object.
     )
 
 As GLNs do not appear independently in barcodes, the GLN parser is not a part of
-the top-level parser `biip.parse()`. However, if you are parsing a barcode with
-GS1 element strings including a GLN, the GLN will be parsed and validated using
-the `Gln` class.
+the top-level parser [`biip.parse()`][biip.parse]. However, if you are parsing a
+barcode with GS1 element strings including a GLN, the GLN will be parsed and
+validated using the [`Gln`][biip.gln.Gln] class.
 
     >>> import biip
     >>> gln = (
@@ -68,13 +68,13 @@ class Gln:
     """Raw unprocessed value."""
 
     prefix: Optional[GS1Prefix]
-    """The GS1 Prefix
+    """The [GS1 Prefix][biip.gs1.GS1Prefix].
 
     Indicating what GS1 country organization that assigned code range.
     """
 
     company_prefix: Optional[GS1CompanyPrefix]
-    """The GS1 Company Prefix.
+    """The [GS1 Company Prefix][biip.gs1.GS1CompanyPrefix].
 
     Identifying the company that issued the GLN.
     """
@@ -87,18 +87,19 @@ class Gln:
     """
 
     check_digit: int
-    """Check digit used to check if the SSCC as a whole is valid."""
+    """Check digit used to check if the GLN as a whole is valid."""
 
     @classmethod
     def parse(cls, value: str) -> Gln:
-        """Parse the given value into a `Gln` object.
+        """Parse the given value into a [`Gln`][biip.gln.Gln] object.
+
+        The checksum is guaranteed to be valid if a GLN object is returned.
 
         Args:
             value: The value to parse.
 
         Returns:
             GLN data structure with the successfully extracted data.
-            The checksum is guaranteed to be valid if a GLN object is returned.
 
         Raises:
             ParseError: If the parsing fails.
