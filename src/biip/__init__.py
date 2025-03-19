@@ -18,8 +18,7 @@ example, the value can be interpreted as either a GTIN or a GS1 Message.
             value='0000963'
         ),
         payload='9638507',
-        check_digit=4,
-        packaging_level=None
+        check_digit=4
     )
     >>> pprint(result.gs1_message)
     GS1Message(
@@ -36,17 +35,7 @@ example, the value can be interpreted as either a GTIN or a GS1 Message.
                 value='385074',
                 pattern_groups=[
                     '385074'
-                ],
-                gln=None,
-                gln_error=None,
-                gtin=None,
-                gtin_error=None,
-                sscc=None,
-                sscc_error=None,
-                date=None,
-                datetime=None,
-                decimal=None,
-                money=None
+                ]
             )
         ]
     )
@@ -77,16 +66,7 @@ the check digits are incorrect.
                 pattern_groups=[
                     '210527'
                 ],
-                gln=None,
-                gln_error=None,
-                gtin=None,
-                gtin_error=None,
-                sscc=None,
-                sscc_error=None,
-                date=datetime.date(2021, 5, 27),
-                datetime=None,
-                decimal=None,
-                money=None
+                date=datetime.date(2021, 5, 27)
             )
         ]
     )
@@ -98,14 +78,9 @@ If a value cannot be interpreted as any supported format, you still get a
     >>> pprint(result)
     ParseResult(
         value='123',
-        symbology_identifier=None,
-        gtin=None,
         gtin_error="Failed to parse '123' as GTIN: Expected 8, 12, 13, or 14 digits, got 3.",
-        upc=None,
         upc_error="Failed to parse '123' as UPC: Expected 6, 7, 8, or 12 digits, got 3.",
-        sscc=None,
         sscc_error="Failed to parse '123' as SSCC: Expected 18 digits, got 3.",
-        gs1_message=None,
         gs1_message_error="Failed to match '123' with GS1 AI (12) pattern '^12(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$'."
     )
 """  # noqa: E501

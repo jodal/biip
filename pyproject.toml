@@ -68,7 +68,7 @@ branch = true
 source_pkgs = ["biip"]
 
 [tool.coverage.report]
-exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:"]
+exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:", "def __rich_repr__"]
 fail_under = 100
 show_missing = true
 

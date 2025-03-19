@@ -31,8 +31,7 @@ If parsing succeeds, it returns a [`Gtin`][biip.gtin.Gtin] object.
             value='703206'
         ),
         payload='703206980498',
-        check_digit=8,
-        packaging_level=None
+        check_digit=8
     )
 
 A GTIN can be converted to any other GTIN format, as long as the target

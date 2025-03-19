@@ -27,15 +27,16 @@ see the [documentation](https://biip.readthedocs.io/).
 ## Example
 
 ```python
+>>> from rich import print
 >>> import biip
->>> biip.parse("]E09781492053743")
+>>> print(biip.parse("]E09781492053743"))
 ParseResult(
     value=']E09781492053743',
     symbology_identifier=SymbologyIdentifier(
         value=']E0',
         symbology=Symbology.EAN_UPC,
         modifiers='0',
-        gs1_symbology=GS1Symbology.EAN_13,
+        gs1_symbology=GS1Symbology.EAN_13
     ),
     gtin=Gtin(
         value='9781492053743',
@@ -43,16 +44,8 @@ ParseResult(
         prefix=GS1Prefix(value='978', usage='Bookland (ISBN)'),
         company_prefix=None,
         payload='978149205374',
-        check_digit=3,
-        packaging_level=None,
-    ),
-    gtin_error=None,
-    upc=None,
-    upc_error=None,
-    sscc=None,
-    sscc_error=None,
-    gs1_message=None,
-    gs1_message_error=None,
+        check_digit=3
+    )
 )
 ```
 
