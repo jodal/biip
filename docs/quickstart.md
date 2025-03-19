@@ -3,6 +3,16 @@
 The following examples should get you started with parsing barcode data
 using Biip.
 
+Throughout the examples, we'll use [Rich](https://rich.readthedocs.io/) for
+pretty-printing the results. This is entirely optional, but it makes the output
+more readable. The examples are complete, so you can copy and paste them into
+your own Python shell to follow along.
+
+```python
+>>> from rich import print
+>>> import biip
+```
+
 See the [API reference](api/biip.md) for details on the API and data fields used
 in the examples below.
 
@@ -16,28 +26,36 @@ Nearly all products you can buy in a store are marked with an UPC or
 EAN-13 barcode. These barcodes contain a number called GTIN, short for
 Global Trade Item Number, which can be parsed by Biip:
 
-```python
->>> import biip
->>> biip.parse("7032069804988")
+```python hl_lines="4-11"
+>>> print(biip.parse("7032069804988"))
 ParseResult(
     value='7032069804988',
-    symbology_identifier=None,
     gtin=Gtin(
         value='7032069804988',
         format=GtinFormat.GTIN_13,
         prefix=GS1Prefix(value='703', usage='GS1 Norway'),
         company_prefix=GS1CompanyPrefix(value='703206'),
         payload='703206980498',
-        check_digit=8,
-        packaging_level=None,
+        check_digit=8
     ),
-    gtin_error=None,
-    upc=None,
     upc_error="Failed to parse '7032069804988' as UPC: Expected 6, 7, 8, or 12 digits, got 13.",
-    sscc=None,
     sscc_error="Failed to parse '7032069804988' as SSCC: Expected 18 digits, got 13.",
-    gs1_message=GS1Message(...),
-    gs1_message_error=None,
+    gs1_message=GS1Message(
+        value='7032069804988',
+        element_strings=[
+            GS1ElementString(
+                ai=GS1ApplicationIdentifier(
+                    ai='7032',
+                    description='Number of processor with three-digit ISO country code',
+                    data_title='PROCESSOR # 2',
+                    fnc1_required=True,
+                    format='N3+X..27'
+                ),
+                value='069804988',
+                pattern_groups=['069', '804988']
+            )
+        ]
+    )
 )
 ```
 
@@ -55,18 +73,13 @@ detailed error messages explaining why each parser failed to interpret the
 provided data:
 
 ```python
->>> biip.parse("12345678")
+>>> print(biip.parse("12345678"))
 ParseResult(
     value='12345678',
-    symbology_identifier=None,
-    gtin=None,
     gtin_error="Invalid GTIN check digit for '12345678': Expected 0, got 8.",
-    upc=None,
     upc_error="Invalid UPC-E check digit for '12345678': Expected 0, got 8.",
-    sscc=None,
     sscc_error="Failed to parse '12345678' as SSCC: Expected 18 digits, got 8.",
-    gs1_message=None,
-    gs1_message_error="Failed to match '12345678' with GS1 AI (12) pattern '^12(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$'.",
+    gs1_message_error="Failed to match '12345678' with GS1 AI (12) pattern '^12(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$'."
 )
 ```
 
@@ -83,14 +96,14 @@ will detect it and use the symbology identifier to only try parsing the payload
 with the parsers relevant for the specified symbology:
 
 ```python
->>> biip.parse("]E09781492053743")
+>>> print(biip.parse("]E09781492053743"))
 ParseResult(
     value=']E09781492053743',
     symbology_identifier=SymbologyIdentifier(
         value=']E0',
         symbology=Symbology.EAN_UPC,
         modifiers='0',
-        gs1_symbology=GS1Symbology.EAN_13,
+        gs1_symbology=GS1Symbology.EAN_13
     ),
     gtin=Gtin(
         value='9781492053743',
@@ -98,24 +111,16 @@ ParseResult(
         prefix=GS1Prefix(value='978', usage='Bookland (ISBN)'),
         company_prefix=None,
         payload='978149205374',
-        check_digit=3,
-        packaging_level=None,
-    ),
-    gtin_error=None,
-    upc=None,
-    upc_error=None,
-    sscc=None,
-    sscc_error=None,
-    gs1_message=None,
-    gs1_message_error=None,
+        check_digit=3
+    )
 )
 ```
 
 In this example, we used the ISBN from a book. As ISBNs are a subset of
 GTINs, this worked just like before. Because the data was prefixed by a
 Symbology Identifier, Biip only tried the GTIN parser. This is reflected
-in the lack of both results and error messages from the SSCC and GS1 Message
-parsers.
+in the lack of both results and error messages from the UPC, SSCC and GS1
+Message parsers.
 
 ## Global Trade Item Number (GTIN)
 
@@ -125,18 +130,28 @@ GTIN-12, GTIN-13, or GTIN-14. Biip supports all GTIN formats.
 
 Let's use the GTIN-12 `123601057072` as another example:
 
-```python
->>> import biip
+```python hl_lines="5-12"
 >>> result = biip.parse("123601057072")
->>> result.gtin
-Gtin(
+>>> print(result)
+ParseResult(
     value='123601057072',
-    format=GtinFormat.GTIN_12,
-    prefix=GS1Prefix(value='012', usage='GS1 US'),
-    company_prefix=None,
-    payload='12360105707',
-    check_digit=2,
-    packaging_level=None,
+    gtin=Gtin(
+        value='123601057072',
+        format=GtinFormat.GTIN_12,
+        prefix=GS1Prefix(value='012', usage='GS1 US'),
+        company_prefix=None,
+        payload='12360105707',
+        check_digit=2
+    ),
+    upc=Upc(
+        value='123601057072',
+        format=UpcFormat.UPC_A,
+        number_system_digit=1,
+        payload='12360105707',
+        check_digit=2
+    ),
+    sscc_error="Failed to parse '123601057072' as SSCC: Expected 18 digits, got 12.",
+    gs1_message_error="Failed to get GS1 Application Identifier from '7072'."
 )
 ```
 
@@ -166,31 +181,31 @@ and either the price or the weight are encoded in the GTIN, you are
 dealing with Restricted Circulation Numbers, or RCN, another subset of
 GTIN:
 
-```python
->>> result = biip.parse("2011122912346")
->>> result.gtin
-Rcn(
+```python hl_lines="4-14"
+>>> print(biip.parse("2011122912346"))
+ParseResult(
     value='2011122912346',
-    format=GtinFormat.GTIN_13,
-    prefix=GS1Prefix(
-        value='201',
-        usage='Used to issue Restricted Circulation Numbers within a geographic region (MO defined)',
+    gtin=Rcn(
+        value='2011122912346',
+        format=GtinFormat.GTIN_13,
+        prefix=GS1Prefix(
+            value='201',
+            usage='Used to issue GS1 Restricted Circulation Numbers within a geographic region (MO defined)'
+        ),
+        company_prefix=None,
+        payload='201112291234',
+        check_digit=6
     ),
-    company_prefix=None,
-    payload='201112291234',
-    check_digit=6,
-    packaging_level=None,
-    usage=RcnUsage.GEOGRAPHICAL,
-    region=None,
-    weight=None,
-    price=None,
-    money=None,
+    upc_error="Failed to parse '2011122912346' as UPC: Expected 6, 7, 8, or 12 digits, got 13.",
+    sscc_error="Failed to parse '2011122912346' as SSCC: Expected 18 digits, got 13.",
+    gs1_message_error="Failed to match '122912346' with GS1 AI (12) pattern
+'^12(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$'."
 )
 ```
 
 In the example above, the number is detected to be an RCN, and an instance of
-[`Rcn`][biip.gtin.Rcn], a subclass of [`Gtin`][biip.gtin.Gtin] with a few
-additional fields, is returned.
+[`Rcn`][biip.gtin.Rcn], a subclass of [`Gtin`][biip.gtin.Gtin], which may
+contain a few additional fields, is returned.
 
 The rules for how to encode weight or price into an RCN varies between
 geographical regions. The national GS1 Member Organizations (MO) specify
@@ -199,28 +214,32 @@ rulesets, and you can easily add more if detailed documentation on the
 market's rules is available.
 
 Because of the market variations, you must specify your geographical
-region for Biip to be able to extract price and weight from the RCN:
+region for Biip to be able to extract price or weight from the RCN:
 
-```python
+```python hl_lines="1-2 15-18"
 >>> from biip.gtin import RcnRegion
->>> result = biip.parse("2011122912346", rcn_region=RcnRegion.GREAT_BRITAIN)
->>> result.gtin
-Rcn(
+>>> print(biip.parse("2011122912346", rcn_region=RcnRegion.GREAT_BRITAIN))
+ParseResult(
     value='2011122912346',
-    format=GtinFormat.GTIN_13,
-    prefix=GS1Prefix(
-        value='201',
-        usage='Used to issue Restricted Circulation Numbers within a geographic region (MO defined)'
+    gtin=Rcn(
+        value='2011122912346',
+        format=GtinFormat.GTIN_13,
+        prefix=GS1Prefix(
+            value='201',
+            usage='Used to issue GS1 Restricted Circulation Numbers within a geographic region (MO defined)'
+        ),
+        company_prefix=None,
+        payload='201112291234',
+        check_digit=6,
+        usage=RcnUsage.GEOGRAPHICAL,
+        region=RcnRegion.GREAT_BRITAIN,
+        price=Decimal('12.34'),
+        money=Money('12.34', 'GBP')
     ),
-    company_prefix=None,
-    payload='201112291234',
-    check_digit=6,
-    packaging_level=None,
-    usage=RcnUsage.GEOGRAPHICAL,
-    region=RcnRegion.GREAT_BRITAIN,
-    weight=None,
-    price=Decimal('12.34'),
-    money=Money('12.34', 'GBP'),
+    upc_error="Failed to parse '2011122912346' as UPC: Expected 6, 7, 8, or 12 digits, got 13.",
+    sscc_error="Failed to parse '2011122912346' as SSCC: Expected 18 digits, got 13.",
+    gs1_message_error="Failed to match '122912346' with GS1 AI (12) pattern
+'^12(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$'."
 )
 ```
 
@@ -257,7 +276,7 @@ If we scan a GS1-128 barcode on a pallet, we might get the data string
 
 ```python
 >>> result = biip.parse("00157035381410375177")
->>> result.gs1_message
+>>> print(result.gs1_message)
 GS1Message(
     value='00157035381410375177',
     element_strings=[
@@ -267,28 +286,20 @@ GS1Message(
                 description='Serial Shipping Container Code (SSCC)',
                 data_title='SSCC',
                 fnc1_required=False,
-                format='N2+N18',
+                format='N2+N18'
             ),
             value='157035381410375177',
             pattern_groups=['157035381410375177'],
-            gln=None,
-            gln_error=None,
-            gtin=None,
-            gtin_error=None,
             sscc=Sscc(
                 value='157035381410375177',
                 prefix=GS1Prefix(value='570', usage='GS1 Denmark'),
                 company_prefix=GS1CompanyPrefix(value='5703538'),
                 extension_digit=1,
                 payload='15703538141037517',
-                check_digit=7,
-            ),
-            sscc_error=None,
-            date=None,
-            decimal=None,
-            money=None,
-        ),
-    ],
+                check_digit=7
+            )
+        )
+    ]
 )
 ```
 
@@ -322,6 +333,15 @@ In case SSCCs are what you are primarily working with, the
 ```python
 >>> result.sscc == element_string.sscc
 True
+>>> print(result.sscc)
+Sscc(
+    value='157035381410375177',
+    prefix=GS1Prefix(value='570', usage='GS1 Denmark'),
+    company_prefix=GS1CompanyPrefix(value='5703538'),
+    extension_digit=1,
+    payload='15703538141037517',
+    check_digit=7
+)
 ```
 
 If you need to display the barcode data in a more human readable way,
@@ -341,15 +361,20 @@ containing multiple trade units, we might get the data string
 
 ```python
 >>> result = biip.parse("010703206980498815210526100329")
+```
+
+We can have a quick look at the human-readable interpretation (HRI) to get a
+feel for how the data groups into three Element Strings:
+
+```python
 >>> result.gs1_message.as_hri()
 '(01)07032069804988(15)210526(10)0329'
 ```
 
-From the human-readable interpretation (HRI) above, we can see that the
-data contains three Element Strings:
+And we can dig into the parsed Element Strings to get all the details:
 
-```python
->>> result.gs1_message.element_strings
+```python hl_lines="13-20 25 32 37 42"
+>>> print(result.gs1_message.element_strings)
 [
     GS1ElementString(
         ai=GS1ApplicationIdentifier(
@@ -357,27 +382,18 @@ data contains three Element Strings:
             description='Global Trade Item Number (GTIN)',
             data_title='GTIN',
             fnc1_required=False,
-            format='N2+N14',
+            format='N2+N14'
         ),
         value='07032069804988',
         pattern_groups=['07032069804988'],
-        gln=None,
-        gln_error=None,
         gtin=Gtin(
             value='07032069804988',
             format=GtinFormat.GTIN_13,
             prefix=GS1Prefix(value='703', usage='GS1 Norway'),
             company_prefix=GS1CompanyPrefix(value='703206'),
             payload='703206980498',
-            check_digit=8,
-            packaging_level=None,
-        ),
-        gtin_error=None,
-        sscc=None,
-        sscc_error=None,
-        date=None,
-        decimal=None,
-        money=None,
+            check_digit=8
+        )
     ),
     GS1ElementString(
         ai=GS1ApplicationIdentifier(
@@ -385,19 +401,11 @@ data contains three Element Strings:
             description='Best before date (YYMMDD)',
             data_title='BEST BEFORE or BEST BY',
             fnc1_required=False,
-            format='N2+N6',
+            format='N2+N6'
         ),
         value='210526',
         pattern_groups=['210526'],
-        gln=None,
-        gln_error=None,
-        gtin=None,
-        gtin_error=None,
-        sscc=None,
-        sscc_error=None,
-        date=datetime.date(2021, 5, 26),
-        decimal=None,
-        money=None,
+        date=datetime.date(2021, 5, 26)
     ),
     GS1ElementString(
         ai=GS1ApplicationIdentifier(
@@ -408,17 +416,8 @@ data contains three Element Strings:
             format='N2+X..20'
         ),
         value='0329',
-        pattern_groups=['0329'],
-        gln=None,
-        gln_error=None,
-        gtin=None,
-        gtin_error=None,
-        sscc=None,
-        sscc_error=None,
-        date=None,
-        decimal=None,
-        money=None,
-    ),
+        pattern_groups=['0329']
+    )
 ]
 ```
 
@@ -429,6 +428,15 @@ logistic unit. As with SSCC's, this is also available directly from the
 ```python
 >>> result.gtin == result.gs1_message.element_strings[0].gtin
 True
+>>> print(result.gtin)
+Gtin(
+    value='07032069804988',
+    format=GtinFormat.GTIN_13,
+    prefix=GS1Prefix(value='703', usage='GS1 Norway'),
+    company_prefix=GS1CompanyPrefix(value='703206'),
+    payload='703206980498',
+    check_digit=8
+)
 ```
 
 The second Element String is the expiration date of the contained trade
@@ -458,7 +466,7 @@ then know where the Element Strings ends, and the next one starts?
 Let's look closer at the batch/lot number in the example in the previous
 section. It has the following AI defintion:
 
-```python
+```python hl_lines="6"
 GS1ApplicationIdentifier(
     ai='10',
     description='Batch or lot number',
