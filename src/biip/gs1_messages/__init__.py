@@ -109,13 +109,7 @@ strings either by the Application Identifier's "data title" or its AI number.
 """
 
 ASCII_GROUP_SEPARATOR = "\x1d"
-
 DEFAULT_SEPARATOR_CHARS: tuple[str] = (ASCII_GROUP_SEPARATOR,)
-"""The default separator character is `<GS>`, ASCII value 29.
-
-References:
-   GS1 General Specifications, section 7.8.3.
-"""
 
 # The following must be imported in this specific order.
 # ruff: noqa: E402, I001
