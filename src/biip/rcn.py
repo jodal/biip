@@ -1,4 +1,21 @@
-"""Restricted Circulation Numbers (RCN)."""
+"""Restricted Circulation Number (RCN) is a subset of GTIN.
+
+Both RCN-8, RCN-12, and RCN-13 are supported. There is no 14 digit version
+of RCN.
+
+RCN-12 with prefix 2 and RCN-13 with prefix 02 or 20-29 have the same
+semantics across a geographic region, defined by the local GS1 Member
+Organization.
+
+RCN-8 with prefix 0 or 2, RCN-12 with prefix 4, and RCN-13 with prefix 04 or
+40-49 have semantics that are only defined within a single company.
+
+Use [`Gtin.parse()`][biip.gtin.Gtin.parse] to parse potential RCNs. This
+subclass is returned if the GS1 Prefix signifies that the value is an RCN.
+
+References:
+    GS1 General Specifications, section 2.1.11-2.1.12
+"""
 
 from __future__ import annotations
 
@@ -9,7 +26,7 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 
 from biip import EncodeError, ParseError
 from biip.checksums import gs1_price_weight_check_digit, gs1_standard_check_digit
-from biip.gtin import Gtin, RcnRegion, RcnUsage
+from biip.gtin import Gtin
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -21,26 +38,78 @@ try:
 except ImportError:  # pragma: no cover
     have_moneyed = False
 
+__all__ = ["Rcn", "RcnRegion", "RcnUsage"]
+
+
+class RcnUsage(Enum):
+    """Enum of RCN usage restrictions."""
+
+    GEOGRAPHICAL = "geo"
+    """Usage of RCN restricted to geopgraphical area."""
+
+    COMPANY = "company"
+    """Usage of RCN restricted to internally in a company."""
+
+    def __repr__(self) -> str:
+        """Canonical string representation of format."""
+        return f"RcnUsage.{self.name}"
+
+
+class RcnRegion(Enum):
+    """Enum of geographical regions with custom RCN rules.
+
+    The value of the enum is the lowercase ISO 3166-1 Alpha-2 code.
+    """
+
+    DENMARK = "dk"
+    """Denmark"""
+
+    ESTONIA = "ee"
+    """Estonia"""
+
+    FINLAND = "fi"
+    """Finland"""
+
+    GERMANY = "de"
+    """Germany"""
+
+    GREAT_BRITAIN = "gb"
+    """Great Britain"""
+
+    LATVIA = "lv"
+    """Latvia"""
+
+    LITHUANIA = "lt"
+    """Lithuania"""
+
+    NORWAY = "no"
+    """Norway"""
+
+    SWEDEN = "se"
+    """Sweden"""
+
+    def __repr__(self) -> str:
+        """Canonical string representation of format."""
+        return f"RcnRegion.{self.name}"
+
+    def get_currency_code(self) -> Optional[str]:
+        """Get the ISO-4217 currency code for the region."""
+        return {
+            RcnRegion.DENMARK: "DKK",
+            RcnRegion.GERMANY: "EUR",
+            RcnRegion.GREAT_BRITAIN: "GBP",
+            RcnRegion.NORWAY: "NOK",
+            RcnRegion.SWEDEN: "SEK",
+        }.get(self)
+
 
 @dataclass
 class Rcn(Gtin):
-    """Restricted Circulation Number (RCN) is a subset of GTIN.
+    """Data class containing an RCN.
 
-    Both RCN-8, RCN-12, and RCN-13 are supported. There is no 14 digit version
-    of RCN.
-
-    RCN-12 with prefix 2 and RCN-13 with prefix 02 or 20-29 have the same
-    semantics across a geographic region, defined by the local GS1 Member
-    Organization.
-
-    RCN-8 with prefix 0 or 2, RCN-12 with prefix 4, and RCN-13 with prefix 04 or
-    40-49 have semantics that are only defined within a single company.
-
-    Use [`Gtin.parse()`][biip.gtin.Gtin.parse] to parse potential RCNs. This
-    subclass is returned if the GS1 Prefix signifies that the value is an RCN.
-
-    References:
-        GS1 General Specifications, section 2.1.11-2.1.12
+    This is a subclass of [`Gtin`][biip.gtin.Gtin]. To create an `Rcn` instance,
+    use [`Gtin.parse()`][biip.gtin.Gtin.parse] with an RCN string as the value
+    to parse.
     """
 
     usage: Optional[RcnUsage] = field(default=None)
@@ -72,7 +141,7 @@ class Rcn(Gtin):
         """Initialize derivated fields."""
         self._set_usage()
 
-    def __rich_repr__(self) -> Iterator[Union[tuple[str, Any], tuple[str, Any, Any]]]:
+    def __rich_repr__(self) -> Iterator[Union[tuple[str, Any], tuple[str, Any, Any]]]:  # noqa: D105
         # Skip printing fields with default values
         yield from super().__rich_repr__()
         yield "usage", self.usage, None

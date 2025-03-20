@@ -2,7 +2,8 @@ import pytest
 
 from biip import EncodeError
 from biip.checksums import gs1_standard_check_digit
-from biip.gtin import Gtin, Rcn, RcnRegion
+from biip.gtin import Gtin
+from biip.rcn import Rcn, RcnRegion
 
 
 @pytest.mark.parametrize(

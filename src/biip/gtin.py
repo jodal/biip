@@ -1,18 +1,98 @@
-"""Global Trade Item Number (GTIN)."""
+"""Support for Global Trade Item Number (GTIN).
+
+The `biip.gtin` module contains Biip's support for parsing GTIN formats.
+
+A GTIN is a number that uniquely identifies a trade item.
+
+This class can interpet the following GTIN formats:
+
+- GTIN-8, found in EAN-8 barcodes.
+- GTIN-12, found in UPC-A and UPC-E barcodes.
+- GTIN-13, found in EAN-13 barcodes.
+- GTIN-14, found in ITF-14 barcodes, as well as a data field in GS1 barcodes.
+
+If you only want to parse GTINs, you can import the GTIN parser directly
+instead of using [`biip.parse()`][biip.parse].
+
+    >>> from biip.gtin import Gtin
+
+If parsing succeeds, it returns a [`Gtin`][biip.gtin.Gtin] object.
+
+    >>> gtin = Gtin.parse("7032069804988")
+    >>> pprint(gtin)
+    Gtin(
+        value='7032069804988',
+        format=GtinFormat.GTIN_13,
+        prefix=GS1Prefix(
+            value='703',
+            usage='GS1 Norway'
+        ),
+        company_prefix=GS1CompanyPrefix(
+            value='703206'
+        ),
+        payload='703206980498',
+        check_digit=8
+    )
+
+A GTIN can be converted to any other GTIN format, as long as the target
+format is longer.
+
+    >>> gtin.as_gtin_14()
+    '07032069804988'
+
+As all GTINs can be converted to GTIN-14 using
+[`as_gtin_14()`][biip.gtin.Gtin.as_gtin_14], it is the recommended format to use
+when storing or comparing GTINs. For example, when looking up a product
+associated with a GTIN, the GTIN should first be expanded to a GTIN-14 before
+using it to query the product catalog.
+"""
 
 from __future__ import annotations
 
 from collections.abc import Iterator
 from dataclasses import dataclass
+from enum import IntEnum
 from typing import TYPE_CHECKING, Any, Optional, Union
 
 from biip import EncodeError, ParseError
 from biip.checksums import gs1_standard_check_digit
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
-from biip.gtin import GtinFormat, RcnRegion
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
+
+    from biip.rcn import RcnRegion
+
+__all__ = ["Gtin", "GtinFormat"]
+
+
+class GtinFormat(IntEnum):
+    """Enum of GTIN formats."""
+
+    GTIN_8 = 8
+    """GTIN-8"""
+
+    GTIN_12 = 12
+    """GTIN-12"""
+
+    GTIN_13 = 13
+    """GTIN-13"""
+
+    GTIN_14 = 14
+    """GTIN-14"""
+
+    def __str__(self) -> str:
+        """Pretty string representation of format."""
+        return self.name.replace("_", "-")
+
+    def __repr__(self) -> str:
+        """Canonical string representation of format."""
+        return f"GtinFormat.{self.name}"
+
+    @property
+    def length(self) -> int:
+        """Length of a GTIN of the given format."""
+        return int(self)
 
 
 @dataclass
@@ -93,7 +173,7 @@ class Gtin:
         Raises:
             ParseError: If the parsing fails.
         """
-        from biip.gtin import Rcn
+        from biip.rcn import Rcn
 
         value = value.strip()
 
@@ -167,7 +247,7 @@ class Gtin:
 
         return gtin
 
-    def __rich_repr__(self) -> Iterator[Union[tuple[str, Any], tuple[str, Any, Any]]]:
+    def __rich_repr__(self) -> Iterator[Union[tuple[str, Any], tuple[str, Any, Any]]]:  # noqa: D105
         # Skip printing fields with default values
         yield "value", self.value
         yield "format", self.format
