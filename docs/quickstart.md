@@ -249,7 +249,7 @@ contain the same data. The difference is that while `price` is a simple
 The `money` field is only set if the optional dependency
 [`py-moneyed`](https://pypi.org/project/py-moneyed/) is installed.
 
-## GS1 AI Element Strings
+## GS1 messages with AIs
 
 Let us move away from consumer products.
 
@@ -313,8 +313,8 @@ is an [`Sscc`][biip.sscc.Sscc] instance, with fields like
 [`extension_digit`][biip.sscc.Sscc.extension_digit].
 
 You can extract the Element String using
-[`GS1Message.get()`][biip.gs1.GS1Message.get] and
-[`GS1Message.filter()`][biip.gs1.GS1Message.filter]:
+[`GS1Message.get()`][biip.gs1_messages.GS1Message.get] and
+[`GS1Message.filter()`][biip.gs1_messages.GS1Message.filter]:
 
 ```python
 >>> element_string = result.gs1_message.get(ai="00")
@@ -346,7 +346,7 @@ Sscc(
 
 If you need to display the barcode data in a more human readable way,
 e.g. to print below a barcode, you can use
-[`GS1Message.as_hri()`][biip.gs1.GS1Message.as_hri]:
+[`GS1Message.as_hri()`][biip.gs1_messages.GS1Message.as_hri]:
 
 ```python
 >>> result.gs1_message.as_hri()
@@ -477,7 +477,8 @@ GS1ApplicationIdentifier(
 ```
 
 The batch/lot number, with AI `10`, is a variable-length field.
-You can see this from the [`format`][biip.gs1.GS1ApplicationIdentifier.format],
+You can see this from the
+[`format`][biip.gs1_application_identifiers.GS1ApplicationIdentifier.format],
 `N2+X...20`, which indicates a two-digit AI prefix followed by a payload of up
 to 20 alphanumeric characters.
 

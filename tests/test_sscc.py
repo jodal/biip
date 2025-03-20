@@ -3,7 +3,7 @@
 import pytest
 
 from biip import ParseError
-from biip.gs1 import GS1CompanyPrefix, GS1Prefix
+from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
 from biip.sscc import Sscc
 
 

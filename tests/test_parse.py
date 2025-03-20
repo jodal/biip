@@ -4,13 +4,9 @@ from decimal import Decimal
 import pytest
 
 from biip import ParseResult, parse
-from biip.gs1 import (
-    GS1ApplicationIdentifier,
-    GS1CompanyPrefix,
-    GS1ElementString,
-    GS1Message,
-    GS1Prefix,
-)
+from biip.gs1_application_identifiers import GS1ApplicationIdentifier
+from biip.gs1_messages import GS1ElementString, GS1Message
+from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
 from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
 from biip.sscc import Sscc
 from biip.symbology import GS1Symbology, ISOSymbology, SymbologyIdentifier

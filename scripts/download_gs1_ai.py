@@ -5,7 +5,7 @@ import json
 
 import httpx
 
-from biip.gs1 import GS1ApplicationIdentifier
+from biip.gs1_application_identifiers import GS1ApplicationIdentifier
 
 AI_URL = "https://ref.gs1.org/ai/GS1_Application_Identifiers.jsonld"
 

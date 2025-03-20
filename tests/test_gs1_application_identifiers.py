@@ -1,7 +1,7 @@
 import pytest
 
 from biip import ParseError
-from biip.gs1 import GS1ApplicationIdentifier
+from biip.gs1_application_identifiers import GS1ApplicationIdentifier
 
 
 @pytest.mark.parametrize("unknown_ai", ["abcdef", "3376999999"])

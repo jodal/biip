@@ -8,13 +8,15 @@ from itertools import chain
 from typing import TYPE_CHECKING, Optional, Union
 
 from biip import ParseError
-from biip.gs1 import (
+from biip.gs1_application_identifiers import (
+    _GS1_APPLICATION_IDENTIFIERS,
+    GS1ApplicationIdentifier,
+)
+from biip.gs1_messages import (
     ASCII_GROUP_SEPARATOR,
     DEFAULT_SEPARATOR_CHARS,
-    GS1ApplicationIdentifier,
     GS1ElementString,
 )
-from biip.gs1._application_identifiers import _GS1_APPLICATION_IDENTIFIERS
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -29,7 +31,7 @@ class GS1Message:
     It may contain one or more GS1 Element Strings.
 
     Examples:
-        See `biip.gs1` for a usage example.
+        See `biip.gs1_messages` for a usage example.
     """
 
     value: str

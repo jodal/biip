@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Callable, Optional, Union
 
 from biip import ParseError
-from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1Message
+from biip.gs1_messages import DEFAULT_SEPARATOR_CHARS, GS1Message
 from biip.gtin import Gtin, GtinFormat, RcnRegion
 from biip.sscc import Sscc
 from biip.symbology import GS1Symbology, SymbologyIdentifier
@@ -134,7 +134,7 @@ class ParseResult:
     """The SSCC parse error, if parsing as an SSCC was attempted and failed."""
 
     gs1_message: Optional[GS1Message] = None
-    """The extracted [GS1 Message][biip.gs1.GS1Message], if any."""
+    """The extracted [GS1 Message][biip.gs1_messages.GS1Message], if any."""
 
     gs1_message_error: Optional[str] = None
     """The GS1 Message parse error.

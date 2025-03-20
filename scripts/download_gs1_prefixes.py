@@ -6,7 +6,7 @@ import json
 import bs4
 import httpx
 
-from biip.gs1._prefixes import _GS1PrefixRange
+from biip.gs1_prefixes import _GS1PrefixRange
 
 PREFIX_URL = "https://www.gs1.org/standards/id-keys/company-prefix"
 

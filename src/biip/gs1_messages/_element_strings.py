@@ -12,7 +12,8 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 
 from biip import ParseError
 from biip.gln import Gln
-from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1ApplicationIdentifier
+from biip.gs1_application_identifiers import GS1ApplicationIdentifier
+from biip.gs1_messages import DEFAULT_SEPARATOR_CHARS
 from biip.gtin import Gtin, RcnRegion
 from biip.sscc import Sscc
 
@@ -37,7 +38,7 @@ class GS1ElementString:
     called a "message."
 
     Examples:
-        >>> from biip.gs1 import GS1ElementString
+        >>> from biip.gs1_messages import GS1ElementString
         >>> element_string = GS1ElementString.extract("0107032069804988")
         >>> pprint(element_string)
         GS1ElementString(
@@ -127,22 +128,22 @@ class GS1ElementString:
 
         If the element string contains a primitive data type, like a date,
         decimal number, or currency, it will be parsed and stored in the
-        [`date`][biip.gs1.GS1ElementString.date],
-        [`decimal`][biip.gs1.GS1ElementString.decimal], or
-        [`money`][biip.gs1.GS1ElementString.money] field respectively.
+        [`date`][biip.gs1_messages.GS1ElementString.date],
+        [`decimal`][biip.gs1_messages.GS1ElementString.decimal], or
+        [`money`][biip.gs1_messages.GS1ElementString.money] field respectively.
         If parsing of a primitive data type fails, a
         [`ParseError`][biip.ParseError] will be raised.
 
         If the element string contains another supported format, like a GLN,
         GTIN, or SSCC, it will parsed and validated, and the result stored in
         the fields
-        [`gln`][biip.gs1.GS1ElementString.gln],
-        [`gtin`][biip.gs1.GS1ElementString.gtin], or
-        [`sscc`][biip.gs1.GS1ElementString.sscc] respectively. If parsing or
+        [`gln`][biip.gs1_messages.GS1ElementString.gln],
+        [`gtin`][biip.gs1_messages.GS1ElementString.gtin], or
+        [`sscc`][biip.gs1_messages.GS1ElementString.sscc] respectively. If parsing or
         validation of an inner format fails, the
-        [`gln_error`][biip.gs1.GS1ElementString.gln_error],
-        [`gtin_error`][biip.gs1.GS1ElementString.gtin_error], or
-        [`sscc_error`][biip.gs1.GS1ElementString.sscc_error] field will be set.
+        [`gln_error`][biip.gs1_messages.GS1ElementString.gln_error],
+        [`gtin_error`][biip.gs1_messages.GS1ElementString.gtin_error], or
+        [`sscc_error`][biip.gs1_messages.GS1ElementString.sscc_error] field will be set.
         No [`ParseError`][biip.ParseError] will be raised.
 
         Args:

@@ -57,7 +57,7 @@ from typing import Optional
 
 from biip import ParseError
 from biip.checksums import gs1_standard_check_digit
-from biip.gs1 import GS1CompanyPrefix, GS1Prefix
+from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
 
 
 @dataclass
@@ -68,13 +68,13 @@ class Gln:
     """Raw unprocessed value."""
 
     prefix: Optional[GS1Prefix]
-    """The [GS1 Prefix][biip.gs1.GS1Prefix].
+    """The [GS1 Prefix][biip.gs1_prefixes.GS1Prefix].
 
     Indicating what GS1 country organization that assigned code range.
     """
 
     company_prefix: Optional[GS1CompanyPrefix]
-    """The [GS1 Company Prefix][biip.gs1.GS1CompanyPrefix].
+    """The [GS1 Company Prefix][biip.gs1_prefixes.GS1CompanyPrefix].
 
     Identifying the company that issued the GLN.
     """

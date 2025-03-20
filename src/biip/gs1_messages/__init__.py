@@ -1,8 +1,10 @@
-"""Support for barcode data with GS1 element strings.
+"""Support for barcode data with GS1 messages.
 
-The `biip.gs1` module contains Biip's support for parsing data consisting of GS1
-Element Strings. Each Element String is identified by a GS1 Application
-Identifier (AI) prefix.
+The `biip.gs1_messages` module contains Biip's support for parsing data
+consisting of GS1 messages and element strings. GS1 messages are text strings
+consisting of one or more GS1 element strings. Each GS1 Element String is
+identified by a GS1 Application Identifier (AI) prefix followed by the element's
+value.
 
 Data of this format is found in the following types of barcodes:
 
@@ -14,17 +16,17 @@ Data of this format is found in the following types of barcodes:
 If you only want to parse GS1 Messages, you can import the GS1 Message parser
 directly instead of using [`biip.parse()`][biip.parse].
 
-    >>> from biip.gs1 import GS1Message
+    >>> from biip.gs1_messages import GS1Message
 
-If the parsing succeeds, it returns a [`GS1Message`][biip.gs1.GS1Message]
+If the parsing succeeds, it returns a [`GS1Message`][biip.gs1_messages.GS1Message]
 object.
 
     >>> msg = GS1Message.parse("010703206980498815210526100329")
 
-The [`GS1Message`][biip.gs1.GS1Message] can be represented as an HRI, short
-for "human readable interpretation", using
-[`msg.as_hri()`][biip.gs1.GS1Message.as_hri]. The HRI is the text usually printed
-below or next to the barcode.
+The [`GS1Message`][biip.gs1_messages.GS1Message] can be represented as an HRI,
+short for "human readable interpretation", using
+[`msg.as_hri()`][biip.gs1_messages.GS1Message.as_hri]. The HRI is the text
+usually printed below or next to the barcode.
 
     >>> msg.value
     '010703206980498815210526100329'
@@ -32,7 +34,7 @@ below or next to the barcode.
     '(01)07032069804988(15)210526(10)0329'
 
 HRI can also be parsed using
-[`GS1Message.parse_hri()`][biip.gs1.GS1Message.parse_hri].
+[`GS1Message.parse_hri()`][biip.gs1_messages.GS1Message.parse_hri].
 
     >>> msg = GS1Message.parse_hri("(01)07032069804988(15)210526(10)0329")
 
@@ -71,9 +73,9 @@ In this example, the first element string is a GTIN.
         )
     )
 
-The message object has [`msg.get()`][biip.gs1.GS1Message.get] and
-[`msg.filter()`][biip.gs1.GS1Message.filter] methods to lookup element strings
-either by the Application Identifier's "data title" or its AI number.
+The message object has [`msg.get()`][biip.gs1_messages.GS1Message.get] and
+[`msg.filter()`][biip.gs1_messages.GS1Message.filter] methods to lookup element
+strings either by the Application Identifier's "data title" or its AI number.
 
     >>> pprint(msg.get(data_title='BEST BY'))
     GS1ElementString(
@@ -107,26 +109,15 @@ either by the Application Identifier's "data title" or its AI number.
 """
 
 ASCII_GROUP_SEPARATOR = "\x1d"
-
 DEFAULT_SEPARATOR_CHARS: tuple[str] = (ASCII_GROUP_SEPARATOR,)
-"""The default separator character is `<GS>`, ASCII value 29.
-
-References:
-   GS1 General Specifications, section 7.8.3.
-"""
 
 # The following must be imported in this specific order.
 # ruff: noqa: E402, I001
-from biip.gs1._application_identifiers import GS1ApplicationIdentifier
-from biip.gs1._prefixes import GS1CompanyPrefix, GS1Prefix
-from biip.gs1._element_strings import GS1ElementString
-from biip.gs1._messages import GS1Message
+from biip.gs1_messages._element_strings import GS1ElementString
+from biip.gs1_messages._messages import GS1Message
 
 __all__ = [
     "DEFAULT_SEPARATOR_CHARS",
-    "GS1ApplicationIdentifier",
-    "GS1CompanyPrefix",
     "GS1ElementString",
     "GS1Message",
-    "GS1Prefix",
 ]

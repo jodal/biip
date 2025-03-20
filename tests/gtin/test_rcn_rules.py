@@ -5,7 +5,7 @@ import pytest
 from moneyed import Money
 
 from biip import ParseError
-from biip.gs1 import GS1Prefix
+from biip.gs1_prefixes import GS1Prefix
 from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
 
 
