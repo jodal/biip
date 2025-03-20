@@ -1,4 +1,17 @@
-"""Prefixes allocated by GS1.
+"""Support for prefixes allocated by GS1.
+
+GS1 prefixes are used to split the allocation space of various number schemes,
+e.g. GTIN, GLN, and SSCC.
+
+The allocation space is split twice:
+
+- First, among the national GS1 organizations, represented by
+  [`GS1Prefix`][biip.gs1_prefixes.GS1Prefix].
+- Secondly, among the companies that apply to their national GS1 organization
+  for a number allocation, represented by
+  [`GS1CompanyPrefix`][biip.gs1_prefixes.GS1CompanyPrefix].
+
+All prefix data is bundled with Biip. No network access is required.
 
 Examples:
     >>> from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
@@ -31,7 +44,7 @@ class GS1Prefix:
     """Prefix assigned by GS1.
 
     Used to split the allocation space of various number schemes, e.g. GTIN,
-    among GS1 organizations worldwide.
+    GLN, and SSCC, among GS1 organizations worldwide.
 
     The GS1 Prefix does not identify the origin of a product, only where the
     number was assigned to a GS1 member organization.
