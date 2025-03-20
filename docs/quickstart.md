@@ -13,7 +13,7 @@ your own Python shell to follow along.
 >>> import biip
 ```
 
-See the [API reference](api/biip.md) for details on the API and data fields used
+See the [API reference](../api/) for details on the API and data fields used
 in the examples below.
 
 ## Parsing barcode data
