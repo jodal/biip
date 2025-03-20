@@ -15,6 +15,7 @@ nav:
       - api/checksums.md
       - api/gln.md
       - api/gs1.md
+      - api/gs1_prefixes.md
       - api/gtin.md
       - api/sscc.md
       - api/symbology.md

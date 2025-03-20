@@ -1,7 +1,7 @@
 """Prefixes allocated by GS1.
 
 Examples:
-    >>> from biip.gs1 import GS1CompanyPrefix, GS1Prefix
+    >>> from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
     >>> GS1Prefix.extract("7044610873466")
     GS1Prefix(value='704', usage='GS1 Norway')
     >>> GS1CompanyPrefix.extract("7044610873466")
@@ -17,6 +17,11 @@ from importlib import resources
 from typing import Optional, Union
 
 from biip import ParseError
+
+__all__ = [
+    "GS1CompanyPrefix",
+    "GS1Prefix",
+]
 
 _TrieNode = Union[dict[str, "_TrieNode"], int]
 
@@ -35,7 +40,7 @@ class GS1Prefix:
         https://www.gs1.org/standards/id-keys/company-prefix
 
     Examples:
-        >>> from biip.gs1 import GS1Prefix
+        >>> from biip.gs1_prefixes import GS1Prefix
         >>> GS1Prefix.extract("978-1-492-05374-3")
         GS1Prefix(value='978', usage='Bookland (ISBN)')
     """
@@ -87,7 +92,7 @@ class GS1CompanyPrefix:
     The prefix assigned to a single company.
 
     Examples:
-        >>> from biip.gs1 import GS1CompanyPrefix
+        >>> from biip.gs1_prefixes import GS1CompanyPrefix
         >>> GS1CompanyPrefix.extract("7044610873466")
         GS1CompanyPrefix(value='704461')
     """
@@ -142,14 +147,16 @@ class _GS1PrefixRange:
     usage: str
 
 
-_GS1_PREFIX_RANGES_FILE = resources.files("biip") / "gs1" / "_prefix_ranges.json"
+_GS1_PREFIX_RANGES_FILE = (
+    resources.files("biip") / "gs1_prefixes" / "_prefix_ranges.json"
+)
 _GS1_PREFIX_RANGES = [
     _GS1PrefixRange(**kwargs)
     for kwargs in json.loads(_GS1_PREFIX_RANGES_FILE.read_text())
 ]
 
 _GS1_COMPANY_PREFIX_TRIE_FILE = (
-    resources.files("biip") / "gs1" / "_company_prefix_trie.json.lzma"
+    resources.files("biip") / "gs1_prefixes" / "_company_prefix_trie.json.lzma"
 )
 _GS1_COMPANY_PREFIX_TRIE: _TrieNode = json.loads(
     lzma.decompress(_GS1_COMPANY_PREFIX_TRIE_FILE.read_bytes()).decode()

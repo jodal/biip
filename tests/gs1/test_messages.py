@@ -9,11 +9,10 @@ from biip import ParseError
 from biip.gs1 import (
     DEFAULT_SEPARATOR_CHARS,
     GS1ApplicationIdentifier,
-    GS1CompanyPrefix,
     GS1ElementString,
     GS1Message,
-    GS1Prefix,
 )
+from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
 from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion
 
 
