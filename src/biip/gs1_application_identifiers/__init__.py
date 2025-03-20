@@ -1,4 +1,25 @@
-"""Support for GS1 Application Identifiers (AI)."""
+r"""Support for GS1 Application Identifiers (AI).
+
+Application identifiers are used to identify the type of data that follows in a
+GS1 element string.
+
+All application identifier data is bundled with Biip. No network access is
+required.
+
+Examples:
+    >>> from biip.gs1_application_identifiers import GS1ApplicationIdentifier
+    >>> ai = GS1ApplicationIdentifier.extract("01")
+    >>> pprint(ai)
+    GS1ApplicationIdentifier(
+        ai='01',
+        description='Global Trade Item Number (GTIN)',
+        data_title='GTIN',
+        fnc1_required=False,
+        format='N2+N14'
+    )
+    >>> ai.pattern
+    '^01(\\d{14})$'
+"""
 
 from __future__ import annotations
 
@@ -11,7 +32,7 @@ from biip import ParseError
 
 @dataclass(frozen=True)
 class GS1ApplicationIdentifier:
-    r"""GS1 Application Identifier (AI).
+    """GS1 Application Identifier (AI).
 
     AIs are data field prefixes used in several types of barcodes, including
     GS1-128. The AI defines what semantical meaning and format of the following
@@ -22,20 +43,6 @@ class GS1ApplicationIdentifier:
 
     References:
         https://www.gs1.org/standards/barcodes/application-identifiers
-
-    Examples:
-        >>> from biip.gs1_application_identifiers import GS1ApplicationIdentifier
-        >>> ai = GS1ApplicationIdentifier.extract("01")
-        >>> pprint(ai)
-        GS1ApplicationIdentifier(
-            ai='01',
-            description='Global Trade Item Number (GTIN)',
-            data_title='GTIN',
-            fnc1_required=False,
-            format='N2+N14'
-        )
-        >>> ai.pattern
-        '^01(\\d{14})$'
     """
 
     ai: str
