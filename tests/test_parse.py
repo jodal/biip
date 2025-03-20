@@ -10,11 +10,10 @@ from biip.gs1 import (
     GS1ElementString,
     GS1Message,
     GS1Prefix,
-    GS1Symbology,
 )
 from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
 from biip.sscc import Sscc
-from biip.symbology import Symbology, SymbologyIdentifier
+from biip.symbology import GS1Symbology, ISOSymbology, SymbologyIdentifier
 from biip.upc import Upc, UpcFormat
 
 
@@ -60,7 +59,7 @@ from biip.upc import Upc, UpcFormat
                 value="]E496385074",
                 symbology_identifier=SymbologyIdentifier(
                     value="]E4",
-                    symbology=Symbology.EAN_UPC,
+                    iso_symbology=ISOSymbology.EAN_UPC,
                     modifiers="4",
                     gs1_symbology=GS1Symbology.EAN_8,
                 ),
@@ -140,7 +139,7 @@ from biip.upc import Upc, UpcFormat
                 value="]E00123601057072",
                 symbology_identifier=SymbologyIdentifier(
                     value="]E0",
-                    symbology=Symbology.EAN_UPC,
+                    iso_symbology=ISOSymbology.EAN_UPC,
                     modifiers="0",
                     gs1_symbology=GS1Symbology.EAN_13,
                 ),
@@ -194,7 +193,7 @@ from biip.upc import Upc, UpcFormat
                 value="]E05901234123457",
                 symbology_identifier=SymbologyIdentifier(
                     value="]E0",
-                    symbology=Symbology.EAN_UPC,
+                    iso_symbology=ISOSymbology.EAN_UPC,
                     modifiers="0",
                     gs1_symbology=GS1Symbology.EAN_13,
                 ),
@@ -241,7 +240,7 @@ from biip.upc import Upc, UpcFormat
                 value="]I105901234123457",
                 symbology_identifier=SymbologyIdentifier(
                     value="]I1",
-                    symbology=Symbology.ITF,
+                    iso_symbology=ISOSymbology.ITF,
                     modifiers="1",
                     gs1_symbology=GS1Symbology.ITF_14,
                 ),
@@ -551,7 +550,7 @@ from biip.upc import Upc, UpcFormat
                 value="]C1010590123412345715210526",
                 symbology_identifier=SymbologyIdentifier(
                     value="]C1",
-                    symbology=Symbology.CODE_128,
+                    iso_symbology=ISOSymbology.CODE_128,
                     modifiers="1",
                     gs1_symbology=GS1Symbology.GS1_128,
                 ),
@@ -596,7 +595,7 @@ from biip.upc import Upc, UpcFormat
                 value="]e00100123456789012",
                 symbology_identifier=SymbologyIdentifier(
                     value="]e0",
-                    symbology=Symbology.RSS_EAN_UCC_COMPOSITE,
+                    iso_symbology=ISOSymbology.RSS_EAN_UCC_COMPOSITE,
                     modifiers="0",
                     gs1_symbology=GS1Symbology.GS1_DATABAR,
                 ),
@@ -658,7 +657,7 @@ def test_parse_rcn_with_ignored_invalid_check_digit() -> None:
         value="]C10102824040005133",
         symbology_identifier=SymbologyIdentifier(
             value="]C1",
-            symbology=Symbology.CODE_128,
+            iso_symbology=ISOSymbology.CODE_128,
             modifiers="1",
             gs1_symbology=GS1Symbology.GS1_128,
         ),

@@ -117,7 +117,6 @@ References:
 
 # The following must be imported in this specific order.
 # ruff: noqa: E402, I001
-from biip.gs1._symbology import GS1Symbology
 from biip.gs1._application_identifiers import GS1ApplicationIdentifier
 from biip.gs1._prefixes import GS1CompanyPrefix, GS1Prefix
 from biip.gs1._element_strings import GS1ElementString
@@ -130,5 +129,4 @@ __all__ = [
     "GS1ElementString",
     "GS1Message",
     "GS1Prefix",
-    "GS1Symbology",
 ]
