@@ -63,9 +63,9 @@ ParseResult(
 
 Biip can parse several different data formats. Thus, it'll return a
 result object with a mix of results and errors. In the above example, we
-can see that the data is successfully parsed as a GTIN while parsing as
-an SSCC or GS1 Message failed, and Biip returned error messages
-explaining why.
+can see that the data is successfully parsed as a GTIN (and GS1 Message) while
+parsing as an UPC or SSCC failed, and Biip returned error messages explaining
+why.
 
 If all parsers fail, Biip still returns a
 [`ParseResult`][biip.ParseResult]. The result's error fields contains
@@ -249,7 +249,7 @@ contain the same data. The difference is that while `price` is a simple
 The `money` field is only set if the optional dependency
 [`py-moneyed`](https://pypi.org/project/py-moneyed/) is installed.
 
-## GS1 messages with AIs
+## GS1 messages
 
 Let us move away from consumer products.
 
@@ -483,11 +483,17 @@ You can see this from the
 to 20 alphanumeric characters.
 
 In the last example, we didn't need to do anything to handle the variable-length
-data field because the batch/lot number Element String was the last one in the
-Message.
+data field because the batch/lot number Element String (AI `10`) was the last
+one in the message:
 
-Let's try to reorder the expiration date and batch/lot number, so that
-the batch/lot number comes in the middle of the Message:
+```python
+>>> result = biip.parse("010703206980498815210526100329")
+>>> result.gs1_message.as_hri()
+'(01)07032069804988(15)210526(10)0329'
+```
+
+Let's try to reorder the expiration date (AI `15`) and batch/lot number (AI
+`10`), so that the batch/lot number comes in the middle of the Message:
 
 ```python
 >>> result = biip.parse("010703206980498810032915210525")
