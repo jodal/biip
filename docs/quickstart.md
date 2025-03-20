@@ -464,7 +464,7 @@ About a third of the specified AIs don't have a fixed length. How do we
 then know where the Element Strings ends, and the next one starts?
 
 Let's look closer at the batch/lot number in the example in the previous
-section. It has the following AI defintion:
+section. It has the following AI definition:
 
 ```python hl_lines="6"
 GS1ApplicationIdentifier(
