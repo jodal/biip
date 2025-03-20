@@ -6,12 +6,8 @@ from typing import Optional
 import pytest
 
 from biip import ParseError
-from biip.gs1 import (
-    DEFAULT_SEPARATOR_CHARS,
-    GS1ApplicationIdentifier,
-    GS1ElementString,
-    GS1Message,
-)
+from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1ElementString, GS1Message
+from biip.gs1_application_identifiers import GS1ApplicationIdentifier
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
 from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion
 

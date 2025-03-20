@@ -11,10 +11,12 @@ from biip import ParseError
 from biip.gs1 import (
     ASCII_GROUP_SEPARATOR,
     DEFAULT_SEPARATOR_CHARS,
-    GS1ApplicationIdentifier,
     GS1ElementString,
 )
-from biip.gs1._application_identifiers import _GS1_APPLICATION_IDENTIFIERS
+from biip.gs1_application_identifiers import (
+    _GS1_APPLICATION_IDENTIFIERS,
+    GS1ApplicationIdentifier,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Iterable

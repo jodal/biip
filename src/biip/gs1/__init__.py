@@ -117,13 +117,11 @@ References:
 
 # The following must be imported in this specific order.
 # ruff: noqa: E402, I001
-from biip.gs1._application_identifiers import GS1ApplicationIdentifier
 from biip.gs1._element_strings import GS1ElementString
 from biip.gs1._messages import GS1Message
 
 __all__ = [
     "DEFAULT_SEPARATOR_CHARS",
-    "GS1ApplicationIdentifier",
     "GS1ElementString",
     "GS1Message",
 ]

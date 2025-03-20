@@ -1,4 +1,4 @@
-"""GS1 Application Identifiers."""
+"""Support for GS1 Application Identifiers (AI)."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ class GS1ApplicationIdentifier:
         https://www.gs1.org/standards/barcodes/application-identifiers
 
     Examples:
-        >>> from biip.gs1 import GS1ApplicationIdentifier
+        >>> from biip.gs1_application_identifiers import GS1ApplicationIdentifier
         >>> ai = GS1ApplicationIdentifier.extract("01")
         >>> pprint(ai)
         GS1ApplicationIdentifier(
@@ -73,7 +73,7 @@ class GS1ApplicationIdentifier:
             ParseError: If the parsing fails.
 
         Examples:
-            >>> from biip.gs1 import GS1ApplicationIdentifier
+            >>> from biip.gs1_application_identifiers import GS1ApplicationIdentifier
             >>> ai = GS1ApplicationIdentifier.extract("010703206980498815210526100329")
             >>> pprint(ai)
             GS1ApplicationIdentifier(
@@ -101,7 +101,9 @@ class GS1ApplicationIdentifier:
 
 
 _GS1_APPLICATION_IDENTIFIERS_FILE = (
-    resources.files("biip") / "gs1" / "_application_identifiers.json"
+    resources.files("biip")
+    / "gs1_application_identifiers"
+    / "_application_identifiers.json"
 )
 _GS1_APPLICATION_IDENTIFIERS = {
     entry.ai: entry

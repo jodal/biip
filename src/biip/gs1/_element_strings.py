@@ -12,7 +12,8 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 
 from biip import ParseError
 from biip.gln import Gln
-from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1ApplicationIdentifier
+from biip.gs1 import DEFAULT_SEPARATOR_CHARS
+from biip.gs1_application_identifiers import GS1ApplicationIdentifier
 from biip.gtin import Gtin, RcnRegion
 from biip.sscc import Sscc
 

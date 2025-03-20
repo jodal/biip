@@ -477,7 +477,8 @@ GS1ApplicationIdentifier(
 ```
 
 The batch/lot number, with AI `10`, is a variable-length field.
-You can see this from the [`format`][biip.gs1.GS1ApplicationIdentifier.format],
+You can see this from the
+[`format`][biip.gs1_application_identifiers.GS1ApplicationIdentifier.format],
 `N2+X...20`, which indicates a two-digit AI prefix followed by a payload of up
 to 20 alphanumeric characters.
 
