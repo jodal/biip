@@ -10,11 +10,10 @@ from biip.gs1 import (
     GS1ElementString,
     GS1Message,
     GS1Prefix,
-    GS1Symbology,
 )
 from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
 from biip.sscc import Sscc
-from biip.symbology import Symbology, SymbologyIdentifier
+from biip.symbology import GS1Symbology, Symbology, SymbologyIdentifier
 from biip.upc import Upc, UpcFormat
 
 

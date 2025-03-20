@@ -6,10 +6,10 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Callable, Optional, Union
 
 from biip import ParseError
-from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1Message, GS1Symbology
+from biip.gs1 import DEFAULT_SEPARATOR_CHARS, GS1Message
 from biip.gtin import Gtin, GtinFormat, RcnRegion
 from biip.sscc import Sscc
-from biip.symbology import SymbologyIdentifier
+from biip.symbology import GS1Symbology, SymbologyIdentifier
 from biip.upc import Upc
 
 if TYPE_CHECKING:
