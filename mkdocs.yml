@@ -11,7 +11,7 @@ nav:
   - index.md
   - quickstart.md
   - Reference:
-      - api/biip.md
+      - api/index.md
       - api/checksums.md
       - api/gln.md
       - api/gs1_messages.md
