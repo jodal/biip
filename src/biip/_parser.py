@@ -7,13 +7,15 @@ from typing import TYPE_CHECKING, Any, Callable, Optional, Union
 
 from biip import ParseError
 from biip.gs1_messages import DEFAULT_SEPARATOR_CHARS, GS1Message
-from biip.gtin import Gtin, GtinFormat, RcnRegion
+from biip.gtin import Gtin, GtinFormat
 from biip.sscc import Sscc
 from biip.symbology import GS1Symbology, SymbologyIdentifier
 from biip.upc import Upc
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
+
+    from biip.rcn import RcnRegion
 
 
 def parse(

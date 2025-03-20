@@ -7,7 +7,8 @@ from biip import ParseResult, parse
 from biip.gs1_application_identifiers import GS1ApplicationIdentifier
 from biip.gs1_messages import GS1ElementString, GS1Message
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
-from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
+from biip.gtin import Gtin, GtinFormat
+from biip.rcn import Rcn, RcnRegion, RcnUsage
 from biip.sscc import Sscc
 from biip.symbology import GS1Symbology, ISOSymbology, SymbologyIdentifier
 from biip.upc import Upc, UpcFormat

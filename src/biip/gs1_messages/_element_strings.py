@@ -14,11 +14,13 @@ from biip import ParseError
 from biip.gln import Gln
 from biip.gs1_application_identifiers import GS1ApplicationIdentifier
 from biip.gs1_messages import DEFAULT_SEPARATOR_CHARS
-from biip.gtin import Gtin, RcnRegion
+from biip.gtin import Gtin
 from biip.sscc import Sscc
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
+
+    from biip.rcn import RcnRegion
 
 try:
     import moneyed  # noqa: TC002

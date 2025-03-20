@@ -1,6 +1,7 @@
 import pytest
 
-from biip.gtin import Gtin, GtinFormat, Rcn, RcnRegion, RcnUsage
+from biip.gtin import Gtin, GtinFormat
+from biip.rcn import Rcn, RcnRegion, RcnUsage
 
 
 @pytest.mark.parametrize(

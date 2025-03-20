@@ -204,7 +204,7 @@ ParseResult(
 ```
 
 In the example above, the number is detected to be an RCN, and an instance of
-[`Rcn`][biip.gtin.Rcn], a subclass of [`Gtin`][biip.gtin.Gtin], which may
+[`Rcn`][biip.rcn.Rcn], a subclass of [`Gtin`][biip.gtin.Gtin], which may
 contain a few additional fields, is returned.
 
 The rules for how to encode weight or price into an RCN varies between
@@ -243,7 +243,7 @@ ParseResult(
 )
 ```
 
-The [`price`][biip.gtin.Rcn.price] and [`money`][biip.gtin.Rcn.money] fields
+The [`price`][biip.rcn.Rcn.price] and [`money`][biip.rcn.Rcn.money] fields
 contain the same data. The difference is that while `price` is a simple
 [`Decimal`][decimal.Decimal] type, `money` also carries currency information.
 The `money` field is only set if the optional dependency
