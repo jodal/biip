@@ -24,7 +24,7 @@ ParseResult(
     value=']E09781492053743',
     symbology_identifier=SymbologyIdentifier(
         value=']E0',
-        symbology=ISOSymbology.EAN_UPC,
+        iso_symbology=ISOSymbology.EAN_UPC,
         modifiers='0',
         gs1_symbology=GS1Symbology.EAN_13
     ),

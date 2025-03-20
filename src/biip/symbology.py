@@ -15,7 +15,7 @@ Examples:
     >>> pprint(si)
     SymbologyIdentifier(
         value=']E0',
-        symbology=ISOSymbology.EAN_UPC,
+        iso_symbology=ISOSymbology.EAN_UPC,
         modifiers='0',
         gs1_symbology=GS1Symbology.EAN_13
     )
@@ -23,7 +23,7 @@ Examples:
     >>> pprint(si)
     SymbologyIdentifier(
         value=']I1',
-        symbology=ISOSymbology.ITF,
+        iso_symbology=ISOSymbology.ITF,
         modifiers='1',
         gs1_symbology=GS1Symbology.ITF_14
     )
@@ -224,7 +224,7 @@ class SymbologyIdentifier:
     value: str
     """Raw unprocessed value."""
 
-    symbology: ISOSymbology
+    iso_symbology: ISOSymbology
     """The recognized ISO symbology."""
 
     modifiers: str
@@ -285,7 +285,7 @@ class SymbologyIdentifier:
 
         return cls(
             value=value,
-            symbology=iso_symbology,
+            iso_symbology=iso_symbology,
             modifiers=modifiers,
             gs1_symbology=gs1_symbology,
         )

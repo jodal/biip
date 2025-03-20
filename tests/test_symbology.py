@@ -32,7 +32,7 @@ def test_iso_symbology_enum() -> None:
             "]E0abc",
             SymbologyIdentifier(
                 value="]E0",
-                symbology=ISOSymbology.EAN_UPC,
+                iso_symbology=ISOSymbology.EAN_UPC,
                 modifiers="0",
                 gs1_symbology=GS1Symbology.EAN_13,
             ),
@@ -41,7 +41,7 @@ def test_iso_symbology_enum() -> None:
             "]C0abc",
             SymbologyIdentifier(
                 value="]C0",
-                symbology=ISOSymbology.CODE_128,
+                iso_symbology=ISOSymbology.CODE_128,
                 modifiers="0",
                 gs1_symbology=None,
             ),
@@ -50,7 +50,7 @@ def test_iso_symbology_enum() -> None:
             "]C1abc",
             SymbologyIdentifier(
                 value="]C1",
-                symbology=ISOSymbology.CODE_128,
+                iso_symbology=ISOSymbology.CODE_128,
                 modifiers="1",
                 gs1_symbology=GS1Symbology.GS1_128,
             ),
@@ -59,7 +59,7 @@ def test_iso_symbology_enum() -> None:
             "]I1abc",
             SymbologyIdentifier(
                 value="]I1",
-                symbology=ISOSymbology.ITF,
+                iso_symbology=ISOSymbology.ITF,
                 modifiers="1",
                 gs1_symbology=GS1Symbology.ITF_14,
             ),
@@ -68,7 +68,7 @@ def test_iso_symbology_enum() -> None:
             "]Y1abcdefghijkl",
             SymbologyIdentifier(
                 value="]Y1a",
-                symbology=ISOSymbology.SYSTEM_EXPANSION,
+                iso_symbology=ISOSymbology.SYSTEM_EXPANSION,
                 modifiers="1a",
                 gs1_symbology=None,
             ),
@@ -77,7 +77,7 @@ def test_iso_symbology_enum() -> None:
             "]Y9abcdefghijkl",
             SymbologyIdentifier(
                 value="]Y9abcdefghi",
-                symbology=ISOSymbology.SYSTEM_EXPANSION,
+                iso_symbology=ISOSymbology.SYSTEM_EXPANSION,
                 modifiers="9abcdefghi",
                 gs1_symbology=None,
             ),
