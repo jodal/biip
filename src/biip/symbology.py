@@ -15,7 +15,7 @@ Examples:
     >>> pprint(si)
     SymbologyIdentifier(
         value=']E0',
-        symbology=Symbology.EAN_UPC,
+        symbology=ISOSymbology.EAN_UPC,
         modifiers='0',
         gs1_symbology=GS1Symbology.EAN_13
     )
@@ -23,7 +23,7 @@ Examples:
     >>> pprint(si)
     SymbologyIdentifier(
         value=']I1',
-        symbology=Symbology.ITF,
+        symbology=ISOSymbology.ITF,
         modifiers='1',
         gs1_symbology=GS1Symbology.ITF_14
     )
@@ -42,12 +42,12 @@ from biip import ParseError
 
 __all__ = [
     "GS1Symbology",
-    "Symbology",
+    "ISOSymbology",
     "SymbologyIdentifier",
 ]
 
 
-class Symbology(Enum):
+class ISOSymbology(Enum):
     """Enum of barcode symbologies that are supported by Symbology Identifers.
 
     References:
@@ -146,7 +146,7 @@ class Symbology(Enum):
 
     def __repr__(self) -> str:
         """Canonical string representation of format."""
-        return f"Symbology.{self.name}"
+        return f"ISOSymbology.{self.name}"
 
 
 class GS1Symbology(Enum):
@@ -224,8 +224,8 @@ class SymbologyIdentifier:
     value: str
     """Raw unprocessed value."""
 
-    symbology: Symbology
-    """The recognized symbology."""
+    symbology: ISOSymbology
+    """The recognized ISO symbology."""
 
     modifiers: str
     """Symbology modifiers.
@@ -260,7 +260,7 @@ class SymbologyIdentifier:
             raise ParseError(msg)
 
         try:
-            symbology = Symbology(value[1])
+            iso_symbology = ISOSymbology(value[1])
         except ValueError as exc:
             msg = (
                 f"Failed to get Symbology Identifier from {value!r}. "
@@ -268,24 +268,24 @@ class SymbologyIdentifier:
             )
             raise ParseError(msg) from exc
 
-        if symbology == Symbology.SYSTEM_EXPANSION:
+        if iso_symbology == ISOSymbology.SYSTEM_EXPANSION:
             modifiers_length = int(value[2]) + 1
         else:
             modifiers_length = 1
 
         modifiers = value[2 : 2 + modifiers_length]
 
-        value = f"]{symbology.value}{modifiers}"
+        value = f"]{iso_symbology.value}{modifiers}"
 
         gs1_symbology: Optional[GS1Symbology]
         try:
-            gs1_symbology = GS1Symbology(f"{symbology.value}{modifiers}")
+            gs1_symbology = GS1Symbology(f"{iso_symbology.value}{modifiers}")
         except ValueError:
             gs1_symbology = None
 
         return cls(
             value=value,
-            symbology=symbology,
+            symbology=iso_symbology,
             modifiers=modifiers,
             gs1_symbology=gs1_symbology,
         )
