@@ -117,6 +117,35 @@ def test_parse_with_separator_char(
     )
 
 
+@pytest.mark.parametrize(
+    ("value", "config", "expected"),
+    [
+        (
+            # Invalid date "000000"
+            "15000000",
+            ParseConfig(gs1_message_verify_date=False),
+            GS1Message(
+                value="15000000",
+                element_strings=[
+                    GS1ElementString(
+                        ai=GS1ApplicationIdentifier.extract("15"),
+                        value="000000",
+                        pattern_groups=["000000"],
+                        date=None,
+                    )
+                ],
+            ),
+        ),
+    ],
+)
+def test_parse_with_invalid_element_values(
+    value: str,
+    config: ParseConfig,
+    expected: GS1Message,
+) -> None:
+    assert GS1Message.parse(value, config=config) == expected
+
+
 def test_parse_with_too_long_separator_char_fails() -> None:
     with pytest.raises(
         ValueError,

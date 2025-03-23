@@ -17,6 +17,17 @@ class ParseConfig:
     some of its the behavior by setting these options.
     """
 
+    gs1_message_verify_date: bool = True
+    """Whether to verify that the date in a GS1 message is valid.
+
+    According to the GS1 General Specification, dates are required to contain a
+    valid year and month. Only the day of month can be left as zeros, which
+    should be interpreted as the last day of the month.
+
+    Some barcodes include a GS1 element string with all zero dates, requiring
+    this check to be disabled.
+    """
+
     rcn_region: RcnRegion | str | None = None
     """The geographical region to use when parsing RCNs.
 
