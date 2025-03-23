@@ -27,7 +27,7 @@ import json
 import lzma
 from dataclasses import dataclass
 from importlib import resources
-from typing import Optional, Union
+from typing import Union
 
 from biip import ParseError
 
@@ -36,7 +36,7 @@ __all__ = [
     "GS1Prefix",
 ]
 
-_TrieNode = Union[dict[str, "_TrieNode"], int]
+_TrieNode = Union[dict[str, "_TrieNode"], int]  # noqa: UP007
 
 
 @dataclass(frozen=True)
@@ -65,7 +65,7 @@ class GS1Prefix:
     """Description of who is using the prefix."""
 
     @classmethod
-    def extract(cls, value: str) -> Optional[GS1Prefix]:
+    def extract(cls, value: str) -> GS1Prefix | None:
         """Extract the GS1 Prefix from the given value.
 
         Args:
@@ -114,7 +114,7 @@ class GS1CompanyPrefix:
     """The company prefix itself."""
 
     @classmethod
-    def extract(cls, value: str) -> Optional[GS1CompanyPrefix]:
+    def extract(cls, value: str) -> GS1CompanyPrefix | None:
         """Extract the GS1 Company Prefix from the given value.
 
         Args:

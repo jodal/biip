@@ -63,7 +63,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
 
 from biip import EncodeError, ParseError
 from biip.checksums import gs1_standard_check_digit
@@ -103,7 +102,7 @@ class Upc:
     the check digit.
     """
 
-    check_digit: Optional[int] = None
+    check_digit: int | None = None
     """Check digit used to check if the UPC-A as a whole is valid.
 
     Set for UPC-A, but not set for UPC-E.

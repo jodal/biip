@@ -41,7 +41,6 @@ If the detected GS1 Company Prefix length is wrong, it can be overridden:
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
 
 from biip import ParseError
 from biip.checksums import gs1_standard_check_digit
@@ -55,13 +54,13 @@ class Sscc:
     value: str
     """Raw unprocessed value."""
 
-    prefix: Optional[GS1Prefix]
+    prefix: GS1Prefix | None
     """The GS1 Prefix.
 
     Indicating what GS1 country organization that assigned code range.
     """
 
-    company_prefix: Optional[GS1CompanyPrefix]
+    company_prefix: GS1CompanyPrefix | None
     """The GS1 Company Prefix.
 
     Identifying the company that issued the SSCC.
@@ -132,7 +131,7 @@ class Sscc:
             check_digit=check_digit,
         )
 
-    def as_hri(self, *, company_prefix_length: Optional[int] = None) -> str:
+    def as_hri(self, *, company_prefix_length: int | None = None) -> str:
         """Render as a human readable interpretation (HRI).
 
         The HRI is often printed directly below barcodes.

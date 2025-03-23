@@ -8,7 +8,7 @@ import re
 from collections.abc import Iterator
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Any
 
 from biip import ParseError
 from biip.gln import Gln
@@ -82,35 +82,35 @@ class GS1ElementString:
     pattern_groups: list[str]
     """List of pattern groups extracted from the Element String."""
 
-    gln: Optional[Gln] = None
+    gln: Gln | None = None
     """A GLN created from the element string, if the AI represents a GLN."""
 
-    gln_error: Optional[str] = None
+    gln_error: str | None = None
     """The GLN parse error, if parsing as a GLN was attempted and failed."""
 
-    gtin: Optional[Gtin] = None
+    gtin: Gtin | None = None
     """A GTIN created from the element string, if the AI represents a GTIN."""
 
-    gtin_error: Optional[str] = None
+    gtin_error: str | None = None
     """The GTIN parse error, if parsing as a GTIN was attempted and failed."""
 
-    sscc: Optional[Sscc] = None
+    sscc: Sscc | None = None
     """An SSCC created from the element string, if the AI represents a SSCC."""
 
-    sscc_error: Optional[str] = None
+    sscc_error: str | None = None
     """The SSCC parse error, if parsing as an SSCC was attempted and failed."""
 
-    date: Optional[dt.date] = None
+    date: dt.date | None = None
     """A date created from the element string, if the AI represents a date."""
 
-    datetime: Optional[dt.datetime] = None
+    datetime: dt.datetime | None = None
     """A datetime created from the element string, if the AI represents a datetime."""
 
-    decimal: Optional[Decimal] = None
+    decimal: Decimal | None = None
     """A decimal value created from the element string, if the AI represents a
     number."""
 
-    money: Optional["moneyed.Money"] = None  # noqa: UP037
+    money: moneyed.Money | None = None
     """A Money value created from the element string, if the AI represents a
     currency and an amount.
 
@@ -122,7 +122,7 @@ class GS1ElementString:
         cls,
         value: str,
         *,
-        rcn_region: Optional[RcnRegion] = None,
+        rcn_region: RcnRegion | None = None,
         rcn_verify_variable_measure: bool = True,
         separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
     ) -> GS1ElementString:
@@ -216,7 +216,7 @@ class GS1ElementString:
     def _set_gtin(
         self,
         *,
-        rcn_region: Optional[RcnRegion],
+        rcn_region: RcnRegion | None,
         rcn_verify_variable_measure: bool,
     ) -> None:
         if self.ai.ai not in ("01", "02"):
@@ -312,7 +312,7 @@ class GS1ElementString:
         """Get the length of the element string."""
         return len(self.ai) + len(self.value)
 
-    def __rich_repr__(self) -> Iterator[Union[tuple[str, Any], tuple[str, Any, Any]]]:
+    def __rich_repr__(self) -> Iterator[tuple[str, Any] | tuple[str, Any, Any]]:
         # Skip printing fields with default values
         yield "ai", self.ai
         yield "value", self.value
@@ -339,7 +339,7 @@ class GS1ElementString:
         return f"{self.ai}{self.value}"
 
 
-def _parse_date_and_datetime(value: str) -> tuple[dt.date, Optional[dt.datetime]]:
+def _parse_date_and_datetime(value: str) -> tuple[dt.date, dt.datetime | None]:
     pairs = [value[i : i + 2] for i in range(0, len(value), 2)]
 
     year = int(pairs[0])

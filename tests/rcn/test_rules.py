@@ -1,5 +1,4 @@
 from decimal import Decimal
-from typing import Optional
 
 import pytest
 from moneyed import Money
@@ -37,9 +36,9 @@ from biip.rcn import Rcn, RcnRegion, RcnUsage
 def test_region_baltics(
     rcn_region: RcnRegion,
     value: str,
-    weight: Optional[Decimal],
-    price: Optional[Decimal],
-    money: Optional[Money],
+    weight: Decimal | None,
+    price: Decimal | None,
+    money: Money | None,
 ) -> None:
     # The three Baltic countries share the same rules and allocation pool.
     #
@@ -70,9 +69,9 @@ def test_region_baltics(
 )
 def test_region_denmark(
     value: str,
-    weight: Optional[Decimal],
-    price: Optional[Decimal],
-    money: Optional[Money],
+    weight: Decimal | None,
+    price: Decimal | None,
+    money: Money | None,
 ) -> None:
     # References:
     #   https://www.gs1.dk/om-gs1/overblik-over-gs1-standarder/gtin-13-pris
@@ -98,9 +97,9 @@ def test_region_denmark(
 )
 def test_region_finland(
     value: str,
-    weight: Optional[Decimal],
-    price: Optional[Decimal],
-    money: Optional[Money],
+    weight: Decimal | None,
+    price: Decimal | None,
+    money: Money | None,
 ) -> None:
     # References:
     #   https://gs1.fi/en/instructions/gs1-company-prefix/how-identify-product-gtin
@@ -134,10 +133,10 @@ def test_region_finland(
 )
 def test_region_germany(
     value: str,
-    weight: Optional[Decimal],
-    count: Optional[int],
-    price: Optional[Decimal],
-    money: Optional[Money],
+    weight: Decimal | None,
+    count: int | None,
+    price: Decimal | None,
+    money: Money | None,
 ) -> None:
     # References:
     #   https://www.gs1-germany.de/fileadmin/gs1/fachpublikationen/globale-artikelnummer-gtin-in-der-anwendung.pdf
@@ -202,9 +201,9 @@ def test_region_germany_when_not_verifying_invalid_check_digit() -> None:
 )
 def test_region_great_britain(
     value: str,
-    weight: Optional[Decimal],
-    price: Optional[Decimal],
-    money: Optional[Money],
+    weight: Decimal | None,
+    price: Decimal | None,
+    money: Money | None,
 ) -> None:
     # References:
     #   https://www.gs1uk.org/how-to-barcode-variable-measure-items
@@ -264,9 +263,9 @@ def test_region_great_britain_when_not_verifying_invalid_check_digit() -> None:
 )
 def test_region_norway(
     value: str,
-    weight: Optional[Decimal],
-    price: Optional[Decimal],
-    money: Optional[Money],
+    weight: Decimal | None,
+    price: Decimal | None,
+    money: Money | None,
 ) -> None:
     # References: TODO: Find specification.
 
@@ -293,9 +292,9 @@ def test_region_norway(
 )
 def test_region_sweden(
     value: str,
-    weight: Optional[Decimal],
-    price: Optional[Decimal],
-    money: Optional[Money],
+    weight: Decimal | None,
+    price: Decimal | None,
+    money: Money | None,
 ) -> None:
     # References:
     #   https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/

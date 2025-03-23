@@ -6,7 +6,7 @@ from xml.etree import ElementTree  # noqa: ICN001
 
 import httpx
 
-TrieNode = Union[dict[str, "TrieNode"], int]
+TrieNode = Union[dict[str, "TrieNode"], int]  # noqa: UP007
 
 COMPANY_PREFIX_URL = "https://www.gs1.org/docs/gcp_length/gcpprefixformatlist.xml"
 

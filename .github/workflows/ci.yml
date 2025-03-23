@@ -19,9 +19,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: "pytest (3.9)"
-            python: "3.9"
-            tox: "3.9"
           - name: "pytest (3.10)"
             python: "3.10"
             tox: "3.10"
@@ -47,9 +44,9 @@ jobs:
           - name: "ruff format"
             python: "3.13"
             tox: ruff-format
-          - name: "ruff lint"
+          - name: "ruff check"
             python: "3.13"
-            tox: ruff-lint
+            tox: ruff-check
           - name: "Docs"
             python: "3.13"
             tox: docs

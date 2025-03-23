@@ -78,7 +78,7 @@ def gs1_price_weight_check_digit(value: str) -> int:
 def _four_digit_price_weight_check_digit(value: str) -> int:
     digits = list(map(int, list(value)))
     weight_sum = 0
-    for digit, weight_map in zip(digits, _FOUR_DIGIT_POSITION_WEIGHTS):
+    for digit, weight_map in zip(digits, _FOUR_DIGIT_POSITION_WEIGHTS, strict=True):
         weight = weight_map[digit]
         weight_sum += weight
     return (weight_sum * 3) % 10
@@ -87,7 +87,7 @@ def _four_digit_price_weight_check_digit(value: str) -> int:
 def _five_digit_price_weight_check_digit(value: str) -> int:
     digits = list(map(int, list(value)))
     weighted_sum = 0
-    for digit, weight_map in zip(digits, _FIVE_DIGIT_POSITION_WEIGHTS):
+    for digit, weight_map in zip(digits, _FIVE_DIGIT_POSITION_WEIGHTS, strict=True):
         weight = weight_map[digit]
         weighted_sum += weight
     result = (10 - weighted_sum % 10) % 10

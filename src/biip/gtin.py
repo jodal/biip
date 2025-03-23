@@ -52,7 +52,7 @@ from __future__ import annotations
 from collections.abc import Iterator
 from dataclasses import dataclass
 from enum import IntEnum
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Any
 
 from biip import EncodeError, ParseError
 from biip.checksums import gs1_standard_check_digit
@@ -112,14 +112,14 @@ class Gtin:
     Classification is done after stripping leading zeros.
     """
 
-    prefix: Optional[GS1Prefix]
+    prefix: GS1Prefix | None
     """The [GS1 Prefix][biip.gs1_prefixes.GS1Prefix].
 
     Indicating what GS1 country organization that assigned
     code range.
     """
 
-    company_prefix: Optional[GS1CompanyPrefix]
+    company_prefix: GS1CompanyPrefix | None
     """The [GS1 Company Prefix][biip.gs1_prefixes.GS1CompanyPrefix].
 
     Identifying the company that issued the GTIN.
@@ -135,7 +135,7 @@ class Gtin:
     check_digit: int
     """Check digit used to check if the GTIN as a whole is valid."""
 
-    packaging_level: Optional[int] = None
+    packaging_level: int | None = None
     """Packaging level is the first digit in GTIN-14 codes.
 
     This digit is used for wholesale shipments, e.g. the GTIN-14 product
@@ -148,7 +148,7 @@ class Gtin:
         cls,
         value: str,
         *,
-        rcn_region: Optional[Union[RcnRegion, str]] = None,
+        rcn_region: RcnRegion | str | None = None,
         rcn_verify_variable_measure: bool = True,
     ) -> Gtin:
         """Parse the given value into a [`Gtin`][biip.gtin.Gtin] object.
@@ -197,7 +197,7 @@ class Gtin:
         payload = stripped_value[:-1]
         check_digit = int(stripped_value[-1])
 
-        packaging_level: Optional[int] = None
+        packaging_level: int | None = None
         prefix_value = stripped_value
         if gtin_format == GtinFormat.GTIN_14:
             packaging_level = int(stripped_value[0])
@@ -219,7 +219,7 @@ class Gtin:
             )
             raise ParseError(msg)
 
-        gtin_type: type[Union[Gtin, Rcn]]
+        gtin_type: type[Gtin | Rcn]
         if (
             gtin_format <= GtinFormat.GTIN_13
             and prefix is not None
@@ -247,7 +247,7 @@ class Gtin:
 
         return gtin
 
-    def __rich_repr__(self) -> Iterator[Union[tuple[str, Any], tuple[str, Any, Any]]]:  # noqa: D105
+    def __rich_repr__(self) -> Iterator[tuple[str, Any] | tuple[str, Any, Any]]:  # noqa: D105
         # Skip printing fields with default values
         yield "value", self.value
         yield "format", self.format

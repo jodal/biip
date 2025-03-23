@@ -22,7 +22,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from decimal import Decimal
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Any
 
 from biip import EncodeError, ParseError
 from biip.checksums import gs1_price_weight_check_digit, gs1_standard_check_digit
@@ -92,7 +92,7 @@ class RcnRegion(Enum):
         """Canonical string representation of format."""
         return f"RcnRegion.{self.name}"
 
-    def get_currency_code(self) -> Optional[str]:
+    def get_currency_code(self) -> str | None:
         """Get the ISO-4217 currency code for the region."""
         return {
             RcnRegion.DENMARK: "DKK",
@@ -112,25 +112,25 @@ class Rcn(Gtin):
     to parse.
     """
 
-    usage: Optional[RcnUsage] = field(default=None)
+    usage: RcnUsage | None = field(default=None)
     """Where the RCN can be circulated, in a geographical region or within a company."""
 
-    region: Optional[RcnRegion] = field(default=None)
+    region: RcnRegion | None = field(default=None)
     """The geographical region.
 
     The region's rules are used to interpret the contents of the RCN.
     """
 
-    weight: Optional[Decimal] = field(default=None)
+    weight: Decimal | None = field(default=None)
     """A variable weight value extracted from the GTIN."""
 
-    count: Optional[int] = field(default=None)
+    count: int | None = field(default=None)
     """A variable count extracted from the GTIN."""
 
-    price: Optional[Decimal] = field(default=None)
+    price: Decimal | None = field(default=None)
     """A variable weight price extracted from the GTIN."""
 
-    money: Optional["moneyed.Money"] = field(default=None)  # noqa: UP037
+    money: moneyed.Money | None = field(default=None)
     """A Money value created from the variable weight price.
 
     Only set if [`py-moneyed`](https://pypi.org/project/py-moneyed/) is
@@ -141,7 +141,7 @@ class Rcn(Gtin):
         """Initialize derivated fields."""
         self._set_usage()
 
-    def __rich_repr__(self) -> Iterator[Union[tuple[str, Any], tuple[str, Any, Any]]]:  # noqa: D105
+    def __rich_repr__(self) -> Iterator[tuple[str, Any] | tuple[str, Any, Any]]:  # noqa: D105
         # Skip printing fields with default values
         yield from super().__rich_repr__()
         yield "usage", self.usage, None
@@ -164,7 +164,7 @@ class Rcn(Gtin):
     def _parse_with_regional_rules(
         self,
         *,
-        region: Union[RcnRegion, str],
+        region: RcnRegion | str,
         verify_variable_measure: bool,
     ) -> None:
         if self.usage == RcnUsage.COMPANY:
@@ -249,10 +249,10 @@ class _Strategy:
 
     prefix_slice: slice = field(init=False)
     value_slice: slice = field(init=False)
-    check_digit_slice: Optional[slice] = field(init=False)
+    check_digit_slice: slice | None = field(init=False)
 
     @classmethod
-    def get_for_rcn(cls, rcn: Rcn) -> Optional[_Strategy]:
+    def get_for_rcn(cls, rcn: Rcn) -> _Strategy | None:
         # The RCN's geographical region must be known to lookup the correct
         # strategy for interpreting the RCN's variable measure.
         assert rcn.region is not None
@@ -282,7 +282,7 @@ class _Strategy:
         self.value_slice = value_slice
         self.check_digit_slice = self._get_pattern_slice("C")
 
-    def _get_pattern_slice(self, char: str) -> Optional[slice]:
+    def _get_pattern_slice(self, char: str) -> slice | None:
         if char not in self.pattern:
             return None
         return slice(self.pattern.index(char), self.pattern.rindex(char) + 1)
