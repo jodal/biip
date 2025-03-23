@@ -46,7 +46,7 @@ docs = [
 ]
 mypy = ["mypy==1.15.0"]
 pyright = ["pyright==1.1.394"]
-ruff = ["ruff==0.9.6"]
+ruff = ["ruff==0.11.2"]
 scripts = [
     "beautifulsoup4>=4.13.3",
     "httpx>=0.28.1",
