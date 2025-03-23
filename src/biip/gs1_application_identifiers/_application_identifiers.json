@@ -24,6 +24,14 @@
     "pattern": "^02(\\d{14})$"
   },
   {
+    "ai": "03",
+    "description": "Identification of a Made-to-Order (MtO) trade item (GTIN)",
+    "data_title": "MTO GTIN",
+    "fnc1_required": false,
+    "format": "N2+N14",
+    "pattern": "^03(\\d{14})$"
+  },
+  {
     "ai": "10",
     "description": "Batch or lot number",
     "data_title": "BATCH/LOT",
@@ -2162,7 +2170,7 @@
   {
     "ai": "3560",
     "description": "Net weight, troy ounces (variable measure trade item)",
-    "data_title": "NET WEIGHT (t oz)",
+    "data_title": "NET WEIGHT (troy oz)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3560(\\d{6})$"
@@ -2170,7 +2178,7 @@
   {
     "ai": "3561",
     "description": "Net weight, troy ounces (variable measure trade item)",
-    "data_title": "NET WEIGHT (t oz)",
+    "data_title": "NET WEIGHT (troy oz)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3561(\\d{6})$"
@@ -2178,7 +2186,7 @@
   {
     "ai": "3562",
     "description": "Net weight, troy ounces (variable measure trade item)",
-    "data_title": "NET WEIGHT (t oz)",
+    "data_title": "NET WEIGHT (troy oz)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3562(\\d{6})$"
@@ -2186,7 +2194,7 @@
   {
     "ai": "3563",
     "description": "Net weight, troy ounces (variable measure trade item)",
-    "data_title": "NET WEIGHT (t oz)",
+    "data_title": "NET WEIGHT (troy oz)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3563(\\d{6})$"
@@ -2194,7 +2202,7 @@
   {
     "ai": "3564",
     "description": "Net weight, troy ounces (variable measure trade item)",
-    "data_title": "NET WEIGHT (t oz)",
+    "data_title": "NET WEIGHT (troy oz)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3564(\\d{6})$"
@@ -2202,7 +2210,7 @@
   {
     "ai": "3565",
     "description": "Net weight, troy ounces (variable measure trade item)",
-    "data_title": "NET WEIGHT (t oz)",
+    "data_title": "NET WEIGHT (troy oz)",
     "fnc1_required": false,
     "format": "N4+N6",
     "pattern": "^3565(\\d{6})$"
@@ -3210,7 +3218,7 @@
   {
     "ai": "414",
     "description": "Identification of a physical location - Global Location Number (GLN)",
-    "data_title": "Loc No.",
+    "data_title": "LOC No.",
     "fnc1_required": false,
     "format": "N3+N13",
     "pattern": "^414(\\d{13})$"
@@ -3497,7 +3505,7 @@
   },
   {
     "ai": "4324",
-    "description": "Not before delivery date time",
+    "description": "Not before delivery date time (YYMMDDhhmm)",
     "data_title": "NBEF DEL DT",
     "fnc1_required": true,
     "format": "N4+N10",
@@ -3505,7 +3513,7 @@
   },
   {
     "ai": "4325",
-    "description": "Not after delivery date time",
+    "description": "Not after delivery date time (YYMMDDhhmm)",
     "data_title": "NAFT DEL DT",
     "fnc1_required": true,
     "format": "N4+N10",
@@ -3513,7 +3521,7 @@
   },
   {
     "ai": "4326",
-    "description": "Release date",
+    "description": "Release date (YYMMDD)",
     "data_title": "REL DATE",
     "fnc1_required": true,
     "format": "N4+N6",
@@ -3569,7 +3577,7 @@
   },
   {
     "ai": "7003",
-    "description": "Expiration date and time",
+    "description": "Expiration date and time (YYMMDDhhmm)",
     "data_title": "EXPIRY TIME",
     "fnc1_required": true,
     "format": "N4+N10",
@@ -3593,7 +3601,7 @@
   },
   {
     "ai": "7006",
-    "description": "First freeze date",
+    "description": "First freeze date (YYMMDD)",
     "data_title": "FIRST FREEZE DATE",
     "fnc1_required": true,
     "format": "N4+N6",
@@ -3601,7 +3609,7 @@
   },
   {
     "ai": "7007",
-    "description": "Harvest date",
+    "description": "Harvest date (YYMMDD[YYMMDD])",
     "data_title": "HARVEST DATE",
     "fnc1_required": true,
     "format": "N4+N6[+N6]",
@@ -3633,7 +3641,7 @@
   },
   {
     "ai": "7011",
-    "description": "Test by date",
+    "description": "Test by date (YYMMDD[hhmm])",
     "data_title": "TEST BY DATE",
     "fnc1_required": true,
     "format": "N4+N6[+N4]",
@@ -3760,6 +3768,14 @@
     "pattern": "^7040(\\d)([!%-?A-Z_a-z\\x22])([!%-?A-Z_a-z\\x22])([!%-?A-Z_a-z\\x22])$"
   },
   {
+    "ai": "7041",
+    "description": "UN/CEFACT freight unit type",
+    "data_title": "UFRGT UNIT TYPE",
+    "fnc1_required": true,
+    "format": "N4+X..4",
+    "pattern": "^7041([!%-?A-Z_a-z\\x22]{1,4})$"
+  },
+  {
     "ai": "710",
     "description": "National Healthcare Reimbursement Number (NHRN) - Germany PZN",
     "data_title": "NHRN PZN",
@@ -3806,6 +3822,14 @@
     "fnc1_required": true,
     "format": "N3+X..20",
     "pattern": "^715([!%-?A-Z_a-z\\x22]{1,20})$"
+  },
+  {
+    "ai": "716",
+    "description": "National Healthcare Reimbursement Number (NHRN) - Italy AIC",
+    "data_title": "NHRN AIC",
+    "fnc1_required": true,
+    "format": "N3+X..20",
+    "pattern": "^716([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "7230",
@@ -3912,6 +3936,86 @@
     "pattern": "^7242([!%-?A-Z_a-z\\x22]{1,25})$"
   },
   {
+    "ai": "7250",
+    "description": "Date of birth (YYYYMMDD)",
+    "data_title": "DOB",
+    "fnc1_required": true,
+    "format": "N4+N8",
+    "pattern": "^7250(\\d{4}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$"
+  },
+  {
+    "ai": "7251",
+    "description": "Date and time of birth (YYYYMMDDhhmm)",
+    "data_title": "DOB TIME",
+    "fnc1_required": true,
+    "format": "N4+N12",
+    "pattern": "^7251(\\d{4}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01])(?:[01]\\d|2[0-3])(?:[0-5]\\d))$"
+  },
+  {
+    "ai": "7252",
+    "description": "Biological sex",
+    "data_title": "BIO SEX",
+    "fnc1_required": true,
+    "format": "N4+N1",
+    "pattern": "^7252(\\d{1})$"
+  },
+  {
+    "ai": "7253",
+    "description": "Family name of person",
+    "data_title": "FAMILY NAME",
+    "fnc1_required": true,
+    "format": "N4+X..40",
+    "pattern": "^7253((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,40})$"
+  },
+  {
+    "ai": "7254",
+    "description": "Given name of person",
+    "data_title": "GIVEN NAME",
+    "fnc1_required": true,
+    "format": "N4+X..40",
+    "pattern": "^7254((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,40})$"
+  },
+  {
+    "ai": "7255",
+    "description": "Name suffix of person",
+    "data_title": "SUFFIX",
+    "fnc1_required": true,
+    "format": "N4+X..10",
+    "pattern": "^7255((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,10})$"
+  },
+  {
+    "ai": "7256",
+    "description": "Full name of person",
+    "data_title": "FULL NAME",
+    "fnc1_required": true,
+    "format": "N4+X..90",
+    "pattern": "^7256((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,90})$"
+  },
+  {
+    "ai": "7257",
+    "description": "Address of person",
+    "data_title": "PERSON ADDR",
+    "fnc1_required": true,
+    "format": "N4+X..70",
+    "pattern": "^7257((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
+  },
+  {
+    "ai": "7258",
+    "description": "Baby birth sequence",
+    "data_title": "BIRTH SEQUENCE",
+    "fnc1_required": true,
+    "format": "N4+N1+X1+N1",
+    "pattern": "^7258(\\d[/]\\d)$"
+  },
+  {
+    "ai": "7259",
+    "description": "Baby of family name",
+    "data_title": "BABY",
+    "fnc1_required": true,
+    "format": "N4+X..40",
+    "pattern": "^7259((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,40})$"
+  },
+  {
     "ai": "8001",
     "description": "Roll products (width, length, core diameter, direction, splices)",
     "data_title": "DIMENSIONS",
@@ -3922,7 +4026,7 @@
   {
     "ai": "8002",
     "description": "Cellular mobile telephone identifier",
-    "data_title": "CMT NO.",
+    "data_title": "CMT No.",
     "fnc1_required": true,
     "format": "N4+X..20",
     "pattern": "^8002([!%-?A-Z_a-z\\x22]{1,20})$"
@@ -3969,11 +4073,11 @@
   },
   {
     "ai": "8008",
-    "description": "Date and time of production",
+    "description": "Date and time of production (YYMMDDhh[mm[ss]])",
     "data_title": "PROD TIME",
     "fnc1_required": true,
     "format": "N4+N8[+N..4]",
-    "pattern": "^8008(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01])(?:[01]\\d|2[0-4]))((?:[0-5]\\d)(?:[0-5]\\d)?)?$"
+    "pattern": "^8008(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01])(?:[01]\\d|2[0-3]))((?:[0-5]\\d)(?:[0-5]\\d)?)?$"
   },
   {
     "ai": "8009",
@@ -4016,6 +4120,14 @@
     "pattern": "^8013([!%-?A-Z_a-z\\x22]{1,25})$"
   },
   {
+    "ai": "8014",
+    "description": "Highly Individualised Device Registration Identifier (HIDRI)",
+    "data_title": "MUDI",
+    "fnc1_required": true,
+    "format": "N4+X..25",
+    "pattern": "^8014([!%-?A-Z_a-z\\x22]{1,25})$"
+  },
+  {
     "ai": "8017",
     "description": "Global Service Relation Number (GSRN) to identify the relationship between an organisation offering services and the provider of services",
     "data_title": "GSRN - PROVIDER",
@@ -4042,7 +4154,7 @@
   {
     "ai": "8020",
     "description": "Payment slip reference number",
-    "data_title": "Ref No.",
+    "data_title": "REF No.",
     "fnc1_required": true,
     "format": "N4+X..25",
     "pattern": "^8020([!%-?A-Z_a-z\\x22]{1,25})$"
