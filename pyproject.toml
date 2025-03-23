@@ -158,7 +158,7 @@ env_list = [
     "mypy",
     "pyright",
     "ruff-format",
-    "ruff-lint",
+    "ruff-check",
 ]
 
 [tool.tox.env_run_base]
@@ -213,7 +213,7 @@ skip_install = true
 dependency_groups = ["ruff"]
 commands = [["ruff", "format", "--check", "{posargs:.}"]]
 
-[tool.tox.env.ruff-lint]
+[tool.tox.env.ruff-check]
 skip_install = true
 dependency_groups = ["ruff"]
 commands = [["ruff", "check", "{posargs:.}"]]

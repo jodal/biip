@@ -44,9 +44,9 @@ jobs:
           - name: "ruff format"
             python: "3.13"
             tox: ruff-format
-          - name: "ruff lint"
+          - name: "ruff check"
             python: "3.13"
-            tox: ruff-lint
+            tox: ruff-check
           - name: "Docs"
             python: "3.13"
             tox: docs
