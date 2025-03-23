@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Callable, Optional, Union
+from typing import TYPE_CHECKING, Any
 
 from biip import ParseError
 from biip.gs1_messages import DEFAULT_SEPARATOR_CHARS, GS1Message
@@ -21,7 +22,7 @@ if TYPE_CHECKING:
 def parse(
     value: str,
     *,
-    rcn_region: Optional[RcnRegion] = None,
+    rcn_region: RcnRegion | None = None,
     rcn_verify_variable_measure: bool = True,
     separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
 ) -> ParseResult:
@@ -97,7 +98,7 @@ def parse(
 class ParseConfig:
     """Configuration options for parsers."""
 
-    rcn_region: Optional[RcnRegion]
+    rcn_region: RcnRegion | None
     rcn_verify_variable_measure: bool
     separator_chars: Iterable[str]
 
@@ -109,42 +110,42 @@ class ParseResult:
     value: str
     """The raw value. Only stripped of surrounding whitespace."""
 
-    symbology_identifier: Optional[SymbologyIdentifier] = None
+    symbology_identifier: SymbologyIdentifier | None = None
     """The Symbology Identifier, if any."""
 
-    gtin: Optional[Gtin] = None
+    gtin: Gtin | None = None
     """The extracted [GTIN][biip.gtin.Gtin], if any.
 
     Is also set if a GS1 Message containing a GTIN was successfully parsed."""
 
-    gtin_error: Optional[str] = None
+    gtin_error: str | None = None
     """The GTIN parse error, if parsing as a GTIN was attempted and failed."""
 
-    upc: Optional[Upc] = None
+    upc: Upc | None = None
     """The extracted [UPC][biip.upc.Upc], if any."""
 
-    upc_error: Optional[str] = None
+    upc_error: str | None = None
     """The UPC parse error, if parsing as an UPC was attempted and failed."""
 
-    sscc: Optional[Sscc] = None
+    sscc: Sscc | None = None
     """The extracted [SSCC][biip.sscc.Sscc], if any.
 
     Is also set if a GS1 Message containing an SSCC was successfully parsed.
     """
 
-    sscc_error: Optional[str] = None
+    sscc_error: str | None = None
     """The SSCC parse error, if parsing as an SSCC was attempted and failed."""
 
-    gs1_message: Optional[GS1Message] = None
+    gs1_message: GS1Message | None = None
     """The extracted [GS1 Message][biip.gs1_messages.GS1Message], if any."""
 
-    gs1_message_error: Optional[str] = None
+    gs1_message_error: str | None = None
     """The GS1 Message parse error.
 
     If parsing as a GS1 Message was attempted and failed.
     """
 
-    def __rich_repr__(self) -> Iterator[Union[tuple[str, Any], tuple[str, Any, Any]]]:
+    def __rich_repr__(self) -> Iterator[tuple[str, Any] | tuple[str, Any, Any]]:
         # Skip printing fields with default values
         yield "value", self.value
         yield "symbology_identifier", self.symbology_identifier, None

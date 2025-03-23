@@ -36,7 +36,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
 
 from biip import ParseError
 
@@ -234,7 +233,7 @@ class SymbologyIdentifier:
     or ISO/IEC 15424 for interpretation.
     """
 
-    gs1_symbology: Optional[GS1Symbology] = None
+    gs1_symbology: GS1Symbology | None = None
     """If the Symbology Identifier is used in the GS1 system,
     this field is set to indicate how to interpret the following data.
     """
@@ -277,7 +276,7 @@ class SymbologyIdentifier:
 
         value = f"]{iso_symbology.value}{modifiers}"
 
-        gs1_symbology: Optional[GS1Symbology]
+        gs1_symbology: GS1Symbology | None
         try:
             gs1_symbology = GS1Symbology(f"{iso_symbology.value}{modifiers}")
         except ValueError:

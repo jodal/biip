@@ -1,6 +1,5 @@
 import datetime as dt
 from decimal import Decimal
-from typing import Optional
 
 import pytest
 
@@ -197,7 +196,7 @@ def test_extract_fails_when_not_matching_pattern(ai_code: str, bad_value: str) -
     ],
 )
 def test_extract_date_and_datetime(
-    value: str, expected_date: dt.date, expected_datetime: Optional[dt.datetime]
+    value: str, expected_date: dt.date, expected_datetime: dt.datetime | None
 ) -> None:
     element_string = GS1ElementString.extract(value)
 
@@ -356,7 +355,7 @@ def test_extract_amount_payable(value: str, expected: Decimal) -> None:
     ],
 )
 def test_extract_amount_payable_and_currency(
-    value: str, expected_currency: Optional[str], expected_decimal: Optional[Decimal]
+    value: str, expected_currency: str | None, expected_decimal: Decimal | None
 ) -> None:
     element_string = GS1ElementString.extract(value)
 

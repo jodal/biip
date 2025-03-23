@@ -53,7 +53,6 @@ validated using the [`Gln`][biip.gln.Gln] class.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
 
 from biip import ParseError
 from biip.checksums import gs1_standard_check_digit
@@ -67,13 +66,13 @@ class Gln:
     value: str
     """Raw unprocessed value."""
 
-    prefix: Optional[GS1Prefix]
+    prefix: GS1Prefix | None
     """The [GS1 Prefix][biip.gs1_prefixes.GS1Prefix].
 
     Indicating what GS1 country organization that assigned code range.
     """
 
-    company_prefix: Optional[GS1CompanyPrefix]
+    company_prefix: GS1CompanyPrefix | None
     """The [GS1 Company Prefix][biip.gs1_prefixes.GS1CompanyPrefix].
 
     Identifying the company that issued the GLN.

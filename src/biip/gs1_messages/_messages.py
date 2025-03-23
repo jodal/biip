@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from itertools import chain
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING
 
 from biip import ParseError
 from biip.gs1_application_identifiers import (
@@ -45,7 +45,7 @@ class GS1Message:
         cls,
         value: str,
         *,
-        rcn_region: Optional[RcnRegion] = None,
+        rcn_region: RcnRegion | None = None,
         rcn_verify_variable_measure: bool = True,
         separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
     ) -> GS1Message:
@@ -101,7 +101,7 @@ class GS1Message:
         cls,
         value: str,
         *,
-        rcn_region: Optional[RcnRegion] = None,
+        rcn_region: RcnRegion | None = None,
         rcn_verify_variable_measure: bool = True,
     ) -> GS1Message:
         """Parse the GS1 string given in HRI (human readable interpretation) format.
@@ -173,8 +173,8 @@ class GS1Message:
     def filter(
         self,
         *,
-        ai: Optional[Union[str, GS1ApplicationIdentifier]] = None,
-        data_title: Optional[str] = None,
+        ai: str | GS1ApplicationIdentifier | None = None,
+        data_title: str | None = None,
     ) -> list[GS1ElementString]:
         """Filter Element Strings by AI or data title.
 
@@ -205,9 +205,9 @@ class GS1Message:
     def get(
         self,
         *,
-        ai: Optional[Union[str, GS1ApplicationIdentifier]] = None,
-        data_title: Optional[str] = None,
-    ) -> Optional[GS1ElementString]:
+        ai: str | GS1ApplicationIdentifier | None = None,
+        data_title: str | None = None,
+    ) -> GS1ElementString | None:
         """Get Element String by AI or data title.
 
         Args:
