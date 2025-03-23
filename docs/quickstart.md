@@ -217,7 +217,7 @@ Because of the market variations, you must specify your geographical
 region for Biip to be able to extract price or weight from the RCN:
 
 ```python hl_lines="1-2 15-18"
->>> from biip.gtin import RcnRegion
+>>> from biip.rcn import RcnRegion
 >>> print(biip.parse("2011122912346", rcn_region=RcnRegion.GREAT_BRITAIN))
 ParseResult(
     value='2011122912346',
