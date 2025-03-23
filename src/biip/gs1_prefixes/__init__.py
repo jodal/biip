@@ -36,7 +36,8 @@ __all__ = [
     "GS1Prefix",
 ]
 
-_TrieNode = Union[dict[str, "_TrieNode"], int]  # noqa: UP007
+_PrefixTrieNode = Union[dict[str, "_PrefixTrieNode"], tuple[int, str]]  # noqa: UP007
+_CompanyPrefixTrieNode = Union[dict[str, "_CompanyPrefixTrieNode"], int]  # noqa: UP007
 
 
 @dataclass(frozen=True)
@@ -54,7 +55,7 @@ class GS1Prefix:
 
     Examples:
         >>> from biip.gs1_prefixes import GS1Prefix
-        >>> GS1Prefix.extract("978-1-492-05374-3")
+        >>> GS1Prefix.extract("9781492053743")
         GS1Prefix(value='978', usage='Bookland (ISBN)')
     """
 
@@ -77,23 +78,25 @@ class GS1Prefix:
         Raises:
             ParseError: If the parsing fails.
         """
-        prefix = ""
-
-        for prefix_range in _GS1_PREFIX_RANGES:
-            prefix = value[: prefix_range.length]
-
-            if not prefix.isdecimal():
-                continue
-            number = int(prefix)
-
-            if prefix_range.min_value <= number <= prefix_range.max_value:
-                return cls(value=prefix, usage=prefix_range.usage)
-
-        if not prefix.isdecimal():
-            # `prefix` is now the shortest prefix possible, and should be
-            # numeric even if the prefix assignment is unknown.
+        if not value.isdecimal():
             msg = f"Failed to get GS1 Prefix from {value!r}."
             raise ParseError(msg)
+
+        node = _GS1_PREFIX_TRIE
+        digits = list(value)
+
+        while digits:
+            digit = digits.pop(0)
+
+            assert isinstance(node, dict)
+            if digit not in node:
+                # Prefix is undefined.
+                return None
+            node = node[digit]
+
+            if isinstance(node, list):
+                length, usage = node
+                return cls(value=value[:length], usage=usage)
 
         return None
 
@@ -152,25 +155,16 @@ class GS1CompanyPrefix:
         return None
 
 
-@dataclass(frozen=True)
-class _GS1PrefixRange:
-    length: int
-    min_value: int
-    max_value: int
-    usage: str
-
-
-_GS1_PREFIX_RANGES_FILE = (
-    resources.files("biip") / "gs1_prefixes" / "_prefix_ranges.json"
+_GS1_PREFIX_TRIE_FILE = (
+    resources.files("biip") / "gs1_prefixes" / "_prefix_trie.json.lzma"
 )
-_GS1_PREFIX_RANGES = [
-    _GS1PrefixRange(**kwargs)
-    for kwargs in json.loads(_GS1_PREFIX_RANGES_FILE.read_text())
-]
+_GS1_PREFIX_TRIE: _PrefixTrieNode = json.loads(
+    lzma.decompress(_GS1_PREFIX_TRIE_FILE.read_bytes()).decode()
+)
 
 _GS1_COMPANY_PREFIX_TRIE_FILE = (
     resources.files("biip") / "gs1_prefixes" / "_company_prefix_trie.json.lzma"
 )
-_GS1_COMPANY_PREFIX_TRIE: _TrieNode = json.loads(
+_GS1_COMPANY_PREFIX_TRIE: _CompanyPrefixTrieNode = json.loads(
     lzma.decompress(_GS1_COMPANY_PREFIX_TRIE_FILE.read_bytes()).decode()
 )
