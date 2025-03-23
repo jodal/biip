@@ -1,6 +1,6 @@
 import pytest
 
-from biip import EncodeError
+from biip import EncodeError, ParseConfig
 from biip.checksums import gs1_standard_check_digit
 from biip.gtin import Gtin
 from biip.rcn import Rcn, RcnRegion
@@ -25,7 +25,7 @@ from biip.rcn import Rcn, RcnRegion
 def test_without_variable_measure_strips_variable_parts(
     rcn_region: RcnRegion, value: str, expected: str
 ) -> None:
-    original_rcn = Gtin.parse(value, rcn_region=rcn_region)
+    original_rcn = Gtin.parse(value, config=ParseConfig(rcn_region=rcn_region))
     assert isinstance(original_rcn, Rcn)
 
     stripped_rcn = original_rcn.without_variable_measure()
@@ -82,7 +82,7 @@ def test_without_variable_measure_keeps_nonvariable_rcn_unchanged(
     for prefix in nonvariable_prefixes:
         payload = f"{prefix}1111111111"
         value = f"{payload}{gs1_standard_check_digit(payload)}"
-        original_rcn = Gtin.parse(value, rcn_region=rcn_region)
+        original_rcn = Gtin.parse(value, config=ParseConfig(rcn_region=rcn_region))
         assert isinstance(original_rcn, Rcn)
 
         stripped_rcn = original_rcn.without_variable_measure()
@@ -104,7 +104,7 @@ def test_without_variable_measure_keeps_nonvariable_rcn_unchanged(
 def test_without_variable_measure_keeps_company_rcn_unchanged(
     rcn_region: RcnRegion, value: str
 ) -> None:
-    original_rcn = Gtin.parse(value, rcn_region=rcn_region)
+    original_rcn = Gtin.parse(value, config=ParseConfig(rcn_region=rcn_region))
     assert isinstance(original_rcn, Rcn)
 
     stripped_rcn = original_rcn.without_variable_measure()
@@ -136,7 +136,7 @@ def test_without_variable_measure_keeps_gtin_unchanged(value: str) -> None:
 
 
 def test_without_variable_measure_fails_if_rules_are_unknown() -> None:
-    rcn = Gtin.parse("2302148210869", rcn_region=None)
+    rcn = Gtin.parse("2302148210869", config=ParseConfig(rcn_region=None))
     assert isinstance(rcn, Rcn)
 
     with pytest.raises(EncodeError) as exc_info:

@@ -6,7 +6,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
-from biip import ParseError
+from biip import ParseConfig, ParseError
 from biip.gs1_messages import GS1Message
 from biip.gtin import Gtin, GtinFormat
 from biip.sscc import Sscc
@@ -14,17 +14,13 @@ from biip.symbology import GS1Symbology, SymbologyIdentifier
 from biip.upc import Upc
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator
-
-    from biip.rcn import RcnRegion
+    from collections.abc import Iterator
 
 
 def parse(
     value: str,
     *,
-    rcn_region: RcnRegion | None = None,
-    rcn_verify_variable_measure: bool = True,
-    separator_chars: Iterable[str] = ("\x1d",),
+    config: ParseConfig | None = None,
 ) -> ParseResult:
     """Identify data format and parse data.
 
@@ -36,28 +32,15 @@ def parse(
 
     Args:
         value: The data to classify and parse.
-        rcn_region: The geographical region whose rules should be used to
-            interpret Restricted Circulation Numbers (RCN).
-            Needed to extract e.g. variable weight/price from GTIN.
-        rcn_verify_variable_measure: Whether to verify that the variable measure
-            in a RCN matches its check digit, if present. Some companies use the
-            variable measure check digit for other purposes, requiring this
-            check to be disabled.
-        separator_chars: Characters used in place of the FNC1 symbol.
-            Defaults to `<GS>` (ASCII value 29).
-            If variable-length fields in the middle of the message are
-            not terminated with a separator character, the parser might
-            greedily consume the rest of the message.
+        config: Configuration options for parsers.
 
     Returns:
-        A data class depending upon what type of data is parsed.
+        A `ParseResult` object with the results and errors from all parsers.
     """
+    if config is None:
+        config = ParseConfig()
+
     value = value.strip()
-    config = ParseConfig(
-        rcn_region=rcn_region,
-        rcn_verify_variable_measure=rcn_verify_variable_measure,
-        separator_chars=separator_chars,
-    )
     result = ParseResult(value=value)
 
     # Extract Symbology Identifier
@@ -92,15 +75,6 @@ def parse(
         parse_func(val, config, queue, result)
 
     return result
-
-
-@dataclass
-class ParseConfig:
-    """Configuration options for parsers."""
-
-    rcn_region: RcnRegion | None
-    rcn_verify_variable_measure: bool
-    separator_chars: Iterable[str]
 
 
 @dataclass
@@ -173,11 +147,7 @@ def _parse_gtin(
         return  # pragma: no cover
 
     try:
-        result.gtin = Gtin.parse(
-            value,
-            rcn_region=config.rcn_region,
-            rcn_verify_variable_measure=config.rcn_verify_variable_measure,
-        )
+        result.gtin = Gtin.parse(value, config=config)
         result.gtin_error = None
     except ParseError as exc:
         result.gtin = None
@@ -190,7 +160,7 @@ def _parse_gtin(
 
 def _parse_upc(
     value: str,
-    config: ParseConfig,  # noqa: ARG001
+    config: ParseConfig,
     queue: ParseQueue,
     result: ParseResult,
 ) -> None:
@@ -198,7 +168,7 @@ def _parse_upc(
         return  # pragma: no cover
 
     try:
-        result.upc = Upc.parse(value)
+        result.upc = Upc.parse(value, config=config)
         result.upc_error = None
     except ParseError as exc:
         result.upc = None
@@ -210,7 +180,7 @@ def _parse_upc(
 
 def _parse_sscc(
     value: str,
-    config: ParseConfig,  # noqa: ARG001
+    config: ParseConfig,
     queue: ParseQueue,  # noqa: ARG001
     result: ParseResult,
 ) -> None:
@@ -218,7 +188,7 @@ def _parse_sscc(
         return  # pragma: no cover
 
     try:
-        result.sscc = Sscc.parse(value)
+        result.sscc = Sscc.parse(value, config=config)
         result.sscc_error = None
     except ParseError as exc:
         result.sscc = None
@@ -235,12 +205,7 @@ def _parse_gs1_message(
         return  # pragma: no cover
 
     try:
-        result.gs1_message = GS1Message.parse(
-            value,
-            rcn_region=config.rcn_region,
-            rcn_verify_variable_measure=config.rcn_verify_variable_measure,
-            separator_chars=config.separator_chars,
-        )
+        result.gs1_message = GS1Message.parse(value, config=config)
         result.gs1_message_error = None
     except ParseError as exc:
         result.gs1_message = None

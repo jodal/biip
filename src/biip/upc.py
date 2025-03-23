@@ -64,7 +64,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
-from biip import EncodeError, ParseError
+from biip import EncodeError, ParseConfig, ParseError
 from biip.checksums import gs1_standard_check_digit
 
 
@@ -109,13 +109,19 @@ class Upc:
     """
 
     @classmethod
-    def parse(cls, value: str) -> Upc:
+    def parse(
+        cls,
+        value: str,
+        *,
+        config: ParseConfig | None = None,  # noqa: ARG003
+    ) -> Upc:
         """Parse the given value into a [`Upc`][biip.upc.Upc] object.
 
         The checksum is guaranteed to be valid if an UPC object is returned.
 
         Args:
             value: The value to parse.
+            config: Configuration options for parsing.
 
         Returns:
             UPC data structure with the successfully extracted data.

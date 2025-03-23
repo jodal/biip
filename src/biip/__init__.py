@@ -90,12 +90,14 @@ from importlib.metadata import (  # pyright: ignore[reportMissingImports]
     version,  # pyright: ignore[reportUnknownVariableType]
 )
 
+from biip._config import ParseConfig
 from biip._exceptions import BiipException, EncodeError, ParseError
 from biip._parser import ParseResult, parse
 
 __all__ = [
     "BiipException",
     "EncodeError",
+    "ParseConfig",
     "ParseError",
     "ParseResult",
     "parse",

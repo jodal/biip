@@ -25,6 +25,7 @@ from enum import Enum
 from typing import TYPE_CHECKING, Any
 
 from biip import EncodeError, ParseError
+from biip._parser import ParseConfig
 from biip.checksums import gs1_price_weight_check_digit, gs1_standard_check_digit
 from biip.gtin import Gtin
 
@@ -161,27 +162,20 @@ class Rcn(Gtin):
         if "within a company" in self.prefix.usage:
             self.usage = RcnUsage.COMPANY
 
-    def _parse_with_regional_rules(
-        self,
-        *,
-        region: RcnRegion | str,
-        verify_variable_measure: bool,
-    ) -> None:
+    def _parse_with_regional_rules(self, *, config: ParseConfig) -> None:
         if self.usage == RcnUsage.COMPANY:
             # The value is an RCN, but it is intended for use within a company,
             # so we can only interpret it as an opaque GTIN.
             return
 
-        if not isinstance(region, RcnRegion):
-            region = RcnRegion(region)
-        self.region = region
+        self.region = RcnRegion(config.rcn_region)
 
         strategy = _Strategy.get_for_rcn(self)
         if strategy is None:
             # Without a strategy, we cannot extract anything.
             return
 
-        if verify_variable_measure:
+        if config.rcn_verify_variable_measure:
             strategy.verify_check_digit(self)
 
         if strategy.measure_type == _MeasureType.WEIGHT:
@@ -327,7 +321,7 @@ class _Strategy:
         gtin_payload = "".join(digits)
         gtin_check_digit = gs1_standard_check_digit(gtin_payload)
         gtin = f"{gtin_payload}{gtin_check_digit}"
-        return Gtin.parse(gtin, rcn_region=rcn.region)
+        return Gtin.parse(gtin, config=ParseConfig(rcn_region=rcn.region))
 
 
 _RCN_RULES: dict[RcnRegion, dict[str, _Strategy]] = {

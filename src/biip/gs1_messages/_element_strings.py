@@ -11,15 +11,15 @@ from decimal import Decimal
 from typing import TYPE_CHECKING, Any
 
 from biip import ParseError
+from biip._parser import ParseConfig
 from biip.gln import Gln
 from biip.gs1_application_identifiers import GS1ApplicationIdentifier
 from biip.gtin import Gtin
 from biip.sscc import Sscc
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator
+    from collections.abc import Iterator
 
-    from biip.rcn import RcnRegion
 
 try:
     import moneyed  # noqa: TC002
@@ -121,9 +121,7 @@ class GS1ElementString:
         cls,
         value: str,
         *,
-        rcn_region: RcnRegion | None = None,
-        rcn_verify_variable_measure: bool = True,
-        separator_chars: Iterable[str] = ("\x1d",),
+        config: ParseConfig | None = None,
     ) -> GS1ElementString:
         """Extract the first GS1 Element String from the given value.
 
@@ -150,17 +148,7 @@ class GS1ElementString:
         Args:
             value: The string to extract an Element String from. May contain
                 more than one Element String.
-            rcn_region: The geographical region whose rules should be used to
-                interpret Restricted Circulation Numbers (RCN).
-                Needed to extract e.g. variable weight/price from GTIN.
-            rcn_verify_variable_measure: Whether to verify that the variable
-                measure in a RCN matches its check digit, if present. Some
-                companies use the variable measure check digit for other
-                purposes, requiring this check to be disabled.
-            separator_chars: Characters used in place of the FNC1 symbol.
-                Defaults to `<GS>` (ASCII value 29).
-                If variable-length fields are not terminated with a separator
-                character, the parser might greedily consume later fields.
+            config: Configuration options for parsing.
 
         Returns:
             A data class with the Element String's parts and data extracted from it.
@@ -169,16 +157,19 @@ class GS1ElementString:
             ValueError: If the `separator_char` isn't exactly 1 character long.
             ParseError: If the parsing fails.
         """
-        if any(len(char) != 1 for char in separator_chars):
+        if config is None:
+            config = ParseConfig()
+
+        if any(len(char) != 1 for char in config.separator_chars):
             msg = (
                 "All separator characters must be exactly 1 character long, "
-                f"got {list(separator_chars)!r}."
+                f"got {list(config.separator_chars)!r}."
             )
             raise ValueError(msg)
 
         ai = GS1ApplicationIdentifier.extract(value)
 
-        for separator_char in separator_chars:
+        for separator_char in config.separator_chars:
             value = value.split(separator_char, maxsplit=1)[0]
 
         pattern = ai.pattern.removesuffix("$")
@@ -190,54 +181,42 @@ class GS1ElementString:
         value = "".join(pattern_groups)
 
         element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
-        element._set_gln()
-        element._set_gtin(
-            rcn_region=rcn_region,
-            rcn_verify_variable_measure=rcn_verify_variable_measure,
-        )
-        element._set_sscc()
+        element._set_gln(config=config)
+        element._set_gtin(config=config)
+        element._set_sscc(config=config)
         element._set_date_and_datetime()
         element._set_decimal()
 
         return element
 
-    def _set_gln(self) -> None:
+    def _set_gln(self, *, config: ParseConfig) -> None:
         if self.ai.ai[:2] != "41":
             return
 
         try:
-            self.gln = Gln.parse(self.value)
+            self.gln = Gln.parse(self.value, config=config)
             self.gln_error = None
         except ParseError as exc:
             self.gln = None
             self.gln_error = str(exc)
 
-    def _set_gtin(
-        self,
-        *,
-        rcn_region: RcnRegion | None,
-        rcn_verify_variable_measure: bool,
-    ) -> None:
+    def _set_gtin(self, *, config: ParseConfig) -> None:
         if self.ai.ai not in ("01", "02", "03"):
             return
 
         try:
-            self.gtin = Gtin.parse(
-                self.value,
-                rcn_region=rcn_region,
-                rcn_verify_variable_measure=rcn_verify_variable_measure,
-            )
+            self.gtin = Gtin.parse(self.value, config=config)
             self.gtin_error = None
         except ParseError as exc:
             self.gtin = None
             self.gtin_error = str(exc)
 
-    def _set_sscc(self) -> None:
+    def _set_sscc(self, *, config: ParseConfig) -> None:
         if self.ai.ai != "00":
             return
 
         try:
-            self.sscc = Sscc.parse(self.value)
+            self.sscc = Sscc.parse(self.value, config=config)
             self.sscc_error = None
         except ParseError as exc:
             self.sscc = None

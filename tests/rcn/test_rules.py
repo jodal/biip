@@ -3,7 +3,7 @@ from decimal import Decimal
 import pytest
 from moneyed import Money
 
-from biip import ParseError
+from biip import ParseConfig, ParseError
 from biip.gs1_prefixes import GS1Prefix
 from biip.gtin import Gtin, GtinFormat
 from biip.rcn import Rcn, RcnRegion, RcnUsage
@@ -45,7 +45,7 @@ def test_region_baltics(
     # References:
     #   https://gs1lv.org/img/upload/ENG.Variable%20measure_in_Latvia.pdf
 
-    rcn = Gtin.parse(value, rcn_region=rcn_region)
+    rcn = Gtin.parse(value, config=ParseConfig(rcn_region=rcn_region))
 
     assert isinstance(rcn, Rcn)
     assert rcn.region == rcn_region
@@ -77,7 +77,7 @@ def test_region_denmark(
     #   https://www.gs1.dk/om-gs1/overblik-over-gs1-standarder/gtin-13-pris
     #   https://www.gs1.dk/om-gs1/overblik-over-gs1-standarder/gtin-13-vaegt
 
-    rcn = Gtin.parse(value, rcn_region=RcnRegion.DENMARK)
+    rcn = Gtin.parse(value, config=ParseConfig(rcn_region=RcnRegion.DENMARK))
 
     assert isinstance(rcn, Rcn)
     assert rcn.region == RcnRegion.DENMARK
@@ -104,7 +104,7 @@ def test_region_finland(
     # References:
     #   https://gs1.fi/en/instructions/gs1-company-prefix/how-identify-product-gtin
 
-    rcn = Gtin.parse(value, rcn_region=RcnRegion.FINLAND)
+    rcn = Gtin.parse(value, config=ParseConfig(rcn_region=RcnRegion.FINLAND))
 
     assert isinstance(rcn, Rcn)
     assert rcn.region == RcnRegion.FINLAND
@@ -142,7 +142,7 @@ def test_region_germany(
     #   https://www.gs1-germany.de/fileadmin/gs1/fachpublikationen/globale-artikelnummer-gtin-in-der-anwendung.pdf
     #   https://san.gs1-germany.de/SAN-4-Konzept
 
-    rcn = Gtin.parse(value, rcn_region=RcnRegion.GERMANY)
+    rcn = Gtin.parse(value, config=ParseConfig(rcn_region=RcnRegion.GERMANY))
 
     assert isinstance(rcn, Rcn)
     assert rcn.region == RcnRegion.GERMANY
@@ -157,7 +157,7 @@ def test_region_germany_fails_with_invalid_variable_measure_check_digit() -> Non
     # correct value is 9.
 
     with pytest.raises(ParseError) as exc_info:
-        Gtin.parse("2511118000120", rcn_region=RcnRegion.GERMANY)
+        Gtin.parse("2511118000120", config=ParseConfig(rcn_region=RcnRegion.GERMANY))
 
     assert str(exc_info.value) == (
         "Invalid check digit for variable measure value '00012' "
@@ -171,8 +171,10 @@ def test_region_germany_when_not_verifying_invalid_check_digit() -> None:
 
     rcn = Gtin.parse(
         "2511118000120",
-        rcn_region=RcnRegion.GERMANY,
-        rcn_verify_variable_measure=False,
+        config=ParseConfig(
+            rcn_region=RcnRegion.GERMANY,
+            rcn_verify_variable_measure=False,
+        ),
     )
 
     assert isinstance(rcn, Rcn)
@@ -208,7 +210,7 @@ def test_region_great_britain(
     # References:
     #   https://www.gs1uk.org/how-to-barcode-variable-measure-items
 
-    rcn = Gtin.parse(value, rcn_region=RcnRegion.GREAT_BRITAIN)
+    rcn = Gtin.parse(value, config=ParseConfig(rcn_region=RcnRegion.GREAT_BRITAIN))
 
     assert isinstance(rcn, Rcn)
     assert rcn.region == RcnRegion.GREAT_BRITAIN
@@ -221,7 +223,10 @@ def test_region_great_britain_fails_with_invalid_price_check_digit() -> None:
     # The digit 8 in the value below is the price check digit. The correct value is 9.
 
     with pytest.raises(ParseError) as exc_info:
-        Gtin.parse("2011122812349", rcn_region=RcnRegion.GREAT_BRITAIN)
+        Gtin.parse(
+            "2011122812349",
+            config=ParseConfig(rcn_region=RcnRegion.GREAT_BRITAIN),
+        )
 
     assert str(exc_info.value) == (
         "Invalid check digit for variable measure value '1234' in RCN '2011122812349': "
@@ -234,8 +239,10 @@ def test_region_great_britain_when_not_verifying_invalid_check_digit() -> None:
 
     rcn = Gtin.parse(
         "2011122812349",
-        rcn_region=RcnRegion.GREAT_BRITAIN,
-        rcn_verify_variable_measure=False,
+        config=ParseConfig(
+            rcn_region=RcnRegion.GREAT_BRITAIN,
+            rcn_verify_variable_measure=False,
+        ),
     )
 
     assert isinstance(rcn, Rcn)
@@ -269,7 +276,7 @@ def test_region_norway(
 ) -> None:
     # References: TODO: Find specification.
 
-    rcn = Gtin.parse(value, rcn_region=RcnRegion.NORWAY)
+    rcn = Gtin.parse(value, config=ParseConfig(rcn_region=RcnRegion.NORWAY))
 
     assert isinstance(rcn, Rcn)
     assert rcn.region == RcnRegion.NORWAY
@@ -299,7 +306,7 @@ def test_region_sweden(
     # References:
     #   https://www.gs1.se/en/our-standards/Identify/variable-weight-number1/
 
-    rcn = Gtin.parse(value, rcn_region=RcnRegion.SWEDEN)
+    rcn = Gtin.parse(value, config=ParseConfig(rcn_region=RcnRegion.SWEDEN))
 
     assert isinstance(rcn, Rcn)
     assert rcn.region == RcnRegion.SWEDEN
