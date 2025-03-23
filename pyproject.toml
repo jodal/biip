@@ -101,9 +101,6 @@ reportImportCycles = false
 reportPrivateUsage = false
 
 
-[tool.ruff]
-target-version = "py39"
-
 [tool.ruff.lint]
 preview = true
 explicit-preview-rules = true
@@ -116,6 +113,7 @@ select = [
     "DOC402", # docstring-missing-yields
     "DOC403", # docstring-extraneous-yields
     "DOC501", # docstring-missing-exception
+    "UP045",  # non-pep604-annotation-optional
 ]
 ignore = [
     "PLR2004", # magic-value-comparison
