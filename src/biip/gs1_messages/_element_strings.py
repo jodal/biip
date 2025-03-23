@@ -184,7 +184,7 @@ class GS1ElementString:
         element._set_gln(config=config)
         element._set_gtin(config=config)
         element._set_sscc(config=config)
-        element._set_date_and_datetime()
+        element._set_date_and_datetime(config=config)
         element._set_decimal()
 
         return element
@@ -222,7 +222,7 @@ class GS1ElementString:
             self.sscc = None
             self.sscc_error = str(exc)
 
-    def _set_date_and_datetime(self) -> None:
+    def _set_date_and_datetime(self, *, config: ParseConfig) -> None:
         if self.ai.ai not in (
             "11",
             "12",
@@ -244,6 +244,8 @@ class GS1ElementString:
         try:
             self.date, self.datetime = _parse_date_and_datetime(self.value)
         except ValueError as exc:
+            if not config.gs1_message_verify_date:
+                return
             msg = f"Failed to parse GS1 AI {self.ai} date/time from {self.value!r}."
             raise ParseError(msg) from exc
 
