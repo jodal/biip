@@ -37,7 +37,7 @@ def parse(json_content: bytes) -> list[GS1ApplicationIdentifier]:
                 description=row["description"],
                 format=row["formatString"],
                 data_title=row["title"],
-                fnc1_required=row["fnc1required"],
+                separator_required=row["separatorRequired"],
                 pattern=rf"^{row['applicationIdentifier']}{_fix_pattern(row['regex'])}$",
             )
         )

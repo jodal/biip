@@ -29,7 +29,7 @@ example, the value can be interpreted as either a GTIN or a GS1 Message.
                     ai='96',
                     description='Company internal information',
                     data_title='INTERNAL',
-                    fnc1_required=True,
+                    separator_required=True,
                     format='N2+X..90'
                 ),
                 value='385074',
@@ -59,7 +59,7 @@ the check digits are incorrect.
                     ai='15',
                     description='Best before date (YYMMDD)',
                     data_title='BEST BEFORE or BEST BY',
-                    fnc1_required=False,
+                    separator_required=False,
                     format='N2+N6'
                 ),
                 value='210527',

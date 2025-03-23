@@ -14,7 +14,7 @@ Examples:
         ai='01',
         description='Global Trade Item Number (GTIN)',
         data_title='GTIN',
-        fnc1_required=False,
+        separator_required=False,
         format='N2+N14'
     )
     >>> ai.pattern
@@ -54,8 +54,8 @@ class GS1ApplicationIdentifier:
     data_title: str
     """Commonly used label/abbreviation for the AI."""
 
-    fnc1_required: bool
-    """Whether a FNC1 character is required after element strings of this type.
+    separator_required: bool
+    """Whether a separator character is required after element strings of this type.
 
     This is the case for all AIs that have a variable length.
     """
@@ -87,7 +87,7 @@ class GS1ApplicationIdentifier:
                 ai='01',
                 description='Global Trade Item Number (GTIN)',
                 data_title='GTIN',
-                fnc1_required=False,
+                separator_required=False,
                 format='N2+N14'
             )
         """
