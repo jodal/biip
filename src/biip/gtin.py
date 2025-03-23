@@ -55,13 +55,13 @@ from enum import IntEnum
 from typing import TYPE_CHECKING, Any
 
 from biip import EncodeError, ParseError
+from biip._parser import ParseConfig
 from biip.checksums import gs1_standard_check_digit
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from biip.rcn import RcnRegion
 
 __all__ = ["Gtin", "GtinFormat"]
 
@@ -148,8 +148,7 @@ class Gtin:
         cls,
         value: str,
         *,
-        rcn_region: RcnRegion | str | None = None,
-        rcn_verify_variable_measure: bool = True,
+        config: ParseConfig | None = None,
     ) -> Gtin:
         """Parse the given value into a [`Gtin`][biip.gtin.Gtin] object.
 
@@ -159,13 +158,7 @@ class Gtin:
 
         Args:
             value: The value to parse.
-            rcn_region: The geographical region whose rules should be used to
-                interpret Restricted Circulation Numbers (RCN).
-                Needed to extract e.g. variable weight/price from GTIN.
-            rcn_verify_variable_measure: Whether to verify that the variable
-                measure in a RCN matches its check digit, if present. Some
-                companies use the variable measure check digit for other
-                purposes, requiring this check to be disabled.
+            config: Configuration options for parsing.
 
         Returns:
             GTIN data structure with the successfully extracted data.
@@ -173,6 +166,9 @@ class Gtin:
         Raises:
             ParseError: If the parsing fails.
         """
+        if config is None:
+            config = ParseConfig()
+
         from biip.rcn import Rcn
 
         value = value.strip()
@@ -239,10 +235,9 @@ class Gtin:
             packaging_level=packaging_level,
         )
 
-        if isinstance(gtin, Rcn) and rcn_region is not None:
+        if isinstance(gtin, Rcn) and config.rcn_region is not None:
             gtin._parse_with_regional_rules(  # noqa: SLF001
-                region=rcn_region,
-                verify_variable_measure=rcn_verify_variable_measure,
+                config=config
             )
 
         return gtin

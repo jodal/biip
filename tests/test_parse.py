@@ -3,7 +3,7 @@ from decimal import Decimal
 
 import pytest
 
-from biip import ParseResult, parse
+from biip import ParseConfig, ParseResult, parse
 from biip.gs1_application_identifiers import GS1ApplicationIdentifier
 from biip.gs1_messages import GS1ElementString, GS1Message
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
@@ -646,8 +646,10 @@ def test_parse_rcn_with_ignored_invalid_check_digit() -> None:
 
     result = parse(
         "]C10102824040005133",
-        rcn_region=RcnRegion.GERMANY,
-        rcn_verify_variable_measure=False,
+        config=ParseConfig(
+            rcn_region=RcnRegion.GERMANY,
+            rcn_verify_variable_measure=False,
+        ),
     )
 
     assert result == ParseResult(
@@ -712,7 +714,10 @@ def test_parse_strips_symbology_identifier() -> None:
 
 
 def test_parse_with_separator_char() -> None:
-    result = parse("101313|15210526", separator_chars=["|"])
+    result = parse(
+        "101313|15210526",
+        config=ParseConfig(separator_chars=["|"]),
+    )
 
     assert result.gs1_message is not None
     assert result.gs1_message.as_hri() == "(10)1313(15)210526"

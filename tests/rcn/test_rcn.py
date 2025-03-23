@@ -1,5 +1,6 @@
 import pytest
 
+from biip import ParseConfig
 from biip.gtin import Gtin, GtinFormat
 from biip.rcn import Rcn, RcnRegion, RcnUsage
 
@@ -23,7 +24,7 @@ from biip.rcn import Rcn, RcnRegion, RcnUsage
 def test_gtin_parse_may_return_rcn_instance(
     value: str, gtin_format: GtinFormat, rcn_usage: RcnUsage
 ) -> None:
-    rcn = Gtin.parse(value, rcn_region=RcnRegion.SWEDEN)
+    rcn = Gtin.parse(value, config=ParseConfig(rcn_region=RcnRegion.SWEDEN))
 
     assert isinstance(rcn, Rcn)
     assert rcn.format == gtin_format
@@ -35,7 +36,7 @@ def test_gtin_parse_may_return_rcn_instance(
 
 
 def test_rcn_without_specified_region() -> None:
-    rcn = Gtin.parse("2991111111113", rcn_region=None)
+    rcn = Gtin.parse("2991111111113", config=ParseConfig(rcn_region=None))
 
     assert isinstance(rcn, Rcn)
     assert rcn.format == GtinFormat.GTIN_13
@@ -48,7 +49,7 @@ def test_rcn_without_specified_region() -> None:
 
 def test_gtin_14_with_rcn_prefix_is_not_an_rcn() -> None:
     # The value below is a GTIN-14 composed of packaging level 1 and a valid RCN-13.
-    gtin = Gtin.parse("12991111111110", rcn_region=None)
+    gtin = Gtin.parse("12991111111110", config=ParseConfig(rcn_region=None))
 
     assert isinstance(gtin, Gtin)
     assert not isinstance(gtin, Rcn)
@@ -72,7 +73,7 @@ def test_gtin_14_with_rcn_prefix_is_not_an_rcn() -> None:
 def test_rcn_region_can_be_specified_as_string(
     value: str, rcn_region: RcnRegion
 ) -> None:
-    rcn = Gtin.parse("0211111111114", rcn_region=value)
+    rcn = Gtin.parse("0211111111114", config=ParseConfig(rcn_region=value))
 
     assert isinstance(rcn, Rcn)
     assert rcn.region == rcn_region
@@ -83,7 +84,7 @@ def test_fails_when_rcn_region_is_unknown_string() -> None:
         ValueError,
         match=r"^'foo' is not a valid RcnRegion$",
     ):
-        Gtin.parse("2311111112345", rcn_region="foo")
+        Gtin.parse("2311111112345", config=ParseConfig(rcn_region="foo"))
 
 
 def test_rcn_usage_repr() -> None:

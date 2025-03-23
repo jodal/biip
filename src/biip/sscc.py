@@ -42,7 +42,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from biip import ParseError
+from biip import ParseConfig, ParseError
 from biip.checksums import gs1_standard_check_digit
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
 
@@ -80,13 +80,19 @@ class Sscc:
     """Check digit used to check if the SSCC as a whole is valid."""
 
     @classmethod
-    def parse(cls, value: str) -> Sscc:
+    def parse(
+        cls,
+        value: str,
+        *,
+        config: ParseConfig | None = None,  # noqa: ARG003
+    ) -> Sscc:
         """Parse the given value into a `Sscc` object.
 
         The checksum is guaranteed to be valid if an SSCC object is returned.
 
         Args:
             value: The value to parse.
+            config: Configuration options for parsing.
 
         Returns:
             SSCC data structure with the successfully extracted data.

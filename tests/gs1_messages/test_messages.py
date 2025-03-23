@@ -4,7 +4,7 @@ from decimal import Decimal
 
 import pytest
 
-from biip import ParseError
+from biip import ParseConfig, ParseError
 from biip.gs1_application_identifiers import GS1ApplicationIdentifier
 from biip.gs1_messages import GS1ElementString, GS1Message
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
@@ -109,7 +109,10 @@ def test_parse_with_separator_char(
     value: str, separator_chars: Iterable[str], expected_hri: str
 ) -> None:
     assert (
-        GS1Message.parse(value, separator_chars=separator_chars).as_hri()
+        GS1Message.parse(
+            value,
+            config=ParseConfig(separator_chars=separator_chars),
+        ).as_hri()
         == expected_hri
     )
 
@@ -122,7 +125,10 @@ def test_parse_with_too_long_separator_char_fails() -> None:
             r"got \['--'\].$"
         ),
     ):
-        GS1Message.parse("10222--15210526", separator_chars=["--"])
+        GS1Message.parse(
+            "10222--15210526",
+            config=ParseConfig(separator_chars=["--"]),
+        )
 
 
 @pytest.mark.parametrize(
@@ -234,7 +240,7 @@ def test_parse_hri(value: str, expected: GS1Message) -> None:
 def test_parse_hri_with_gtin_with_variable_weight() -> None:
     result = GS1Message.parse_hri(
         "(01)02302148210869",
-        rcn_region=RcnRegion.NORWAY,
+        config=ParseConfig(rcn_region=RcnRegion.NORWAY),
     )
 
     gs1_gtin = result.get(ai="01")

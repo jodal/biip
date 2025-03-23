@@ -5,19 +5,14 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from itertools import chain
-from typing import TYPE_CHECKING
 
 from biip import ParseError
+from biip._parser import ParseConfig
 from biip.gs1_application_identifiers import (
     _GS1_APPLICATION_IDENTIFIERS,
     GS1ApplicationIdentifier,
 )
 from biip.gs1_messages import GS1ElementString
-
-if TYPE_CHECKING:
-    from collections.abc import Iterable
-
-    from biip.gtin import RcnRegion
 
 
 @dataclass
@@ -41,26 +36,13 @@ class GS1Message:
         cls,
         value: str,
         *,
-        rcn_region: RcnRegion | None = None,
-        rcn_verify_variable_measure: bool = True,
-        separator_chars: Iterable[str] = ("\x1d",),
+        config: ParseConfig | None = None,
     ) -> GS1Message:
         """Parse a string from a barcode scan as a GS1 message with AIs.
 
         Args:
             value: The string to parse.
-            rcn_region: The geographical region whose rules should be used to
-                interpret Restricted Circulation Numbers (RCN).
-                Needed to extract e.g. variable weight/price from GTIN.
-            rcn_verify_variable_measure: Whether to verify that the variable
-                measure in a RCN matches its check digit, if present. Some
-                companies use the variable measure check digit for other
-                purposes, requiring this check to be disabled.
-            separator_chars: Characters used in place of the FNC1 symbol.
-                Defaults to `<GS>` (ASCII value 29).
-                If variable-length fields in the middle of the message are
-                not terminated with a separator character, the parser might
-                greedily consume the rest of the message.
+            config: Configuration options for parsing.
 
         Returns:
             A message object with one or more element strings.
@@ -69,17 +51,15 @@ class GS1Message:
             ValueError: If the `separator_char` isn't exactly 1 character long.
             ParseError: If the parsing fails.
         """
+        if config is None:
+            config = ParseConfig()
+
         value = value.strip()
         element_strings: list[GS1ElementString] = []
         rest = value[:]
 
         while rest:
-            element_string = GS1ElementString.extract(
-                rest,
-                rcn_region=rcn_region,
-                rcn_verify_variable_measure=rcn_verify_variable_measure,
-                separator_chars=separator_chars,
-            )
+            element_string = GS1ElementString.extract(rest, config=config)
             element_strings.append(element_string)
 
             rest = rest[len(element_string) :]
@@ -87,7 +67,7 @@ class GS1Message:
             # Separator characters are accepted inbetween any element string,
             # even if the AI doesn't require it. See GS1 General Specifications,
             # section 7.8.6 for details.
-            while rest.startswith(tuple(separator_chars)):
+            while rest.startswith(tuple(config.separator_chars)):
                 rest = rest[1:]
 
         return cls(value=value, element_strings=element_strings)
@@ -97,20 +77,13 @@ class GS1Message:
         cls,
         value: str,
         *,
-        rcn_region: RcnRegion | None = None,
-        rcn_verify_variable_measure: bool = True,
+        config: ParseConfig | None = None,
     ) -> GS1Message:
         """Parse the GS1 string given in HRI (human readable interpretation) format.
 
         Args:
             value: The HRI string to parse.
-            rcn_region: The geographical region whose rules should be used to
-                interpret Restricted Circulation Numbers (RCN).
-                Needed to extract e.g. variable weight/price from GTIN.
-            rcn_verify_variable_measure: Whether to verify that the variable
-                measure in a RCN matches its check digit, if present. Some
-                companies use the variable measure check digit for other
-                purposes, requiring this check to be disabled.
+            config: Configuration options for parsing.
 
         Returns:
             A message object with one or more element strings.
@@ -118,6 +91,9 @@ class GS1Message:
         Raises:
             ParseError: If parsing of the data fails.
         """
+        if config is None:
+            config = ParseConfig()
+
         value = value.strip()
         if not value.startswith("("):
             msg = f"Expected HRI string {value!r} to start with a parenthesis."
@@ -150,11 +126,7 @@ class GS1Message:
             ]
         )
         normalized_string = "".join(parts)
-        return GS1Message.parse(
-            normalized_string,
-            rcn_region=rcn_region,
-            rcn_verify_variable_measure=rcn_verify_variable_measure,
-        )
+        return GS1Message.parse(normalized_string, config=config)
 
     def as_hri(self) -> str:
         """Render as a human readable interpretation (HRI).

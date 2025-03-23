@@ -218,7 +218,8 @@ region for Biip to be able to extract price or weight from the RCN:
 
 ```python hl_lines="1-2 15-18"
 >>> from biip.rcn import RcnRegion
->>> print(biip.parse("2011122912346", rcn_region=RcnRegion.GREAT_BRITAIN))
+>>> config = biip.ParseConfig(rcn_region=RcnRegion.GREAT_BRITAIN)
+>>> print(biip.parse("2011122912346", config=config))
 ParseResult(
     value='2011122912346',
     gtin=Rcn(
@@ -536,11 +537,14 @@ pipe character, `|`, as this character cannot legally be a part of the
 payload in Element Strings.
 
 If we configure the barcode scanner to use an alternative separator character,
-we also need to tell Biip what character to expect by passing the
-`separator_chars` parameter to the [`parse()`][biip.parse] function:
+we also need to tell Biip what character to expect by creating a
+[`ParseConfig`][biip.ParseConfig] object with the
+[`separator_chars`][biip.ParseConfig.separator_chars] option, and then call the
+[`parse()`][biip.parse] function with the config:
 
 ```python
->>> result = biip.parse("0107032069804988100329|15210525", separator_chars=["|"])
+>>> config = biip.ParseConfig(separator_chars=["|"])
+>>> result = biip.parse("0107032069804988100329|15210525", config=config)
 >>> result.gs1_message.as_hri()
 '(01)07032069804988(10)0329(15)210525'
 ```
