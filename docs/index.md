@@ -41,7 +41,7 @@ ParseResult(
 
 ## Installation
 
-Biip has no dependencies other than Python 3.9 or newer.
+Biip has no dependencies other than Python 3.10 or newer.
 
 Biip can be installed from [PyPI](https://pypi.org/project/biip/):
 
