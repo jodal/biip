@@ -3,7 +3,7 @@ name = "biip"
 version = "3.6.0"
 description = "Biip interprets the data in barcodes."
 authors = [{ name = "Stein Magnus Jodal", email = "stein.magnus@jodal.no" }]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 readme = "README.md"
 license = "Apache-2.0"
 keywords = ["barcodes", "ean", "isbn", "gs1", "gtin", "upc"]
@@ -93,7 +93,7 @@ disallow_untyped_defs = true
 
 
 [tool.pyright]
-pythonVersion = "3.9"
+pythonVersion = "3.10"
 typeCheckingMode = "strict"
 # Already covered by tests and careful import ordering:
 reportImportCycles = false
@@ -151,7 +151,6 @@ keep-runtime-typing = true
 
 [tool.tox]
 env_list = [
-    "3.9",
     "3.10",
     "3.11",
     "3.12",
