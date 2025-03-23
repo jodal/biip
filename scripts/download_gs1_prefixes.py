@@ -74,6 +74,22 @@ def parse(html_content: bytes) -> TrieNode:
                     else:
                         node[digit] = (length, usage)
 
+    # Exceptions defined in the GS1 prefix table's footnotes
+    trie["9"]["6"]["0"] = (3, "GS1 UK - GTIN-8")  # type: ignore  # noqa: PGH003
+    trie["9"]["6"]["1"] = (3, "GS1 UK - GTIN-8")  # type: ignore  # noqa: PGH003
+    trie["9"]["6"]["2"] = {  # type: ignore  # noqa: PGH003
+        "0": (4, "GS1 UK - GTIN-8"),
+        "1": (4, "GS1 UK - GTIN-8"),
+        "2": (4, "GS1 UK - GTIN-8"),
+        "3": (4, "GS1 UK - GTIN-8"),
+        "4": (4, "GS1 UK - GTIN-8"),
+        "5": (4, "GS1 Poland - GTIN-8"),
+        "6": (4, "GS1 Poland - GTIN-8"),
+        "7": (4, "GS1 Global Office - GTIN-8"),
+        "8": (4, "GS1 Global Office - GTIN-8"),
+        "9": (4, "GS1 Global Office - GTIN-8"),
+    }
+
     return trie
 
 
