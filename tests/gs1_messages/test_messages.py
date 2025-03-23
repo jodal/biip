@@ -6,7 +6,7 @@ import pytest
 
 from biip import ParseError
 from biip.gs1_application_identifiers import GS1ApplicationIdentifier
-from biip.gs1_messages import DEFAULT_SEPARATOR_CHARS, GS1ElementString, GS1Message
+from biip.gs1_messages import GS1ElementString, GS1Message
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
 from biip.gtin import Gtin, GtinFormat
 from biip.rcn import Rcn, RcnRegion
@@ -72,35 +72,35 @@ def test_parse(value: str, expected: GS1Message) -> None:
         (
             # Variable-length lot number field last, all OK.
             "010703206980498815210526100329",
-            DEFAULT_SEPARATOR_CHARS,
+            ("\x1d",),
             "(01)07032069804988(15)210526(10)0329",
         ),
         (
             # Variable-length lot number field in the middle, consuming the
             # best before date field at the end.
             "010703206980498810032915210526",
-            DEFAULT_SEPARATOR_CHARS,
+            ("\x1d",),
             "(01)07032069804988(10)032915210526",
         ),
         (
             # Variable-length lot number field in the middle, end marked with
             # default separator character.
             "0107032069804988100329\x1d15210526",
-            DEFAULT_SEPARATOR_CHARS,
+            ("\x1d",),
             "(01)07032069804988(10)0329(15)210526",
         ),
         (
             # Variable-length lot number field in the middle, end marked with
             # custom separator character.
             "0107032069804988100329|15210526",
-            ["|"],
+            ("|",),
             "(01)07032069804988(10)0329(15)210526",
         ),
         (
             # Unrealistic corner case just to exercise the code:
             # Two variable-length fields marked with different separators
             "0107032069804988100329|2112345\x1d15210526",
-            ["|", *DEFAULT_SEPARATOR_CHARS],
+            ("|", "\x1d"),
             "(01)07032069804988(10)0329(21)12345(15)210526",
         ),
     ],

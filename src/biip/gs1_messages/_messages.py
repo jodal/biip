@@ -12,11 +12,7 @@ from biip.gs1_application_identifiers import (
     _GS1_APPLICATION_IDENTIFIERS,
     GS1ApplicationIdentifier,
 )
-from biip.gs1_messages import (
-    ASCII_GROUP_SEPARATOR,
-    DEFAULT_SEPARATOR_CHARS,
-    GS1ElementString,
-)
+from biip.gs1_messages import GS1ElementString
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -47,7 +43,7 @@ class GS1Message:
         *,
         rcn_region: RcnRegion | None = None,
         rcn_verify_variable_measure: bool = True,
-        separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
+        separator_chars: Iterable[str] = ("\x1d",),
     ) -> GS1Message:
         """Parse a string from a barcode scan as a GS1 message with AIs.
 
@@ -148,7 +144,7 @@ class GS1Message:
                 [
                     gs1_ai.ai,
                     ai_data,
-                    (ASCII_GROUP_SEPARATOR if gs1_ai.separator_required else ""),
+                    ("\x1d" if gs1_ai.separator_required else ""),
                 ]
                 for gs1_ai, ai_data in pairs
             ]

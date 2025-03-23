@@ -108,16 +108,10 @@ strings either by the Application Identifier's "data title" or its AI number.
     )
 """
 
-ASCII_GROUP_SEPARATOR = "\x1d"
-DEFAULT_SEPARATOR_CHARS: tuple[str] = (ASCII_GROUP_SEPARATOR,)
-
-# The following must be imported in this specific order.
-# ruff: noqa: E402, I001
 from biip.gs1_messages._element_strings import GS1ElementString
 from biip.gs1_messages._messages import GS1Message
 
 __all__ = [
-    "DEFAULT_SEPARATOR_CHARS",
     "GS1ElementString",
     "GS1Message",
 ]

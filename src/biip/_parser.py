@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 from biip import ParseError
-from biip.gs1_messages import DEFAULT_SEPARATOR_CHARS, GS1Message
+from biip.gs1_messages import GS1Message
 from biip.gtin import Gtin, GtinFormat
 from biip.sscc import Sscc
 from biip.symbology import GS1Symbology, SymbologyIdentifier
@@ -24,7 +24,7 @@ def parse(
     *,
     rcn_region: RcnRegion | None = None,
     rcn_verify_variable_measure: bool = True,
-    separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
+    separator_chars: Iterable[str] = ("\x1d",),
 ) -> ParseResult:
     """Identify data format and parse data.
 

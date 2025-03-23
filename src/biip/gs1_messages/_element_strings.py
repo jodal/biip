@@ -13,7 +13,6 @@ from typing import TYPE_CHECKING, Any
 from biip import ParseError
 from biip.gln import Gln
 from biip.gs1_application_identifiers import GS1ApplicationIdentifier
-from biip.gs1_messages import DEFAULT_SEPARATOR_CHARS
 from biip.gtin import Gtin
 from biip.sscc import Sscc
 
@@ -124,7 +123,7 @@ class GS1ElementString:
         *,
         rcn_region: RcnRegion | None = None,
         rcn_verify_variable_measure: bool = True,
-        separator_chars: Iterable[str] = DEFAULT_SEPARATOR_CHARS,
+        separator_chars: Iterable[str] = ("\x1d",),
     ) -> GS1ElementString:
         """Extract the first GS1 Element String from the given value.
 
