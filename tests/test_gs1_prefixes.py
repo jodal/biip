@@ -18,14 +18,54 @@ def test_invalid_gs1_prefix(bad_value: str) -> None:
     ("value", "expected"),
     [
         (
+            # Undefined prefix
+            "0",
+            None,
+        ),
+        (
+            # In the GTIN-8 range
             "0000001999",
             GS1Prefix(value="0000001", usage="Unused to avoid collision with GTIN-8"),
         ),
-        ("060999", GS1Prefix(value="060", usage="GS1 US")),
-        ("139999", GS1Prefix(value="139", usage="GS1 US")),
-        ("6712670000276", None),  # Unassigned prefix
-        ("701999", GS1Prefix(value="701", usage="GS1 Norway")),
-        ("9781492053743", GS1Prefix(value="978", usage="Bookland (ISBN)")),
+        (
+            # In the GTIN-12 range
+            "060999",
+            GS1Prefix(value="060", usage="GS1 US"),
+        ),
+        (
+            # In the GTIN-13 range
+            "139999",
+            GS1Prefix(value="139", usage="GS1 US"),
+        ),
+        (
+            # Unassigned prefix
+            "6712670000276",
+            None,
+        ),
+        (
+            # Norwegian GTIN-13
+            "701999",
+            GS1Prefix(value="701", usage="GS1 Norway"),
+        ),
+        (
+            # ISBN
+            "9781492053743",
+            GS1Prefix(value="978", usage="Bookland (ISBN)"),
+        ),
+        #
+        # Exceptions defined in the GS1 prefix table's footnotes
+        ("960", GS1Prefix(value="960", usage="GS1 UK - GTIN-8")),
+        ("961", GS1Prefix(value="961", usage="GS1 UK - GTIN-8")),
+        ("9620", GS1Prefix(value="9620", usage="GS1 UK - GTIN-8")),
+        ("9621", GS1Prefix(value="9621", usage="GS1 UK - GTIN-8")),
+        ("9622", GS1Prefix(value="9622", usage="GS1 UK - GTIN-8")),
+        ("9623", GS1Prefix(value="9623", usage="GS1 UK - GTIN-8")),
+        ("9624", GS1Prefix(value="9624", usage="GS1 UK - GTIN-8")),
+        ("9625", GS1Prefix(value="9625", usage="GS1 Poland - GTIN-8")),
+        ("9626", GS1Prefix(value="9626", usage="GS1 Poland - GTIN-8")),
+        ("9627", GS1Prefix(value="9627", usage="GS1 Global Office - GTIN-8")),
+        ("9628", GS1Prefix(value="9628", usage="GS1 Global Office - GTIN-8")),
+        ("9629", GS1Prefix(value="9629", usage="GS1 Global Office - GTIN-8")),
     ],
 )
 def test_gs1_prefix(value: str, expected: GS1Prefix) -> None:

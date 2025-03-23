@@ -1,12 +1,12 @@
 """Script to download and extract Prefix data from GS1."""
 
-import dataclasses
 import json
+from typing import Union
 
 import bs4
 import httpx
 
-from biip.gs1_prefixes import _GS1PrefixRange
+TrieNode = Union[dict[str, "TrieNode"], tuple[int, str]]  # noqa: UP007
 
 PREFIX_URL = "https://www.gs1.org/standards/id-keys/company-prefix"
 
@@ -14,8 +14,8 @@ PREFIX_URL = "https://www.gs1.org/standards/id-keys/company-prefix"
 def main() -> None:
     """The script's main function."""
     html_content = download(PREFIX_URL)
-    prefixes: list[_GS1PrefixRange] = parse(html_content)
-    output(prefixes)
+    trie = parse(html_content)
+    output(trie)
 
 
 def download(url: str) -> bytes:
@@ -23,9 +23,9 @@ def download(url: str) -> bytes:
     return httpx.get(url, timeout=30).content
 
 
-def parse(html_content: bytes) -> list[_GS1PrefixRange]:
+def parse(html_content: bytes) -> TrieNode:
     """Parse the data from HTML to _GS1PrefixRange objects."""
-    result: list[_GS1PrefixRange] = []
+    trie: TrieNode = {}
 
     page = bs4.BeautifulSoup(html_content, "html.parser")
     datatable = page.find("table", {"class": ["table"]})
@@ -60,27 +60,42 @@ def parse(html_content: bytes) -> list[_GS1PrefixRange]:
             min_value = int(start)
             max_value = int(end)
 
-            result.append(
-                _GS1PrefixRange(
-                    length=length,
-                    min_value=min_value,
-                    max_value=max_value,
-                    usage=usage,
-                )
-            )
+            # Build/traverse the trie
+            for prefix in range(min_value, max_value + 1):
+                node: TrieNode = trie
+                digits = list(str(prefix).zfill(length))
+                while digits:
+                    assert isinstance(node, dict)
+                    digit = digits.pop(0)
+                    if digits:
+                        if digit not in node:
+                            node[digit] = {}
+                        node = node[digit]
+                    else:
+                        node[digit] = (length, usage)
 
-    # Remove duplicates
-    result = list(set(result))
+    # Exceptions defined in the GS1 prefix table's footnotes
+    trie["9"]["6"]["0"] = (3, "GS1 UK - GTIN-8")  # type: ignore  # noqa: PGH003
+    trie["9"]["6"]["1"] = (3, "GS1 UK - GTIN-8")  # type: ignore  # noqa: PGH003
+    trie["9"]["6"]["2"] = {  # type: ignore  # noqa: PGH003
+        "0": (4, "GS1 UK - GTIN-8"),
+        "1": (4, "GS1 UK - GTIN-8"),
+        "2": (4, "GS1 UK - GTIN-8"),
+        "3": (4, "GS1 UK - GTIN-8"),
+        "4": (4, "GS1 UK - GTIN-8"),
+        "5": (4, "GS1 Poland - GTIN-8"),
+        "6": (4, "GS1 Poland - GTIN-8"),
+        "7": (4, "GS1 Global Office - GTIN-8"),
+        "8": (4, "GS1 Global Office - GTIN-8"),
+        "9": (4, "GS1 Global Office - GTIN-8"),
+    }
 
-    # Order prefixes
-    result = sorted(result, key=lambda pr: str(pr.min_value).zfill(pr.length))
-
-    return result  # noqa: RET504
+    return trie
 
 
-def output(prefixes: list[_GS1PrefixRange]) -> None:
-    """Output the _GS1PrefixRange objects as JSON to stdout."""
-    print(json.dumps([dataclasses.asdict(cp) for cp in prefixes], indent=2))
+def output(trie: TrieNode) -> None:
+    """Output the trie data structure as JSON to stdout."""
+    print(json.dumps(trie, indent=2))
 
 
 if __name__ == "__main__":
