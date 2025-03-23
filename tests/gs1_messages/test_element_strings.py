@@ -48,6 +48,38 @@ from biip.sscc import Sscc
             ),
         ),
         (
+            "0207032069804988",
+            GS1ElementString(
+                ai=GS1ApplicationIdentifier.extract("02"),
+                value="07032069804988",
+                pattern_groups=["07032069804988"],
+                gtin=Gtin(
+                    value="07032069804988",
+                    format=GtinFormat.GTIN_13,
+                    prefix=GS1Prefix(value="703", usage="GS1 Norway"),
+                    company_prefix=GS1CompanyPrefix(value="703206"),
+                    payload="703206980498",
+                    check_digit=8,
+                ),
+            ),
+        ),
+        (
+            "0307032069804988",
+            GS1ElementString(
+                ai=GS1ApplicationIdentifier.extract("03"),
+                value="07032069804988",
+                pattern_groups=["07032069804988"],
+                gtin=Gtin(
+                    value="07032069804988",
+                    format=GtinFormat.GTIN_13,
+                    prefix=GS1Prefix(value="703", usage="GS1 Norway"),
+                    company_prefix=GS1CompanyPrefix(value="703206"),
+                    payload="703206980498",
+                    check_digit=8,
+                ),
+            ),
+        ),
+        (
             "100329",
             GS1ElementString(
                 ai=GS1ApplicationIdentifier.extract("10"),

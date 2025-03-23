@@ -218,7 +218,7 @@ class GS1ElementString:
         rcn_region: RcnRegion | None,
         rcn_verify_variable_measure: bool,
     ) -> None:
-        if self.ai.ai not in ("01", "02"):
+        if self.ai.ai not in ("01", "02", "03"):
             return
 
         try:
