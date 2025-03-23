@@ -51,7 +51,7 @@ In this example, the first element string is a GTIN.
             ai='01',
             description='Global Trade Item Number (GTIN)',
             data_title='GTIN',
-            fnc1_required=False,
+            separator_required=False,
             format='N2+N14'
         ),
         value='07032069804988',
@@ -83,7 +83,7 @@ strings either by the Application Identifier's "data title" or its AI number.
             ai='15',
             description='Best before date (YYMMDD)',
             data_title='BEST BEFORE or BEST BY',
-            fnc1_required=False,
+            separator_required=False,
             format='N2+N6'
         ),
         value='210526',
@@ -98,7 +98,7 @@ strings either by the Application Identifier's "data title" or its AI number.
             ai='10',
             description='Batch or lot number',
             data_title='BATCH/LOT',
-            fnc1_required=True,
+            separator_required=True,
             format='N2+X..20'
         ),
         value='0329',

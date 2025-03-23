@@ -48,7 +48,7 @@ class GS1ElementString:
                 ai='01',
                 description='Global Trade Item Number (GTIN)',
                 data_title='GTIN',
-                fnc1_required=False,
+                separator_required=False,
                 format='N2+N14'
             ),
             value='07032069804988',

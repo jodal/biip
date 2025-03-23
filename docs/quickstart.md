@@ -48,7 +48,7 @@ ParseResult(
                     ai='7032',
                     description='Number of processor with three-digit ISO country code',
                     data_title='PROCESSOR # 2',
-                    fnc1_required=True,
+                    separator_required=True,
                     format='N3+X..27'
                 ),
                 value='069804988',
@@ -285,7 +285,7 @@ GS1Message(
                 ai='00',
                 description='Serial Shipping Container Code (SSCC)',
                 data_title='SSCC',
-                fnc1_required=False,
+                separator_required=False,
                 format='N2+N18'
             ),
             value='157035381410375177',
@@ -381,7 +381,7 @@ And we can dig into the parsed Element Strings to get all the details:
             ai='01',
             description='Global Trade Item Number (GTIN)',
             data_title='GTIN',
-            fnc1_required=False,
+            separator_required=False,
             format='N2+N14'
         ),
         value='07032069804988',
@@ -400,7 +400,7 @@ And we can dig into the parsed Element Strings to get all the details:
             ai='15',
             description='Best before date (YYMMDD)',
             data_title='BEST BEFORE or BEST BY',
-            fnc1_required=False,
+            separator_required=False,
             format='N2+N6'
         ),
         value='210526',
@@ -412,7 +412,7 @@ And we can dig into the parsed Element Strings to get all the details:
             ai='10',
             description='Batch or lot number',
             data_title='BATCH/LOT',
-            fnc1_required=True,
+            separator_required=True,
             format='N2+X..20'
         ),
         value='0329',
@@ -471,7 +471,7 @@ GS1ApplicationIdentifier(
     ai='10',
     description='Batch or lot number',
     data_title='BATCH/LOT',
-    fnc1_required=True,
+    separator_required=True,
     format='N2+X..20'
 )
 ```

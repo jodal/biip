@@ -345,13 +345,13 @@
     "length": 3,
     "min_value": 605,
     "max_value": 605,
-    "usage": "Managed by GS1 Global Office for future MO"
+    "usage": "GS1 Uganda"
   },
   {
     "length": 3,
     "min_value": 606,
     "max_value": 606,
-    "usage": "Managed by GS1 Global Office for future MO"
+    "usage": "GS1 Angola"
   },
   {
     "length": 3,
@@ -496,6 +496,12 @@
     "min_value": 631,
     "max_value": 631,
     "usage": "GS1 Namibia"
+  },
+  {
+    "length": 3,
+    "min_value": 632,
+    "max_value": 632,
+    "usage": "GS1 Rwanda"
   },
   {
     "length": 3,

@@ -148,7 +148,7 @@ class GS1Message:
                 [
                     gs1_ai.ai,
                     ai_data,
-                    (ASCII_GROUP_SEPARATOR if gs1_ai.fnc1_required else ""),
+                    (ASCII_GROUP_SEPARATOR if gs1_ai.separator_required else ""),
                 ]
                 for gs1_ai, ai_data in pairs
             ]

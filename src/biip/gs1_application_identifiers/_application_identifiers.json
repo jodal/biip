@@ -3,7 +3,7 @@
     "ai": "00",
     "description": "Serial Shipping Container Code (SSCC)",
     "data_title": "SSCC",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N2+N18",
     "pattern": "^00(\\d{18})$"
   },
@@ -11,7 +11,7 @@
     "ai": "01",
     "description": "Global Trade Item Number (GTIN)",
     "data_title": "GTIN",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N2+N14",
     "pattern": "^01(\\d{14})$"
   },
@@ -19,15 +19,23 @@
     "ai": "02",
     "description": "Global Trade Item Number (GTIN) of contained trade items",
     "data_title": "CONTENT",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N2+N14",
     "pattern": "^02(\\d{14})$"
+  },
+  {
+    "ai": "03",
+    "description": "Identification of a Made-to-Order (MtO) trade item (GTIN)",
+    "data_title": "MTO GTIN",
+    "separator_required": false,
+    "format": "N2+N14",
+    "pattern": "^03(\\d{14})$"
   },
   {
     "ai": "10",
     "description": "Batch or lot number",
     "data_title": "BATCH/LOT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+X..20",
     "pattern": "^10([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -35,7 +43,7 @@
     "ai": "11",
     "description": "Production date (YYMMDD)",
     "data_title": "PROD DATE",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N2+N6",
     "pattern": "^11(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$"
   },
@@ -43,7 +51,7 @@
     "ai": "12",
     "description": "Due date (YYMMDD)",
     "data_title": "DUE DATE",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N2+N6",
     "pattern": "^12(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$"
   },
@@ -51,7 +59,7 @@
     "ai": "13",
     "description": "Packaging date (YYMMDD)",
     "data_title": "PACK DATE",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N2+N6",
     "pattern": "^13(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$"
   },
@@ -59,7 +67,7 @@
     "ai": "15",
     "description": "Best before date (YYMMDD)",
     "data_title": "BEST BEFORE or BEST BY",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N2+N6",
     "pattern": "^15(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$"
   },
@@ -67,7 +75,7 @@
     "ai": "16",
     "description": "Sell by date (YYMMDD)",
     "data_title": "SELL BY",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N2+N6",
     "pattern": "^16(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$"
   },
@@ -75,7 +83,7 @@
     "ai": "17",
     "description": "Expiration date (YYMMDD)",
     "data_title": "USE BY or EXPIRY",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N2+N6",
     "pattern": "^17(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$"
   },
@@ -83,7 +91,7 @@
     "ai": "20",
     "description": "Internal product variant",
     "data_title": "VARIANT",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N2+N2",
     "pattern": "^20(\\d{2})$"
   },
@@ -91,7 +99,7 @@
     "ai": "21",
     "description": "Serial number",
     "data_title": "SERIAL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+X..20",
     "pattern": "^21([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -99,7 +107,7 @@
     "ai": "22",
     "description": "Consumer product variant",
     "data_title": "CPV",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+X..20",
     "pattern": "^22([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -107,7 +115,7 @@
     "ai": "235",
     "description": "Third Party Controlled, Serialised Extension of Global Trade Item Number (GTIN) (TPX)",
     "data_title": "TPX",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..28",
     "pattern": "^235([!%-?A-Z_a-z\\x22]{1,28})$"
   },
@@ -115,7 +123,7 @@
     "ai": "240",
     "description": "Additional product identification assigned by the manufacturer",
     "data_title": "ADDITIONAL ID",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..30",
     "pattern": "^240([!%-?A-Z_a-z\\x22]{1,30})$"
   },
@@ -123,7 +131,7 @@
     "ai": "241",
     "description": "Customer part number",
     "data_title": "CUST. PART No.",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..30",
     "pattern": "^241([!%-?A-Z_a-z\\x22]{1,30})$"
   },
@@ -131,7 +139,7 @@
     "ai": "242",
     "description": "Made-to-Order variation number",
     "data_title": "MTO VARIANT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+N..6",
     "pattern": "^242(\\d{1,6})$"
   },
@@ -139,7 +147,7 @@
     "ai": "243",
     "description": "Packaging component number",
     "data_title": "PCN",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..20",
     "pattern": "^243([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -147,7 +155,7 @@
     "ai": "250",
     "description": "Secondary serial number",
     "data_title": "SECONDARY SERIAL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..30",
     "pattern": "^250([!%-?A-Z_a-z\\x22]{1,30})$"
   },
@@ -155,7 +163,7 @@
     "ai": "251",
     "description": "Reference to source entity",
     "data_title": "REF. TO SOURCE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..30",
     "pattern": "^251([!%-?A-Z_a-z\\x22]{1,30})$"
   },
@@ -163,7 +171,7 @@
     "ai": "253",
     "description": "Global Document Type Identifier (GDTI)",
     "data_title": "GDTI",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+N13[+X..17]",
     "pattern": "^253(\\d{13})([!%-?A-Z_a-z\\x22]{0,17})$"
   },
@@ -171,7 +179,7 @@
     "ai": "254",
     "description": "Global Location Number (GLN) extension component",
     "data_title": "GLN EXTENSION COMPONENT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..20",
     "pattern": "^254([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -179,7 +187,7 @@
     "ai": "255",
     "description": "Global Coupon Number (GCN)",
     "data_title": "GCN",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+N13[+N..12]",
     "pattern": "^255(\\d{13})(\\d{0,12})$"
   },
@@ -187,7 +195,7 @@
     "ai": "30",
     "description": "Variable count of items (variable measure trade item)",
     "data_title": "VAR. COUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+N..8",
     "pattern": "^30(\\d{0,8})$"
   },
@@ -195,7 +203,7 @@
     "ai": "3100",
     "description": "Net weight, kilograms (variable measure trade item)",
     "data_title": "NET WEIGHT (kg)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3100(\\d{6})$"
   },
@@ -203,7 +211,7 @@
     "ai": "3101",
     "description": "Net weight, kilograms (variable measure trade item)",
     "data_title": "NET WEIGHT (kg)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3101(\\d{6})$"
   },
@@ -211,7 +219,7 @@
     "ai": "3102",
     "description": "Net weight, kilograms (variable measure trade item)",
     "data_title": "NET WEIGHT (kg)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3102(\\d{6})$"
   },
@@ -219,7 +227,7 @@
     "ai": "3103",
     "description": "Net weight, kilograms (variable measure trade item)",
     "data_title": "NET WEIGHT (kg)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3103(\\d{6})$"
   },
@@ -227,7 +235,7 @@
     "ai": "3104",
     "description": "Net weight, kilograms (variable measure trade item)",
     "data_title": "NET WEIGHT (kg)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3104(\\d{6})$"
   },
@@ -235,7 +243,7 @@
     "ai": "3105",
     "description": "Net weight, kilograms (variable measure trade item)",
     "data_title": "NET WEIGHT (kg)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3105(\\d{6})$"
   },
@@ -243,7 +251,7 @@
     "ai": "3110",
     "description": "Length or first dimension, metres (variable measure trade item)",
     "data_title": "LENGTH (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3110(\\d{6})$"
   },
@@ -251,7 +259,7 @@
     "ai": "3111",
     "description": "Length or first dimension, metres (variable measure trade item)",
     "data_title": "LENGTH (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3111(\\d{6})$"
   },
@@ -259,7 +267,7 @@
     "ai": "3112",
     "description": "Length or first dimension, metres (variable measure trade item)",
     "data_title": "LENGTH (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3112(\\d{6})$"
   },
@@ -267,7 +275,7 @@
     "ai": "3113",
     "description": "Length or first dimension, metres (variable measure trade item)",
     "data_title": "LENGTH (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3113(\\d{6})$"
   },
@@ -275,7 +283,7 @@
     "ai": "3114",
     "description": "Length or first dimension, metres (variable measure trade item)",
     "data_title": "LENGTH (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3114(\\d{6})$"
   },
@@ -283,7 +291,7 @@
     "ai": "3115",
     "description": "Length or first dimension, metres (variable measure trade item)",
     "data_title": "LENGTH (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3115(\\d{6})$"
   },
@@ -291,7 +299,7 @@
     "ai": "3120",
     "description": "Width, diameter, or second dimension, metres (variable measure trade item)",
     "data_title": "WIDTH (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3120(\\d{6})$"
   },
@@ -299,7 +307,7 @@
     "ai": "3121",
     "description": "Width, diameter, or second dimension, metres (variable measure trade item)",
     "data_title": "WIDTH (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3121(\\d{6})$"
   },
@@ -307,7 +315,7 @@
     "ai": "3122",
     "description": "Width, diameter, or second dimension, metres (variable measure trade item)",
     "data_title": "WIDTH (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3122(\\d{6})$"
   },
@@ -315,7 +323,7 @@
     "ai": "3123",
     "description": "Width, diameter, or second dimension, metres (variable measure trade item)",
     "data_title": "WIDTH (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3123(\\d{6})$"
   },
@@ -323,7 +331,7 @@
     "ai": "3124",
     "description": "Width, diameter, or second dimension, metres (variable measure trade item)",
     "data_title": "WIDTH (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3124(\\d{6})$"
   },
@@ -331,7 +339,7 @@
     "ai": "3125",
     "description": "Width, diameter, or second dimension, metres (variable measure trade item)",
     "data_title": "WIDTH (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3125(\\d{6})$"
   },
@@ -339,7 +347,7 @@
     "ai": "3130",
     "description": "Depth, thickness, height, or third dimension, metres (variable measure trade item)",
     "data_title": "HEIGHT (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3130(\\d{6})$"
   },
@@ -347,7 +355,7 @@
     "ai": "3131",
     "description": "Depth, thickness, height, or third dimension, metres (variable measure trade item)",
     "data_title": "HEIGHT (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3131(\\d{6})$"
   },
@@ -355,7 +363,7 @@
     "ai": "3132",
     "description": "Depth, thickness, height, or third dimension, metres (variable measure trade item)",
     "data_title": "HEIGHT (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3132(\\d{6})$"
   },
@@ -363,7 +371,7 @@
     "ai": "3133",
     "description": "Depth, thickness, height, or third dimension, metres (variable measure trade item)",
     "data_title": "HEIGHT (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3133(\\d{6})$"
   },
@@ -371,7 +379,7 @@
     "ai": "3134",
     "description": "Depth, thickness, height, or third dimension, metres (variable measure trade item)",
     "data_title": "HEIGHT (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3134(\\d{6})$"
   },
@@ -379,7 +387,7 @@
     "ai": "3135",
     "description": "Depth, thickness, height, or third dimension, metres (variable measure trade item)",
     "data_title": "HEIGHT (m)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3135(\\d{6})$"
   },
@@ -387,7 +395,7 @@
     "ai": "3140",
     "description": "Area, square metres (variable measure trade item)",
     "data_title": "AREA (m\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3140(\\d{6})$"
   },
@@ -395,7 +403,7 @@
     "ai": "3141",
     "description": "Area, square metres (variable measure trade item)",
     "data_title": "AREA (m\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3141(\\d{6})$"
   },
@@ -403,7 +411,7 @@
     "ai": "3142",
     "description": "Area, square metres (variable measure trade item)",
     "data_title": "AREA (m\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3142(\\d{6})$"
   },
@@ -411,7 +419,7 @@
     "ai": "3143",
     "description": "Area, square metres (variable measure trade item)",
     "data_title": "AREA (m\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3143(\\d{6})$"
   },
@@ -419,7 +427,7 @@
     "ai": "3144",
     "description": "Area, square metres (variable measure trade item)",
     "data_title": "AREA (m\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3144(\\d{6})$"
   },
@@ -427,7 +435,7 @@
     "ai": "3145",
     "description": "Area, square metres (variable measure trade item)",
     "data_title": "AREA (m\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3145(\\d{6})$"
   },
@@ -435,7 +443,7 @@
     "ai": "3150",
     "description": "Net volume, litres (variable measure trade item)",
     "data_title": "NET VOLUME (l)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3150(\\d{6})$"
   },
@@ -443,7 +451,7 @@
     "ai": "3151",
     "description": "Net volume, litres (variable measure trade item)",
     "data_title": "NET VOLUME (l)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3151(\\d{6})$"
   },
@@ -451,7 +459,7 @@
     "ai": "3152",
     "description": "Net volume, litres (variable measure trade item)",
     "data_title": "NET VOLUME (l)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3152(\\d{6})$"
   },
@@ -459,7 +467,7 @@
     "ai": "3153",
     "description": "Net volume, litres (variable measure trade item)",
     "data_title": "NET VOLUME (l)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3153(\\d{6})$"
   },
@@ -467,7 +475,7 @@
     "ai": "3154",
     "description": "Net volume, litres (variable measure trade item)",
     "data_title": "NET VOLUME (l)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3154(\\d{6})$"
   },
@@ -475,7 +483,7 @@
     "ai": "3155",
     "description": "Net volume, litres (variable measure trade item)",
     "data_title": "NET VOLUME (l)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3155(\\d{6})$"
   },
@@ -483,7 +491,7 @@
     "ai": "3160",
     "description": "Net volume, cubic metres (variable measure trade item)",
     "data_title": "NET VOLUME (m\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3160(\\d{6})$"
   },
@@ -491,7 +499,7 @@
     "ai": "3161",
     "description": "Net volume, cubic metres (variable measure trade item)",
     "data_title": "NET VOLUME (m\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3161(\\d{6})$"
   },
@@ -499,7 +507,7 @@
     "ai": "3162",
     "description": "Net volume, cubic metres (variable measure trade item)",
     "data_title": "NET VOLUME (m\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3162(\\d{6})$"
   },
@@ -507,7 +515,7 @@
     "ai": "3163",
     "description": "Net volume, cubic metres (variable measure trade item)",
     "data_title": "NET VOLUME (m\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3163(\\d{6})$"
   },
@@ -515,7 +523,7 @@
     "ai": "3164",
     "description": "Net volume, cubic metres (variable measure trade item)",
     "data_title": "NET VOLUME (m\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3164(\\d{6})$"
   },
@@ -523,7 +531,7 @@
     "ai": "3165",
     "description": "Net volume, cubic metres (variable measure trade item)",
     "data_title": "NET VOLUME (m\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3165(\\d{6})$"
   },
@@ -531,7 +539,7 @@
     "ai": "3200",
     "description": "Net weight, pounds (variable measure trade item)",
     "data_title": "NET WEIGHT (lb)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3200(\\d{6})$"
   },
@@ -539,7 +547,7 @@
     "ai": "3201",
     "description": "Net weight, pounds (variable measure trade item)",
     "data_title": "NET WEIGHT (lb)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3201(\\d{6})$"
   },
@@ -547,7 +555,7 @@
     "ai": "3202",
     "description": "Net weight, pounds (variable measure trade item)",
     "data_title": "NET WEIGHT (lb)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3202(\\d{6})$"
   },
@@ -555,7 +563,7 @@
     "ai": "3203",
     "description": "Net weight, pounds (variable measure trade item)",
     "data_title": "NET WEIGHT (lb)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3203(\\d{6})$"
   },
@@ -563,7 +571,7 @@
     "ai": "3204",
     "description": "Net weight, pounds (variable measure trade item)",
     "data_title": "NET WEIGHT (lb)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3204(\\d{6})$"
   },
@@ -571,7 +579,7 @@
     "ai": "3205",
     "description": "Net weight, pounds (variable measure trade item)",
     "data_title": "NET WEIGHT (lb)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3205(\\d{6})$"
   },
@@ -579,7 +587,7 @@
     "ai": "3210",
     "description": "Length or first dimension, inches (variable measure trade item)",
     "data_title": "LENGTH (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3210(\\d{6})$"
   },
@@ -587,7 +595,7 @@
     "ai": "3211",
     "description": "Length or first dimension, inches (variable measure trade item)",
     "data_title": "LENGTH (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3211(\\d{6})$"
   },
@@ -595,7 +603,7 @@
     "ai": "3212",
     "description": "Length or first dimension, inches (variable measure trade item)",
     "data_title": "LENGTH (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3212(\\d{6})$"
   },
@@ -603,7 +611,7 @@
     "ai": "3213",
     "description": "Length or first dimension, inches (variable measure trade item)",
     "data_title": "LENGTH (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3213(\\d{6})$"
   },
@@ -611,7 +619,7 @@
     "ai": "3214",
     "description": "Length or first dimension, inches (variable measure trade item)",
     "data_title": "LENGTH (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3214(\\d{6})$"
   },
@@ -619,7 +627,7 @@
     "ai": "3215",
     "description": "Length or first dimension, inches (variable measure trade item)",
     "data_title": "LENGTH (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3215(\\d{6})$"
   },
@@ -627,7 +635,7 @@
     "ai": "3220",
     "description": "Length or first dimension, feet (variable measure trade item)",
     "data_title": "LENGTH (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3220(\\d{6})$"
   },
@@ -635,7 +643,7 @@
     "ai": "3221",
     "description": "Length or first dimension, feet (variable measure trade item)",
     "data_title": "LENGTH (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3221(\\d{6})$"
   },
@@ -643,7 +651,7 @@
     "ai": "3222",
     "description": "Length or first dimension, feet (variable measure trade item)",
     "data_title": "LENGTH (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3222(\\d{6})$"
   },
@@ -651,7 +659,7 @@
     "ai": "3223",
     "description": "Length or first dimension, feet (variable measure trade item)",
     "data_title": "LENGTH (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3223(\\d{6})$"
   },
@@ -659,7 +667,7 @@
     "ai": "3224",
     "description": "Length or first dimension, feet (variable measure trade item)",
     "data_title": "LENGTH (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3224(\\d{6})$"
   },
@@ -667,7 +675,7 @@
     "ai": "3225",
     "description": "Length or first dimension, feet (variable measure trade item)",
     "data_title": "LENGTH (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3225(\\d{6})$"
   },
@@ -675,7 +683,7 @@
     "ai": "3230",
     "description": "Length or first dimension, yards (variable measure trade item)",
     "data_title": "LENGTH (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3230(\\d{6})$"
   },
@@ -683,7 +691,7 @@
     "ai": "3231",
     "description": "Length or first dimension, yards (variable measure trade item)",
     "data_title": "LENGTH (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3231(\\d{6})$"
   },
@@ -691,7 +699,7 @@
     "ai": "3232",
     "description": "Length or first dimension, yards (variable measure trade item)",
     "data_title": "LENGTH (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3232(\\d{6})$"
   },
@@ -699,7 +707,7 @@
     "ai": "3233",
     "description": "Length or first dimension, yards (variable measure trade item)",
     "data_title": "LENGTH (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3233(\\d{6})$"
   },
@@ -707,7 +715,7 @@
     "ai": "3234",
     "description": "Length or first dimension, yards (variable measure trade item)",
     "data_title": "LENGTH (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3234(\\d{6})$"
   },
@@ -715,7 +723,7 @@
     "ai": "3235",
     "description": "Length or first dimension, yards (variable measure trade item)",
     "data_title": "LENGTH (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3235(\\d{6})$"
   },
@@ -723,7 +731,7 @@
     "ai": "3240",
     "description": "Width, diameter, or second dimension, inches (variable measure trade item)",
     "data_title": "WIDTH (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3240(\\d{6})$"
   },
@@ -731,7 +739,7 @@
     "ai": "3241",
     "description": "Width, diameter, or second dimension, inches (variable measure trade item)",
     "data_title": "WIDTH (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3241(\\d{6})$"
   },
@@ -739,7 +747,7 @@
     "ai": "3242",
     "description": "Width, diameter, or second dimension, inches (variable measure trade item)",
     "data_title": "WIDTH (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3242(\\d{6})$"
   },
@@ -747,7 +755,7 @@
     "ai": "3243",
     "description": "Width, diameter, or second dimension, inches (variable measure trade item)",
     "data_title": "WIDTH (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3243(\\d{6})$"
   },
@@ -755,7 +763,7 @@
     "ai": "3244",
     "description": "Width, diameter, or second dimension, inches (variable measure trade item)",
     "data_title": "WIDTH (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3244(\\d{6})$"
   },
@@ -763,7 +771,7 @@
     "ai": "3245",
     "description": "Width, diameter, or second dimension, inches (variable measure trade item)",
     "data_title": "WIDTH (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3245(\\d{6})$"
   },
@@ -771,7 +779,7 @@
     "ai": "3250",
     "description": "Width, diameter, or second dimension, feet (variable measure trade item)",
     "data_title": "WIDTH (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3250(\\d{6})$"
   },
@@ -779,7 +787,7 @@
     "ai": "3251",
     "description": "Width, diameter, or second dimension, feet (variable measure trade item)",
     "data_title": "WIDTH (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3251(\\d{6})$"
   },
@@ -787,7 +795,7 @@
     "ai": "3252",
     "description": "Width, diameter, or second dimension, feet (variable measure trade item)",
     "data_title": "WIDTH (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3252(\\d{6})$"
   },
@@ -795,7 +803,7 @@
     "ai": "3253",
     "description": "Width, diameter, or second dimension, feet (variable measure trade item)",
     "data_title": "WIDTH (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3253(\\d{6})$"
   },
@@ -803,7 +811,7 @@
     "ai": "3254",
     "description": "Width, diameter, or second dimension, feet (variable measure trade item)",
     "data_title": "WIDTH (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3254(\\d{6})$"
   },
@@ -811,7 +819,7 @@
     "ai": "3255",
     "description": "Width, diameter, or second dimension, feet (variable measure trade item)",
     "data_title": "WIDTH (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3255(\\d{6})$"
   },
@@ -819,7 +827,7 @@
     "ai": "3260",
     "description": "Width, diameter, or second dimension, yards (variable measure trade item)",
     "data_title": "WIDTH (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3260(\\d{6})$"
   },
@@ -827,7 +835,7 @@
     "ai": "3261",
     "description": "Width, diameter, or second dimension, yards (variable measure trade item)",
     "data_title": "WIDTH (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3261(\\d{6})$"
   },
@@ -835,7 +843,7 @@
     "ai": "3262",
     "description": "Width, diameter, or second dimension, yards (variable measure trade item)",
     "data_title": "WIDTH (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3262(\\d{6})$"
   },
@@ -843,7 +851,7 @@
     "ai": "3263",
     "description": "Width, diameter, or second dimension, yards (variable measure trade item)",
     "data_title": "WIDTH (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3263(\\d{6})$"
   },
@@ -851,7 +859,7 @@
     "ai": "3264",
     "description": "Width, diameter, or second dimension, yards (variable measure trade item)",
     "data_title": "WIDTH (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3264(\\d{6})$"
   },
@@ -859,7 +867,7 @@
     "ai": "3265",
     "description": "Width, diameter, or second dimension, yards (variable measure trade item)",
     "data_title": "WIDTH (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3265(\\d{6})$"
   },
@@ -867,7 +875,7 @@
     "ai": "3270",
     "description": "Depth, thickness, height, or third dimension, inches (variable measure trade item)",
     "data_title": "HEIGHT (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3270(\\d{6})$"
   },
@@ -875,7 +883,7 @@
     "ai": "3271",
     "description": "Depth, thickness, height, or third dimension, inches (variable measure trade item)",
     "data_title": "HEIGHT (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3271(\\d{6})$"
   },
@@ -883,7 +891,7 @@
     "ai": "3272",
     "description": "Depth, thickness, height, or third dimension, inches (variable measure trade item)",
     "data_title": "HEIGHT (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3272(\\d{6})$"
   },
@@ -891,7 +899,7 @@
     "ai": "3273",
     "description": "Depth, thickness, height, or third dimension, inches (variable measure trade item)",
     "data_title": "HEIGHT (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3273(\\d{6})$"
   },
@@ -899,7 +907,7 @@
     "ai": "3274",
     "description": "Depth, thickness, height, or third dimension, inches (variable measure trade item)",
     "data_title": "HEIGHT (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3274(\\d{6})$"
   },
@@ -907,7 +915,7 @@
     "ai": "3275",
     "description": "Depth, thickness, height, or third dimension, inches (variable measure trade item)",
     "data_title": "HEIGHT (in)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3275(\\d{6})$"
   },
@@ -915,7 +923,7 @@
     "ai": "3280",
     "description": "Depth, thickness, height, or third dimension, feet (variable measure trade item)",
     "data_title": "HEIGHT (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3280(\\d{6})$"
   },
@@ -923,7 +931,7 @@
     "ai": "3281",
     "description": "Depth, thickness, height, or third dimension, feet (variable measure trade item)",
     "data_title": "HEIGHT (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3281(\\d{6})$"
   },
@@ -931,7 +939,7 @@
     "ai": "3282",
     "description": "Depth, thickness, height, or third dimension, feet (variable measure trade item)",
     "data_title": "HEIGHT (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3282(\\d{6})$"
   },
@@ -939,7 +947,7 @@
     "ai": "3283",
     "description": "Depth, thickness, height, or third dimension, feet (variable measure trade item)",
     "data_title": "HEIGHT (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3283(\\d{6})$"
   },
@@ -947,7 +955,7 @@
     "ai": "3284",
     "description": "Depth, thickness, height, or third dimension, feet (variable measure trade item)",
     "data_title": "HEIGHT (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3284(\\d{6})$"
   },
@@ -955,7 +963,7 @@
     "ai": "3285",
     "description": "Depth, thickness, height, or third dimension, feet (variable measure trade item)",
     "data_title": "HEIGHT (ft)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3285(\\d{6})$"
   },
@@ -963,7 +971,7 @@
     "ai": "3290",
     "description": "Depth, thickness, height, or third dimension, yards (variable measure trade item)",
     "data_title": "HEIGHT (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3290(\\d{6})$"
   },
@@ -971,7 +979,7 @@
     "ai": "3291",
     "description": "Depth, thickness, height, or third dimension, yards (variable measure trade item)",
     "data_title": "HEIGHT (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3291(\\d{6})$"
   },
@@ -979,7 +987,7 @@
     "ai": "3292",
     "description": "Depth, thickness, height, or third dimension, yards (variable measure trade item)",
     "data_title": "HEIGHT (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3292(\\d{6})$"
   },
@@ -987,7 +995,7 @@
     "ai": "3293",
     "description": "Depth, thickness, height, or third dimension, yards (variable measure trade item)",
     "data_title": "HEIGHT (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3293(\\d{6})$"
   },
@@ -995,7 +1003,7 @@
     "ai": "3294",
     "description": "Depth, thickness, height, or third dimension, yards (variable measure trade item)",
     "data_title": "HEIGHT (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3294(\\d{6})$"
   },
@@ -1003,7 +1011,7 @@
     "ai": "3295",
     "description": "Depth, thickness, height, or third dimension, yards (variable measure trade item)",
     "data_title": "HEIGHT (yd)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3295(\\d{6})$"
   },
@@ -1011,7 +1019,7 @@
     "ai": "3300",
     "description": "Logistic weight, kilograms",
     "data_title": "GROSS WEIGHT (kg)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3300(\\d{6})$"
   },
@@ -1019,7 +1027,7 @@
     "ai": "3301",
     "description": "Logistic weight, kilograms",
     "data_title": "GROSS WEIGHT (kg)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3301(\\d{6})$"
   },
@@ -1027,7 +1035,7 @@
     "ai": "3302",
     "description": "Logistic weight, kilograms",
     "data_title": "GROSS WEIGHT (kg)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3302(\\d{6})$"
   },
@@ -1035,7 +1043,7 @@
     "ai": "3303",
     "description": "Logistic weight, kilograms",
     "data_title": "GROSS WEIGHT (kg)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3303(\\d{6})$"
   },
@@ -1043,7 +1051,7 @@
     "ai": "3304",
     "description": "Logistic weight, kilograms",
     "data_title": "GROSS WEIGHT (kg)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3304(\\d{6})$"
   },
@@ -1051,7 +1059,7 @@
     "ai": "3305",
     "description": "Logistic weight, kilograms",
     "data_title": "GROSS WEIGHT (kg)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3305(\\d{6})$"
   },
@@ -1059,7 +1067,7 @@
     "ai": "3310",
     "description": "Length or first dimension, metres",
     "data_title": "LENGTH (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3310(\\d{6})$"
   },
@@ -1067,7 +1075,7 @@
     "ai": "3311",
     "description": "Length or first dimension, metres",
     "data_title": "LENGTH (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3311(\\d{6})$"
   },
@@ -1075,7 +1083,7 @@
     "ai": "3312",
     "description": "Length or first dimension, metres",
     "data_title": "LENGTH (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3312(\\d{6})$"
   },
@@ -1083,7 +1091,7 @@
     "ai": "3313",
     "description": "Length or first dimension, metres",
     "data_title": "LENGTH (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3313(\\d{6})$"
   },
@@ -1091,7 +1099,7 @@
     "ai": "3314",
     "description": "Length or first dimension, metres",
     "data_title": "LENGTH (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3314(\\d{6})$"
   },
@@ -1099,7 +1107,7 @@
     "ai": "3315",
     "description": "Length or first dimension, metres",
     "data_title": "LENGTH (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3315(\\d{6})$"
   },
@@ -1107,7 +1115,7 @@
     "ai": "3320",
     "description": "Width, diameter, or second dimension, metres",
     "data_title": "WIDTH (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3320(\\d{6})$"
   },
@@ -1115,7 +1123,7 @@
     "ai": "3321",
     "description": "Width, diameter, or second dimension, metres",
     "data_title": "WIDTH (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3321(\\d{6})$"
   },
@@ -1123,7 +1131,7 @@
     "ai": "3322",
     "description": "Width, diameter, or second dimension, metres",
     "data_title": "WIDTH (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3322(\\d{6})$"
   },
@@ -1131,7 +1139,7 @@
     "ai": "3323",
     "description": "Width, diameter, or second dimension, metres",
     "data_title": "WIDTH (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3323(\\d{6})$"
   },
@@ -1139,7 +1147,7 @@
     "ai": "3324",
     "description": "Width, diameter, or second dimension, metres",
     "data_title": "WIDTH (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3324(\\d{6})$"
   },
@@ -1147,7 +1155,7 @@
     "ai": "3325",
     "description": "Width, diameter, or second dimension, metres",
     "data_title": "WIDTH (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3325(\\d{6})$"
   },
@@ -1155,7 +1163,7 @@
     "ai": "3330",
     "description": "Depth, thickness, height, or third dimension, metres",
     "data_title": "HEIGHT (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3330(\\d{6})$"
   },
@@ -1163,7 +1171,7 @@
     "ai": "3331",
     "description": "Depth, thickness, height, or third dimension, metres",
     "data_title": "HEIGHT (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3331(\\d{6})$"
   },
@@ -1171,7 +1179,7 @@
     "ai": "3332",
     "description": "Depth, thickness, height, or third dimension, metres",
     "data_title": "HEIGHT (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3332(\\d{6})$"
   },
@@ -1179,7 +1187,7 @@
     "ai": "3333",
     "description": "Depth, thickness, height, or third dimension, metres",
     "data_title": "HEIGHT (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3333(\\d{6})$"
   },
@@ -1187,7 +1195,7 @@
     "ai": "3334",
     "description": "Depth, thickness, height, or third dimension, metres",
     "data_title": "HEIGHT (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3334(\\d{6})$"
   },
@@ -1195,7 +1203,7 @@
     "ai": "3335",
     "description": "Depth, thickness, height, or third dimension, metres",
     "data_title": "HEIGHT (m), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3335(\\d{6})$"
   },
@@ -1203,7 +1211,7 @@
     "ai": "3340",
     "description": "Area, square metres",
     "data_title": "AREA (m\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3340(\\d{6})$"
   },
@@ -1211,7 +1219,7 @@
     "ai": "3341",
     "description": "Area, square metres",
     "data_title": "AREA (m\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3341(\\d{6})$"
   },
@@ -1219,7 +1227,7 @@
     "ai": "3342",
     "description": "Area, square metres",
     "data_title": "AREA (m\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3342(\\d{6})$"
   },
@@ -1227,7 +1235,7 @@
     "ai": "3343",
     "description": "Area, square metres",
     "data_title": "AREA (m\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3343(\\d{6})$"
   },
@@ -1235,7 +1243,7 @@
     "ai": "3344",
     "description": "Area, square metres",
     "data_title": "AREA (m\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3344(\\d{6})$"
   },
@@ -1243,7 +1251,7 @@
     "ai": "3345",
     "description": "Area, square metres",
     "data_title": "AREA (m\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3345(\\d{6})$"
   },
@@ -1251,7 +1259,7 @@
     "ai": "3350",
     "description": "Logistic volume, litres",
     "data_title": "VOLUME (l), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3350(\\d{6})$"
   },
@@ -1259,7 +1267,7 @@
     "ai": "3351",
     "description": "Logistic volume, litres",
     "data_title": "VOLUME (l), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3351(\\d{6})$"
   },
@@ -1267,7 +1275,7 @@
     "ai": "3352",
     "description": "Logistic volume, litres",
     "data_title": "VOLUME (l), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3352(\\d{6})$"
   },
@@ -1275,7 +1283,7 @@
     "ai": "3353",
     "description": "Logistic volume, litres",
     "data_title": "VOLUME (l), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3353(\\d{6})$"
   },
@@ -1283,7 +1291,7 @@
     "ai": "3354",
     "description": "Logistic volume, litres",
     "data_title": "VOLUME (l), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3354(\\d{6})$"
   },
@@ -1291,7 +1299,7 @@
     "ai": "3355",
     "description": "Logistic volume, litres",
     "data_title": "VOLUME (l), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3355(\\d{6})$"
   },
@@ -1299,7 +1307,7 @@
     "ai": "3360",
     "description": "Logistic volume, cubic metres",
     "data_title": "VOLUME (m\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3360(\\d{6})$"
   },
@@ -1307,7 +1315,7 @@
     "ai": "3361",
     "description": "Logistic volume, cubic metres",
     "data_title": "VOLUME (m\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3361(\\d{6})$"
   },
@@ -1315,7 +1323,7 @@
     "ai": "3362",
     "description": "Logistic volume, cubic metres",
     "data_title": "VOLUME (m\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3362(\\d{6})$"
   },
@@ -1323,7 +1331,7 @@
     "ai": "3363",
     "description": "Logistic volume, cubic metres",
     "data_title": "VOLUME (m\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3363(\\d{6})$"
   },
@@ -1331,7 +1339,7 @@
     "ai": "3364",
     "description": "Logistic volume, cubic metres",
     "data_title": "VOLUME (m\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3364(\\d{6})$"
   },
@@ -1339,7 +1347,7 @@
     "ai": "3365",
     "description": "Logistic volume, cubic metres",
     "data_title": "VOLUME (m\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3365(\\d{6})$"
   },
@@ -1347,7 +1355,7 @@
     "ai": "3370",
     "description": "Kilograms per square metre",
     "data_title": "KG PER m\u00b2",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3370(\\d{6})$"
   },
@@ -1355,7 +1363,7 @@
     "ai": "3371",
     "description": "Kilograms per square metre",
     "data_title": "KG PER m\u00b2",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3371(\\d{6})$"
   },
@@ -1363,7 +1371,7 @@
     "ai": "3372",
     "description": "Kilograms per square metre",
     "data_title": "KG PER m\u00b2",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3372(\\d{6})$"
   },
@@ -1371,7 +1379,7 @@
     "ai": "3373",
     "description": "Kilograms per square metre",
     "data_title": "KG PER m\u00b2",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3373(\\d{6})$"
   },
@@ -1379,7 +1387,7 @@
     "ai": "3374",
     "description": "Kilograms per square metre",
     "data_title": "KG PER m\u00b2",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3374(\\d{6})$"
   },
@@ -1387,7 +1395,7 @@
     "ai": "3375",
     "description": "Kilograms per square metre",
     "data_title": "KG PER m\u00b2",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3375(\\d{6})$"
   },
@@ -1395,7 +1403,7 @@
     "ai": "3400",
     "description": "Logistic weight, pounds",
     "data_title": "GROSS WEIGHT (lb)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3400(\\d{6})$"
   },
@@ -1403,7 +1411,7 @@
     "ai": "3401",
     "description": "Logistic weight, pounds",
     "data_title": "GROSS WEIGHT (lb)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3401(\\d{6})$"
   },
@@ -1411,7 +1419,7 @@
     "ai": "3402",
     "description": "Logistic weight, pounds",
     "data_title": "GROSS WEIGHT (lb)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3402(\\d{6})$"
   },
@@ -1419,7 +1427,7 @@
     "ai": "3403",
     "description": "Logistic weight, pounds",
     "data_title": "GROSS WEIGHT (lb)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3403(\\d{6})$"
   },
@@ -1427,7 +1435,7 @@
     "ai": "3404",
     "description": "Logistic weight, pounds",
     "data_title": "GROSS WEIGHT (lb)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3404(\\d{6})$"
   },
@@ -1435,7 +1443,7 @@
     "ai": "3405",
     "description": "Logistic weight, pounds",
     "data_title": "GROSS WEIGHT (lb)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3405(\\d{6})$"
   },
@@ -1443,7 +1451,7 @@
     "ai": "3410",
     "description": "Length or first dimension, inches",
     "data_title": "LENGTH (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3410(\\d{6})$"
   },
@@ -1451,7 +1459,7 @@
     "ai": "3411",
     "description": "Length or first dimension, inches",
     "data_title": "LENGTH (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3411(\\d{6})$"
   },
@@ -1459,7 +1467,7 @@
     "ai": "3412",
     "description": "Length or first dimension, inches",
     "data_title": "LENGTH (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3412(\\d{6})$"
   },
@@ -1467,7 +1475,7 @@
     "ai": "3413",
     "description": "Length or first dimension, inches",
     "data_title": "LENGTH (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3413(\\d{6})$"
   },
@@ -1475,7 +1483,7 @@
     "ai": "3414",
     "description": "Length or first dimension, inches",
     "data_title": "LENGTH (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3414(\\d{6})$"
   },
@@ -1483,7 +1491,7 @@
     "ai": "3415",
     "description": "Length or first dimension, inches",
     "data_title": "LENGTH (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3415(\\d{6})$"
   },
@@ -1491,7 +1499,7 @@
     "ai": "3420",
     "description": "Length or first dimension, feet",
     "data_title": "LENGTH (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3420(\\d{6})$"
   },
@@ -1499,7 +1507,7 @@
     "ai": "3421",
     "description": "Length or first dimension, feet",
     "data_title": "LENGTH (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3421(\\d{6})$"
   },
@@ -1507,7 +1515,7 @@
     "ai": "3422",
     "description": "Length or first dimension, feet",
     "data_title": "LENGTH (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3422(\\d{6})$"
   },
@@ -1515,7 +1523,7 @@
     "ai": "3423",
     "description": "Length or first dimension, feet",
     "data_title": "LENGTH (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3423(\\d{6})$"
   },
@@ -1523,7 +1531,7 @@
     "ai": "3424",
     "description": "Length or first dimension, feet",
     "data_title": "LENGTH (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3424(\\d{6})$"
   },
@@ -1531,7 +1539,7 @@
     "ai": "3425",
     "description": "Length or first dimension, feet",
     "data_title": "LENGTH (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3425(\\d{6})$"
   },
@@ -1539,7 +1547,7 @@
     "ai": "3430",
     "description": "Length or first dimension, yards",
     "data_title": "LENGTH (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3430(\\d{6})$"
   },
@@ -1547,7 +1555,7 @@
     "ai": "3431",
     "description": "Length or first dimension, yards",
     "data_title": "LENGTH (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3431(\\d{6})$"
   },
@@ -1555,7 +1563,7 @@
     "ai": "3432",
     "description": "Length or first dimension, yards",
     "data_title": "LENGTH (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3432(\\d{6})$"
   },
@@ -1563,7 +1571,7 @@
     "ai": "3433",
     "description": "Length or first dimension, yards",
     "data_title": "LENGTH (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3433(\\d{6})$"
   },
@@ -1571,7 +1579,7 @@
     "ai": "3434",
     "description": "Length or first dimension, yards",
     "data_title": "LENGTH (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3434(\\d{6})$"
   },
@@ -1579,7 +1587,7 @@
     "ai": "3435",
     "description": "Length or first dimension, yards",
     "data_title": "LENGTH (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3435(\\d{6})$"
   },
@@ -1587,7 +1595,7 @@
     "ai": "3440",
     "description": "Width, diameter, or second dimension, inches",
     "data_title": "WIDTH (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3440(\\d{6})$"
   },
@@ -1595,7 +1603,7 @@
     "ai": "3441",
     "description": "Width, diameter, or second dimension, inches",
     "data_title": "WIDTH (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3441(\\d{6})$"
   },
@@ -1603,7 +1611,7 @@
     "ai": "3442",
     "description": "Width, diameter, or second dimension, inches",
     "data_title": "WIDTH (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3442(\\d{6})$"
   },
@@ -1611,7 +1619,7 @@
     "ai": "3443",
     "description": "Width, diameter, or second dimension, inches",
     "data_title": "WIDTH (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3443(\\d{6})$"
   },
@@ -1619,7 +1627,7 @@
     "ai": "3444",
     "description": "Width, diameter, or second dimension, inches",
     "data_title": "WIDTH (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3444(\\d{6})$"
   },
@@ -1627,7 +1635,7 @@
     "ai": "3445",
     "description": "Width, diameter, or second dimension, inches",
     "data_title": "WIDTH (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3445(\\d{6})$"
   },
@@ -1635,7 +1643,7 @@
     "ai": "3450",
     "description": "Width, diameter, or second dimension, feet",
     "data_title": "WIDTH (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3450(\\d{6})$"
   },
@@ -1643,7 +1651,7 @@
     "ai": "3451",
     "description": "Width, diameter, or second dimension, feet",
     "data_title": "WIDTH (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3451(\\d{6})$"
   },
@@ -1651,7 +1659,7 @@
     "ai": "3452",
     "description": "Width, diameter, or second dimension, feet",
     "data_title": "WIDTH (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3452(\\d{6})$"
   },
@@ -1659,7 +1667,7 @@
     "ai": "3453",
     "description": "Width, diameter, or second dimension, feet",
     "data_title": "WIDTH (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3453(\\d{6})$"
   },
@@ -1667,7 +1675,7 @@
     "ai": "3454",
     "description": "Width, diameter, or second dimension, feet",
     "data_title": "WIDTH (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3454(\\d{6})$"
   },
@@ -1675,7 +1683,7 @@
     "ai": "3455",
     "description": "Width, diameter, or second dimension, feet",
     "data_title": "WIDTH (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3455(\\d{6})$"
   },
@@ -1683,7 +1691,7 @@
     "ai": "3460",
     "description": "Width, diameter, or second dimension, yard",
     "data_title": "WIDTH (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3460(\\d{6})$"
   },
@@ -1691,7 +1699,7 @@
     "ai": "3461",
     "description": "Width, diameter, or second dimension, yard",
     "data_title": "WIDTH (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3461(\\d{6})$"
   },
@@ -1699,7 +1707,7 @@
     "ai": "3462",
     "description": "Width, diameter, or second dimension, yard",
     "data_title": "WIDTH (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3462(\\d{6})$"
   },
@@ -1707,7 +1715,7 @@
     "ai": "3463",
     "description": "Width, diameter, or second dimension, yard",
     "data_title": "WIDTH (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3463(\\d{6})$"
   },
@@ -1715,7 +1723,7 @@
     "ai": "3464",
     "description": "Width, diameter, or second dimension, yard",
     "data_title": "WIDTH (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3464(\\d{6})$"
   },
@@ -1723,7 +1731,7 @@
     "ai": "3465",
     "description": "Width, diameter, or second dimension, yard",
     "data_title": "WIDTH (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3465(\\d{6})$"
   },
@@ -1731,7 +1739,7 @@
     "ai": "3470",
     "description": "Depth, thickness, height, or third dimension, inches",
     "data_title": "HEIGHT (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3470(\\d{6})$"
   },
@@ -1739,7 +1747,7 @@
     "ai": "3471",
     "description": "Depth, thickness, height, or third dimension, inches",
     "data_title": "HEIGHT (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3471(\\d{6})$"
   },
@@ -1747,7 +1755,7 @@
     "ai": "3472",
     "description": "Depth, thickness, height, or third dimension, inches",
     "data_title": "HEIGHT (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3472(\\d{6})$"
   },
@@ -1755,7 +1763,7 @@
     "ai": "3473",
     "description": "Depth, thickness, height, or third dimension, inches",
     "data_title": "HEIGHT (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3473(\\d{6})$"
   },
@@ -1763,7 +1771,7 @@
     "ai": "3474",
     "description": "Depth, thickness, height, or third dimension, inches",
     "data_title": "HEIGHT (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3474(\\d{6})$"
   },
@@ -1771,7 +1779,7 @@
     "ai": "3475",
     "description": "Depth, thickness, height, or third dimension, inches",
     "data_title": "HEIGHT (in), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3475(\\d{6})$"
   },
@@ -1779,7 +1787,7 @@
     "ai": "3480",
     "description": "Depth, thickness, height, or third dimension, feet",
     "data_title": "HEIGHT (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3480(\\d{6})$"
   },
@@ -1787,7 +1795,7 @@
     "ai": "3481",
     "description": "Depth, thickness, height, or third dimension, feet",
     "data_title": "HEIGHT (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3481(\\d{6})$"
   },
@@ -1795,7 +1803,7 @@
     "ai": "3482",
     "description": "Depth, thickness, height, or third dimension, feet",
     "data_title": "HEIGHT (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3482(\\d{6})$"
   },
@@ -1803,7 +1811,7 @@
     "ai": "3483",
     "description": "Depth, thickness, height, or third dimension, feet",
     "data_title": "HEIGHT (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3483(\\d{6})$"
   },
@@ -1811,7 +1819,7 @@
     "ai": "3484",
     "description": "Depth, thickness, height, or third dimension, feet",
     "data_title": "HEIGHT (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3484(\\d{6})$"
   },
@@ -1819,7 +1827,7 @@
     "ai": "3485",
     "description": "Depth, thickness, height, or third dimension, feet",
     "data_title": "HEIGHT (ft), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3485(\\d{6})$"
   },
@@ -1827,7 +1835,7 @@
     "ai": "3490",
     "description": "Depth, thickness, height, or third dimension, yards",
     "data_title": "HEIGHT (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3490(\\d{6})$"
   },
@@ -1835,7 +1843,7 @@
     "ai": "3491",
     "description": "Depth, thickness, height, or third dimension, yards",
     "data_title": "HEIGHT (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3491(\\d{6})$"
   },
@@ -1843,7 +1851,7 @@
     "ai": "3492",
     "description": "Depth, thickness, height, or third dimension, yards",
     "data_title": "HEIGHT (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3492(\\d{6})$"
   },
@@ -1851,7 +1859,7 @@
     "ai": "3493",
     "description": "Depth, thickness, height, or third dimension, yards",
     "data_title": "HEIGHT (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3493(\\d{6})$"
   },
@@ -1859,7 +1867,7 @@
     "ai": "3494",
     "description": "Depth, thickness, height, or third dimension, yards",
     "data_title": "HEIGHT (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3494(\\d{6})$"
   },
@@ -1867,7 +1875,7 @@
     "ai": "3495",
     "description": "Depth, thickness, height, or third dimension, yards",
     "data_title": "HEIGHT (yd), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3495(\\d{6})$"
   },
@@ -1875,7 +1883,7 @@
     "ai": "3500",
     "description": "Area, square inches (variable measure trade item)",
     "data_title": "AREA (in\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3500(\\d{6})$"
   },
@@ -1883,7 +1891,7 @@
     "ai": "3501",
     "description": "Area, square inches (variable measure trade item)",
     "data_title": "AREA (in\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3501(\\d{6})$"
   },
@@ -1891,7 +1899,7 @@
     "ai": "3502",
     "description": "Area, square inches (variable measure trade item)",
     "data_title": "AREA (in\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3502(\\d{6})$"
   },
@@ -1899,7 +1907,7 @@
     "ai": "3503",
     "description": "Area, square inches (variable measure trade item)",
     "data_title": "AREA (in\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3503(\\d{6})$"
   },
@@ -1907,7 +1915,7 @@
     "ai": "3504",
     "description": "Area, square inches (variable measure trade item)",
     "data_title": "AREA (in\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3504(\\d{6})$"
   },
@@ -1915,7 +1923,7 @@
     "ai": "3505",
     "description": "Area, square inches (variable measure trade item)",
     "data_title": "AREA (in\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3505(\\d{6})$"
   },
@@ -1923,7 +1931,7 @@
     "ai": "3510",
     "description": "Area, square feet (variable measure trade item)",
     "data_title": "AREA (ft\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3510(\\d{6})$"
   },
@@ -1931,7 +1939,7 @@
     "ai": "3511",
     "description": "Area, square feet (variable measure trade item)",
     "data_title": "AREA (ft\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3511(\\d{6})$"
   },
@@ -1939,7 +1947,7 @@
     "ai": "3512",
     "description": "Area, square feet (variable measure trade item)",
     "data_title": "AREA (ft\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3512(\\d{6})$"
   },
@@ -1947,7 +1955,7 @@
     "ai": "3513",
     "description": "Area, square feet (variable measure trade item)",
     "data_title": "AREA (ft\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3513(\\d{6})$"
   },
@@ -1955,7 +1963,7 @@
     "ai": "3514",
     "description": "Area, square feet (variable measure trade item)",
     "data_title": "AREA (ft\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3514(\\d{6})$"
   },
@@ -1963,7 +1971,7 @@
     "ai": "3515",
     "description": "Area, square feet (variable measure trade item)",
     "data_title": "AREA (ft\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3515(\\d{6})$"
   },
@@ -1971,7 +1979,7 @@
     "ai": "3520",
     "description": "Area, square yards (variable measure trade item)",
     "data_title": "AREA (yd\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3520(\\d{6})$"
   },
@@ -1979,7 +1987,7 @@
     "ai": "3521",
     "description": "Area, square yards (variable measure trade item)",
     "data_title": "AREA (yd\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3521(\\d{6})$"
   },
@@ -1987,7 +1995,7 @@
     "ai": "3522",
     "description": "Area, square yards (variable measure trade item)",
     "data_title": "AREA (yd\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3522(\\d{6})$"
   },
@@ -1995,7 +2003,7 @@
     "ai": "3523",
     "description": "Area, square yards (variable measure trade item)",
     "data_title": "AREA (yd\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3523(\\d{6})$"
   },
@@ -2003,7 +2011,7 @@
     "ai": "3524",
     "description": "Area, square yards (variable measure trade item)",
     "data_title": "AREA (yd\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3524(\\d{6})$"
   },
@@ -2011,7 +2019,7 @@
     "ai": "3525",
     "description": "Area, square yards (variable measure trade item)",
     "data_title": "AREA (yd\u00b2)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3525(\\d{6})$"
   },
@@ -2019,7 +2027,7 @@
     "ai": "3530",
     "description": "Area, square inches",
     "data_title": "AREA (in\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3530(\\d{6})$"
   },
@@ -2027,7 +2035,7 @@
     "ai": "3531",
     "description": "Area, square inches",
     "data_title": "AREA (in\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3531(\\d{6})$"
   },
@@ -2035,7 +2043,7 @@
     "ai": "3532",
     "description": "Area, square inches",
     "data_title": "AREA (in\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3532(\\d{6})$"
   },
@@ -2043,7 +2051,7 @@
     "ai": "3533",
     "description": "Area, square inches",
     "data_title": "AREA (in\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3533(\\d{6})$"
   },
@@ -2051,7 +2059,7 @@
     "ai": "3534",
     "description": "Area, square inches",
     "data_title": "AREA (in\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3534(\\d{6})$"
   },
@@ -2059,7 +2067,7 @@
     "ai": "3535",
     "description": "Area, square inches",
     "data_title": "AREA (in\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3535(\\d{6})$"
   },
@@ -2067,7 +2075,7 @@
     "ai": "3540",
     "description": "Area, square feet",
     "data_title": "AREA (ft\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3540(\\d{6})$"
   },
@@ -2075,7 +2083,7 @@
     "ai": "3541",
     "description": "Area, square feet",
     "data_title": "AREA (ft\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3541(\\d{6})$"
   },
@@ -2083,7 +2091,7 @@
     "ai": "3542",
     "description": "Area, square feet",
     "data_title": "AREA (ft\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3542(\\d{6})$"
   },
@@ -2091,7 +2099,7 @@
     "ai": "3543",
     "description": "Area, square feet",
     "data_title": "AREA (ft\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3543(\\d{6})$"
   },
@@ -2099,7 +2107,7 @@
     "ai": "3544",
     "description": "Area, square feet",
     "data_title": "AREA (ft\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3544(\\d{6})$"
   },
@@ -2107,7 +2115,7 @@
     "ai": "3545",
     "description": "Area, square feet",
     "data_title": "AREA (ft\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3545(\\d{6})$"
   },
@@ -2115,7 +2123,7 @@
     "ai": "3550",
     "description": "Area, square yards",
     "data_title": "AREA (yd\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3550(\\d{6})$"
   },
@@ -2123,7 +2131,7 @@
     "ai": "3551",
     "description": "Area, square yards",
     "data_title": "AREA (yd\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3551(\\d{6})$"
   },
@@ -2131,7 +2139,7 @@
     "ai": "3552",
     "description": "Area, square yards",
     "data_title": "AREA (yd\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3552(\\d{6})$"
   },
@@ -2139,7 +2147,7 @@
     "ai": "3553",
     "description": "Area, square yards",
     "data_title": "AREA (yd\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3553(\\d{6})$"
   },
@@ -2147,7 +2155,7 @@
     "ai": "3554",
     "description": "Area, square yards",
     "data_title": "AREA (yd\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3554(\\d{6})$"
   },
@@ -2155,55 +2163,55 @@
     "ai": "3555",
     "description": "Area, square yards",
     "data_title": "AREA (yd\u00b2), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3555(\\d{6})$"
   },
   {
     "ai": "3560",
     "description": "Net weight, troy ounces (variable measure trade item)",
-    "data_title": "NET WEIGHT (t oz)",
-    "fnc1_required": false,
+    "data_title": "NET WEIGHT (troy oz)",
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3560(\\d{6})$"
   },
   {
     "ai": "3561",
     "description": "Net weight, troy ounces (variable measure trade item)",
-    "data_title": "NET WEIGHT (t oz)",
-    "fnc1_required": false,
+    "data_title": "NET WEIGHT (troy oz)",
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3561(\\d{6})$"
   },
   {
     "ai": "3562",
     "description": "Net weight, troy ounces (variable measure trade item)",
-    "data_title": "NET WEIGHT (t oz)",
-    "fnc1_required": false,
+    "data_title": "NET WEIGHT (troy oz)",
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3562(\\d{6})$"
   },
   {
     "ai": "3563",
     "description": "Net weight, troy ounces (variable measure trade item)",
-    "data_title": "NET WEIGHT (t oz)",
-    "fnc1_required": false,
+    "data_title": "NET WEIGHT (troy oz)",
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3563(\\d{6})$"
   },
   {
     "ai": "3564",
     "description": "Net weight, troy ounces (variable measure trade item)",
-    "data_title": "NET WEIGHT (t oz)",
-    "fnc1_required": false,
+    "data_title": "NET WEIGHT (troy oz)",
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3564(\\d{6})$"
   },
   {
     "ai": "3565",
     "description": "Net weight, troy ounces (variable measure trade item)",
-    "data_title": "NET WEIGHT (t oz)",
-    "fnc1_required": false,
+    "data_title": "NET WEIGHT (troy oz)",
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3565(\\d{6})$"
   },
@@ -2211,7 +2219,7 @@
     "ai": "3570",
     "description": "Net weight (or volume), ounces (variable measure trade item)",
     "data_title": "NET VOLUME (oz)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3570(\\d{6})$"
   },
@@ -2219,7 +2227,7 @@
     "ai": "3571",
     "description": "Net weight (or volume), ounces (variable measure trade item)",
     "data_title": "NET VOLUME (oz)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3571(\\d{6})$"
   },
@@ -2227,7 +2235,7 @@
     "ai": "3572",
     "description": "Net weight (or volume), ounces (variable measure trade item)",
     "data_title": "NET VOLUME (oz)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3572(\\d{6})$"
   },
@@ -2235,7 +2243,7 @@
     "ai": "3573",
     "description": "Net weight (or volume), ounces (variable measure trade item)",
     "data_title": "NET VOLUME (oz)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3573(\\d{6})$"
   },
@@ -2243,7 +2251,7 @@
     "ai": "3574",
     "description": "Net weight (or volume), ounces (variable measure trade item)",
     "data_title": "NET VOLUME (oz)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3574(\\d{6})$"
   },
@@ -2251,7 +2259,7 @@
     "ai": "3575",
     "description": "Net weight (or volume), ounces (variable measure trade item)",
     "data_title": "NET VOLUME (oz)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3575(\\d{6})$"
   },
@@ -2259,7 +2267,7 @@
     "ai": "3600",
     "description": "Net volume, quarts (variable measure trade item)",
     "data_title": "NET VOLUME (qt)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3600(\\d{6})$"
   },
@@ -2267,7 +2275,7 @@
     "ai": "3601",
     "description": "Net volume, quarts (variable measure trade item)",
     "data_title": "NET VOLUME (qt)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3601(\\d{6})$"
   },
@@ -2275,7 +2283,7 @@
     "ai": "3602",
     "description": "Net volume, quarts (variable measure trade item)",
     "data_title": "NET VOLUME (qt)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3602(\\d{6})$"
   },
@@ -2283,7 +2291,7 @@
     "ai": "3603",
     "description": "Net volume, quarts (variable measure trade item)",
     "data_title": "NET VOLUME (qt)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3603(\\d{6})$"
   },
@@ -2291,7 +2299,7 @@
     "ai": "3604",
     "description": "Net volume, quarts (variable measure trade item)",
     "data_title": "NET VOLUME (qt)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3604(\\d{6})$"
   },
@@ -2299,7 +2307,7 @@
     "ai": "3605",
     "description": "Net volume, quarts (variable measure trade item)",
     "data_title": "NET VOLUME (qt)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3605(\\d{6})$"
   },
@@ -2307,7 +2315,7 @@
     "ai": "3610",
     "description": "Net volume, gallons U.S. (variable measure trade item)",
     "data_title": "NET VOLUME (gal.)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3610(\\d{6})$"
   },
@@ -2315,7 +2323,7 @@
     "ai": "3611",
     "description": "Net volume, gallons U.S. (variable measure trade item)",
     "data_title": "NET VOLUME (gal.)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3611(\\d{6})$"
   },
@@ -2323,7 +2331,7 @@
     "ai": "3612",
     "description": "Net volume, gallons U.S. (variable measure trade item)",
     "data_title": "NET VOLUME (gal.)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3612(\\d{6})$"
   },
@@ -2331,7 +2339,7 @@
     "ai": "3613",
     "description": "Net volume, gallons U.S. (variable measure trade item)",
     "data_title": "NET VOLUME (gal.)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3613(\\d{6})$"
   },
@@ -2339,7 +2347,7 @@
     "ai": "3614",
     "description": "Net volume, gallons U.S. (variable measure trade item)",
     "data_title": "NET VOLUME (gal.)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3614(\\d{6})$"
   },
@@ -2347,7 +2355,7 @@
     "ai": "3615",
     "description": "Net volume, gallons U.S. (variable measure trade item)",
     "data_title": "NET VOLUME (gal.)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3615(\\d{6})$"
   },
@@ -2355,7 +2363,7 @@
     "ai": "3620",
     "description": "Logistic volume, quarts",
     "data_title": "VOLUME (qt), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3620(\\d{6})$"
   },
@@ -2363,7 +2371,7 @@
     "ai": "3621",
     "description": "Logistic volume, quarts",
     "data_title": "VOLUME (qt), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3621(\\d{6})$"
   },
@@ -2371,7 +2379,7 @@
     "ai": "3622",
     "description": "Logistic volume, quarts",
     "data_title": "VOLUME (qt), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3622(\\d{6})$"
   },
@@ -2379,7 +2387,7 @@
     "ai": "3623",
     "description": "Logistic volume, quarts",
     "data_title": "VOLUME (qt), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3623(\\d{6})$"
   },
@@ -2387,7 +2395,7 @@
     "ai": "3624",
     "description": "Logistic volume, quarts",
     "data_title": "VOLUME (qt), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3624(\\d{6})$"
   },
@@ -2395,7 +2403,7 @@
     "ai": "3625",
     "description": "Logistic volume, quarts",
     "data_title": "VOLUME (qt), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3625(\\d{6})$"
   },
@@ -2403,7 +2411,7 @@
     "ai": "3630",
     "description": "Logistic volume, gallons U.S.",
     "data_title": "VOLUME (gal.), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3630(\\d{6})$"
   },
@@ -2411,7 +2419,7 @@
     "ai": "3631",
     "description": "Logistic volume, gallons U.S.",
     "data_title": "VOLUME (gal.), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3631(\\d{6})$"
   },
@@ -2419,7 +2427,7 @@
     "ai": "3632",
     "description": "Logistic volume, gallons U.S.",
     "data_title": "VOLUME (gal.), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3632(\\d{6})$"
   },
@@ -2427,7 +2435,7 @@
     "ai": "3633",
     "description": "Logistic volume, gallons U.S.",
     "data_title": "VOLUME (gal.), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3633(\\d{6})$"
   },
@@ -2435,7 +2443,7 @@
     "ai": "3634",
     "description": "Logistic volume, gallons U.S.",
     "data_title": "VOLUME (gal.), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3634(\\d{6})$"
   },
@@ -2443,7 +2451,7 @@
     "ai": "3635",
     "description": "Logistic volume, gallons U.S.",
     "data_title": "VOLUME (gal.), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3635(\\d{6})$"
   },
@@ -2451,7 +2459,7 @@
     "ai": "3640",
     "description": "Net volume, cubic inches (variable measure trade item)",
     "data_title": "VOLUME (in\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3640(\\d{6})$"
   },
@@ -2459,7 +2467,7 @@
     "ai": "3641",
     "description": "Net volume, cubic inches (variable measure trade item)",
     "data_title": "VOLUME (in\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3641(\\d{6})$"
   },
@@ -2467,7 +2475,7 @@
     "ai": "3642",
     "description": "Net volume, cubic inches (variable measure trade item)",
     "data_title": "VOLUME (in\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3642(\\d{6})$"
   },
@@ -2475,7 +2483,7 @@
     "ai": "3643",
     "description": "Net volume, cubic inches (variable measure trade item)",
     "data_title": "VOLUME (in\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3643(\\d{6})$"
   },
@@ -2483,7 +2491,7 @@
     "ai": "3644",
     "description": "Net volume, cubic inches (variable measure trade item)",
     "data_title": "VOLUME (in\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3644(\\d{6})$"
   },
@@ -2491,7 +2499,7 @@
     "ai": "3645",
     "description": "Net volume, cubic inches (variable measure trade item)",
     "data_title": "VOLUME (in\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3645(\\d{6})$"
   },
@@ -2499,7 +2507,7 @@
     "ai": "3650",
     "description": "Net volume, cubic feet (variable measure trade item)",
     "data_title": "VOLUME (ft\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3650(\\d{6})$"
   },
@@ -2507,7 +2515,7 @@
     "ai": "3651",
     "description": "Net volume, cubic feet (variable measure trade item)",
     "data_title": "VOLUME (ft\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3651(\\d{6})$"
   },
@@ -2515,7 +2523,7 @@
     "ai": "3652",
     "description": "Net volume, cubic feet (variable measure trade item)",
     "data_title": "VOLUME (ft\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3652(\\d{6})$"
   },
@@ -2523,7 +2531,7 @@
     "ai": "3653",
     "description": "Net volume, cubic feet (variable measure trade item)",
     "data_title": "VOLUME (ft\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3653(\\d{6})$"
   },
@@ -2531,7 +2539,7 @@
     "ai": "3654",
     "description": "Net volume, cubic feet (variable measure trade item)",
     "data_title": "VOLUME (ft\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3654(\\d{6})$"
   },
@@ -2539,7 +2547,7 @@
     "ai": "3655",
     "description": "Net volume, cubic feet (variable measure trade item)",
     "data_title": "VOLUME (ft\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3655(\\d{6})$"
   },
@@ -2547,7 +2555,7 @@
     "ai": "3660",
     "description": "Net volume, cubic yards (variable measure trade item)",
     "data_title": "VOLUME (yd\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3660(\\d{6})$"
   },
@@ -2555,7 +2563,7 @@
     "ai": "3661",
     "description": "Net volume, cubic yards (variable measure trade item)",
     "data_title": "VOLUME (yd\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3661(\\d{6})$"
   },
@@ -2563,7 +2571,7 @@
     "ai": "3662",
     "description": "Net volume, cubic yards (variable measure trade item)",
     "data_title": "VOLUME (yd\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3662(\\d{6})$"
   },
@@ -2571,7 +2579,7 @@
     "ai": "3663",
     "description": "Net volume, cubic yards (variable measure trade item)",
     "data_title": "VOLUME (yd\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3663(\\d{6})$"
   },
@@ -2579,7 +2587,7 @@
     "ai": "3664",
     "description": "Net volume, cubic yards (variable measure trade item)",
     "data_title": "VOLUME (yd\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3664(\\d{6})$"
   },
@@ -2587,7 +2595,7 @@
     "ai": "3665",
     "description": "Net volume, cubic yards (variable measure trade item)",
     "data_title": "VOLUME (yd\u00b3)",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3665(\\d{6})$"
   },
@@ -2595,7 +2603,7 @@
     "ai": "3670",
     "description": "Logistic volume, cubic inches",
     "data_title": "VOLUME (in\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3670(\\d{6})$"
   },
@@ -2603,7 +2611,7 @@
     "ai": "3671",
     "description": "Logistic volume, cubic inches",
     "data_title": "VOLUME (in\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3671(\\d{6})$"
   },
@@ -2611,7 +2619,7 @@
     "ai": "3672",
     "description": "Logistic volume, cubic inches",
     "data_title": "VOLUME (in\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3672(\\d{6})$"
   },
@@ -2619,7 +2627,7 @@
     "ai": "3673",
     "description": "Logistic volume, cubic inches",
     "data_title": "VOLUME (in\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3673(\\d{6})$"
   },
@@ -2627,7 +2635,7 @@
     "ai": "3674",
     "description": "Logistic volume, cubic inches",
     "data_title": "VOLUME (in\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3674(\\d{6})$"
   },
@@ -2635,7 +2643,7 @@
     "ai": "3675",
     "description": "Logistic volume, cubic inches",
     "data_title": "VOLUME (in\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3675(\\d{6})$"
   },
@@ -2643,7 +2651,7 @@
     "ai": "3680",
     "description": "Logistic volume, cubic feet",
     "data_title": "VOLUME (ft\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3680(\\d{6})$"
   },
@@ -2651,7 +2659,7 @@
     "ai": "3681",
     "description": "Logistic volume, cubic feet",
     "data_title": "VOLUME (ft\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3681(\\d{6})$"
   },
@@ -2659,7 +2667,7 @@
     "ai": "3682",
     "description": "Logistic volume, cubic feet",
     "data_title": "VOLUME (ft\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3682(\\d{6})$"
   },
@@ -2667,7 +2675,7 @@
     "ai": "3683",
     "description": "Logistic volume, cubic feet",
     "data_title": "VOLUME (ft\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3683(\\d{6})$"
   },
@@ -2675,7 +2683,7 @@
     "ai": "3684",
     "description": "Logistic volume, cubic feet",
     "data_title": "VOLUME (ft\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3684(\\d{6})$"
   },
@@ -2683,7 +2691,7 @@
     "ai": "3685",
     "description": "Logistic volume, cubic feet",
     "data_title": "VOLUME (ft\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3685(\\d{6})$"
   },
@@ -2691,7 +2699,7 @@
     "ai": "3690",
     "description": "Logistic volume, cubic yards",
     "data_title": "VOLUME (yd\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3690(\\d{6})$"
   },
@@ -2699,7 +2707,7 @@
     "ai": "3691",
     "description": "Logistic volume, cubic yards",
     "data_title": "VOLUME (yd\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3691(\\d{6})$"
   },
@@ -2707,7 +2715,7 @@
     "ai": "3692",
     "description": "Logistic volume, cubic yards",
     "data_title": "VOLUME (yd\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3692(\\d{6})$"
   },
@@ -2715,7 +2723,7 @@
     "ai": "3693",
     "description": "Logistic volume, cubic yards",
     "data_title": "VOLUME (yd\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3693(\\d{6})$"
   },
@@ -2723,7 +2731,7 @@
     "ai": "3694",
     "description": "Logistic volume, cubic yards",
     "data_title": "VOLUME (yd\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3694(\\d{6})$"
   },
@@ -2731,7 +2739,7 @@
     "ai": "3695",
     "description": "Logistic volume, cubic yards",
     "data_title": "VOLUME (yd\u00b3), log",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3695(\\d{6})$"
   },
@@ -2739,7 +2747,7 @@
     "ai": "37",
     "description": "Count of trade items or trade item pieces contained in a logistic unit",
     "data_title": "COUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+N..8",
     "pattern": "^37(\\d{1,8})$"
   },
@@ -2747,7 +2755,7 @@
     "ai": "3900",
     "description": "Applicable amount payable or Coupon value, local currency",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3900(\\d{1,15})$"
   },
@@ -2755,7 +2763,7 @@
     "ai": "3901",
     "description": "Applicable amount payable or Coupon value, local currency",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3901(\\d{1,15})$"
   },
@@ -2763,7 +2771,7 @@
     "ai": "3902",
     "description": "Applicable amount payable or Coupon value, local currency",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3902(\\d{1,15})$"
   },
@@ -2771,7 +2779,7 @@
     "ai": "3903",
     "description": "Applicable amount payable or Coupon value, local currency",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3903(\\d{1,15})$"
   },
@@ -2779,7 +2787,7 @@
     "ai": "3904",
     "description": "Applicable amount payable or Coupon value, local currency",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3904(\\d{1,15})$"
   },
@@ -2787,7 +2795,7 @@
     "ai": "3905",
     "description": "Applicable amount payable or Coupon value, local currency",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3905(\\d{1,15})$"
   },
@@ -2795,7 +2803,7 @@
     "ai": "3906",
     "description": "Applicable amount payable or Coupon value, local currency",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3906(\\d{1,15})$"
   },
@@ -2803,7 +2811,7 @@
     "ai": "3907",
     "description": "Applicable amount payable or Coupon value, local currency",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3907(\\d{1,15})$"
   },
@@ -2811,7 +2819,7 @@
     "ai": "3908",
     "description": "Applicable amount payable or Coupon value, local currency",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3908(\\d{1,15})$"
   },
@@ -2819,7 +2827,7 @@
     "ai": "3909",
     "description": "Applicable amount payable or Coupon value, local currency",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3909(\\d{1,15})$"
   },
@@ -2827,7 +2835,7 @@
     "ai": "3910",
     "description": "Applicable amount payable with ISO currency code",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3910(\\d{3})(\\d{1,15})$"
   },
@@ -2835,7 +2843,7 @@
     "ai": "3911",
     "description": "Applicable amount payable with ISO currency code",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3911(\\d{3})(\\d{1,15})$"
   },
@@ -2843,7 +2851,7 @@
     "ai": "3912",
     "description": "Applicable amount payable with ISO currency code",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3912(\\d{3})(\\d{1,15})$"
   },
@@ -2851,7 +2859,7 @@
     "ai": "3913",
     "description": "Applicable amount payable with ISO currency code",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3913(\\d{3})(\\d{1,15})$"
   },
@@ -2859,7 +2867,7 @@
     "ai": "3914",
     "description": "Applicable amount payable with ISO currency code",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3914(\\d{3})(\\d{1,15})$"
   },
@@ -2867,7 +2875,7 @@
     "ai": "3915",
     "description": "Applicable amount payable with ISO currency code",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3915(\\d{3})(\\d{1,15})$"
   },
@@ -2875,7 +2883,7 @@
     "ai": "3916",
     "description": "Applicable amount payable with ISO currency code",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3916(\\d{3})(\\d{1,15})$"
   },
@@ -2883,7 +2891,7 @@
     "ai": "3917",
     "description": "Applicable amount payable with ISO currency code",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3917(\\d{3})(\\d{1,15})$"
   },
@@ -2891,7 +2899,7 @@
     "ai": "3918",
     "description": "Applicable amount payable with ISO currency code",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3918(\\d{3})(\\d{1,15})$"
   },
@@ -2899,7 +2907,7 @@
     "ai": "3919",
     "description": "Applicable amount payable with ISO currency code",
     "data_title": "AMOUNT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3919(\\d{3})(\\d{1,15})$"
   },
@@ -2907,7 +2915,7 @@
     "ai": "3920",
     "description": "Applicable amount payable, single monetary area (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3920(\\d{1,15})$"
   },
@@ -2915,7 +2923,7 @@
     "ai": "3921",
     "description": "Applicable amount payable, single monetary area (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3921(\\d{1,15})$"
   },
@@ -2923,7 +2931,7 @@
     "ai": "3922",
     "description": "Applicable amount payable, single monetary area (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3922(\\d{1,15})$"
   },
@@ -2931,7 +2939,7 @@
     "ai": "3923",
     "description": "Applicable amount payable, single monetary area (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3923(\\d{1,15})$"
   },
@@ -2939,7 +2947,7 @@
     "ai": "3924",
     "description": "Applicable amount payable, single monetary area (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3924(\\d{1,15})$"
   },
@@ -2947,7 +2955,7 @@
     "ai": "3925",
     "description": "Applicable amount payable, single monetary area (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3925(\\d{1,15})$"
   },
@@ -2955,7 +2963,7 @@
     "ai": "3926",
     "description": "Applicable amount payable, single monetary area (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3926(\\d{1,15})$"
   },
@@ -2963,7 +2971,7 @@
     "ai": "3927",
     "description": "Applicable amount payable, single monetary area (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3927(\\d{1,15})$"
   },
@@ -2971,7 +2979,7 @@
     "ai": "3928",
     "description": "Applicable amount payable, single monetary area (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3928(\\d{1,15})$"
   },
@@ -2979,7 +2987,7 @@
     "ai": "3929",
     "description": "Applicable amount payable, single monetary area (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..15",
     "pattern": "^3929(\\d{1,15})$"
   },
@@ -2987,7 +2995,7 @@
     "ai": "3930",
     "description": "Applicable amount payable with ISO currency code (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3930(\\d{3})(\\d{1,15})$"
   },
@@ -2995,7 +3003,7 @@
     "ai": "3931",
     "description": "Applicable amount payable with ISO currency code (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3931(\\d{3})(\\d{1,15})$"
   },
@@ -3003,7 +3011,7 @@
     "ai": "3932",
     "description": "Applicable amount payable with ISO currency code (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3932(\\d{3})(\\d{1,15})$"
   },
@@ -3011,7 +3019,7 @@
     "ai": "3933",
     "description": "Applicable amount payable with ISO currency code (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3933(\\d{3})(\\d{1,15})$"
   },
@@ -3019,7 +3027,7 @@
     "ai": "3934",
     "description": "Applicable amount payable with ISO currency code (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3934(\\d{3})(\\d{1,15})$"
   },
@@ -3027,7 +3035,7 @@
     "ai": "3935",
     "description": "Applicable amount payable with ISO currency code (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3935(\\d{3})(\\d{1,15})$"
   },
@@ -3035,7 +3043,7 @@
     "ai": "3936",
     "description": "Applicable amount payable with ISO currency code (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3936(\\d{3})(\\d{1,15})$"
   },
@@ -3043,7 +3051,7 @@
     "ai": "3937",
     "description": "Applicable amount payable with ISO currency code (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3937(\\d{3})(\\d{1,15})$"
   },
@@ -3051,7 +3059,7 @@
     "ai": "3938",
     "description": "Applicable amount payable with ISO currency code (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3938(\\d{3})(\\d{1,15})$"
   },
@@ -3059,7 +3067,7 @@
     "ai": "3939",
     "description": "Applicable amount payable with ISO currency code (variable measure trade item)",
     "data_title": "PRICE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N3+N..15",
     "pattern": "^3939(\\d{3})(\\d{1,15})$"
   },
@@ -3067,7 +3075,7 @@
     "ai": "3940",
     "description": "Percentage discount of a coupon",
     "data_title": "PRCNT OFF",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N4",
     "pattern": "^3940(\\d{4})$"
   },
@@ -3075,7 +3083,7 @@
     "ai": "3941",
     "description": "Percentage discount of a coupon",
     "data_title": "PRCNT OFF",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N4",
     "pattern": "^3941(\\d{4})$"
   },
@@ -3083,7 +3091,7 @@
     "ai": "3942",
     "description": "Percentage discount of a coupon",
     "data_title": "PRCNT OFF",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N4",
     "pattern": "^3942(\\d{4})$"
   },
@@ -3091,7 +3099,7 @@
     "ai": "3943",
     "description": "Percentage discount of a coupon",
     "data_title": "PRCNT OFF",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N4",
     "pattern": "^3943(\\d{4})$"
   },
@@ -3099,7 +3107,7 @@
     "ai": "3950",
     "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
     "data_title": "PRICE/UoM",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6",
     "pattern": "^3950(\\d{6})$"
   },
@@ -3107,7 +3115,7 @@
     "ai": "3951",
     "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
     "data_title": "PRICE/UoM",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6",
     "pattern": "^3951(\\d{6})$"
   },
@@ -3115,7 +3123,7 @@
     "ai": "3952",
     "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
     "data_title": "PRICE/UoM",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6",
     "pattern": "^3952(\\d{6})$"
   },
@@ -3123,7 +3131,7 @@
     "ai": "3953",
     "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
     "data_title": "PRICE/UoM",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6",
     "pattern": "^3953(\\d{6})$"
   },
@@ -3131,7 +3139,7 @@
     "ai": "3954",
     "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
     "data_title": "PRICE/UoM",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6",
     "pattern": "^3954(\\d{6})$"
   },
@@ -3139,7 +3147,7 @@
     "ai": "3955",
     "description": "Amount Payable per unit of measure single monetary area (variable measure trade item)",
     "data_title": "PRICE/UoM",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6",
     "pattern": "^3955(\\d{6})$"
   },
@@ -3147,7 +3155,7 @@
     "ai": "400",
     "description": "Customers purchase order number",
     "data_title": "ORDER NUMBER",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..30",
     "pattern": "^400([!%-?A-Z_a-z\\x22]{1,30})$"
   },
@@ -3155,7 +3163,7 @@
     "ai": "401",
     "description": "Global Identification Number for Consignment (GINC)",
     "data_title": "GINC",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..30",
     "pattern": "^401([!%-?A-Z_a-z\\x22]{1,30})$"
   },
@@ -3163,7 +3171,7 @@
     "ai": "402",
     "description": "Global Shipment Identification Number (GSIN)",
     "data_title": "GSIN",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+N17",
     "pattern": "^402(\\d{17})$"
   },
@@ -3171,7 +3179,7 @@
     "ai": "403",
     "description": "Routing code",
     "data_title": "ROUTE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..30",
     "pattern": "^403([!%-?A-Z_a-z\\x22]{1,30})$"
   },
@@ -3179,7 +3187,7 @@
     "ai": "410",
     "description": "Ship to / Deliver to Global Location Number (GLN)",
     "data_title": "SHIP TO LOC",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N3+N13",
     "pattern": "^410(\\d{13})$"
   },
@@ -3187,7 +3195,7 @@
     "ai": "411",
     "description": "Bill to / Invoice to Global Location Number (GLN)",
     "data_title": "BILL TO",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N3+N13",
     "pattern": "^411(\\d{13})$"
   },
@@ -3195,7 +3203,7 @@
     "ai": "412",
     "description": "Purchased from Global Location Number (GLN)",
     "data_title": "PURCHASE FROM",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N3+N13",
     "pattern": "^412(\\d{13})$"
   },
@@ -3203,15 +3211,15 @@
     "ai": "413",
     "description": "Ship for / Deliver for - Forward to Global Location Number (GLN)",
     "data_title": "SHIP FOR LOC",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N3+N13",
     "pattern": "^413(\\d{13})$"
   },
   {
     "ai": "414",
     "description": "Identification of a physical location - Global Location Number (GLN)",
-    "data_title": "Loc No.",
-    "fnc1_required": false,
+    "data_title": "LOC No.",
+    "separator_required": false,
     "format": "N3+N13",
     "pattern": "^414(\\d{13})$"
   },
@@ -3219,7 +3227,7 @@
     "ai": "415",
     "description": "Global Location Number (GLN) of the invoicing party",
     "data_title": "PAY TO",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N3+N13",
     "pattern": "^415(\\d{13})$"
   },
@@ -3227,7 +3235,7 @@
     "ai": "416",
     "description": "Global Location Number (GLN) of the production or service location",
     "data_title": "PROD/SERV LOC",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N3+N13",
     "pattern": "^416(\\d{13})$"
   },
@@ -3235,7 +3243,7 @@
     "ai": "417",
     "description": "Party Global Location Number (GLN)",
     "data_title": "PARTY",
-    "fnc1_required": false,
+    "separator_required": false,
     "format": "N3+N13",
     "pattern": "^417(\\d{13})$"
   },
@@ -3243,7 +3251,7 @@
     "ai": "420",
     "description": "Ship to / Deliver to postal code within a single postal authority",
     "data_title": "SHIP TO POST",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..20",
     "pattern": "^420([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -3251,7 +3259,7 @@
     "ai": "421",
     "description": "Ship to / Deliver to postal code with ISO country code",
     "data_title": "SHIP TO POST",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+N3+X..9",
     "pattern": "^421(\\d{3})([!%-?A-Z_a-z\\x22]{1,9})$"
   },
@@ -3259,7 +3267,7 @@
     "ai": "422",
     "description": "Country of origin of a trade item",
     "data_title": "ORIGIN",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+N3",
     "pattern": "^422(\\d{3})$"
   },
@@ -3267,7 +3275,7 @@
     "ai": "423",
     "description": "Country of initial processing",
     "data_title": "COUNTRY - INITIAL PROCESS",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+N3+N..12",
     "pattern": "^423((?:\\d{3}){1,5})$"
   },
@@ -3275,7 +3283,7 @@
     "ai": "424",
     "description": "Country of processing",
     "data_title": "COUNTRY - PROCESS",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+N3",
     "pattern": "^424(\\d{3})$"
   },
@@ -3283,7 +3291,7 @@
     "ai": "425",
     "description": "Country of disassembly",
     "data_title": "COUNTRY - DISASSEMBLY",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+N3+N..12",
     "pattern": "^425((?:\\d{3}){1,5})$"
   },
@@ -3291,7 +3299,7 @@
     "ai": "426",
     "description": "Country covering full process chain",
     "data_title": "COUNTRY - FULL PROCESS",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+N3",
     "pattern": "^426(\\d{3})$"
   },
@@ -3299,7 +3307,7 @@
     "ai": "427",
     "description": "Country subdivision Of origin",
     "data_title": "ORIGIN SUBDIVISION",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..3",
     "pattern": "^427([!%-?A-Z_a-z\\x22]{1,3})$"
   },
@@ -3307,7 +3315,7 @@
     "ai": "4300",
     "description": "Ship-to / Deliver-to company name",
     "data_title": "SHIP TO COMP",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..35",
     "pattern": "^4300((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,35})$"
   },
@@ -3315,7 +3323,7 @@
     "ai": "4301",
     "description": "Ship-to / Deliver-to contact",
     "data_title": "SHIP TO NAME",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..35",
     "pattern": "^4301((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,35})$"
   },
@@ -3323,7 +3331,7 @@
     "ai": "4302",
     "description": "Ship-to / Deliver-to address line 1",
     "data_title": "SHIP TO ADD1",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..70",
     "pattern": "^4302((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
@@ -3331,7 +3339,7 @@
     "ai": "4303",
     "description": "Ship-to / Deliver-to address line 2",
     "data_title": "SHIP TO ADD2",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..70",
     "pattern": "^4303((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
@@ -3339,7 +3347,7 @@
     "ai": "4304",
     "description": "Ship-to / Deliver-to suburb",
     "data_title": "SHIP TO SUB",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..70",
     "pattern": "^4304((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
@@ -3347,7 +3355,7 @@
     "ai": "4305",
     "description": "Ship-to / Deliver-to locality",
     "data_title": "SHIP TO LOC",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..70",
     "pattern": "^4305((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
@@ -3355,7 +3363,7 @@
     "ai": "4306",
     "description": "Ship-to / Deliver-to region",
     "data_title": "SHIP TO REG",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..70",
     "pattern": "^4306((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
@@ -3363,7 +3371,7 @@
     "ai": "4307",
     "description": "Ship-to / Deliver-to country code",
     "data_title": "SHIP TO COUNTRY",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X2",
     "pattern": "^4307([A-Z0-9]{2})$"
   },
@@ -3371,7 +3379,7 @@
     "ai": "4308",
     "description": "Ship-to / Deliver-to telephone number",
     "data_title": "SHIP TO PHONE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..30",
     "pattern": "^4308([!%-?A-Z_a-z\\x22]{1,30})$"
   },
@@ -3379,7 +3387,7 @@
     "ai": "4309",
     "description": "Ship-to / Deliver-to GEO location",
     "data_title": "SHIP TO GEO",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N20",
     "pattern": "^4309(\\d{20})$"
   },
@@ -3387,7 +3395,7 @@
     "ai": "4310",
     "description": "Return-to company name",
     "data_title": "RTN TO COMP",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..35",
     "pattern": "^4310((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,35})$"
   },
@@ -3395,7 +3403,7 @@
     "ai": "4311",
     "description": "Return-to contact",
     "data_title": "RTN TO NAME",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..35",
     "pattern": "^4311((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,35})$"
   },
@@ -3403,7 +3411,7 @@
     "ai": "4312",
     "description": "Return-to address line 1",
     "data_title": "RTN TO ADD1",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..70",
     "pattern": "^4312((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
@@ -3411,7 +3419,7 @@
     "ai": "4313",
     "description": "Return-to address line 2",
     "data_title": "RTN TO ADD2",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..70",
     "pattern": "^4313((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
@@ -3419,7 +3427,7 @@
     "ai": "4314",
     "description": "Return-to suburb",
     "data_title": "RTN TO SUB",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..70",
     "pattern": "^4314((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
@@ -3427,7 +3435,7 @@
     "ai": "4315",
     "description": "Return-to locality",
     "data_title": "RTN TO LOC",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..70",
     "pattern": "^4315((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
@@ -3435,7 +3443,7 @@
     "ai": "4316",
     "description": "Return-to region",
     "data_title": "RTN TO REG",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..70",
     "pattern": "^4316((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
   },
@@ -3443,7 +3451,7 @@
     "ai": "4317",
     "description": "Return-to country code",
     "data_title": "RTN TO COUNTRY",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X2",
     "pattern": "^4317([A-Z0-9]{2})$"
   },
@@ -3451,7 +3459,7 @@
     "ai": "4318",
     "description": "Return-to postal code",
     "data_title": "RTN TO POST",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..20",
     "pattern": "^4318([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -3459,7 +3467,7 @@
     "ai": "4319",
     "description": "Return-to telephone number",
     "data_title": "RTN TO PHONE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..30",
     "pattern": "^4319([!%-?A-Z_a-z\\x22]{1,30})$"
   },
@@ -3467,7 +3475,7 @@
     "ai": "4320",
     "description": "Service code description",
     "data_title": "SRV DESCRIPTION",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..35",
     "pattern": "^4320((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,35})$"
   },
@@ -3475,7 +3483,7 @@
     "ai": "4321",
     "description": "Dangerous goods flag",
     "data_title": "DANGEROUS GOODS",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N1",
     "pattern": "^4321([01])$"
   },
@@ -3483,7 +3491,7 @@
     "ai": "4322",
     "description": "Authority to leave",
     "data_title": "AUTH LEAVE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N1",
     "pattern": "^4322([01])$"
   },
@@ -3491,31 +3499,31 @@
     "ai": "4323",
     "description": "Signature required flag",
     "data_title": "SIG REQUIRED",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N1",
     "pattern": "^4323([01])$"
   },
   {
     "ai": "4324",
-    "description": "Not before delivery date time",
+    "description": "Not before delivery date time (YYMMDDhhmm)",
     "data_title": "NBEF DEL DT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N10",
     "pattern": "^4324(\\d{10})$"
   },
   {
     "ai": "4325",
-    "description": "Not after delivery date time",
+    "description": "Not after delivery date time (YYMMDDhhmm)",
     "data_title": "NAFT DEL DT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N10",
     "pattern": "^4325(\\d{10})$"
   },
   {
     "ai": "4326",
-    "description": "Release date",
+    "description": "Release date (YYMMDD)",
     "data_title": "REL DATE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6",
     "pattern": "^4326(\\d{6})$"
   },
@@ -3523,7 +3531,7 @@
     "ai": "4330",
     "description": "Maximum temperature in Fahrenheit (expressed in hundredths of degrees)",
     "data_title": "MAX TEMP F",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6+[-]",
     "pattern": "^4330(\\d{6}[-]?)$"
   },
@@ -3531,7 +3539,7 @@
     "ai": "4331",
     "description": "Maximum temperature in Celsius (expressed in hundredths of degrees)",
     "data_title": "MAX TEMP C",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6+[-]",
     "pattern": "^4331(\\d{6}[-]?)$"
   },
@@ -3539,7 +3547,7 @@
     "ai": "4332",
     "description": "Minimum temperature in Fahrenheit (expressed in hundredths of degrees)",
     "data_title": "MIN TEMP F",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6+[-]",
     "pattern": "^4332(\\d{6}[-]?)$"
   },
@@ -3547,7 +3555,7 @@
     "ai": "4333",
     "description": "Minimum temperature in Celsius (expressed in hundredths of degrees)",
     "data_title": "MIN TEMP C",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6+[-]",
     "pattern": "^4333(\\d{6}[-]?)$"
   },
@@ -3555,7 +3563,7 @@
     "ai": "7001",
     "description": "NATO Stock Number (NSN)",
     "data_title": "NSN",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N13",
     "pattern": "^7001(\\d{13})$"
   },
@@ -3563,15 +3571,15 @@
     "ai": "7002",
     "description": "UN/ECE meat carcasses and cuts classification",
     "data_title": "MEAT CUT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..30",
     "pattern": "^7002([!%-?A-Z_a-z\\x22]{1,30})$"
   },
   {
     "ai": "7003",
-    "description": "Expiration date and time",
+    "description": "Expiration date and time (YYMMDDhhmm)",
     "data_title": "EXPIRY TIME",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N10",
     "pattern": "^7003(\\d{10})$"
   },
@@ -3579,7 +3587,7 @@
     "ai": "7004",
     "description": "Active potency",
     "data_title": "ACTIVE POTENCY",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..4",
     "pattern": "^7004(\\d{0,4})$"
   },
@@ -3587,23 +3595,23 @@
     "ai": "7005",
     "description": "Catch area",
     "data_title": "CATCH AREA",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..12",
     "pattern": "^7005([!%-?A-Z_a-z\\x22]{1,12})$"
   },
   {
     "ai": "7006",
-    "description": "First freeze date",
+    "description": "First freeze date (YYMMDD)",
     "data_title": "FIRST FREEZE DATE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6",
     "pattern": "^7006(\\d{6})$"
   },
   {
     "ai": "7007",
-    "description": "Harvest date",
+    "description": "Harvest date (YYMMDD[YYMMDD])",
     "data_title": "HARVEST DATE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6[+N6]",
     "pattern": "^7007(\\d{6})(\\d{6})?$"
   },
@@ -3611,7 +3619,7 @@
     "ai": "7008",
     "description": "Species for fishery purposes",
     "data_title": "AQUATIC SPECIES",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..3",
     "pattern": "^7008([!%-?A-Z_a-z\\x22]{1,3})$"
   },
@@ -3619,7 +3627,7 @@
     "ai": "7009",
     "description": "Fishing gear type",
     "data_title": "FISHING GEAR TYPE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..10",
     "pattern": "^7009([!%-?A-Z_a-z\\x22]{1,10})$"
   },
@@ -3627,15 +3635,15 @@
     "ai": "7010",
     "description": "Production method",
     "data_title": "PROD METHOD",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..2",
     "pattern": "^7010([!%-?A-Z_a-z\\x22]{1,2})$"
   },
   {
     "ai": "7011",
-    "description": "Test by date",
+    "description": "Test by date (YYMMDD[hhmm])",
     "data_title": "TEST BY DATE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6[+N4]",
     "pattern": "^7011(\\d{6})(\\d{4})?$"
   },
@@ -3643,7 +3651,7 @@
     "ai": "7020",
     "description": "Refurbishment lot ID",
     "data_title": "REFURB LOT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..20",
     "pattern": "^7020([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -3651,7 +3659,7 @@
     "ai": "7021",
     "description": "Functional status",
     "data_title": "FUNC STAT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..20",
     "pattern": "^7021([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -3659,7 +3667,7 @@
     "ai": "7022",
     "description": "Revision status",
     "data_title": "REV STAT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..20",
     "pattern": "^7022([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -3667,7 +3675,7 @@
     "ai": "7023",
     "description": "Global Individual Asset Identifier (GIAI) of an assembly",
     "data_title": "GIAI - ASSEMBLY",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..30",
     "pattern": "^7023([!%-?A-Z_a-z\\x22]{1,30})$"
   },
@@ -3675,7 +3683,7 @@
     "ai": "7030",
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 0",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..27",
     "pattern": "^7030(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
@@ -3683,7 +3691,7 @@
     "ai": "7031",
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 1",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..27",
     "pattern": "^7031(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
@@ -3691,7 +3699,7 @@
     "ai": "7032",
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 2",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..27",
     "pattern": "^7032(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
@@ -3699,7 +3707,7 @@
     "ai": "7033",
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 3",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..27",
     "pattern": "^7033(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
@@ -3707,7 +3715,7 @@
     "ai": "7034",
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 4",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..27",
     "pattern": "^7034(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
@@ -3715,7 +3723,7 @@
     "ai": "7035",
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 5",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..27",
     "pattern": "^7035(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
@@ -3723,7 +3731,7 @@
     "ai": "7036",
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 6",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..27",
     "pattern": "^7036(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
@@ -3731,7 +3739,7 @@
     "ai": "7037",
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 7",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..27",
     "pattern": "^7037(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
@@ -3739,7 +3747,7 @@
     "ai": "7038",
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 8",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..27",
     "pattern": "^7038(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
@@ -3747,7 +3755,7 @@
     "ai": "7039",
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 9",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..27",
     "pattern": "^7039(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
@@ -3755,15 +3763,23 @@
     "ai": "7040",
     "description": "GS1 UIC with Extension 1 and Importer index",
     "data_title": "UIC+EXT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N1+X3",
     "pattern": "^7040(\\d)([!%-?A-Z_a-z\\x22])([!%-?A-Z_a-z\\x22])([!%-?A-Z_a-z\\x22])$"
+  },
+  {
+    "ai": "7041",
+    "description": "UN/CEFACT freight unit type",
+    "data_title": "UFRGT UNIT TYPE",
+    "separator_required": true,
+    "format": "N4+X..4",
+    "pattern": "^7041([!%-?A-Z_a-z\\x22]{1,4})$"
   },
   {
     "ai": "710",
     "description": "National Healthcare Reimbursement Number (NHRN) - Germany PZN",
     "data_title": "NHRN PZN",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..20",
     "pattern": "^710([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -3771,7 +3787,7 @@
     "ai": "711",
     "description": "National Healthcare Reimbursement Number (NHRN) - France CIP",
     "data_title": "NHRN CIP",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..20",
     "pattern": "^711([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -3779,7 +3795,7 @@
     "ai": "712",
     "description": "National Healthcare Reimbursement Number (NHRN) - Spain CN",
     "data_title": "NHRN CN",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..20",
     "pattern": "^712([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -3787,7 +3803,7 @@
     "ai": "713",
     "description": "National Healthcare Reimbursement Number (NHRN) - Brasil DRN",
     "data_title": "NHRN DRN",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..20",
     "pattern": "^713([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -3795,7 +3811,7 @@
     "ai": "714",
     "description": "National Healthcare Reimbursement Number (NHRN) - Portugal AIM",
     "data_title": "NHRN AIM",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..20",
     "pattern": "^714([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -3803,15 +3819,23 @@
     "ai": "715",
     "description": "National Healthcare Reimbursement Number (NHRN) - United States of America NDC",
     "data_title": "NHRN NDC",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N3+X..20",
     "pattern": "^715([!%-?A-Z_a-z\\x22]{1,20})$"
+  },
+  {
+    "ai": "716",
+    "description": "National Healthcare Reimbursement Number (NHRN) - Italy AIC",
+    "data_title": "NHRN AIC",
+    "separator_required": true,
+    "format": "N3+X..20",
+    "pattern": "^716([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
     "ai": "7230",
     "description": "Certification Reference",
     "data_title": "CERT # 0",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "X2+X..28",
     "pattern": "^7230([!%-?A-Z_a-z\\x22]{3,30})$"
   },
@@ -3819,7 +3843,7 @@
     "ai": "7231",
     "description": "Certification Reference",
     "data_title": "CERT # 1",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "X2+X..28",
     "pattern": "^7231([!%-?A-Z_a-z\\x22]{3,30})$"
   },
@@ -3827,7 +3851,7 @@
     "ai": "7232",
     "description": "Certification Reference",
     "data_title": "CERT # 2",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "X2+X..28",
     "pattern": "^7232([!%-?A-Z_a-z\\x22]{3,30})$"
   },
@@ -3835,7 +3859,7 @@
     "ai": "7233",
     "description": "Certification Reference",
     "data_title": "CERT # 3",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "X2+X..28",
     "pattern": "^7233([!%-?A-Z_a-z\\x22]{3,30})$"
   },
@@ -3843,7 +3867,7 @@
     "ai": "7234",
     "description": "Certification Reference",
     "data_title": "CERT # 4",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "X2+X..28",
     "pattern": "^7234([!%-?A-Z_a-z\\x22]{3,30})$"
   },
@@ -3851,7 +3875,7 @@
     "ai": "7235",
     "description": "Certification Reference",
     "data_title": "CERT # 5",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "X2+X..28",
     "pattern": "^7235([!%-?A-Z_a-z\\x22]{3,30})$"
   },
@@ -3859,7 +3883,7 @@
     "ai": "7236",
     "description": "Certification Reference",
     "data_title": "CERT # 6",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "X2+X..28",
     "pattern": "^7236([!%-?A-Z_a-z\\x22]{3,30})$"
   },
@@ -3867,7 +3891,7 @@
     "ai": "7237",
     "description": "Certification Reference",
     "data_title": "CERT # 7",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "X2+X..28",
     "pattern": "^7237([!%-?A-Z_a-z\\x22]{3,30})$"
   },
@@ -3875,7 +3899,7 @@
     "ai": "7238",
     "description": "Certification Reference",
     "data_title": "CERT # 8",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "X2+X..28",
     "pattern": "^7238([!%-?A-Z_a-z\\x22]{3,30})$"
   },
@@ -3883,7 +3907,7 @@
     "ai": "7239",
     "description": "Certification Reference",
     "data_title": "CERT # 9",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "X2+X..28",
     "pattern": "^7239([!%-?A-Z_a-z\\x22]{3,30})$"
   },
@@ -3891,7 +3915,7 @@
     "ai": "7240",
     "description": "Protocol ID",
     "data_title": "PROTOCOL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..20",
     "pattern": "^7240([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -3899,7 +3923,7 @@
     "ai": "7241",
     "description": "AIDC media type",
     "data_title": "AIDC MEDIA TYPE",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N2",
     "pattern": "^7241(\\d{2})$"
   },
@@ -3907,23 +3931,103 @@
     "ai": "7242",
     "description": "Version Control Number (VCN)",
     "data_title": "VCN",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..25",
     "pattern": "^7242([!%-?A-Z_a-z\\x22]{1,25})$"
+  },
+  {
+    "ai": "7250",
+    "description": "Date of birth (YYYYMMDD)",
+    "data_title": "DOB",
+    "separator_required": true,
+    "format": "N4+N8",
+    "pattern": "^7250(\\d{4}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01]))$"
+  },
+  {
+    "ai": "7251",
+    "description": "Date and time of birth (YYYYMMDDhhmm)",
+    "data_title": "DOB TIME",
+    "separator_required": true,
+    "format": "N4+N12",
+    "pattern": "^7251(\\d{4}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01])(?:[01]\\d|2[0-3])(?:[0-5]\\d))$"
+  },
+  {
+    "ai": "7252",
+    "description": "Biological sex",
+    "data_title": "BIO SEX",
+    "separator_required": true,
+    "format": "N4+N1",
+    "pattern": "^7252(\\d{1})$"
+  },
+  {
+    "ai": "7253",
+    "description": "Family name of person",
+    "data_title": "FAMILY NAME",
+    "separator_required": true,
+    "format": "N4+X..40",
+    "pattern": "^7253((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,40})$"
+  },
+  {
+    "ai": "7254",
+    "description": "Given name of person",
+    "data_title": "GIVEN NAME",
+    "separator_required": true,
+    "format": "N4+X..40",
+    "pattern": "^7254((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,40})$"
+  },
+  {
+    "ai": "7255",
+    "description": "Name suffix of person",
+    "data_title": "SUFFIX",
+    "separator_required": true,
+    "format": "N4+X..10",
+    "pattern": "^7255((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,10})$"
+  },
+  {
+    "ai": "7256",
+    "description": "Full name of person",
+    "data_title": "FULL NAME",
+    "separator_required": true,
+    "format": "N4+X..90",
+    "pattern": "^7256((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,90})$"
+  },
+  {
+    "ai": "7257",
+    "description": "Address of person",
+    "data_title": "PERSON ADDR",
+    "separator_required": true,
+    "format": "N4+X..70",
+    "pattern": "^7257((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,70})$"
+  },
+  {
+    "ai": "7258",
+    "description": "Baby birth sequence",
+    "data_title": "BIRTH SEQUENCE",
+    "separator_required": true,
+    "format": "N4+N1+X1+N1",
+    "pattern": "^7258(\\d[/]\\d)$"
+  },
+  {
+    "ai": "7259",
+    "description": "Baby of family name",
+    "data_title": "BABY",
+    "separator_required": true,
+    "format": "N4+X..40",
+    "pattern": "^7259((?:[!%-?A-Z_a-z\\x22]|%[0-9A-Fa-f][0-9A-Fa-f]%[0-9A-Fa-f][0-9A-Fa-f]){1,40})$"
   },
   {
     "ai": "8001",
     "description": "Roll products (width, length, core diameter, direction, splices)",
     "data_title": "DIMENSIONS",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N14",
     "pattern": "^8001(\\d{4})(\\d{5})(\\d{3})(\\d{1})(\\d{1})$"
   },
   {
     "ai": "8002",
     "description": "Cellular mobile telephone identifier",
-    "data_title": "CMT NO.",
-    "fnc1_required": true,
+    "data_title": "CMT No.",
+    "separator_required": true,
     "format": "N4+X..20",
     "pattern": "^8002([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -3931,7 +4035,7 @@
     "ai": "8003",
     "description": "Global Returnable Asset Identifier (GRAI)",
     "data_title": "GRAI",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N14[+X..16]",
     "pattern": "^8003(0)(\\d{13})([!%-?A-Z_a-z\\x22]{0,16})$"
   },
@@ -3939,7 +4043,7 @@
     "ai": "8004",
     "description": "Global Individual Asset Identifier (GIAI)",
     "data_title": "GIAI",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..30",
     "pattern": "^8004([!%-?A-Z_a-z\\x22]{1,30})$"
   },
@@ -3947,7 +4051,7 @@
     "ai": "8005",
     "description": "Price per unit of measure",
     "data_title": "PRICE PER UNIT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N6",
     "pattern": "^8005(\\d{6})$"
   },
@@ -3955,7 +4059,7 @@
     "ai": "8006",
     "description": "Identification of an individual trade item piece (ITIP)",
     "data_title": "ITIP",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N14+N2+N2",
     "pattern": "^8006(\\d{14})(\\d{4})$"
   },
@@ -3963,23 +4067,23 @@
     "ai": "8007",
     "description": "International Bank Account Number (IBAN)",
     "data_title": "IBAN",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..34",
     "pattern": "^8007([!%-?A-Z_a-z\\x22]{1,34})$"
   },
   {
     "ai": "8008",
-    "description": "Date and time of production",
+    "description": "Date and time of production (YYMMDDhh[mm[ss]])",
     "data_title": "PROD TIME",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N8[+N..4]",
-    "pattern": "^8008(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01])(?:[01]\\d|2[0-4]))((?:[0-5]\\d)(?:[0-5]\\d)?)?$"
+    "pattern": "^8008(\\d{2}(?:0\\d|1[0-2])(?:[0-2]\\d|3[01])(?:[01]\\d|2[0-3]))((?:[0-5]\\d)(?:[0-5]\\d)?)?$"
   },
   {
     "ai": "8009",
     "description": "Optically Readable Sensor Indicator",
     "data_title": "OPTSEN",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..50",
     "pattern": "^8009([!%-?A-Z_a-z\\x22]{1,50})$"
   },
@@ -3987,7 +4091,7 @@
     "ai": "8010",
     "description": "Component/Part Identifier (CPID)",
     "data_title": "CPID",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+Y..30",
     "pattern": "^8010([A-Z0-9/#-]{5,30})$"
   },
@@ -3995,7 +4099,7 @@
     "ai": "8011",
     "description": "Component/Part Identifier serial number (CPID SERIAL)",
     "data_title": "CPID SERIAL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..12",
     "pattern": "^8011(\\d{1,12})$"
   },
@@ -4003,7 +4107,7 @@
     "ai": "8012",
     "description": "Software version",
     "data_title": "VERSION",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..20",
     "pattern": "^8012([!%-?A-Z_a-z\\x22]{1,20})$"
   },
@@ -4011,15 +4115,23 @@
     "ai": "8013",
     "description": "Global Model Number (GMN)",
     "data_title": "GMN",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..25",
     "pattern": "^8013([!%-?A-Z_a-z\\x22]{1,25})$"
+  },
+  {
+    "ai": "8014",
+    "description": "Highly Individualised Device Registration Identifier (HIDRI)",
+    "data_title": "MUDI",
+    "separator_required": true,
+    "format": "N4+X..25",
+    "pattern": "^8014([!%-?A-Z_a-z\\x22]{1,25})$"
   },
   {
     "ai": "8017",
     "description": "Global Service Relation Number (GSRN) to identify the relationship between an organisation offering services and the provider of services",
     "data_title": "GSRN - PROVIDER",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N18",
     "pattern": "^8017(\\d{18})$"
   },
@@ -4027,7 +4139,7 @@
     "ai": "8018",
     "description": "Global Service Relation Number (GSRN) to identify the relationship between an organisation offering services and the recipient of services",
     "data_title": "GSRN - RECIPIENT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N18",
     "pattern": "^8018(\\d{18})$"
   },
@@ -4035,15 +4147,15 @@
     "ai": "8019",
     "description": "Service Relation Instance Number (SRIN)",
     "data_title": "SRIN",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N..10",
     "pattern": "^8019(\\d{1,10})$"
   },
   {
     "ai": "8020",
     "description": "Payment slip reference number",
-    "data_title": "Ref No.",
-    "fnc1_required": true,
+    "data_title": "REF No.",
+    "separator_required": true,
     "format": "N4+X..25",
     "pattern": "^8020([!%-?A-Z_a-z\\x22]{1,25})$"
   },
@@ -4051,7 +4163,7 @@
     "ai": "8026",
     "description": "Identification of pieces of a trade item (ITIP) contained in a logistic unit",
     "data_title": "ITIP CONTENT",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N14+N2+N2",
     "pattern": "^8026(\\d{14})(\\d{4})$"
   },
@@ -4059,7 +4171,7 @@
     "ai": "8030",
     "description": "Digital Signature (DigSig)",
     "data_title": "DIGSIG",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+Z..90",
     "pattern": "^8030([0-9A-Za-z_-]{1,90})$"
   },
@@ -4067,7 +4179,7 @@
     "ai": "8110",
     "description": "Coupon code identification for use in North America",
     "data_title": "",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..70",
     "pattern": "^8110([!%-?A-Z_a-z\\x22]{1,70})$"
   },
@@ -4075,7 +4187,7 @@
     "ai": "8111",
     "description": "Loyalty points of a coupon",
     "data_title": "POINTS",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+N4",
     "pattern": "^8111(\\d{4})$"
   },
@@ -4083,7 +4195,7 @@
     "ai": "8112",
     "description": "Positive offer file coupon code identification for use in North America",
     "data_title": "",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..70",
     "pattern": "^8112([!%-?A-Z_a-z\\x22]{1,70})$"
   },
@@ -4091,7 +4203,7 @@
     "ai": "8200",
     "description": "Extended Packaging URL",
     "data_title": "PRODUCT URL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N4+X..70",
     "pattern": "^8200([!%-?A-Z_a-z\\x22]{1,70})$"
   },
@@ -4099,7 +4211,7 @@
     "ai": "90",
     "description": "Information mutually agreed between trading partners",
     "data_title": "INTERNAL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+X..30",
     "pattern": "^90([!%-?A-Z_a-z\\x22]{1,30})$"
   },
@@ -4107,7 +4219,7 @@
     "ai": "91",
     "description": "Company internal information",
     "data_title": "INTERNAL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+X..90",
     "pattern": "^91([!%-?A-Z_a-z\\x22]{1,90})$"
   },
@@ -4115,7 +4227,7 @@
     "ai": "92",
     "description": "Company internal information",
     "data_title": "INTERNAL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+X..90",
     "pattern": "^92([!%-?A-Z_a-z\\x22]{1,90})$"
   },
@@ -4123,7 +4235,7 @@
     "ai": "93",
     "description": "Company internal information",
     "data_title": "INTERNAL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+X..90",
     "pattern": "^93([!%-?A-Z_a-z\\x22]{1,90})$"
   },
@@ -4131,7 +4243,7 @@
     "ai": "94",
     "description": "Company internal information",
     "data_title": "INTERNAL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+X..90",
     "pattern": "^94([!%-?A-Z_a-z\\x22]{1,90})$"
   },
@@ -4139,7 +4251,7 @@
     "ai": "95",
     "description": "Company internal information",
     "data_title": "INTERNAL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+X..90",
     "pattern": "^95([!%-?A-Z_a-z\\x22]{1,90})$"
   },
@@ -4147,7 +4259,7 @@
     "ai": "96",
     "description": "Company internal information",
     "data_title": "INTERNAL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+X..90",
     "pattern": "^96([!%-?A-Z_a-z\\x22]{1,90})$"
   },
@@ -4155,7 +4267,7 @@
     "ai": "97",
     "description": "Company internal information",
     "data_title": "INTERNAL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+X..90",
     "pattern": "^97([!%-?A-Z_a-z\\x22]{1,90})$"
   },
@@ -4163,7 +4275,7 @@
     "ai": "98",
     "description": "Company internal information",
     "data_title": "INTERNAL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+X..90",
     "pattern": "^98([!%-?A-Z_a-z\\x22]{1,90})$"
   },
@@ -4171,7 +4283,7 @@
     "ai": "99",
     "description": "Company internal information",
     "data_title": "INTERNAL",
-    "fnc1_required": true,
+    "separator_required": true,
     "format": "N2+X..90",
     "pattern": "^99([!%-?A-Z_a-z\\x22]{1,90})$"
   }
