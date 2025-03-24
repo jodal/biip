@@ -17,6 +17,7 @@ nav:
       - api/gs1_application_identifiers.md
       - api/gs1_messages.md
       - api/gs1_prefixes.md
+      - api/gs1_web_uris.md
       - api/gtin.md
       - api/rcn.md
       - api/sscc.md
