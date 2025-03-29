@@ -295,3 +295,70 @@ def test_parse_with_invalid_element_values(
 def test_parse_error(value: str, error: str) -> None:
     with pytest.raises(ParseError, match=error):
         GS1WebURI.parse(value)
+
+
+@pytest.mark.parametrize(
+    ("value", "ai", "expected"),
+    [
+        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "01", ["00614141123452"]),
+        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "10", ["ABC123"]),
+    ],
+)
+def test_filter_element_strings_by_ai(value: str, ai: str, expected: list[str]) -> None:
+    matches = GS1WebURI.parse(value).element_strings.filter(ai=ai)
+
+    assert [element_string.value for element_string in matches] == expected
+
+
+@pytest.mark.parametrize(
+    ("value", "data_title", "expected"),
+    [
+        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "GTIN", ["00614141123452"]),
+        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "BATCH", ["ABC123"]),
+    ],
+)
+def test_filter_element_strings_by_data_title(
+    value: str, data_title: str, expected: list[str]
+) -> None:
+    matches = GS1WebURI.parse(value).element_strings.filter(data_title=data_title)
+
+    assert [element_string.value for element_string in matches] == expected
+
+
+@pytest.mark.parametrize(
+    ("value", "ai", "expected"),
+    [
+        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "01", "00614141123452"),
+        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "10", "ABC123"),
+        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "15", None),
+    ],
+)
+def test_get_element_strings_by_ai(value: str, ai: str, expected: str | None) -> None:
+    element_string = GS1WebURI.parse(value).element_strings.get(ai=ai)
+
+    if expected is None:
+        assert element_string is None
+    else:
+        assert element_string is not None
+        assert element_string.value == expected
+
+
+@pytest.mark.parametrize(
+    ("value", "data_title", "expected"),
+    [
+        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "GTIN", "00614141123452"),
+        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "BATCH", "ABC123"),
+        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "LOT", "ABC123"),
+        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "BEST BY", None),
+    ],
+)
+def test_get_element_strings_by_data_title(
+    value: str, data_title: str, expected: str | None
+) -> None:
+    element_string = GS1WebURI.parse(value).element_strings.get(data_title=data_title)
+
+    if expected is None:
+        assert element_string is None
+    else:
+        assert element_string is not None
+        assert element_string.value == expected
