@@ -6,7 +6,7 @@ import pytest
 from biip import ParseError
 from biip.gln import Gln
 from biip.gs1_application_identifiers import GS1ApplicationIdentifier
-from biip.gs1_element_strings import GS1ElementString
+from biip.gs1_element_strings import GS1ElementString, GS1ElementStrings
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
 from biip.gtin import Gtin, GtinFormat
 from biip.sscc import Sscc
@@ -418,3 +418,167 @@ def test_extract_percentage_discount(value: str, expected: Decimal) -> None:
 )
 def test_as_hri(value: str, expected: str) -> None:
     assert GS1ElementString.extract(value).as_hri() == expected
+
+
+@pytest.mark.parametrize(
+    ("value", "ai", "expected"),
+    [
+        (
+            [
+                GS1ElementString.extract("0100614141123452"),
+                GS1ElementString.extract("10ABC123"),
+            ],
+            "01",
+            ["00614141123452"],
+        ),
+        (
+            [
+                GS1ElementString.extract("0100614141123452"),
+                GS1ElementString.extract("10ABC123"),
+            ],
+            "10",
+            ["ABC123"],
+        ),
+        (
+            [
+                GS1ElementString.extract("0100614141123452"),
+                GS1ElementString.extract("10ABC123"),
+            ],
+            GS1ApplicationIdentifier.extract("10"),
+            ["ABC123"],
+        ),
+    ],
+)
+def test_list_filter_element_strings_by_ai(
+    value: list[GS1ElementString],
+    ai: str | GS1ApplicationIdentifier,
+    expected: list[str],
+) -> None:
+    matches = GS1ElementStrings(value).filter(ai=ai)
+
+    assert [element_string.value for element_string in matches] == expected
+
+
+@pytest.mark.parametrize(
+    ("value", "data_title", "expected"),
+    [
+        (
+            [
+                GS1ElementString.extract("0100614141123452"),
+                GS1ElementString.extract("10ABC123"),
+            ],
+            "GTIN",
+            ["00614141123452"],
+        ),
+        (
+            [
+                GS1ElementString.extract("0100614141123452"),
+                GS1ElementString.extract("10ABC123"),
+            ],
+            "BATCH",
+            ["ABC123"],
+        ),
+    ],
+)
+def test_list_filter_element_strings_by_data_title(
+    value: list[GS1ElementString],
+    data_title: str,
+    expected: list[str],
+) -> None:
+    matches = GS1ElementStrings(value).filter(data_title=data_title)
+
+    assert [element_string.value for element_string in matches] == expected
+
+
+@pytest.mark.parametrize(
+    ("value", "ai", "expected"),
+    [
+        (
+            [
+                GS1ElementString.extract("0100614141123452"),
+                GS1ElementString.extract("10ABC123"),
+            ],
+            "01",
+            "00614141123452",
+        ),
+        (
+            [
+                GS1ElementString.extract("0100614141123452"),
+                GS1ElementString.extract("10ABC123"),
+            ],
+            "10",
+            "ABC123",
+        ),
+        (
+            [
+                GS1ElementString.extract("0100614141123452"),
+                GS1ElementString.extract("10ABC123"),
+            ],
+            "15",
+            None,
+        ),
+    ],
+)
+def test_list_get_element_strings_by_ai(
+    value: list[GS1ElementString],
+    ai: str,
+    expected: str | None,
+) -> None:
+    element_string = GS1ElementStrings(value).get(ai=ai)
+
+    if expected is None:
+        assert element_string is None
+    else:
+        assert element_string is not None
+        assert element_string.value == expected
+
+
+@pytest.mark.parametrize(
+    ("value", "data_title", "expected"),
+    [
+        (
+            [
+                GS1ElementString.extract("0100614141123452"),
+                GS1ElementString.extract("10ABC123"),
+            ],
+            "GTIN",
+            "00614141123452",
+        ),
+        (
+            [
+                GS1ElementString.extract("0100614141123452"),
+                GS1ElementString.extract("10ABC123"),
+            ],
+            "BATCH",
+            "ABC123",
+        ),
+        (
+            [
+                GS1ElementString.extract("0100614141123452"),
+                GS1ElementString.extract("10ABC123"),
+            ],
+            "LOT",
+            "ABC123",
+        ),
+        (
+            [
+                GS1ElementString.extract("0100614141123452"),
+                GS1ElementString.extract("10ABC123"),
+            ],
+            "BEST BY",
+            None,
+        ),
+    ],
+)
+def test_list_get_element_strings_by_data_title(
+    value: list[GS1ElementString],
+    data_title: str,
+    expected: str | None,
+) -> None:
+    element_string = GS1ElementStrings(value).get(data_title=data_title)
+
+    if expected is None:
+        assert element_string is None
+    else:
+        assert element_string is not None
+        assert element_string.value == expected
