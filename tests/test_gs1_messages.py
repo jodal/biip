@@ -6,7 +6,7 @@ import pytest
 
 from biip import ParseConfig, ParseError
 from biip.gs1_application_identifiers import GS1ApplicationIdentifier
-from biip.gs1_element_strings import GS1ElementString
+from biip.gs1_element_strings import GS1ElementString, GS1ElementStrings
 from biip.gs1_messages import GS1Message
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
 from biip.gtin import Gtin, GtinFormat
@@ -20,45 +20,49 @@ from biip.rcn import Rcn, RcnRegion
             "010703206980498815210526100329",
             GS1Message(
                 value="010703206980498815210526100329",
-                element_strings=[
-                    GS1ElementString(
-                        ai=GS1ApplicationIdentifier.extract("01"),
-                        value="07032069804988",
-                        pattern_groups=["07032069804988"],
-                        gtin=Gtin(
+                element_strings=GS1ElementStrings(
+                    [
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("01"),
                             value="07032069804988",
-                            format=GtinFormat.GTIN_13,
-                            prefix=GS1Prefix(value="703", usage="GS1 Norway"),
-                            company_prefix=GS1CompanyPrefix(value="703206"),
-                            payload="703206980498",
-                            check_digit=8,
+                            pattern_groups=["07032069804988"],
+                            gtin=Gtin(
+                                value="07032069804988",
+                                format=GtinFormat.GTIN_13,
+                                prefix=GS1Prefix(value="703", usage="GS1 Norway"),
+                                company_prefix=GS1CompanyPrefix(value="703206"),
+                                payload="703206980498",
+                                check_digit=8,
+                            ),
                         ),
-                    ),
-                    GS1ElementString(
-                        ai=GS1ApplicationIdentifier.extract("15"),
-                        value="210526",
-                        pattern_groups=["210526"],
-                        date=dt.date(2021, 5, 26),
-                    ),
-                    GS1ElementString(
-                        ai=GS1ApplicationIdentifier.extract("10"),
-                        value="0329",
-                        pattern_groups=["0329"],
-                    ),
-                ],
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("15"),
+                            value="210526",
+                            pattern_groups=["210526"],
+                            date=dt.date(2021, 5, 26),
+                        ),
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("10"),
+                            value="0329",
+                            pattern_groups=["0329"],
+                        ),
+                    ]
+                ),
             ),
         ),
         (
             "800307071324001022085952",
             GS1Message(
                 value="800307071324001022085952",
-                element_strings=[
-                    GS1ElementString(
-                        ai=GS1ApplicationIdentifier.extract("8003"),
-                        value="07071324001022085952",
-                        pattern_groups=["0", "7071324001022", "085952"],
-                    )
-                ],
+                element_strings=GS1ElementStrings(
+                    [
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("8003"),
+                            value="07071324001022085952",
+                            pattern_groups=["0", "7071324001022", "085952"],
+                        )
+                    ]
+                ),
             ),
         ),
     ],
@@ -127,14 +131,16 @@ def test_parse_with_separator_char(
             ParseConfig(gs1_element_strings_verify_date=False),
             GS1Message(
                 value="15000000",
-                element_strings=[
-                    GS1ElementString(
-                        ai=GS1ApplicationIdentifier.extract("15"),
-                        value="000000",
-                        pattern_groups=["000000"],
-                        date=None,
-                    )
-                ],
+                element_strings=GS1ElementStrings(
+                    [
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("15"),
+                            value="000000",
+                            pattern_groups=["000000"],
+                            date=None,
+                        )
+                    ]
+                ),
             ),
         ),
     ],
@@ -213,52 +219,58 @@ def test_parse_strips_surrounding_whitespace() -> None:
             "(17)221231",
             GS1Message(
                 value="17221231",
-                element_strings=[
-                    GS1ElementString(
-                        ai=GS1ApplicationIdentifier.extract("17"),
-                        value="221231",
-                        pattern_groups=["221231"],
-                        date=dt.date(2022, 12, 31),
-                    )
-                ],
+                element_strings=GS1ElementStrings(
+                    [
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("17"),
+                            value="221231",
+                            pattern_groups=["221231"],
+                            date=dt.date(2022, 12, 31),
+                        )
+                    ]
+                ),
             ),
         ),
         (
             "(10)123(17)221231",
             GS1Message(
                 value="10123\x1d17221231",
-                element_strings=[
-                    GS1ElementString(
-                        ai=GS1ApplicationIdentifier.extract("10"),
-                        value="123",
-                        pattern_groups=["123"],
-                    ),
-                    GS1ElementString(
-                        ai=GS1ApplicationIdentifier.extract("17"),
-                        value="221231",
-                        pattern_groups=["221231"],
-                        date=dt.date(2022, 12, 31),
-                    ),
-                ],
+                element_strings=GS1ElementStrings(
+                    [
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("10"),
+                            value="123",
+                            pattern_groups=["123"],
+                        ),
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("17"),
+                            value="221231",
+                            pattern_groups=["221231"],
+                            date=dt.date(2022, 12, 31),
+                        ),
+                    ]
+                ),
             ),
         ),
         (
             "(17)221231(10)123",
             GS1Message(
                 value="1722123110123",
-                element_strings=[
-                    GS1ElementString(
-                        ai=GS1ApplicationIdentifier.extract("17"),
-                        value="221231",
-                        pattern_groups=["221231"],
-                        date=dt.date(2022, 12, 31),
-                    ),
-                    GS1ElementString(
-                        ai=GS1ApplicationIdentifier.extract("10"),
-                        value="123",
-                        pattern_groups=["123"],
-                    ),
-                ],
+                element_strings=GS1ElementStrings(
+                    [
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("17"),
+                            value="221231",
+                            pattern_groups=["221231"],
+                            date=dt.date(2022, 12, 31),
+                        ),
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("10"),
+                            value="123",
+                            pattern_groups=["123"],
+                        ),
+                    ]
+                ),
             ),
         ),
     ],
