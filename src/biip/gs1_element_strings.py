@@ -244,7 +244,7 @@ class GS1ElementString:
         try:
             self.date, self.datetime = _parse_date_and_datetime(self.value)
         except ValueError as exc:
-            if not config.gs1_message_verify_date:
+            if not config.gs1_element_strings_verify_date:
                 return
             msg = f"Failed to parse GS1 AI {self.ai} date/time from {self.value!r}."
             raise ParseError(msg) from exc
