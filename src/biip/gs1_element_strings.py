@@ -1,4 +1,43 @@
-"""GS1 Element Strings."""
+"""GS1 element strings.
+
+An element string consists of a GS1 Application Identifier (AI) and its data field.
+
+Element strings are usually found in a GS1 message or a GS1 Web URI. A single
+barcode can contain multiple element strings.
+
+Examples:
+    >>> from biip.gs1_element_strings import GS1ElementString
+    >>> element_string = GS1ElementString.extract("0107032069804988")
+    >>> pprint(element_string)
+    GS1ElementString(
+        ai=GS1ApplicationIdentifier(
+            ai='01',
+            description='Global Trade Item Number (GTIN)',
+            data_title='GTIN',
+            separator_required=False,
+            format='N2+N14'
+        ),
+        value='07032069804988',
+        pattern_groups=[
+            '07032069804988'
+        ],
+        gtin=Gtin(
+            value='07032069804988',
+            format=GtinFormat.GTIN_13,
+            prefix=GS1Prefix(
+                value='703',
+                usage='GS1 Norway'
+            ),
+            company_prefix=GS1CompanyPrefix(
+                value='703206'
+            ),
+            payload='703206980498',
+            check_digit=8
+        )
+    )
+    >>> element_string.as_hri()
+    '(01)07032069804988'
+"""
 
 from __future__ import annotations
 
@@ -31,46 +70,7 @@ except ImportError:  # pragma: no cover
 
 @dataclass
 class GS1ElementString:
-    """GS1 Element String.
-
-    An Element String consists of a GS1 Application Identifier (AI) and its data field.
-
-    A single barcode can contain multiple Element Strings. Together these are
-    called a "message."
-
-    Examples:
-        >>> from biip.gs1_messages import GS1ElementString
-        >>> element_string = GS1ElementString.extract("0107032069804988")
-        >>> pprint(element_string)
-        GS1ElementString(
-            ai=GS1ApplicationIdentifier(
-                ai='01',
-                description='Global Trade Item Number (GTIN)',
-                data_title='GTIN',
-                separator_required=False,
-                format='N2+N14'
-            ),
-            value='07032069804988',
-            pattern_groups=[
-                '07032069804988'
-            ],
-            gtin=Gtin(
-                value='07032069804988',
-                format=GtinFormat.GTIN_13,
-                prefix=GS1Prefix(
-                    value='703',
-                    usage='GS1 Norway'
-                ),
-                company_prefix=GS1CompanyPrefix(
-                    value='703206'
-                ),
-                payload='703206980498',
-                check_digit=8
-            )
-        )
-        >>> element_string.as_hri()
-        '(01)07032069804988'
-    """
+    """A GS1 element string consists of an Application Identifier (AI) and a value."""
 
     ai: GS1ApplicationIdentifier
     """The element's Application Identifier (AI)."""
@@ -292,7 +292,7 @@ class GS1ElementString:
         """Get the length of the element string."""
         return len(self.ai) + len(self.value)
 
-    def __rich_repr__(self) -> Iterator[tuple[str, Any] | tuple[str, Any, Any]]:
+    def __rich_repr__(self) -> Iterator[tuple[str, Any] | tuple[str, Any, Any]]:  # noqa: D105
         # Skip printing fields with default values
         yield "ai", self.ai
         yield "value", self.value
