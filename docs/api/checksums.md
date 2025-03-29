@@ -1,3 +1,3 @@
-# `biip.checksums` - Checksums
+# `biip.checksums`
 
 ::: biip.checksums
