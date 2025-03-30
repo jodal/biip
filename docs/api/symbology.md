@@ -1,3 +1,3 @@
-# `biip.symbology` - Symbology Identifiers
+# `biip.symbology`
 
 ::: biip.symbology

@@ -1,4 +1,4 @@
-# `biip.rcn` - Restricted Circulation Number
+# `biip.rcn`
 
 ::: biip.rcn
     options:
