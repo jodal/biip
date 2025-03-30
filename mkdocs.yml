@@ -15,6 +15,7 @@ nav:
       - api/checksums.md
       - api/gln.md
       - api/gs1_application_identifiers.md
+      - api/gs1_element_strings.md
       - api/gs1_messages.md
       - api/gs1_prefixes.md
       - api/gtin.md
@@ -53,6 +54,7 @@ plugins:
             docstring_style: google
             docstring_section_style: list
             filters:
+              - "!^_[^_]"
               - "!^__post_init__"
               - "!^__len__"
               - "!^__repr__"
