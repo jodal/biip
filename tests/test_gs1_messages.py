@@ -124,7 +124,7 @@ def test_parse_with_separator_char(
         (
             # Invalid date "000000"
             "15000000",
-            ParseConfig(gs1_message_verify_date=False),
+            ParseConfig(gs1_element_strings_verify_date=False),
             GS1Message(
                 value="15000000",
                 element_strings=[

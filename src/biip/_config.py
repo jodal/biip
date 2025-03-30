@@ -17,8 +17,8 @@ class ParseConfig:
     some of its the behavior by setting these options.
     """
 
-    gs1_message_verify_date: bool = True
-    """Whether to verify that the date in a GS1 message is valid.
+    gs1_element_strings_verify_date: bool = True
+    """Whether to verify that the date in a GS1 element string is valid.
 
     According to the GS1 General Specification, dates are required to contain a
     valid year and month. Only the day of month can be left as zeros, which
