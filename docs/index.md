@@ -124,6 +124,23 @@ including
 - [x] Parse Human Readable Interpretation (HRI) strings.
 - [x] Easy lookup of parsed Element Strings by Application Identifier (AI)
       prefix and part of AI's data title.
+- [x] Encode as GS1 Web URIs.
+
+### GS1 Web URIs
+
+GS1 Web URIs are used to encode the same information as GS1 messages, but as the
+path and query parameters of an URL. The URL can point to any domain. This means
+that barcodes containing GS1 Web URIs can be used both in the supply chain and
+for consumers to look up product information. GS1 Web URIs are used in the
+[GS1 DataMatrix](https://en.wikipedia.org/wiki/Data_Matrix) and
+[GS1 QR Code](https://en.wikipedia.org/wiki/QR_code)
+barcode symbologies.
+
+- [x] Everything supported for GS1 messages are also supported for GS1 Web URIs.
+- [x] Parse GS1 Web URIs, both canonical and non-canonical URIs.
+- [x] Encode GS1 Web URIs, both canonical and with custom domains, path
+      prefixes, and with short names instead of AIs for the fields encoded in the path.
+- [x] Encode as GS1 messages.
 
 ### GLN (Global Location Number)
 

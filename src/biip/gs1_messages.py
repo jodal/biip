@@ -115,11 +115,15 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from itertools import chain
+from typing import TYPE_CHECKING
 
 from biip import ParseError
 from biip._parser import ParseConfig
 from biip.gs1_application_identifiers import _GS1_APPLICATION_IDENTIFIERS
 from biip.gs1_element_strings import GS1ElementString, GS1ElementStrings
+
+if TYPE_CHECKING:
+    from biip.gs1_web_uris import GS1WebURI
 
 
 @dataclass
@@ -258,3 +262,9 @@ class GS1Message:
             A human-readable string where the AIs are wrapped in parenthesis.
         """
         return "".join(es.as_hri() for es in self.element_strings)
+
+    def as_gs1_web_uri(self) -> GS1WebURI:
+        """Convert to a GS1 Web URI."""
+        from biip.gs1_web_uris import GS1WebURI
+
+        return GS1WebURI.from_element_strings(self.element_strings)
