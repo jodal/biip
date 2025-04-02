@@ -196,8 +196,8 @@ class GS1Symbology(Enum):
     """GS1 DotCode"""
 
     @classmethod
-    def with_ai_element_strings(cls) -> set[GS1Symbology]:
-        """Symbologies that may contain AI Element Strings."""
+    def with_gs1_messages(cls) -> set[GS1Symbology]:
+        """Symbologies that may contain GS1 messages."""
         return {
             cls.GS1_128,
             cls.GS1_DATABAR,

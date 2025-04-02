@@ -55,7 +55,7 @@ def parse(
             queue.append((_parse_gtin, value))
         if (
             result.symbology_identifier.gs1_symbology
-            in GS1Symbology.with_ai_element_strings()
+            in GS1Symbology.with_gs1_messages()
         ):
             queue.append((_parse_gs1_message, value))
     if not queue:
