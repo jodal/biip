@@ -370,6 +370,80 @@ def test_from_element_strings(value: GS1ElementStrings, expected: GS1WebURI) -> 
 
 
 @pytest.mark.parametrize(
+    ("value", "domain", "prefix", "short_names", "expected"),
+    [
+        (
+            # Defaults creates a canonical URI
+            "https://example.com/01/614141123452",
+            None,
+            None,
+            False,
+            "https://id.gs1.org/01/00614141123452",
+        ),
+        (
+            # Custom domain
+            "https://example.com/01/614141123452",
+            "brand.example.net",
+            None,
+            False,
+            "https://brand.example.net/01/00614141123452",
+        ),
+        (
+            # Custom domain with prefix
+            "https://example.com/gtin/614141123452",
+            "brand.example.net",
+            "prefix",
+            False,
+            "https://brand.example.net/prefix/01/00614141123452",
+        ),
+        (
+            # Short names instead of AIs in path
+            "https://id.gs1.org/01/614141123452/22/2A/10/ABC123",
+            "example.com",
+            "products",
+            True,
+            "https://example.com/products/gtin/00614141123452/cpv/2A/lot/ABC123",
+        ),
+        (
+            # Values in params always use AI, not short names
+            "https://example.com/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123&foo=bar",
+            "brand.example.net",
+            None,
+            True,
+            "https://brand.example.net/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123",
+        ),
+    ],
+)
+def test_as_uri(
+    *,
+    value: str,
+    domain: str | None,
+    prefix: str | None,
+    short_names: bool,
+    expected: str,
+) -> None:
+    assert (
+        GS1WebURI.parse(value).as_uri(
+            domain=domain,
+            prefix=prefix,
+            short_names=short_names,
+        )
+        == expected
+    )
+
+
+def test_as_uri_errors() -> None:
+    with pytest.raises(ValueError, match="Prefix must not start with '/'"):
+        GS1WebURI.parse("https://example.com/gtin/614141123452").as_uri(
+            prefix="/prefix"
+        )
+    with pytest.raises(ValueError, match="Prefix must not end with '/'"):
+        GS1WebURI.parse("https://example.com/gtin/614141123452").as_uri(
+            prefix="prefix/"
+        )
+
+
+@pytest.mark.parametrize(
     ("value", "expected"),
     [
         (
