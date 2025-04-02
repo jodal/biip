@@ -717,6 +717,81 @@ from biip.upc import Upc, UpcFormat
                 ),
             ),
         ),
+        (
+            # GS1 Web URI with GTIN-12, lot number, and expiration date with GS1
+            # QR Code symbology identifier
+            "]Q3https://example.com/gtin/614141123452/lot/ABC123?15=250330",
+            ParseResult(
+                value="]Q3https://example.com/gtin/614141123452/lot/ABC123?15=250330",
+                symbology_identifier=SymbologyIdentifier(
+                    value="]Q3",
+                    iso_symbology=ISOSymbology.QR_CODE,
+                    modifiers="3",
+                    gs1_symbology=GS1Symbology.GS1_QR_CODE,
+                ),
+                gtin=Gtin(
+                    value="00614141123452",
+                    format=GtinFormat.GTIN_12,
+                    prefix=GS1Prefix(value="061", usage="GS1 US"),
+                    company_prefix=GS1CompanyPrefix(value="0614141"),
+                    payload="61414112345",
+                    check_digit=2,
+                ),
+                upc=Upc(
+                    value="614141123452",
+                    format=UpcFormat.UPC_A,
+                    number_system_digit=6,
+                    payload="61414112345",
+                    check_digit=2,
+                ),
+                gs1_message_error=(
+                    "Failed to get GS1 Application Identifier from "
+                    "'https://example.com/gtin/614141123452/lot/ABC123?15=250330'."
+                ),
+                gs1_web_uri=GS1WebURI(
+                    value="https://example.com/gtin/614141123452/lot/ABC123?15=250330",
+                    element_strings=GS1ElementStrings(
+                        [
+                            GS1ElementString(
+                                ai=GS1ApplicationIdentifier.extract("01"),
+                                value="00614141123452",
+                                pattern_groups=["00614141123452"],
+                                gtin=Gtin(
+                                    value="00614141123452",
+                                    format=GtinFormat.GTIN_12,
+                                    prefix=GS1Prefix(value="061", usage="GS1 US"),
+                                    company_prefix=GS1CompanyPrefix(value="0614141"),
+                                    payload="61414112345",
+                                    check_digit=2,
+                                ),
+                            ),
+                            GS1ElementString(
+                                ai=GS1ApplicationIdentifier.extract("10"),
+                                value="ABC123",
+                                pattern_groups=["ABC123"],
+                            ),
+                            GS1ElementString(
+                                ai=GS1ApplicationIdentifier.extract("15"),
+                                value="250330",
+                                pattern_groups=[
+                                    "250330",
+                                ],
+                                gln=None,
+                                gln_error=None,
+                                gtin=None,
+                                gtin_error=None,
+                                sscc=None,
+                                sscc_error=None,
+                                date=dt.date(2025, 3, 30),
+                                datetime=None,
+                                decimal=None,
+                                money=None,
+                            ),
+                        ]
+                    ),
+                ),
+            ),
+        ),
     ],
 )
 def test_parse(value: str, expected: ParseResult) -> None:

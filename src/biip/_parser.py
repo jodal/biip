@@ -61,6 +61,8 @@ def parse(
             in GS1Symbology.with_gs1_messages()
         ):
             queue.append((_parse_gs1_message, value))
+        if result.symbology_identifier.gs1_symbology in GS1Symbology.with_gs1_web_uri():
+            queue.append((_parse_gs1_web_uri, value))
     elif value.startswith("http"):
         queue.append((_parse_gs1_web_uri, value))
     if not queue:
