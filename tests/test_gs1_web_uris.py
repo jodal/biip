@@ -1,3 +1,5 @@
+import datetime as dt
+
 import pytest
 
 from biip import ParseConfig, ParseError
@@ -295,6 +297,76 @@ def test_parse_with_invalid_element_values(
 def test_parse_error(value: str, error: str) -> None:
     with pytest.raises(ParseError, match=error):
         GS1WebURI.parse(value)
+
+
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        (
+            GS1ElementStrings(
+                [
+                    GS1ElementString(
+                        ai=GS1ApplicationIdentifier.extract("01"),
+                        value="07032069804988",
+                        pattern_groups=["07032069804988"],
+                        gtin=Gtin(
+                            value="07032069804988",
+                            format=GtinFormat.GTIN_13,
+                            prefix=GS1Prefix(value="703", usage="GS1 Norway"),
+                            company_prefix=GS1CompanyPrefix(value="703206"),
+                            payload="703206980498",
+                            check_digit=8,
+                        ),
+                    ),
+                    GS1ElementString(
+                        ai=GS1ApplicationIdentifier.extract("15"),
+                        value="210526",
+                        pattern_groups=["210526"],
+                        date=dt.date(2021, 5, 26),
+                    ),
+                    GS1ElementString(
+                        ai=GS1ApplicationIdentifier.extract("10"),
+                        value="0329",
+                        pattern_groups=["0329"],
+                    ),
+                ]
+            ),
+            GS1WebURI(
+                value="https://id.gs1.org/01/07032069804988/10/0329?15=210526",
+                element_strings=GS1ElementStrings(
+                    [
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("01"),
+                            value="07032069804988",
+                            pattern_groups=["07032069804988"],
+                            gtin=Gtin(
+                                value="07032069804988",
+                                format=GtinFormat.GTIN_13,
+                                prefix=GS1Prefix(value="703", usage="GS1 Norway"),
+                                company_prefix=GS1CompanyPrefix(value="703206"),
+                                payload="703206980498",
+                                check_digit=8,
+                            ),
+                        ),
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("15"),
+                            value="210526",
+                            pattern_groups=["210526"],
+                            date=dt.date(2021, 5, 26),
+                        ),
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("10"),
+                            value="0329",
+                            pattern_groups=["0329"],
+                        ),
+                    ]
+                ),
+            ),
+        ),
+    ],
+)
+def test_from_element_strings(value: GS1ElementStrings, expected: GS1WebURI) -> None:
+    assert GS1WebURI.from_element_strings(value) == expected
 
 
 @pytest.mark.parametrize(
