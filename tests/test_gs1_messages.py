@@ -216,6 +216,78 @@ def test_parse_strips_surrounding_whitespace() -> None:
     ("value", "expected"),
     [
         (
+            GS1ElementStrings(
+                [
+                    GS1ElementString(
+                        ai=GS1ApplicationIdentifier.extract("17"),
+                        value="221231",
+                        pattern_groups=["221231"],
+                        date=dt.date(2022, 12, 31),
+                    )
+                ]
+            ),
+            GS1Message(
+                value="17221231",
+                element_strings=GS1ElementStrings(
+                    [
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("17"),
+                            value="221231",
+                            pattern_groups=["221231"],
+                            date=dt.date(2022, 12, 31),
+                        )
+                    ]
+                ),
+            ),
+        ),
+        (
+            GS1ElementStrings(
+                [
+                    GS1ElementString(
+                        ai=GS1ApplicationIdentifier.extract("10"),
+                        value="123",
+                        pattern_groups=["123"],
+                    ),
+                    GS1ElementString(
+                        ai=GS1ApplicationIdentifier.extract("17"),
+                        value="221231",
+                        pattern_groups=["221231"],
+                        date=dt.date(2022, 12, 31),
+                    ),
+                ]
+            ),
+            GS1Message(
+                value="10123\x1d17221231",
+                element_strings=GS1ElementStrings(
+                    [
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("10"),
+                            value="123",
+                            pattern_groups=["123"],
+                        ),
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("17"),
+                            value="221231",
+                            pattern_groups=["221231"],
+                            date=dt.date(2022, 12, 31),
+                        ),
+                    ]
+                ),
+            ),
+        ),
+    ],
+)
+def test_from_element_strings(
+    value: GS1ElementStrings,
+    expected: GS1Message,
+) -> None:
+    assert GS1Message.from_element_strings(value) == expected
+
+
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        (
             "(17)221231",
             GS1Message(
                 value="17221231",

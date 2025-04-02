@@ -181,6 +181,29 @@ class GS1Message:
         return cls(value=value, element_strings=element_strings)
 
     @classmethod
+    def from_element_strings(cls, element_strings: GS1ElementStrings) -> GS1Message:
+        """Create a GS1 message from a list of element strings.
+
+        Args:
+            element_strings: A list of GS1 element strings.
+
+        Returns:
+            GS1Message: The created GS1 message.
+        """
+        parts = chain(
+            *[
+                [
+                    es.ai.ai,
+                    es.value,
+                    ("\x1d" if es.ai.separator_required else ""),
+                ]
+                for es in element_strings
+            ]
+        )
+        normalized_string = "".join(parts).removesuffix("\x1d")
+        return cls(value=normalized_string, element_strings=element_strings)
+
+    @classmethod
     def parse_hri(
         cls,
         value: str,
@@ -216,25 +239,16 @@ class GS1Message:
             )
             raise ParseError(msg)
 
-        pairs: list[tuple[GS1ApplicationIdentifier, str]] = []
+        element_strings = GS1ElementStrings()
         for ai_number, ai_data in matches:
             if ai_number not in _GS1_APPLICATION_IDENTIFIERS:
                 msg = f"Unknown GS1 Application Identifier {ai_number!r} in {value!r}."
                 raise ParseError(msg)
-            pairs.append((_GS1_APPLICATION_IDENTIFIERS[ai_number], ai_data))
+            element_strings.append(
+                GS1ElementString.extract(f"{ai_number}{ai_data}", config=config)
+            )
 
-        parts = chain(
-            *[
-                [
-                    gs1_ai.ai,
-                    ai_data,
-                    ("\x1d" if gs1_ai.separator_required else ""),
-                ]
-                for gs1_ai, ai_data in pairs
-            ]
-        )
-        normalized_string = "".join(parts)
-        return GS1Message.parse(normalized_string, config=config)
+        return GS1Message.from_element_strings(element_strings)
 
     def as_hri(self) -> str:
         """Render as a human readable interpretation (HRI).
