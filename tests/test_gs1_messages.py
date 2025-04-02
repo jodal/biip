@@ -357,7 +357,7 @@ def test_parse_hri_with_gtin_with_variable_weight() -> None:
         config=ParseConfig(rcn_region=RcnRegion.NORWAY),
     )
 
-    gs1_gtin = result.get(ai="01")
+    gs1_gtin = result.element_strings.get(ai="01")
     assert gs1_gtin
     gtin = gs1_gtin.gtin
     assert isinstance(gtin, Rcn)
@@ -446,7 +446,7 @@ def test_as_hri(value: str, expected: str) -> None:
     ],
 )
 def test_filter_element_strings_by_ai(value: str, ai: str, expected: list[str]) -> None:
-    matches = GS1Message.parse(value).filter(ai=ai)
+    matches = GS1Message.parse(value).element_strings.filter(ai=ai)
 
     assert [element_string.value for element_string in matches] == expected
 
@@ -467,7 +467,7 @@ def test_filter_element_strings_by_ai(value: str, ai: str, expected: list[str]) 
 def test_filter_element_strings_by_data_title(
     value: str, data_title: str, expected: list[str]
 ) -> None:
-    matches = GS1Message.parse(value).filter(data_title=data_title)
+    matches = GS1Message.parse(value).element_strings.filter(data_title=data_title)
 
     assert [element_string.value for element_string in matches] == expected
 
@@ -484,7 +484,7 @@ def test_filter_element_strings_by_data_title(
     ],
 )
 def test_get_element_string_by_ai(value: str, ai: str, expected: str | None) -> None:
-    element_string = GS1Message.parse(value).get(ai=ai)
+    element_string = GS1Message.parse(value).element_strings.get(ai=ai)
 
     if expected is None:
         assert element_string is None
@@ -507,7 +507,7 @@ def test_get_element_string_by_ai(value: str, ai: str, expected: str | None) -> 
 def test_get_element_string_by_data_title(
     value: str, data_title: str, expected: str | None
 ) -> None:
-    element_string = GS1Message.parse(value).get(data_title=data_title)
+    element_string = GS1Message.parse(value).element_strings.get(data_title=data_title)
 
     if expected is None:
         assert element_string is None
@@ -520,7 +520,7 @@ def test_filter_element_strings_by_ai_instance() -> None:
     ai = GS1ApplicationIdentifier.extract("01")
     msg = GS1Message.parse("010703206980498815210526100329")
 
-    element_string = msg.get(ai=ai)
+    element_string = msg.element_strings.get(ai=ai)
 
     assert element_string is not None
     assert element_string.value == "07032069804988"

@@ -73,11 +73,13 @@ In this example, the first element string is a GTIN.
         )
     )
 
-The message object has [`msg.get()`][biip.gs1_messages.GS1Message.get] and
-[`msg.filter()`][biip.gs1_messages.GS1Message.filter] methods to lookup element
-strings either by the Application Identifier's "data title" or its AI number.
+The `element_strings` attribute has
+[`element_strings.get()`][biip.gs1_element_strings.GS1ElementStrings.get] and
+[`element_strings.filter()`][biip.gs1_element_strings.GS1ElementStrings.filter]
+methods to lookup element strings either by the Application Identifier's "data
+title" or its AI number.
 
-    >>> pprint(msg.get(data_title='BEST BY'))
+    >>> pprint(msg.element_strings.get(data_title='BEST BY'))
     GS1ElementString(
         ai=GS1ApplicationIdentifier(
             ai='15',
@@ -92,7 +94,7 @@ strings either by the Application Identifier's "data title" or its AI number.
         ],
         date=datetime.date(2021, 5, 26)
     )
-    >>> pprint(msg.get(ai="10"))
+    >>> pprint(msg.element_strings.get(ai="10"))
     GS1ElementString(
         ai=GS1ApplicationIdentifier(
             ai='10',
@@ -116,10 +118,7 @@ from itertools import chain
 
 from biip import ParseError
 from biip._parser import ParseConfig
-from biip.gs1_application_identifiers import (
-    _GS1_APPLICATION_IDENTIFIERS,
-    GS1ApplicationIdentifier,
-)
+from biip.gs1_application_identifiers import _GS1_APPLICATION_IDENTIFIERS
 from biip.gs1_element_strings import GS1ElementString, GS1ElementStrings
 
 
@@ -259,41 +258,3 @@ class GS1Message:
             A human-readable string where the AIs are wrapped in parenthesis.
         """
         return "".join(es.as_hri() for es in self.element_strings)
-
-    def filter(
-        self,
-        *,
-        ai: str | GS1ApplicationIdentifier | None = None,
-        data_title: str | None = None,
-    ) -> GS1ElementStrings:
-        """Filter element strings by AI or data title.
-
-        Args:
-            ai: AI instance or string to match against the start of the
-                element string's AI.
-            data_title: String to find anywhere in the element string's AI
-                data title.
-
-        Returns:
-            All matching element strings in the message.
-        """
-        return self.element_strings.filter(ai=ai, data_title=data_title)
-
-    def get(
-        self,
-        *,
-        ai: str | GS1ApplicationIdentifier | None = None,
-        data_title: str | None = None,
-    ) -> GS1ElementString | None:
-        """Get element string by AI or data title.
-
-        Args:
-            ai: AI instance or string to match against the start of the
-                element string's AI.
-            data_title: String to find anywhere in the element string's AI
-                data title.
-
-        Returns:
-            The first matching element string in the list.
-        """
-        return self.element_strings.get(ai=ai, data_title=data_title)
