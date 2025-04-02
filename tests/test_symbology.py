@@ -8,9 +8,9 @@ def test_gs1_symbology_enum() -> None:
     assert GS1Symbology("C1") == GS1Symbology.GS1_128
 
 
-def test_gs1_symbology_with_ai_element_strings() -> None:
-    assert GS1Symbology.EAN_13 not in GS1Symbology.with_ai_element_strings()
-    assert GS1Symbology.GS1_128 in GS1Symbology.with_ai_element_strings()
+def test_gs1_symbology_with_gs1_messages() -> None:
+    assert GS1Symbology.EAN_13 not in GS1Symbology.with_gs1_messages()
+    assert GS1Symbology.GS1_128 in GS1Symbology.with_gs1_messages()
 
 
 def test_gs1_symbology_with_gtin() -> None:
