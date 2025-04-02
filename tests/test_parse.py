@@ -5,7 +5,7 @@ import pytest
 
 from biip import ParseConfig, ParseResult, parse
 from biip.gs1_application_identifiers import GS1ApplicationIdentifier
-from biip.gs1_element_strings import GS1ElementString
+from biip.gs1_element_strings import GS1ElementString, GS1ElementStrings
 from biip.gs1_messages import GS1Message
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
 from biip.gtin import Gtin, GtinFormat
@@ -40,13 +40,15 @@ from biip.upc import Upc, UpcFormat
                 ),
                 gs1_message=GS1Message(
                     value="96385074",
-                    element_strings=[
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("96"),
-                            value="385074",
-                            pattern_groups=["385074"],
-                        )
-                    ],
+                    element_strings=GS1ElementStrings(
+                        [
+                            GS1ElementString(
+                                ai=GS1ApplicationIdentifier.extract("96"),
+                                value="385074",
+                                pattern_groups=["385074"],
+                            )
+                        ]
+                    ),
                 ),
             ),
         ),
@@ -279,18 +281,20 @@ from biip.upc import Upc, UpcFormat
                 ),
                 gs1_message=GS1Message(
                     value="425261",
-                    element_strings=[
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("425"),
-                            value="261",
-                            pattern_groups=["261"],
-                            gtin=None,
-                            sscc=None,
-                            date=None,
-                            decimal=None,
-                            money=None,
-                        )
-                    ],
+                    element_strings=GS1ElementStrings(
+                        [
+                            GS1ElementString(
+                                ai=GS1ApplicationIdentifier.extract("425"),
+                                value="261",
+                                pattern_groups=["261"],
+                                gtin=None,
+                                sscc=None,
+                                date=None,
+                                decimal=None,
+                                money=None,
+                            )
+                        ]
+                    ),
                 ),
             ),
         ),
@@ -344,21 +348,23 @@ from biip.upc import Upc, UpcFormat
                 ),
                 gs1_message=GS1Message(
                     value="00157035381410375177",
-                    element_strings=[
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("00"),
-                            value="157035381410375177",
-                            pattern_groups=["157035381410375177"],
-                            sscc=Sscc(
+                    element_strings=GS1ElementStrings(
+                        [
+                            GS1ElementString(
+                                ai=GS1ApplicationIdentifier.extract("00"),
                                 value="157035381410375177",
-                                prefix=GS1Prefix(value="570", usage="GS1 Denmark"),
-                                company_prefix=GS1CompanyPrefix(value="5703538"),
-                                extension_digit=1,
-                                payload="15703538141037517",
-                                check_digit=7,
-                            ),
-                        )
-                    ],
+                                pattern_groups=["157035381410375177"],
+                                sscc=Sscc(
+                                    value="157035381410375177",
+                                    prefix=GS1Prefix(value="570", usage="GS1 Denmark"),
+                                    company_prefix=GS1CompanyPrefix(value="5703538"),
+                                    extension_digit=1,
+                                    payload="15703538141037517",
+                                    check_digit=7,
+                                ),
+                            )
+                        ]
+                    ),
                 ),
             ),
         ),
@@ -381,17 +387,19 @@ from biip.upc import Upc, UpcFormat
                 ),
                 gs1_message=GS1Message(
                     value="00376130321109103421",
-                    element_strings=[
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("00"),
-                            value="376130321109103421",
-                            pattern_groups=["376130321109103421"],
-                            sscc_error=(
-                                "Invalid SSCC check digit for "
-                                "'376130321109103421': Expected 0, got 1."
+                    element_strings=GS1ElementStrings(
+                        [
+                            GS1ElementString(
+                                ai=GS1ApplicationIdentifier.extract("00"),
+                                value="376130321109103421",
+                                pattern_groups=["376130321109103421"],
+                                sscc_error=(
+                                    "Invalid SSCC check digit for "
+                                    "'376130321109103421': Expected 0, got 1."
+                                ),
                             ),
-                        ),
-                    ],
+                        ]
+                    ),
                 ),
             ),
         ),
@@ -422,22 +430,24 @@ from biip.upc import Upc, UpcFormat
                 ),
                 gs1_message=GS1Message(
                     value="0100123601057072",
-                    element_strings=[
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("01"),
-                            value="00123601057072",
-                            pattern_groups=["00123601057072"],
-                            gtin=Gtin(
+                    element_strings=GS1ElementStrings(
+                        [
+                            GS1ElementString(
+                                ai=GS1ApplicationIdentifier.extract("01"),
                                 value="00123601057072",
-                                format=GtinFormat.GTIN_12,
-                                prefix=GS1Prefix(value="012", usage="GS1 US"),
-                                company_prefix=None,
-                                payload="12360105707",
-                                check_digit=2,
-                                packaging_level=None,
-                            ),
-                        )
-                    ],
+                                pattern_groups=["00123601057072"],
+                                gtin=Gtin(
+                                    value="00123601057072",
+                                    format=GtinFormat.GTIN_12,
+                                    prefix=GS1Prefix(value="012", usage="GS1 US"),
+                                    company_prefix=None,
+                                    payload="12360105707",
+                                    check_digit=2,
+                                    packaging_level=None,
+                                ),
+                            )
+                        ]
+                    ),
                 ),
             ),
         ),
@@ -464,21 +474,23 @@ from biip.upc import Upc, UpcFormat
                 ),
                 gs1_message=GS1Message(
                     value="0105901234123457",
-                    element_strings=[
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("01"),
-                            value="05901234123457",
-                            pattern_groups=["05901234123457"],
-                            gtin=Gtin(
+                    element_strings=GS1ElementStrings(
+                        [
+                            GS1ElementString(
+                                ai=GS1ApplicationIdentifier.extract("01"),
                                 value="05901234123457",
-                                format=GtinFormat.GTIN_13,
-                                prefix=GS1Prefix(value="590", usage="GS1 Poland"),
-                                company_prefix=None,
-                                payload="590123412345",
-                                check_digit=7,
-                            ),
-                        )
-                    ],
+                                pattern_groups=["05901234123457"],
+                                gtin=Gtin(
+                                    value="05901234123457",
+                                    format=GtinFormat.GTIN_13,
+                                    prefix=GS1Prefix(value="590", usage="GS1 Poland"),
+                                    company_prefix=None,
+                                    payload="590123412345",
+                                    check_digit=7,
+                                ),
+                            )
+                        ]
+                    ),
                 ),
             ),
         ),
@@ -500,17 +512,19 @@ from biip.upc import Upc, UpcFormat
                 ),
                 gs1_message=GS1Message(
                     value="0105901234123458",
-                    element_strings=[
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("01"),
-                            value="05901234123458",
-                            pattern_groups=["05901234123458"],
-                            gtin_error=(
-                                "Invalid GTIN check digit for '05901234123458': "
-                                "Expected 7, got 8."
-                            ),
-                        )
-                    ],
+                    element_strings=GS1ElementStrings(
+                        [
+                            GS1ElementString(
+                                ai=GS1ApplicationIdentifier.extract("01"),
+                                value="05901234123458",
+                                pattern_groups=["05901234123458"],
+                                gtin_error=(
+                                    "Invalid GTIN check digit for '05901234123458': "
+                                    "Expected 7, got 8."
+                                ),
+                            )
+                        ]
+                    ),
                 ),
             ),
         ),
@@ -530,14 +544,16 @@ from biip.upc import Upc, UpcFormat
                 ),
                 gs1_message=GS1Message(
                     value="15210527",
-                    element_strings=[
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("15"),
-                            value="210527",
-                            pattern_groups=["210527"],
-                            date=dt.date(2021, 5, 27),
-                        )
-                    ],
+                    element_strings=GS1ElementStrings(
+                        [
+                            GS1ElementString(
+                                ai=GS1ApplicationIdentifier.extract("15"),
+                                value="210527",
+                                pattern_groups=["210527"],
+                                date=dt.date(2021, 5, 27),
+                            )
+                        ]
+                    ),
                 ),
             ),
         ),
@@ -562,27 +578,29 @@ from biip.upc import Upc, UpcFormat
                 ),
                 gs1_message=GS1Message(
                     value="010590123412345715210526",
-                    element_strings=[
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("01"),
-                            value="05901234123457",
-                            pattern_groups=["05901234123457"],
-                            gtin=Gtin(
+                    element_strings=GS1ElementStrings(
+                        [
+                            GS1ElementString(
+                                ai=GS1ApplicationIdentifier.extract("01"),
                                 value="05901234123457",
-                                format=GtinFormat.GTIN_13,
-                                prefix=GS1Prefix(value="590", usage="GS1 Poland"),
-                                company_prefix=None,
-                                payload="590123412345",
-                                check_digit=7,
+                                pattern_groups=["05901234123457"],
+                                gtin=Gtin(
+                                    value="05901234123457",
+                                    format=GtinFormat.GTIN_13,
+                                    prefix=GS1Prefix(value="590", usage="GS1 Poland"),
+                                    company_prefix=None,
+                                    payload="590123412345",
+                                    check_digit=7,
+                                ),
                             ),
-                        ),
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("15"),
-                            value="210526",
-                            pattern_groups=["210526"],
-                            date=dt.date(2021, 5, 26),
-                        ),
-                    ],
+                            GS1ElementString(
+                                ai=GS1ApplicationIdentifier.extract("15"),
+                                value="210526",
+                                pattern_groups=["210526"],
+                                date=dt.date(2021, 5, 26),
+                            ),
+                        ]
+                    ),
                 ),
             ),
         ),
@@ -614,21 +632,23 @@ from biip.upc import Upc, UpcFormat
                 ),
                 gs1_message=GS1Message(
                     value="0100123456789012",
-                    element_strings=[
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("01"),
-                            value="00123456789012",
-                            pattern_groups=["00123456789012"],
-                            gtin=Gtin(
+                    element_strings=GS1ElementStrings(
+                        [
+                            GS1ElementString(
+                                ai=GS1ApplicationIdentifier.extract("01"),
                                 value="00123456789012",
-                                format=GtinFormat.GTIN_12,
-                                prefix=GS1Prefix(value="012", usage="GS1 US"),
-                                company_prefix=None,
-                                payload="12345678901",
-                                check_digit=2,
-                            ),
-                        )
-                    ],
+                                pattern_groups=["00123456789012"],
+                                gtin=Gtin(
+                                    value="00123456789012",
+                                    format=GtinFormat.GTIN_12,
+                                    prefix=GS1Prefix(value="012", usage="GS1 US"),
+                                    company_prefix=None,
+                                    payload="12345678901",
+                                    check_digit=2,
+                                ),
+                            )
+                        ]
+                    ),
                 ),
             ),
         ),
@@ -674,24 +694,26 @@ def test_parse_rcn_with_ignored_invalid_check_digit() -> None:
         ),
         gs1_message=GS1Message(
             value="0102824040005133",
-            element_strings=[
-                GS1ElementString(
-                    ai=GS1ApplicationIdentifier.extract("01"),
-                    value="02824040005133",
-                    pattern_groups=["02824040005133"],
-                    gtin=Rcn(
+            element_strings=GS1ElementStrings(
+                [
+                    GS1ElementString(
+                        ai=GS1ApplicationIdentifier.extract("01"),
                         value="02824040005133",
-                        format=GtinFormat.GTIN_13,
-                        prefix=GS1Prefix.extract("282"),
-                        company_prefix=None,
-                        payload="282404000513",
-                        check_digit=3,
-                        usage=RcnUsage.GEOGRAPHICAL,
-                        region=RcnRegion.GERMANY,
-                        weight=Decimal("0.513"),
-                    ),
-                )
-            ],
+                        pattern_groups=["02824040005133"],
+                        gtin=Rcn(
+                            value="02824040005133",
+                            format=GtinFormat.GTIN_13,
+                            prefix=GS1Prefix.extract("282"),
+                            company_prefix=None,
+                            payload="282404000513",
+                            check_digit=3,
+                            usage=RcnUsage.GEOGRAPHICAL,
+                            region=RcnRegion.GERMANY,
+                            weight=Decimal("0.513"),
+                        ),
+                    )
+                ]
+            ),
         ),
     )
 

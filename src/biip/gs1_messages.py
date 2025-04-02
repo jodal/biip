@@ -73,11 +73,13 @@ In this example, the first element string is a GTIN.
         )
     )
 
-The message object has [`msg.get()`][biip.gs1_messages.GS1Message.get] and
-[`msg.filter()`][biip.gs1_messages.GS1Message.filter] methods to lookup element
-strings either by the Application Identifier's "data title" or its AI number.
+The `element_strings` attribute has
+[`element_strings.get()`][biip.gs1_element_strings.GS1ElementStrings.get] and
+[`element_strings.filter()`][biip.gs1_element_strings.GS1ElementStrings.filter]
+methods to lookup element strings either by the Application Identifier's "data
+title" or its AI number.
 
-    >>> pprint(msg.get(data_title='BEST BY'))
+    >>> pprint(msg.element_strings.get(data_title='BEST BY'))
     GS1ElementString(
         ai=GS1ApplicationIdentifier(
             ai='15',
@@ -92,7 +94,7 @@ strings either by the Application Identifier's "data title" or its AI number.
         ],
         date=datetime.date(2021, 5, 26)
     )
-    >>> pprint(msg.get(ai="10"))
+    >>> pprint(msg.element_strings.get(ai="10"))
     GS1ElementString(
         ai=GS1ApplicationIdentifier(
             ai='10',
@@ -116,11 +118,8 @@ from itertools import chain
 
 from biip import ParseError
 from biip._parser import ParseConfig
-from biip.gs1_application_identifiers import (
-    _GS1_APPLICATION_IDENTIFIERS,
-    GS1ApplicationIdentifier,
-)
-from biip.gs1_element_strings import GS1ElementString
+from biip.gs1_application_identifiers import _GS1_APPLICATION_IDENTIFIERS
+from biip.gs1_element_strings import GS1ElementString, GS1ElementStrings
 
 
 @dataclass
@@ -136,7 +135,7 @@ class GS1Message:
     value: str
     """Raw unprocessed value."""
 
-    element_strings: list[GS1ElementString]
+    element_strings: GS1ElementStrings
     """List of Element Strings found in the message."""
 
     @classmethod
@@ -163,7 +162,7 @@ class GS1Message:
             config = ParseConfig()
 
         value = value.strip()
-        element_strings: list[GS1ElementString] = []
+        element_strings = GS1ElementStrings()
         rest = value[:]
 
         while rest:
@@ -179,6 +178,29 @@ class GS1Message:
                 rest = rest[1:]
 
         return cls(value=value, element_strings=element_strings)
+
+    @classmethod
+    def from_element_strings(cls, element_strings: GS1ElementStrings) -> GS1Message:
+        """Create a GS1 message from a list of element strings.
+
+        Args:
+            element_strings: A list of GS1 element strings.
+
+        Returns:
+            GS1Message: The created GS1 message.
+        """
+        parts = chain(
+            *[
+                [
+                    es.ai.ai,
+                    es.value,
+                    ("\x1d" if es.ai.separator_required else ""),
+                ]
+                for es in element_strings
+            ]
+        )
+        normalized_string = "".join(parts).removesuffix("\x1d")
+        return cls(value=normalized_string, element_strings=element_strings)
 
     @classmethod
     def parse_hri(
@@ -216,25 +238,16 @@ class GS1Message:
             )
             raise ParseError(msg)
 
-        pairs: list[tuple[GS1ApplicationIdentifier, str]] = []
+        element_strings = GS1ElementStrings()
         for ai_number, ai_data in matches:
             if ai_number not in _GS1_APPLICATION_IDENTIFIERS:
                 msg = f"Unknown GS1 Application Identifier {ai_number!r} in {value!r}."
                 raise ParseError(msg)
-            pairs.append((_GS1_APPLICATION_IDENTIFIERS[ai_number], ai_data))
+            element_strings.append(
+                GS1ElementString.extract(f"{ai_number}{ai_data}", config=config)
+            )
 
-        parts = chain(
-            *[
-                [
-                    gs1_ai.ai,
-                    ai_data,
-                    ("\x1d" if gs1_ai.separator_required else ""),
-                ]
-                for gs1_ai, ai_data in pairs
-            ]
-        )
-        normalized_string = "".join(parts)
-        return GS1Message.parse(normalized_string, config=config)
+        return GS1Message.from_element_strings(element_strings)
 
     def as_hri(self) -> str:
         """Render as a human readable interpretation (HRI).
@@ -245,55 +258,3 @@ class GS1Message:
             A human-readable string where the AIs are wrapped in parenthesis.
         """
         return "".join(es.as_hri() for es in self.element_strings)
-
-    def filter(
-        self,
-        *,
-        ai: str | GS1ApplicationIdentifier | None = None,
-        data_title: str | None = None,
-    ) -> list[GS1ElementString]:
-        """Filter Element Strings by AI or data title.
-
-        Args:
-            ai: AI instance or string to match against the start of the
-                Element String's AI.
-            data_title: String to find anywhere in the Element String's AI
-                data title.
-
-        Returns:
-            All matching Element Strings in the message.
-        """
-        if isinstance(ai, GS1ApplicationIdentifier):
-            ai = ai.ai
-
-        result: list[GS1ElementString] = []
-
-        for element_string in self.element_strings:
-            ai_match = ai is not None and element_string.ai.ai.startswith(ai)
-            data_title_match = (
-                data_title is not None and data_title in element_string.ai.data_title
-            )
-            if ai_match or data_title_match:
-                result.append(element_string)
-
-        return result
-
-    def get(
-        self,
-        *,
-        ai: str | GS1ApplicationIdentifier | None = None,
-        data_title: str | None = None,
-    ) -> GS1ElementString | None:
-        """Get Element String by AI or data title.
-
-        Args:
-            ai: AI instance or string to match against the start of the
-                Element String's AI.
-            data_title: String to find anywhere in the Element String's AI
-                data title.
-
-        Returns:
-            The first matching Element String in the message.
-        """
-        matches = self.filter(ai=ai, data_title=data_title)
-        return matches[0] if matches else None

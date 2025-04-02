@@ -32,7 +32,8 @@ validated using the [`Gln`][biip.gln.Gln] class.
     >>> import biip
     >>> gln = (
     ...     biip.parse("4101234567890128")
-    ...     .gs1_message.get(data_title="SHIP TO")
+    ...     .gs1_message
+    ...     .element_strings.get(data_title="SHIP TO")
     ...     .gln
     ... )
     >>> pprint(gln)

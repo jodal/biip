@@ -376,3 +376,59 @@ def _get_century(two_digit_year: int) -> int:
 def _get_last_day_of_month(year: int, month: int) -> int:
     """Get the last day of the given month."""
     return calendar.monthrange(year, month)[1]
+
+
+class GS1ElementStrings(list[GS1ElementString]):
+    """List of GS1 element strings."""
+
+    def filter(
+        self,
+        *,
+        ai: str | GS1ApplicationIdentifier | None = None,
+        data_title: str | None = None,
+    ) -> GS1ElementStrings:
+        """Filter element strings by AI or data title.
+
+        Args:
+            ai: AI instance or string to match against the start of the
+                element string's AI.
+            data_title: String to find anywhere in the element string's AI
+                data title.
+
+        Returns:
+            All matching element strings in the list.
+        """
+        if isinstance(ai, GS1ApplicationIdentifier):
+            ai = ai.ai
+
+        result = GS1ElementStrings()
+
+        for element_string in self:
+            ai_match = ai is not None and element_string.ai.ai.startswith(ai)
+            data_title_match = (
+                data_title is not None and data_title in element_string.ai.data_title
+            )
+            if ai_match or data_title_match:
+                result.append(element_string)
+
+        return result
+
+    def get(
+        self,
+        *,
+        ai: str | GS1ApplicationIdentifier | None = None,
+        data_title: str | None = None,
+    ) -> GS1ElementString | None:
+        """Get element string by AI or data title.
+
+        Args:
+            ai: AI instance or string to match against the start of the
+                element string's AI.
+            data_title: String to find anywhere in the element string's AI
+                data title.
+
+        Returns:
+            The first matching element string in the list.
+        """
+        matches = self.filter(ai=ai, data_title=data_title)
+        return matches[0] if matches else None
