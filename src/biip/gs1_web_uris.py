@@ -254,6 +254,31 @@ class GS1WebURI:
             element_strings=element_strings,
         )
 
+    def as_uri(
+        self,
+        *,
+        domain: str | None = None,
+        prefix: str | None = None,
+        short_names: bool = False,
+    ) -> str:
+        """Render as a GS1 Web URI.
+
+        Args:
+            domain: The domain name to use in the URI. Defaults to `id.gs1.org`.
+            prefix: The path prefix to use in the URI. Defaults to no prefix.
+            short_names: Whether to use short names for AI values in the URI
+                path. Defaults to False.
+
+        Returns:
+            str: The GS1 Web URI.
+        """
+        return _build_url(
+            self.element_strings,
+            domain=domain or "id.gs1.org",
+            prefix=prefix,
+            short_names=short_names,
+        )
+
     def as_canonical_uri(self) -> str:
         """Render as a canonical GS1 Web URI.
 
@@ -311,7 +336,13 @@ def _get_qualifier(
     raise ParseError(msg)
 
 
-def _build_url(element_strings: GS1ElementStrings) -> str:
+def _build_url(
+    element_strings: GS1ElementStrings,
+    *,
+    domain: str = "id.gs1.org",
+    prefix: str | None = None,
+    short_names: bool = False,
+) -> str:
     primary_identifiers = [
         pi for pi in _PRIMARY_IDENTIFIERS if element_strings.get(ai=pi.ai)
     ]
@@ -327,27 +358,46 @@ def _build_url(element_strings: GS1ElementStrings) -> str:
     pi_element_string = element_strings.get(ai=primary_identifier.ai)
     assert pi_element_string
 
-    qualifier_element_strings = [
-        es
+    qualifiers = {
+        q: es
         for q in primary_identifier.qualifiers
         if (es := element_strings.get(ai=q.ai))
-    ]
+    }
 
     other_element_strings = [
         es
         for es in element_strings
-        if es not in (pi_element_string, *qualifier_element_strings)
+        if es not in (pi_element_string, *qualifiers.values())
     ]
 
-    path = f"/{pi_element_string.ai.ai}/{pi_element_string.value}"
-    for es in qualifier_element_strings:
-        path += f"/{es.ai.ai}/{es.value}"
+    if prefix is not None:
+        if prefix.startswith("/"):
+            msg = "Prefix must not start with '/'"
+            raise ValueError(msg)
+        if prefix.endswith("/"):
+            msg = "Prefix must not end with '/'"
+            raise ValueError(msg)
+        path = prefix
+    else:
+        path = ""
+
+    if short_names:
+        path += f"/{primary_identifier.short_name}/{pi_element_string.value}"
+    else:
+        path += f"/{pi_element_string.ai.ai}/{pi_element_string.value}"
+
+    for qualifier, element_string in qualifiers.items():
+        if short_names:
+            path += f"/{qualifier.short_name}/{element_string.value}"
+        else:
+            path += f"/{element_string.ai.ai}/{element_string.value}"
+
     params: dict[str, str] = {es.ai.ai: es.value for es in other_element_strings}
 
     return urlunsplit(
         [
             "https",
-            "id.gs1.org",
+            domain,
             path,
             urlencode(params) if params else None,
             None,
