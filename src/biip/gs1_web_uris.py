@@ -239,6 +239,21 @@ class GS1WebURI:
 
         return cls(value=value, element_strings=element_strings)
 
+    @classmethod
+    def from_element_strings(cls, element_strings: GS1ElementStrings) -> GS1WebURI:
+        """Create a GS1 Web URI from a list of GS1 element strings.
+
+        Args:
+            element_strings: A list of GS1 element strings.
+
+        Returns:
+            GS1WebURI: The created GS1 Web URI.
+        """
+        return GS1WebURI(
+            value=_build_url(element_strings),
+            element_strings=element_strings,
+        )
+
     def as_canonical_uri(self) -> str:
         """Render as a canonical GS1 Web URI.
 
@@ -253,48 +268,8 @@ class GS1WebURI:
 
         References:
             GS1 Web URI Structure Standard, section 5.2
-        """  # noqa: DOC501
-        primary_identifiers = [
-            pi for pi in _PRIMARY_IDENTIFIERS if self.element_strings.get(ai=pi.ai)
-        ]
-        match primary_identifiers:
-            case []:  # pragma: no cover  # Prevented by the parser.
-                msg = "Expected exactly one primary identifier, none found."
-                raise EncodeError(msg)
-            case [pi]:
-                primary_identifier = pi
-            case _:  # pragma: no cover  # Prevented by the parser.
-                msg = "Expected exactly one primary identifier, multiple found."
-                raise EncodeError(msg)
-        pi_element_string = self.element_strings.get(ai=primary_identifier.ai)
-        assert pi_element_string
-
-        qualifier_element_strings = [
-            es
-            for q in primary_identifier.qualifiers
-            if (es := self.element_strings.get(ai=q.ai))
-        ]
-
-        other_element_strings = [
-            es
-            for es in self.element_strings
-            if es not in (pi_element_string, *qualifier_element_strings)
-        ]
-
-        path = f"/{pi_element_string.ai.ai}/{pi_element_string.value}"
-        for es in qualifier_element_strings:
-            path += f"/{es.ai.ai}/{es.value}"
-        params: dict[str, str] = {es.ai.ai: es.value for es in other_element_strings}
-
-        return urlunsplit(
-            [
-                "https",
-                "id.gs1.org",
-                path,
-                urlencode(params) if params else None,
-                None,
-            ]
-        )
+        """
+        return _build_url(self.element_strings)
 
     def as_gs1_message(self) -> GS1Message:
         """Converts the GS1 Web URI to a GS1 Message."""
@@ -334,6 +309,50 @@ def _get_qualifier(
         f"got {qualifier_key!r}."
     )
     raise ParseError(msg)
+
+
+def _build_url(element_strings: GS1ElementStrings) -> str:
+    primary_identifiers = [
+        pi for pi in _PRIMARY_IDENTIFIERS if element_strings.get(ai=pi.ai)
+    ]
+    match primary_identifiers:
+        case []:  # pragma: no cover  # Prevented by the parser.
+            msg = "Expected exactly one primary identifier, none found."
+            raise EncodeError(msg)
+        case [pi]:
+            primary_identifier = pi
+        case _:  # pragma: no cover  # Prevented by the parser.
+            msg = "Expected exactly one primary identifier, multiple found."
+            raise EncodeError(msg)
+    pi_element_string = element_strings.get(ai=primary_identifier.ai)
+    assert pi_element_string
+
+    qualifier_element_strings = [
+        es
+        for q in primary_identifier.qualifiers
+        if (es := element_strings.get(ai=q.ai))
+    ]
+
+    other_element_strings = [
+        es
+        for es in element_strings
+        if es not in (pi_element_string, *qualifier_element_strings)
+    ]
+
+    path = f"/{pi_element_string.ai.ai}/{pi_element_string.value}"
+    for es in qualifier_element_strings:
+        path += f"/{es.ai.ai}/{es.value}"
+    params: dict[str, str] = {es.ai.ai: es.value for es in other_element_strings}
+
+    return urlunsplit(
+        [
+            "https",
+            "id.gs1.org",
+            path,
+            urlencode(params) if params else None,
+            None,
+        ]
+    )
 
 
 @dataclass(frozen=True)
