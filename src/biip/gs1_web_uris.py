@@ -118,9 +118,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
-from urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, urlencode, urlparse, urlunsplit
 
 from biip import ParseConfig, ParseError
+from biip._exceptions import EncodeError
 from biip.gs1_application_identifiers import (
     _GS1_APPLICATION_IDENTIFIERS,
     GS1ApplicationIdentifier,
@@ -235,6 +236,63 @@ class GS1WebURI:
             )
 
         return cls(value=value, element_strings=element_strings)
+
+    def as_canonical_uri(self) -> str:
+        """Render as a canonical GS1 Web URI.
+
+        Canonical URIs:
+
+        - Use the domain name `id.gs1.org`.
+        - Uses numeric AI values in the URI path.
+        - Excludes all query parameters that are not valid application identifiers.
+
+        Returns:
+            str: The canonical GS1 Web URI.
+
+        References:
+            GS1 Web URI Structure Standard, section 5.2
+        """  # noqa: DOC501
+        primary_identifiers = [
+            pi for pi in _PRIMARY_IDENTIFIERS if self.element_strings.get(ai=pi.ai)
+        ]
+        match primary_identifiers:
+            case []:  # pragma: no cover  # Prevented by the parser.
+                msg = "Expected exactly one primary identifier, none found."
+                raise EncodeError(msg)
+            case [pi]:
+                primary_identifier = pi
+            case _:  # pragma: no cover  # Prevented by the parser.
+                msg = "Expected exactly one primary identifier, multiple found."
+                raise EncodeError(msg)
+        pi_element_string = self.element_strings.get(ai=primary_identifier.ai)
+        assert pi_element_string
+
+        qualifier_element_strings = [
+            es
+            for q in primary_identifier.qualifiers
+            if (es := self.element_strings.get(ai=q.ai))
+        ]
+
+        other_element_strings = [
+            es
+            for es in self.element_strings
+            if es not in (pi_element_string, *qualifier_element_strings)
+        ]
+
+        path = f"/{pi_element_string.ai.ai}/{pi_element_string.value}"
+        for es in qualifier_element_strings:
+            path += f"/{es.ai.ai}/{es.value}"
+        params: dict[str, str] = {es.ai.ai: es.value for es in other_element_strings}
+
+        return urlunsplit(
+            [
+                "https",
+                "id.gs1.org",
+                path,
+                urlencode(params) if params else None,
+                None,
+            ]
+        )
 
 
 def _get_pairs(iterable: Iterable[str]) -> Iterator[tuple[str, str]]:
