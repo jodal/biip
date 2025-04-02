@@ -131,6 +131,8 @@ from biip.gs1_element_strings import GS1ElementString, GS1ElementStrings
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
+    from biip.gs1_messages import GS1Message
+
 
 @dataclass
 class GS1WebURI:
@@ -293,6 +295,12 @@ class GS1WebURI:
                 None,
             ]
         )
+
+    def as_gs1_message(self) -> GS1Message:
+        """Converts the GS1 Web URI to a GS1 Message."""
+        from biip.gs1_messages import GS1Message
+
+        return GS1Message.from_element_strings(self.element_strings)
 
 
 def _get_pairs(iterable: Iterable[str]) -> Iterator[tuple[str, str]]:

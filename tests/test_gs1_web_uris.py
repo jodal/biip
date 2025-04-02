@@ -323,6 +323,31 @@ def test_as_canonical_uri(value: str, expected: str) -> None:
 
 
 @pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        (
+            "https://example.com/01/614141123452",
+            "(01)00614141123452",
+        ),
+        (
+            "https://example.com/gtin/614141123452",
+            "(01)00614141123452",
+        ),
+        (
+            "https://example.com/gtin/614141123452/cpv/2A/lot/ABC123",
+            "(01)00614141123452(22)2A(10)ABC123",
+        ),
+        (
+            "https://example.com/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123&foo=bar",
+            "(00)106141412345678908(02)00614141123452(37)25(10)ABC123",
+        ),
+    ],
+)
+def test_as_gs1_message(value: str, expected: str) -> None:
+    assert GS1WebURI.parse(value).as_gs1_message().as_hri() == expected
+
+
+@pytest.mark.parametrize(
     ("value", "ai", "expected"),
     [
         ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "01", ["00614141123452"]),
