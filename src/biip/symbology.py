@@ -221,7 +221,7 @@ class GS1Symbology(Enum):
         return f"GS1Symbology.{self.name}"
 
 
-@dataclass
+@dataclass(frozen=True)
 class SymbologyIdentifier:
     """Data class containing a Symbology Identifier."""
 

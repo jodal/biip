@@ -95,7 +95,7 @@ class GtinFormat(IntEnum):
         return int(self)
 
 
-@dataclass
+@dataclass(frozen=True)
 class Gtin:
     """Data class containing a GTIN."""
 
@@ -225,7 +225,7 @@ class Gtin:
         else:
             gtin_type = Gtin
 
-        gtin = gtin_type(
+        result = gtin_type(
             value=value,
             format=gtin_format,
             prefix=prefix,
@@ -235,12 +235,13 @@ class Gtin:
             packaging_level=packaging_level,
         )
 
-        if isinstance(gtin, Rcn) and config.rcn_region is not None:
-            gtin._parse_with_regional_rules(  # noqa: SLF001
+        if isinstance(result, Rcn):
+            result = result._with_usage()  # noqa: SLF001
+            result = result._parsed_with_regional_rules(  # noqa: SLF001
                 config=config
             )
 
-        return gtin
+        return result
 
     def __rich_repr__(self) -> Iterator[tuple[str, Any] | tuple[str, Any, Any]]:  # noqa: D105
         # Skip printing fields with default values

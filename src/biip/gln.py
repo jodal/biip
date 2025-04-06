@@ -60,7 +60,7 @@ from biip.checksums import gs1_standard_check_digit
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
 
 
-@dataclass
+@dataclass(frozen=True)
 class Gln:
     """Dataclass containing a GLN."""
 

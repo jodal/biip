@@ -126,7 +126,7 @@ if TYPE_CHECKING:
     from biip.gs1_web_uris import GS1WebURI
 
 
-@dataclass
+@dataclass(frozen=True)
 class GS1Message:
     """A GS1 message is the result of a single barcode scan.
 
