@@ -120,7 +120,7 @@ In this example, we used the ISBN from a book. As ISBNs are a subset of
 GTINs, this worked just like before. Because the data was prefixed by a
 Symbology Identifier, Biip only tried the GTIN parser. This is reflected
 in the lack of both results and error messages from the UPC, SSCC and GS1
-Message parsers.
+message parsers.
 
 ## Global Trade Item Number (GTIN)
 
@@ -260,14 +260,14 @@ Identifiers (AI) covering most industry use cases.
 It is helpful to get the terminology straight here, as we use it
 throughout the Biip API:
 
-- An _Application Identifier_ (AI) is a number with 2-4 digits that
+- An _application identifier_ (AI) is a number with 2-4 digits that
   specifies a data field's format and use.
-- An AI prefix, together with its data field, is called an _Element
-  String_.
-- Multiple Element Strings read from a single barcode is called a
-  _Message_.
+- An AI prefix, together with its data field, is called an _element
+  string_.
+- Multiple element strings read from a single barcode is called a
+  _message_.
 
-AI Element Strings can be encoded using several different barcode types,
+AI element strings can be encoded using several different barcode types,
 but the linear barcode format GS1-128 is the most common.
 
 ### Serial Shipping Container Code (SSCC)
@@ -304,8 +304,8 @@ GS1Message(
 )
 ```
 
-From the above result, we can see that the data is a Message that
-contains a single Element String. The Element String has the AI `00`,
+From the above result, we can see that the data is a message that
+contains a single element string. The element string has the AI `00`,
 which is the code for Serial Shipping Container Code, or SSCC for short.
 
 Biip extracts the SSCC payload and validates its check digit. The result
@@ -313,12 +313,13 @@ is an [`Sscc`][biip.sscc.Sscc] instance, with fields like
 [`prefix`][biip.sscc.Sscc.prefix] and
 [`extension_digit`][biip.sscc.Sscc.extension_digit].
 
-You can extract the Element String using
-[`GS1Message.get()`][biip.gs1_messages.GS1Message.get] and
-[`GS1Message.filter()`][biip.gs1_messages.GS1Message.filter]:
+You can extract the element string using
+[`GS1Message.element_strings.get()`][biip.gs1_element_strings.GS1ElementStrings.get]
+and
+[`GS1Message.element_strings.filter()`][biip.gs1_element_strings.GS1ElementStrings.filter]:
 
 ```python
->>> element_string = result.gs1_message.get(ai="00")
+>>> element_string = result.gs1_message.element_strings.(ai="00")
 >>> element_string.ai.data_title
 'SSCC'
 >>> element_string.sscc.prefix.usage
@@ -365,14 +366,14 @@ containing multiple trade units, we might get the data string
 ```
 
 We can have a quick look at the human-readable interpretation (HRI) to get a
-feel for how the data groups into three Element Strings:
+feel for how the data groups into three element strings:
 
 ```python
 >>> result.gs1_message.as_hri()
 '(01)07032069804988(15)210526(10)0329'
 ```
 
-And we can dig into the parsed Element Strings to get all the details:
+And we can dig into the parsed element strings to get all the details:
 
 ```python hl_lines="13-20 25 32 37 42"
 >>> print(result.gs1_message.element_strings)
@@ -422,7 +423,7 @@ And we can dig into the parsed Element Strings to get all the details:
 ]
 ```
 
-The first Element String is the GTIN of the trade item inside the
+The first element string is the GTIN of the trade item inside the
 logistic unit. As with SSCC's, this is also available directly from the
 [`ParseResult`][biip.ParseResult] instance:
 
@@ -440,21 +441,21 @@ Gtin(
 )
 ```
 
-The second Element String is the expiration date of the contained trade
+The second element string is the expiration date of the contained trade
 items. To save you from interpreting the date value correctly yourself,
 Biip does the job for you and exposes a
 [`datetime.date`][datetime.date] instance:
 
 ```python
->>> element_string = result.gs1_message.get(data_title="BEST BY")
+>>> element_string = result.gs1_message.element_strings.get(data_title="BEST BY")
 >>> element_string.date
 datetime.date(2021, 5, 26)
 ```
 
-The last Element String is the batch or lot number of the items:
+The last element string is the batch or lot number of the items:
 
 ```python
->>> element_string = result.gs1_message.get(ai="10")
+>>> element_string = result.gs1_message.element_strings.get(ai="10")
 >>> element_string.value
 '0329'
 ```
@@ -462,7 +463,7 @@ The last Element String is the batch or lot number of the items:
 ### Variable-length fields
 
 About a third of the specified AIs don't have a fixed length. How do we
-then know where the Element Strings ends, and the next one starts?
+then know where the element strings ends, and the next one starts?
 
 Let's look closer at the batch/lot number in the example in the previous
 section. It has the following AI definition:
@@ -484,7 +485,7 @@ You can see this from the
 to 20 alphanumeric characters.
 
 In the last example, we didn't need to do anything to handle the variable-length
-data field because the batch/lot number Element String (AI `10`) was the last
+data field because the batch/lot number element string (AI `10`) was the last
 one in the message:
 
 ```python
@@ -494,7 +495,7 @@ one in the message:
 ```
 
 Let's try to reorder the expiration date (AI `15`) and batch/lot number (AI
-`10`), so that the batch/lot number comes in the middle of the Message:
+`10`), so that the batch/lot number comes in the middle of the message:
 
 ```python
 >>> result = biip.parse("010703206980498810032915210525")
@@ -505,10 +506,10 @@ Let's try to reorder the expiration date (AI `15`) and batch/lot number (AI
 As we can see, the batch/lot number didn't know where to stop, so it
 consumed the remainder of the data, including the full expiration date.
 
-GS1-128 barcodes mark the end of variable-length Element Strings with a
+GS1-128 barcodes mark the end of variable-length element strings with a
 _Function Code 1_ (FNC1) symbol. When the barcode scanner converts the
 barcode to a string of text, it substitutes the FNC1 symbol with
-something else, often with the "Group Separator" or "GS" ASCII
+something else, often with the "Group Separator" (GS) ASCII
 character. The GS ASCII character has a decimal value of 29 or
 hexadecimal value of `0x1D`.
 
@@ -521,7 +522,7 @@ number, we get the following result:
 '(01)07032069804988(10)0329(15)210525'
 ```
 
-Once again, we've correctly detected all three Element Strings.
+Once again, we've correctly detected all three element strings.
 
 ### Barcode scanner configuration
 
@@ -534,7 +535,7 @@ your barcode scanner hardware to use another separator character if:
 
 A reasonable choice for an alternative separator character might be the
 pipe character, `|`, as this character cannot legally be a part of the
-payload in Element Strings.
+payload in element strings.
 
 If we configure the barcode scanner to use an alternative separator character,
 we also need to tell Biip what character to expect by creating a
@@ -549,7 +550,7 @@ we also need to tell Biip what character to expect by creating a
 '(01)07032069804988(10)0329(15)210525'
 ```
 
-Once again, all three Element Strings was successfully extracted.
+Once again, all three element strings was successfully extracted.
 
 ## Deep dive
 
