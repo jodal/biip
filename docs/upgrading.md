@@ -5,6 +5,11 @@
 Biip 4.0 is a major release that includes a few breaking changes. The following
 sections outline the changes you need to make to upgrade from 3.x to 4.x.
 
+### Result objects are immutable
+
+All the dataclasses returned by Biip are now immutable. This means that you can
+no longer set attributes on them after they are created.
+
 ### `biip.parse()` no longer raises `ParseError`
 
 [`biip.parse()`][biip.parse] no longer raises [`ParseError`][biip.ParseError]

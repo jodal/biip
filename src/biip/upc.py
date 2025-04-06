@@ -82,7 +82,7 @@ class UpcFormat(Enum):
         return f"UpcFormat.{self.name}"
 
 
-@dataclass
+@dataclass(frozen=True)
 class Upc:
     """Data class containing an UPC."""
 

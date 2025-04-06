@@ -19,7 +19,7 @@ References:
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from decimal import Decimal
 from enum import Enum
 from typing import TYPE_CHECKING, Any
@@ -104,7 +104,7 @@ class RcnRegion(Enum):
         }.get(self)
 
 
-@dataclass
+@dataclass(frozen=True)
 class Rcn(Gtin):
     """Data class containing an RCN.
 
@@ -138,10 +138,6 @@ class Rcn(Gtin):
     installed and the currency is known.
     """
 
-    def __post_init__(self) -> None:
-        """Initialize derivated fields."""
-        self._set_usage()
-
     def __rich_repr__(self) -> Iterator[tuple[str, Any] | tuple[str, Any, Any]]:  # noqa: D105
         # Skip printing fields with default values
         yield from super().__rich_repr__()
@@ -152,46 +148,72 @@ class Rcn(Gtin):
         yield "price", self.price, None
         yield "money", self.money, None
 
-    def _set_usage(self) -> None:
+    def _with_usage(self) -> Rcn:
         # Classification as RCN depends on the prefix being known, so we won't
         # get here unless it is known.
         assert self.prefix is not None
 
+        usage = None
         if "within a geographic region" in self.prefix.usage:
-            self.usage = RcnUsage.GEOGRAPHICAL
+            usage = RcnUsage.GEOGRAPHICAL
         if "within a company" in self.prefix.usage:
-            self.usage = RcnUsage.COMPANY
+            usage = RcnUsage.COMPANY
 
-    def _parse_with_regional_rules(self, *, config: ParseConfig) -> None:
-        if self.usage == RcnUsage.COMPANY:
+        return replace(self, usage=usage)
+
+    def _parsed_with_regional_rules(self, *, config: ParseConfig) -> Rcn:
+        rcn = self
+
+        if rcn.usage == RcnUsage.COMPANY:
             # The value is an RCN, but it is intended for use within a company,
             # so we can only interpret it as an opaque GTIN.
-            return
+            return rcn
 
-        self.region = RcnRegion(config.rcn_region)
+        if config.rcn_region is None:
+            # The region is not known, so we cannot interpret the variable measure.
+            return rcn
 
-        strategy = _Strategy.get_for_rcn(self)
+        rcn = replace(rcn, region=RcnRegion(config.rcn_region))
+
+        strategy = _Strategy.get_for_rcn(rcn)
         if strategy is None:
             # Without a strategy, we cannot extract anything.
-            return
+            return rcn
 
         if config.rcn_verify_variable_measure:
-            strategy.verify_check_digit(self)
+            strategy.verify_check_digit(rcn)
 
         if strategy.measure_type == _MeasureType.WEIGHT:
-            self.weight = strategy.get_variable_measure(self)
+            weight = strategy.get_variable_measure(self)
+        else:
+            weight = None
 
         if strategy.measure_type == _MeasureType.COUNT:
-            self.count = int(strategy.get_variable_measure(self))
+            count = int(strategy.get_variable_measure(self))
+        else:
+            count = None
 
         if strategy.measure_type == _MeasureType.PRICE:
-            self.price = strategy.get_variable_measure(self)
+            price = strategy.get_variable_measure(self)
+        else:
+            price = None
 
-        currency_code = self.region.get_currency_code()
-        if self.price is not None and have_moneyed and currency_code is not None:
+        assert rcn.region
+        currency_code = rcn.region.get_currency_code()
+        if price is not None and have_moneyed and currency_code is not None:
             import moneyed
 
-            self.money = moneyed.Money(amount=self.price, currency=currency_code)
+            money = moneyed.Money(amount=price, currency=currency_code)
+        else:
+            money = None
+
+        return replace(
+            rcn,
+            weight=weight,
+            count=count,
+            price=price,
+            money=money,
+        )
 
     def without_variable_measure(self) -> Gtin:
         """Create a new RCN where the variable measure is zeroed out.

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import TYPE_CHECKING, Any
 
 from biip import ParseConfig, ParseError
@@ -48,7 +48,10 @@ def parse(
 
     # Extract Symbology Identifier
     if value.startswith("]"):
-        result.symbology_identifier = SymbologyIdentifier.extract(value)
+        result = replace(
+            result, symbology_identifier=SymbologyIdentifier.extract(value)
+        )
+        assert result.symbology_identifier
         value = value[len(result.symbology_identifier) :]
 
     # Select parsers
@@ -79,12 +82,12 @@ def parse(
     # add additional work to the queue. Only the first result for a field is kept.
     while queue:
         (parse_func, val) = queue.pop(0)
-        parse_func(val, config, queue, result)
+        result = parse_func(val, config, queue, result)
 
     return result
 
 
-@dataclass
+@dataclass(frozen=True)
 class ParseResult:
     """Results from a successful barcode parsing."""
 
@@ -152,7 +155,7 @@ class ParseResult:
 
 
 ParseQueue = list[tuple["Parser", str]]
-Parser = Callable[[str, ParseConfig, ParseQueue, ParseResult], None]
+Parser = Callable[[str, ParseConfig, ParseQueue, ParseResult], ParseResult]
 
 
 def _parse_gtin(
@@ -160,20 +163,28 @@ def _parse_gtin(
     config: ParseConfig,
     queue: ParseQueue,
     result: ParseResult,
-) -> None:
+) -> ParseResult:
     if result.gtin is not None:
-        return  # pragma: no cover
+        return result  # pragma: no cover
 
     try:
-        result.gtin = Gtin.parse(value, config=config)
-        result.gtin_error = None
+        gtin = Gtin.parse(value, config=config)
+        gtin_error = None
     except ParseError as exc:
-        result.gtin = None
-        result.gtin_error = str(exc)
-    else:
-        # If GTIN is a GTIN-12, set UPC on the top-level result.
-        if result.gtin.format == GtinFormat.GTIN_12:
-            queue.append((_parse_upc, result.gtin.as_gtin_12()))
+        gtin = None
+        gtin_error = str(exc)
+
+    result = replace(
+        result,
+        gtin=gtin,
+        gtin_error=gtin_error,
+    )
+
+    # If GTIN is a GTIN-12, set UPC on the top-level result.
+    if result.gtin is not None and result.gtin.format == GtinFormat.GTIN_12:
+        queue.append((_parse_upc, result.gtin.as_gtin_12()))
+
+    return result
 
 
 def _parse_upc(
@@ -181,19 +192,22 @@ def _parse_upc(
     config: ParseConfig,
     queue: ParseQueue,
     result: ParseResult,
-) -> None:
+) -> ParseResult:
     if result.upc is not None:
-        return  # pragma: no cover
+        return result  # pragma: no cover
 
     try:
-        result.upc = Upc.parse(value, config=config)
-        result.upc_error = None
+        upc = Upc.parse(value, config=config)
+        upc_error = None
     except ParseError as exc:
-        result.upc = None
-        result.upc_error = str(exc)
-    else:
+        upc = None
+        upc_error = str(exc)
+
+    if upc is not None:
         # If UPC, expand and set GTIN on the top-level result.
-        queue.append((_parse_gtin, result.upc.as_upc_a()))
+        queue.append((_parse_gtin, upc.as_upc_a()))
+
+    return replace(result, upc=upc, upc_error=upc_error)
 
 
 def _parse_sscc(
@@ -201,16 +215,18 @@ def _parse_sscc(
     config: ParseConfig,
     queue: ParseQueue,  # noqa: ARG001
     result: ParseResult,
-) -> None:
+) -> ParseResult:
     if result.sscc is not None:
-        return  # pragma: no cover
+        return result  # pragma: no cover
 
     try:
-        result.sscc = Sscc.parse(value, config=config)
-        result.sscc_error = None
+        sscc = Sscc.parse(value, config=config)
+        sscc_error = None
     except ParseError as exc:
-        result.sscc = None
-        result.sscc_error = str(exc)
+        sscc = None
+        sscc_error = str(exc)
+
+    return replace(result, sscc=sscc, sscc_error=sscc_error)
 
 
 def _parse_gs1_message(
@@ -218,18 +234,21 @@ def _parse_gs1_message(
     config: ParseConfig,
     queue: ParseQueue,
     result: ParseResult,
-) -> None:
+) -> ParseResult:
     if result.gs1_message is not None:
-        return  # pragma: no cover
+        return result  # pragma: no cover
 
     try:
-        result.gs1_message = GS1Message.parse(value, config=config)
-        result.gs1_message_error = None
+        gs1_message = GS1Message.parse(value, config=config)
+        gs1_message_error = None
     except ParseError as exc:
-        result.gs1_message = None
-        result.gs1_message_error = str(exc)
-    else:
-        _promote_gs1_elements(result.gs1_message.element_strings, queue)
+        gs1_message = None
+        gs1_message_error = str(exc)
+
+    if gs1_message is not None:
+        _promote_gs1_elements(gs1_message.element_strings, queue)
+
+    return replace(result, gs1_message=gs1_message, gs1_message_error=gs1_message_error)
 
 
 def _parse_gs1_web_uri(
@@ -237,18 +256,21 @@ def _parse_gs1_web_uri(
     config: ParseConfig,
     queue: ParseQueue,
     result: ParseResult,
-) -> None:
+) -> ParseResult:
     if result.gs1_web_uri is not None:
-        return  # pragma: no cover
+        return result  # pragma: no cover
 
     try:
-        result.gs1_web_uri = GS1WebURI.parse(value, config=config)
-        result.gs1_web_uri_error = None
+        gs1_web_uri = GS1WebURI.parse(value, config=config)
+        gs1_web_uri_error = None
     except ParseError as exc:
-        result.gs1_web_uri = None
-        result.gs1_web_uri_error = str(exc)
-    else:
-        _promote_gs1_elements(result.gs1_web_uri.element_strings, queue)
+        gs1_web_uri = None
+        gs1_web_uri_error = str(exc)
+
+    if gs1_web_uri is not None:
+        _promote_gs1_elements(gs1_web_uri.element_strings, queue)
+
+    return replace(result, gs1_web_uri=gs1_web_uri, gs1_web_uri_error=gs1_web_uri_error)
 
 
 def _promote_gs1_elements(

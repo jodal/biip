@@ -45,7 +45,7 @@ import calendar
 import datetime as dt
 import re
 from collections.abc import Iterator
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from decimal import Decimal
 from typing import TYPE_CHECKING, Any
 
@@ -68,7 +68,7 @@ except ImportError:  # pragma: no cover
     have_moneyed = False
 
 
-@dataclass
+@dataclass(frozen=True)
 class GS1ElementString:
     """A GS1 element string consists of an Application Identifier (AI) and a value."""
 
@@ -181,48 +181,54 @@ class GS1ElementString:
         value = "".join(pattern_groups)
 
         element = cls(ai=ai, value=value, pattern_groups=pattern_groups)
-        element._set_gln(config=config)
-        element._set_gtin(config=config)
-        element._set_sscc(config=config)
-        element._set_date_and_datetime(config=config)
-        element._set_decimal()
+        element = element._with_gln(config=config)
+        element = element._with_gtin(config=config)  # noqa: SLF001
+        element = element._with_sscc(config=config)  # noqa: SLF001
+        element = element._with_date_and_datetime(config=config)  # noqa: SLF001
+        element = element._with_decimal()  # noqa: SLF001
 
-        return element
+        return element  # noqa: RET504
 
-    def _set_gln(self, *, config: ParseConfig) -> None:
+    def _with_gln(self, *, config: ParseConfig) -> GS1ElementString:
         if self.ai.ai[:2] != "41":
-            return
+            return self
 
         try:
-            self.gln = Gln.parse(self.value, config=config)
-            self.gln_error = None
+            gln = Gln.parse(self.value, config=config)
+            gln_error = None
         except ParseError as exc:
-            self.gln = None
-            self.gln_error = str(exc)
+            gln = None
+            gln_error = str(exc)
 
-    def _set_gtin(self, *, config: ParseConfig) -> None:
+        return replace(self, gln=gln, gln_error=gln_error)
+
+    def _with_gtin(self, *, config: ParseConfig) -> GS1ElementString:
         if self.ai.ai not in ("01", "02", "03"):
-            return
+            return self
 
         try:
-            self.gtin = Gtin.parse(self.value, config=config)
-            self.gtin_error = None
+            gtin = Gtin.parse(self.value, config=config)
+            gtin_error = None
         except ParseError as exc:
-            self.gtin = None
-            self.gtin_error = str(exc)
+            gtin = None
+            gtin_error = str(exc)
 
-    def _set_sscc(self, *, config: ParseConfig) -> None:
+        return replace(self, gtin=gtin, gtin_error=gtin_error)
+
+    def _with_sscc(self, *, config: ParseConfig) -> GS1ElementString:
         if self.ai.ai != "00":
-            return
+            return self
 
         try:
-            self.sscc = Sscc.parse(self.value, config=config)
-            self.sscc_error = None
+            sscc = Sscc.parse(self.value, config=config)
+            sscc_error = None
         except ParseError as exc:
-            self.sscc = None
-            self.sscc_error = str(exc)
+            sscc = None
+            sscc_error = str(exc)
 
-    def _set_date_and_datetime(self, *, config: ParseConfig) -> None:
+        return replace(self, sscc=sscc, sscc_error=sscc_error)
+
+    def _with_date_and_datetime(self, *, config: ParseConfig) -> GS1ElementString:
         if self.ai.ai not in (
             "11",
             "12",
@@ -239,17 +245,19 @@ class GS1ElementString:
             "7011",
             "8008",
         ):
-            return
+            return self
 
         try:
-            self.date, self.datetime = _parse_date_and_datetime(self.value)
+            date, datetime = _parse_date_and_datetime(self.value)
         except ValueError as exc:
             if not config.gs1_element_strings_verify_date:
-                return
+                return self
             msg = f"Failed to parse GS1 AI {self.ai} date/time from {self.value!r}."
             raise ParseError(msg) from exc
 
-    def _set_decimal(self) -> None:
+        return replace(self, date=date, datetime=datetime)
+
+    def _with_decimal(self) -> GS1ElementString:
         variable_measure = self.ai.ai[:2] in (
             "31",
             "32",
@@ -280,13 +288,19 @@ class GS1ElementString:
             units = value[:num_units]
             decimals = value[num_units:]
 
-            self.decimal = Decimal(f"{units}.{decimals}")
+            decimal = Decimal(f"{units}.{decimals}")
+        else:
+            decimal = None
 
         if amount_payable_with_currency and have_moneyed:
             import moneyed
 
             currency = moneyed.get_currency(iso=self.pattern_groups[0])
-            self.money = moneyed.Money(amount=self.decimal, currency=currency)
+            money = moneyed.Money(amount=decimal, currency=currency)
+        else:
+            money = None
+
+        return replace(self, decimal=decimal, money=money)
 
     def __len__(self) -> int:
         """Get the length of the element string."""

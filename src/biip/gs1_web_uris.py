@@ -134,7 +134,7 @@ if TYPE_CHECKING:
     from biip.gs1_messages import GS1Message
 
 
-@dataclass
+@dataclass(frozen=True)
 class GS1WebURI:
     """A GS1 Web URI is a URI that contains GS1 element strings."""
 
