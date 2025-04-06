@@ -1,9 +1,10 @@
 # Upgrading
 
-## Upgrading from 3.x to 4.x
+When major versions of Biip are released, we try to keep the upgrade path as
+smooth as possible. However, there are some breaking changes that you need to
+consider when upgrading from one major version to another.
 
-Biip 4.0 is a major release that includes a few breaking changes. The following
-sections outline the changes you need to make to upgrade from 3.x to 4.x.
+## Upgrading from 3.x to 4.x
 
 ### Result objects are immutable
 
