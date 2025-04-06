@@ -130,7 +130,7 @@ if TYPE_CHECKING:
 class GS1Message:
     """A GS1 message is the result of a single barcode scan.
 
-    It may contain one or more GS1 Element Strings.
+    It may contain one or more GS1 element strings.
 
     Examples:
         See `biip.gs1_messages` for a usage example.
@@ -140,7 +140,11 @@ class GS1Message:
     """Raw unprocessed value."""
 
     element_strings: GS1ElementStrings
-    """List of Element Strings found in the message."""
+    """List of element strings found in the message.
+
+    See [`GS1ElementStrings`][biip.gs1_element_strings.GS1ElementStrings] for
+    methods to extract interesting element strings from the list.
+    """
 
     @classmethod
     def parse(

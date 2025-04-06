@@ -136,13 +136,17 @@ if TYPE_CHECKING:
 
 @dataclass
 class GS1WebURI:
-    """A GS1 Web URI is a URI that contains GS1 Element Strings."""
+    """A GS1 Web URI is a URI that contains GS1 element strings."""
 
     value: str
     """Raw unprocessed value."""
 
     element_strings: GS1ElementStrings
-    """List of Element Strings found in the message."""
+    """List of element strings found in the message.
+
+    See [`GS1ElementStrings`][biip.gs1_element_strings.GS1ElementStrings] for
+    methods to extract interesting element strings from the list.
+    """
 
     @classmethod
     def parse(  # noqa: C901
