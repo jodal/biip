@@ -432,6 +432,19 @@ def test_as_hri(value: str, expected: str) -> None:
 
 
 @pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        (
+            "010703206980498815210526100329",
+            "https://id.gs1.org/01/07032069804988/10/0329?15=210526",
+        )
+    ],
+)
+def test_as_gs1_web_uri(value: str, expected: str) -> None:
+    assert GS1Message.parse(value).as_gs1_web_uri().value == expected
+
+
+@pytest.mark.parametrize(
     ("value", "ai", "expected"),
     [
         ("010703206980498815210526100329", "01", ["07032069804988"]),

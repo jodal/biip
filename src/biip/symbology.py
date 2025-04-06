@@ -207,6 +207,11 @@ class GS1Symbology(Enum):
         }
 
     @classmethod
+    def with_gs1_web_uri(cls) -> set[GS1Symbology]:
+        """Symbologies that may contain GS1 Web URIs."""
+        return {cls.GS1_DATAMATRIX, cls.GS1_QR_CODE}
+
+    @classmethod
     def with_gtin(cls) -> set[GS1Symbology]:
         """Symbologies that may contain GTINs."""
         return {cls.EAN_13, cls.EAN_13_WITH_ADD_ON, cls.EAN_8, cls.ITF_14}
