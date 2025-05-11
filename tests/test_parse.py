@@ -5,10 +5,10 @@ import pytest
 
 from biip import ParseConfig, ParseResult, parse
 from biip.gs1_application_identifiers import GS1ApplicationIdentifier
+from biip.gs1_digital_link_uris import GS1DigitalLinkURI
 from biip.gs1_element_strings import GS1ElementString, GS1ElementStrings
 from biip.gs1_messages import GS1Message
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
-from biip.gs1_web_uris import GS1WebURI
 from biip.gtin import Gtin, GtinFormat
 from biip.rcn import Rcn, RcnRegion, RcnUsage
 from biip.sscc import Sscc
@@ -654,7 +654,7 @@ from biip.upc import Upc, UpcFormat
             ),
         ),
         (
-            # GS1 Web URI with GTIN-12, lot number, and expiration date
+            # GS1 Digital Link URI with GTIN-12, lot number, and expiration date
             "https://example.com/gtin/614141123452/lot/ABC123?15=250330",
             ParseResult(
                 value="https://example.com/gtin/614141123452/lot/ABC123?15=250330",
@@ -673,7 +673,7 @@ from biip.upc import Upc, UpcFormat
                     payload="61414112345",
                     check_digit=2,
                 ),
-                gs1_web_uri=GS1WebURI(
+                gs1_digital_link_uri=GS1DigitalLinkURI(
                     value="https://example.com/gtin/614141123452/lot/ABC123?15=250330",
                     element_strings=GS1ElementStrings(
                         [
@@ -718,8 +718,8 @@ from biip.upc import Upc, UpcFormat
             ),
         ),
         (
-            # GS1 Web URI with GTIN-12, lot number, and expiration date with GS1
-            # QR Code symbology identifier
+            # GS1 Digital Link URI with GTIN-12, lot number, and expiration date
+            # with GS1 QR Code symbology identifier
             "]Q3https://example.com/gtin/614141123452/lot/ABC123?15=250330",
             ParseResult(
                 value="]Q3https://example.com/gtin/614141123452/lot/ABC123?15=250330",
@@ -748,7 +748,7 @@ from biip.upc import Upc, UpcFormat
                     "Failed to get GS1 Application Identifier from "
                     "'https://example.com/gtin/614141123452/lot/ABC123?15=250330'."
                 ),
-                gs1_web_uri=GS1WebURI(
+                gs1_digital_link_uri=GS1DigitalLinkURI(
                     value="https://example.com/gtin/614141123452/lot/ABC123?15=250330",
                     element_strings=GS1ElementStrings(
                         [
@@ -899,8 +899,8 @@ def test_parse_invalid_data() -> None:
         result.gs1_message_error
         == "Failed to get GS1 Application Identifier from 'abc'."
     )
-    assert result.gs1_web_uri is None
-    assert result.gs1_web_uri_error is None
+    assert result.gs1_digital_link_uri is None
+    assert result.gs1_digital_link_uri_error is None
     assert result.sscc is None
     assert (
         result.sscc_error == "Failed to parse 'abc' as SSCC: Expected 18 digits, got 3."
@@ -919,9 +919,9 @@ def test_parse_invalid_http_uri() -> None:
     assert result.gtin_error is None
     assert result.gs1_message is None
     assert result.gs1_message_error is None
-    assert result.gs1_web_uri is None
+    assert result.gs1_digital_link_uri is None
     assert (
-        result.gs1_web_uri_error
+        result.gs1_digital_link_uri_error
         == "Expected a primary identifier in the path, got '/foo/bar'."
     )
     assert result.sscc is None

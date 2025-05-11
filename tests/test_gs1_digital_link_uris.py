@@ -4,9 +4,9 @@ import pytest
 
 from biip import ParseConfig, ParseError
 from biip.gs1_application_identifiers import GS1ApplicationIdentifier
+from biip.gs1_digital_link_uris import GS1DigitalLinkURI
 from biip.gs1_element_strings import GS1ElementString, GS1ElementStrings
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
-from biip.gs1_web_uris import GS1WebURI
 from biip.gtin import Gtin, GtinFormat
 from biip.sscc import Sscc
 
@@ -17,7 +17,7 @@ from biip.sscc import Sscc
         (
             # GTIN-12 by AI number
             "https://id.gs1.org/01/614141123452",
-            GS1WebURI(
+            GS1DigitalLinkURI(
                 value="https://id.gs1.org/01/614141123452",
                 element_strings=GS1ElementStrings(
                     [
@@ -41,7 +41,7 @@ from biip.sscc import Sscc
         (
             # GTIN-12 with custom domain, path prefix, and AI alias
             "https://example.com/foo/gtin/614141123452",
-            GS1WebURI(
+            GS1DigitalLinkURI(
                 value="https://example.com/foo/gtin/614141123452",
                 element_strings=GS1ElementStrings(
                     [
@@ -65,7 +65,7 @@ from biip.sscc import Sscc
         (
             # GTIN-12 and batch/lot number by AI number
             "https://id.gs1.org/01/614141123452/10/ABC123",
-            GS1WebURI(
+            GS1DigitalLinkURI(
                 value="https://id.gs1.org/01/614141123452/10/ABC123",
                 element_strings=GS1ElementStrings(
                     [
@@ -94,7 +94,7 @@ from biip.sscc import Sscc
         (
             # GTIN-12, CPV, and batch/lot number by AI alias
             "https://id.gs1.org/gtin/614141123452/cpv/2A/lot/ABC123",
-            GS1WebURI(
+            GS1DigitalLinkURI(
                 value="https://id.gs1.org/gtin/614141123452/cpv/2A/lot/ABC123",
                 element_strings=GS1ElementStrings(
                     [
@@ -128,7 +128,7 @@ from biip.sscc import Sscc
         (
             # GTIN-12 with extra query parameter that is ignored
             "https://id.gs1.org/01/614141123452?foo=bar",
-            GS1WebURI(
+            GS1DigitalLinkURI(
                 value="https://id.gs1.org/01/614141123452?foo=bar",
                 element_strings=GS1ElementStrings(
                     [
@@ -152,7 +152,7 @@ from biip.sscc import Sscc
         (
             # SSCC with content, count, and batch/lot number
             "https://id.gs1.org/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123",
-            GS1WebURI(
+            GS1DigitalLinkURI(
                 value="https://id.gs1.org/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123",
                 element_strings=GS1ElementStrings(
                     [
@@ -201,8 +201,8 @@ from biip.sscc import Sscc
         ),
     ],
 )
-def test_parse(value: str, expected: GS1WebURI) -> None:
-    assert GS1WebURI.parse(value) == expected
+def test_parse(value: str, expected: GS1DigitalLinkURI) -> None:
+    assert GS1DigitalLinkURI.parse(value) == expected
 
 
 @pytest.mark.parametrize(
@@ -212,7 +212,7 @@ def test_parse(value: str, expected: GS1WebURI) -> None:
             # Invalid date "000000"
             "https://id.gs1.org/gtin/614141123452?15=000000",
             ParseConfig(gs1_element_strings_verify_date=False),
-            GS1WebURI(
+            GS1DigitalLinkURI(
                 value="https://id.gs1.org/gtin/614141123452?15=000000",
                 element_strings=GS1ElementStrings(
                     [
@@ -244,9 +244,9 @@ def test_parse(value: str, expected: GS1WebURI) -> None:
 def test_parse_with_invalid_element_values(
     value: str,
     config: ParseConfig,
-    expected: GS1WebURI,
+    expected: GS1DigitalLinkURI,
 ) -> None:
-    assert GS1WebURI.parse(value, config=config) == expected
+    assert GS1DigitalLinkURI.parse(value, config=config) == expected
 
 
 @pytest.mark.parametrize(
@@ -296,7 +296,7 @@ def test_parse_with_invalid_element_values(
 )
 def test_parse_error(value: str, error: str) -> None:
     with pytest.raises(ParseError, match=error):
-        GS1WebURI.parse(value)
+        GS1DigitalLinkURI.parse(value)
 
 
 @pytest.mark.parametrize(
@@ -331,7 +331,7 @@ def test_parse_error(value: str, error: str) -> None:
                     ),
                 ]
             ),
-            GS1WebURI(
+            GS1DigitalLinkURI(
                 value="https://id.gs1.org/01/07032069804988/10/0329?15=210526",
                 element_strings=GS1ElementStrings(
                     [
@@ -365,8 +365,10 @@ def test_parse_error(value: str, error: str) -> None:
         ),
     ],
 )
-def test_from_element_strings(value: GS1ElementStrings, expected: GS1WebURI) -> None:
-    assert GS1WebURI.from_element_strings(value) == expected
+def test_from_element_strings(
+    value: GS1ElementStrings, expected: GS1DigitalLinkURI
+) -> None:
+    assert GS1DigitalLinkURI.from_element_strings(value) == expected
 
 
 @pytest.mark.parametrize(
@@ -423,7 +425,7 @@ def test_as_uri(
     expected: str,
 ) -> None:
     assert (
-        GS1WebURI.parse(value).as_uri(
+        GS1DigitalLinkURI.parse(value).as_uri(
             domain=domain,
             prefix=prefix,
             short_names=short_names,
@@ -434,11 +436,11 @@ def test_as_uri(
 
 def test_as_uri_errors() -> None:
     with pytest.raises(ValueError, match="Prefix must not start with '/'"):
-        GS1WebURI.parse("https://example.com/gtin/614141123452").as_uri(
+        GS1DigitalLinkURI.parse("https://example.com/gtin/614141123452").as_uri(
             prefix="/prefix"
         )
     with pytest.raises(ValueError, match="Prefix must not end with '/'"):
-        GS1WebURI.parse("https://example.com/gtin/614141123452").as_uri(
+        GS1DigitalLinkURI.parse("https://example.com/gtin/614141123452").as_uri(
             prefix="prefix/"
         )
 
@@ -465,7 +467,7 @@ def test_as_uri_errors() -> None:
     ],
 )
 def test_as_canonical_uri(value: str, expected: str) -> None:
-    assert GS1WebURI.parse(value).as_canonical_uri() == expected
+    assert GS1DigitalLinkURI.parse(value).as_canonical_uri() == expected
 
 
 @pytest.mark.parametrize(
@@ -490,7 +492,7 @@ def test_as_canonical_uri(value: str, expected: str) -> None:
     ],
 )
 def test_as_gs1_message(value: str, expected: str) -> None:
-    assert GS1WebURI.parse(value).as_gs1_message().as_hri() == expected
+    assert GS1DigitalLinkURI.parse(value).as_gs1_message().as_hri() == expected
 
 
 @pytest.mark.parametrize(
@@ -501,7 +503,7 @@ def test_as_gs1_message(value: str, expected: str) -> None:
     ],
 )
 def test_filter_element_strings_by_ai(value: str, ai: str, expected: list[str]) -> None:
-    matches = GS1WebURI.parse(value).element_strings.filter(ai=ai)
+    matches = GS1DigitalLinkURI.parse(value).element_strings.filter(ai=ai)
 
     assert [element_string.value for element_string in matches] == expected
 
@@ -516,7 +518,9 @@ def test_filter_element_strings_by_ai(value: str, ai: str, expected: list[str]) 
 def test_filter_element_strings_by_data_title(
     value: str, data_title: str, expected: list[str]
 ) -> None:
-    matches = GS1WebURI.parse(value).element_strings.filter(data_title=data_title)
+    matches = GS1DigitalLinkURI.parse(value).element_strings.filter(
+        data_title=data_title
+    )
 
     assert [element_string.value for element_string in matches] == expected
 
@@ -530,7 +534,7 @@ def test_filter_element_strings_by_data_title(
     ],
 )
 def test_get_element_strings_by_ai(value: str, ai: str, expected: str | None) -> None:
-    element_string = GS1WebURI.parse(value).element_strings.get(ai=ai)
+    element_string = GS1DigitalLinkURI.parse(value).element_strings.get(ai=ai)
 
     if expected is None:
         assert element_string is None
@@ -551,7 +555,9 @@ def test_get_element_strings_by_ai(value: str, ai: str, expected: str | None) ->
 def test_get_element_strings_by_data_title(
     value: str, data_title: str, expected: str | None
 ) -> None:
-    element_string = GS1WebURI.parse(value).element_strings.get(data_title=data_title)
+    element_string = GS1DigitalLinkURI.parse(value).element_strings.get(
+        data_title=data_title
+    )
 
     if expected is None:
         assert element_string is None

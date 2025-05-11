@@ -7,8 +7,8 @@ from dataclasses import dataclass, replace
 from typing import TYPE_CHECKING, Any
 
 from biip import ParseConfig, ParseError
+from biip.gs1_digital_link_uris import GS1DigitalLinkURI
 from biip.gs1_messages import GS1Message
-from biip.gs1_web_uris import GS1WebURI
 from biip.gtin import Gtin, GtinFormat
 from biip.sscc import Sscc
 from biip.symbology import GS1Symbology, SymbologyIdentifier
@@ -64,10 +64,13 @@ def parse(
             in GS1Symbology.with_gs1_messages()
         ):
             queue.append((_parse_gs1_message, value))
-        if result.symbology_identifier.gs1_symbology in GS1Symbology.with_gs1_web_uri():
-            queue.append((_parse_gs1_web_uri, value))
+        if (
+            result.symbology_identifier.gs1_symbology
+            in GS1Symbology.with_gs1_digital_link_uri()
+        ):
+            queue.append((_parse_gs1_digital_link_uri, value))
     elif value.startswith("http"):
-        queue.append((_parse_gs1_web_uri, value))
+        queue.append((_parse_gs1_digital_link_uri, value))
     if not queue:
         # If we're not able to select a subset based on Symbology Identifiers,
         # run all parsers on the full value.
@@ -129,13 +132,16 @@ class ParseResult:
     If parsing as a GS1 Message was attempted and failed.
     """
 
-    gs1_web_uri: GS1WebURI | None = None
-    """The extracted [GS1 Web URI][biip.gs1_web_uris.GS1WebURI], if any."""
+    gs1_digital_link_uri: GS1DigitalLinkURI | None = None
+    """
+    The extracted [GS1 Digtal Link URI][biip.gs1_digital_link_uris.GS1DigitalLinkURI],
+    if any.
+    """
 
-    gs1_web_uri_error: str | None = None
-    """The GS1 Web URI parse error.
+    gs1_digital_link_uri_error: str | None = None
+    """The GS1 Digital Link URI parse error.
 
-    If parsing as a GS1 Web URI was attempted and failed.
+    If parsing as a GS1 Digital Link URI was attempted and failed.
     """
 
     def __rich_repr__(self) -> Iterator[tuple[str, Any] | tuple[str, Any, Any]]:
@@ -150,8 +156,8 @@ class ParseResult:
         yield "sscc_error", self.sscc_error, None
         yield "gs1_message", self.gs1_message, None
         yield "gs1_message_error", self.gs1_message_error, None
-        yield "gs1_web_uri", self.gs1_web_uri, None
-        yield "gs1_web_uri_error", self.gs1_web_uri_error, None
+        yield "gs1_digital_link_uri", self.gs1_digital_link_uri, None
+        yield "gs1_digital_link_uri_error", self.gs1_digital_link_uri_error, None
 
 
 ParseQueue = list[tuple["Parser", str]]
@@ -251,26 +257,30 @@ def _parse_gs1_message(
     return replace(result, gs1_message=gs1_message, gs1_message_error=gs1_message_error)
 
 
-def _parse_gs1_web_uri(
+def _parse_gs1_digital_link_uri(
     value: str,
     config: ParseConfig,
     queue: ParseQueue,
     result: ParseResult,
 ) -> ParseResult:
-    if result.gs1_web_uri is not None:
+    if result.gs1_digital_link_uri is not None:
         return result  # pragma: no cover
 
     try:
-        gs1_web_uri = GS1WebURI.parse(value, config=config)
-        gs1_web_uri_error = None
+        gs1_digital_link_uri = GS1DigitalLinkURI.parse(value, config=config)
+        gs1_digital_link_uri_error = None
     except ParseError as exc:
-        gs1_web_uri = None
-        gs1_web_uri_error = str(exc)
+        gs1_digital_link_uri = None
+        gs1_digital_link_uri_error = str(exc)
 
-    if gs1_web_uri is not None:
-        _promote_gs1_elements(gs1_web_uri.element_strings, queue)
+    if gs1_digital_link_uri is not None:
+        _promote_gs1_elements(gs1_digital_link_uri.element_strings, queue)
 
-    return replace(result, gs1_web_uri=gs1_web_uri, gs1_web_uri_error=gs1_web_uri_error)
+    return replace(
+        result,
+        gs1_digital_link_uri=gs1_digital_link_uri,
+        gs1_digital_link_uri_error=gs1_digital_link_uri_error,
+    )
 
 
 def _promote_gs1_elements(
