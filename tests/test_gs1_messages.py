@@ -440,8 +440,8 @@ def test_as_hri(value: str, expected: str) -> None:
         )
     ],
 )
-def test_as_gs1_web_uri(value: str, expected: str) -> None:
-    assert GS1Message.parse(value).as_gs1_web_uri().value == expected
+def test_as_gs1_digital_link_uri(value: str, expected: str) -> None:
+    assert GS1Message.parse(value).as_gs1_digital_link_uri().value == expected
 
 
 @pytest.mark.parametrize(

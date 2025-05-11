@@ -207,8 +207,8 @@ class GS1Symbology(Enum):
         }
 
     @classmethod
-    def with_gs1_web_uri(cls) -> set[GS1Symbology]:
-        """Symbologies that may contain GS1 Web URIs."""
+    def with_gs1_digital_link_uri(cls) -> set[GS1Symbology]:
+        """Symbologies that may contain GS1 Digital Link URIs."""
         return {cls.GS1_DATAMATRIX, cls.GS1_QR_CODE}
 
     @classmethod

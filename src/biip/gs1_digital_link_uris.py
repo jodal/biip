@@ -1,37 +1,39 @@
-"""Support for GS1 Web URIs.
+"""Support for GS1 Digital Link URIs.
 
-GS1 Web URIs are HTTP(S) URIs pointing to any hostname, optionally with a path
-prefix, where GS1 element strings are encoded in the path and query parameters.
+GS1 Digital Link URIs are HTTPS URIs pointing to any hostname, optionally with a
+path prefix, where GS1 element strings are encoded in the path and query
+parameters.
 
-Examples of GS1 Web URIs:
+Examples of GS1 Digital Link URIs:
 
 - `https://id.gs1.org/gtin/614141123452/lot/ABC1/ser/12345?exp=180426`
 - `https://id.gs1.org/gtin/614141123452?3103=000195`
 - `https://id.gs1.org/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123`
 
-This makes it possible to use GS1 Web URIs encoded in 2D barcodes both in
-supply chain and logistics applications, as well as for consumers to look up
+This makes it possible to use GS1 Digital Link URIs encoded in 2D barcodes both
+in supply chain and logistics applications, as well as for consumers to look up
 product information.
 
 References:
-    https://www.gs1.org/standards/Digital-Link/1-0
+    https://www.gs1.org/standards/gs1-digital-link
 
 ## Example
 
-If you only want to parse GS1 Web URIs, you can import the GS1 Web URI parser
-directly instead of using [`biip.parse()`][biip.parse].
+If you only want to parse GS1 Digital Link URIs, you can import the GS1 Digital
+Link URI parser directly instead of using [`biip.parse()`][biip.parse].
 
-    >>> from biip.gs1_web_uris import GS1WebURI
+    >>> from biip.gs1_digital_link_uris import GS1DigitalLinkURI
 
-If the parsing succeeds, it returns a [`GS1WebURI`][biip.gs1_web_uris.GS1WebURI] object.
+If the parsing succeeds, it returns a
+[`GS1DigitalLinkURI`][biip.gs1_digital_link_uris.GS1DigitalLinkURI] object.
 
-    >>> web_uri = GS1WebURI.parse("https://id.gs1.org/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123")
+    >>> dl_uri = GS1DigitalLinkURI.parse("https://id.gs1.org/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123")
 
 In this case, the URI is parsed into the SSCC of a shipping container, the GTIN
 of the product within the shipping container, the number of item within, and the
 batch number.
 
-    >>> pprint(web_uri.element_strings)
+    >>> pprint(dl_uri.element_strings)
     [
         GS1ElementString(
             ai=GS1ApplicationIdentifier(
@@ -135,8 +137,8 @@ if TYPE_CHECKING:
 
 
 @dataclass(frozen=True)
-class GS1WebURI:
-    """A GS1 Web URI is a URI that contains GS1 element strings."""
+class GS1DigitalLinkURI:
+    """A GS1 Digital Link URI is a URI that contains GS1 element strings."""
 
     value: str
     """Raw unprocessed value."""
@@ -154,15 +156,15 @@ class GS1WebURI:
         value: str,
         *,
         config: ParseConfig | None = None,
-    ) -> GS1WebURI:
-        """Parse a string as a GS1 Web URI.
+    ) -> GS1DigitalLinkURI:
+        """Parse a string as a GS1 Digital Link URI.
 
         Args:
             value: The string to parse.
             config: The parse configuration.
 
         Returns:
-            The parsed GS1 Web URI.
+            The parsed GS1 Digital Link URI.
 
         Raises:
             ParseError: If the parsing fails.
@@ -244,16 +246,18 @@ class GS1WebURI:
         return cls(value=value, element_strings=element_strings)
 
     @classmethod
-    def from_element_strings(cls, element_strings: GS1ElementStrings) -> GS1WebURI:
-        """Create a GS1 Web URI from a list of GS1 element strings.
+    def from_element_strings(
+        cls, element_strings: GS1ElementStrings
+    ) -> GS1DigitalLinkURI:
+        """Create a GS1 Digital Link URI from a list of GS1 element strings.
 
         Args:
             element_strings: A list of GS1 element strings.
 
         Returns:
-            GS1WebURI: The created GS1 Web URI.
+            GS1DigitalLinkURI: The created GS1 Digital Link URI.
         """
-        return GS1WebURI(
+        return GS1DigitalLinkURI(
             value=_build_url(element_strings),
             element_strings=element_strings,
         )
@@ -265,7 +269,7 @@ class GS1WebURI:
         prefix: str | None = None,
         short_names: bool = False,
     ) -> str:
-        """Render as a GS1 Web URI.
+        """Render as a GS1 Digital Link URI.
 
         Args:
             domain: The domain name to use in the URI. Defaults to `id.gs1.org`.
@@ -274,7 +278,7 @@ class GS1WebURI:
                 path. Defaults to False.
 
         Returns:
-            str: The GS1 Web URI.
+            str: The GS1 Digital Link URI.
         """
         return _build_url(
             self.element_strings,
@@ -284,7 +288,7 @@ class GS1WebURI:
         )
 
     def as_canonical_uri(self) -> str:
-        """Render as a canonical GS1 Web URI.
+        """Render as a canonical GS1 Digital Link URI.
 
         Canonical URIs:
 
@@ -293,15 +297,15 @@ class GS1WebURI:
         - Excludes all query parameters that are not valid application identifiers.
 
         Returns:
-            str: The canonical GS1 Web URI.
+            str: The canonical GS1 Digital Link URI.
 
         References:
-            GS1 Web URI Structure Standard, section 5.2
+            GS1 Digital Link Standard: URI Syntax, section 4.12
         """
         return _build_url(self.element_strings)
 
     def as_gs1_message(self) -> GS1Message:
-        """Converts the GS1 Web URI to a GS1 Message."""
+        """Converts the GS1 Digital Link URI to a GS1 Message."""
         from biip.gs1_messages import GS1Message
 
         return GS1Message.from_element_strings(self.element_strings)

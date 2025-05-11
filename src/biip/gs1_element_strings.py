@@ -2,8 +2,8 @@
 
 An element string consists of a GS1 Application Identifier (AI) and its data field.
 
-Element strings are usually found in a GS1 message or a GS1 Web URI. A single
-barcode can contain multiple element strings.
+Element strings are usually found in a GS1 message or a GS1 Digital Link URI. A
+single barcode can contain multiple element strings.
 
 Examples:
     >>> from biip.gs1_element_strings import GS1ElementString
