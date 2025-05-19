@@ -570,7 +570,7 @@ supply chain. Using the GS1 Digital Link URI specification, they create the
 following URI:
 
 ```
-https://www.example.com/products/gtin/07032069804988?10=0329&15=210526
+https://www.example.com/products/01/07032069804988?10=0329&15=210526
 ```
 
 They put this in a GS1 QR code or a GS1 DataMatrix barcode, and print it on the
@@ -579,10 +579,10 @@ product.
 When a consumer scans the barcode, they are taken to the product page. When the supply chain scans this barcode and use Biip to parse it, they get the following result:
 
 ```python
->>> result = biip.parse("https://www.example.com/products/gtin/07032069804988?10=0329&15=210526")
+>>> result = biip.parse("https://www.example.com/products/01/07032069804988?10=0329&15=210526")
 >>> print(result)
 ParseResult(
-    value='https://www.example.com/products/gtin/07032069804988?10=0329&15=210526',
+    value='https://www.example.com/products/01/07032069804988?10=0329&15=210526',
     gtin=Gtin(
         value='07032069804988',
         format=GtinFormat.GTIN_13,
@@ -592,7 +592,7 @@ ParseResult(
         check_digit=8
     ),
     gs1_digital_link_uri=GS1DigitalLinkURI(
-        value='https://www.example.com/products/gtin/07032069804988?10=0329&15=210526',
+        value='https://www.example.com/products/01/07032069804988?10=0329&15=210526',
         element_strings=[
             GS1ElementString(
                 ai=GS1ApplicationIdentifier(
@@ -669,12 +669,6 @@ Digital Link URI, Biip can also be helpful:
 ...    prefix="database",
 ... )
 'https://another.example.net/database/01/07032069804988/10/0329?15=210526'
->>> dl_uri.as_uri(
-...    domain="another.example.net",
-...    prefix="database",
-...    short_names=True,
-... )
-'https://another.example.net/database/gtin/07032069804988/lot/0329?15=210526'
 ```
 
 ## Deep dive

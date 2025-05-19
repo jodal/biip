@@ -654,10 +654,10 @@ from biip.upc import Upc, UpcFormat
             ),
         ),
         (
-            # GS1 Digital Link URI with GTIN-12, lot number, and expiration date
-            "https://example.com/gtin/614141123452/lot/ABC123?15=250330",
+            # GS1 Digital Link URI with GTIN-14, lot number, and expiration date
+            "https://example.com/01/00614141123452/10/ABC123?15=250330",
             ParseResult(
-                value="https://example.com/gtin/614141123452/lot/ABC123?15=250330",
+                value="https://example.com/01/00614141123452/10/ABC123?15=250330",
                 gtin=Gtin(
                     value="00614141123452",
                     format=GtinFormat.GTIN_12,
@@ -674,7 +674,7 @@ from biip.upc import Upc, UpcFormat
                     check_digit=2,
                 ),
                 gs1_digital_link_uri=GS1DigitalLinkURI(
-                    value="https://example.com/gtin/614141123452/lot/ABC123?15=250330",
+                    value="https://example.com/01/00614141123452/10/ABC123?15=250330",
                     element_strings=GS1ElementStrings(
                         [
                             GS1ElementString(
@@ -720,9 +720,9 @@ from biip.upc import Upc, UpcFormat
         (
             # GS1 Digital Link URI with GTIN-12, lot number, and expiration date
             # with GS1 QR Code symbology identifier
-            "]Q3https://example.com/gtin/614141123452/lot/ABC123?15=250330",
+            "]Q3https://example.com/01/614141123452/10/ABC123?15=250330",
             ParseResult(
-                value="]Q3https://example.com/gtin/614141123452/lot/ABC123?15=250330",
+                value="]Q3https://example.com/01/614141123452/10/ABC123?15=250330",
                 symbology_identifier=SymbologyIdentifier(
                     value="]Q3",
                     iso_symbology=ISOSymbology.QR_CODE,
@@ -746,10 +746,10 @@ from biip.upc import Upc, UpcFormat
                 ),
                 gs1_message_error=(
                     "Failed to get GS1 Application Identifier from "
-                    "'https://example.com/gtin/614141123452/lot/ABC123?15=250330'."
+                    "'https://example.com/01/614141123452/10/ABC123?15=250330'."
                 ),
                 gs1_digital_link_uri=GS1DigitalLinkURI(
-                    value="https://example.com/gtin/614141123452/lot/ABC123?15=250330",
+                    value="https://example.com/01/614141123452/10/ABC123?15=250330",
                     element_strings=GS1ElementStrings(
                         [
                             GS1ElementString(

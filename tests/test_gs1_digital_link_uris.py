@@ -15,10 +15,10 @@ from biip.sscc import Sscc
     ("value", "expected"),
     [
         (
-            # GTIN-12 by AI number
-            "https://id.gs1.org/01/614141123452",
+            # Canonical URI
+            "https://id.gs1.org/01/00614141123452",
             GS1DigitalLinkURI(
-                value="https://id.gs1.org/01/614141123452",
+                value="https://id.gs1.org/01/00614141123452",
                 element_strings=GS1ElementStrings(
                     [
                         GS1ElementString(
@@ -39,10 +39,10 @@ from biip.sscc import Sscc
             ),
         ),
         (
-            # GTIN-12 with custom domain, path prefix, and AI alias
-            "https://example.com/foo/gtin/614141123452",
+            # Custom domain and path prefix, with unpadded GTIN-12
+            "https://example.com/foo/01/614141123452",
             GS1DigitalLinkURI(
-                value="https://example.com/foo/gtin/614141123452",
+                value="https://example.com/foo/01/614141123452",
                 element_strings=GS1ElementStrings(
                     [
                         GS1ElementString(
@@ -63,10 +63,10 @@ from biip.sscc import Sscc
             ),
         ),
         (
-            # GTIN-12 and batch/lot number by AI number
-            "https://id.gs1.org/01/614141123452/10/ABC123",
+            # Canonical URI with lot number
+            "https://id.gs1.org/01/00614141123452/10/ABC123",
             GS1DigitalLinkURI(
-                value="https://id.gs1.org/01/614141123452/10/ABC123",
+                value="https://id.gs1.org/01/00614141123452/10/ABC123",
                 element_strings=GS1ElementStrings(
                     [
                         GS1ElementString(
@@ -92,44 +92,10 @@ from biip.sscc import Sscc
             ),
         ),
         (
-            # GTIN-12, CPV, and batch/lot number by AI alias
-            "https://id.gs1.org/gtin/614141123452/cpv/2A/lot/ABC123",
+            # GTIN-14 with extra query parameter that is ignored
+            "https://id.gs1.org/01/00614141123452?foo=bar",
             GS1DigitalLinkURI(
-                value="https://id.gs1.org/gtin/614141123452/cpv/2A/lot/ABC123",
-                element_strings=GS1ElementStrings(
-                    [
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("01"),
-                            value="00614141123452",
-                            pattern_groups=["00614141123452"],
-                            gtin=Gtin(
-                                value="00614141123452",
-                                format=GtinFormat.GTIN_12,
-                                prefix=GS1Prefix(value="061", usage="GS1 US"),
-                                company_prefix=GS1CompanyPrefix(value="0614141"),
-                                payload="61414112345",
-                                check_digit=2,
-                            ),
-                        ),
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("22"),
-                            value="2A",
-                            pattern_groups=["2A"],
-                        ),
-                        GS1ElementString(
-                            ai=GS1ApplicationIdentifier.extract("10"),
-                            value="ABC123",
-                            pattern_groups=["ABC123"],
-                        ),
-                    ]
-                ),
-            ),
-        ),
-        (
-            # GTIN-12 with extra query parameter that is ignored
-            "https://id.gs1.org/01/614141123452?foo=bar",
-            GS1DigitalLinkURI(
-                value="https://id.gs1.org/01/614141123452?foo=bar",
+                value="https://id.gs1.org/01/00614141123452?foo=bar",
                 element_strings=GS1ElementStrings(
                     [
                         GS1ElementString(
@@ -151,9 +117,9 @@ from biip.sscc import Sscc
         ),
         (
             # SSCC with content, count, and batch/lot number
-            "https://id.gs1.org/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123",
+            "https://id.gs1.org/00/106141412345678908?02=00614141123452&37=25&10=ABC123",
             GS1DigitalLinkURI(
-                value="https://id.gs1.org/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123",
+                value="https://id.gs1.org/00/106141412345678908?02=00614141123452&37=25&10=ABC123",
                 element_strings=GS1ElementStrings(
                     [
                         GS1ElementString(
@@ -210,10 +176,10 @@ def test_parse(value: str, expected: GS1DigitalLinkURI) -> None:
     [
         (
             # Invalid date "000000"
-            "https://id.gs1.org/gtin/614141123452?15=000000",
+            "https://id.gs1.org/01/614141123452?15=000000",
             ParseConfig(gs1_element_strings_verify_date=False),
             GS1DigitalLinkURI(
-                value="https://id.gs1.org/gtin/614141123452?15=000000",
+                value="https://id.gs1.org/01/614141123452?15=000000",
                 element_strings=GS1ElementStrings(
                     [
                         GS1ElementString(
@@ -269,28 +235,28 @@ def test_parse_with_invalid_element_values(
         ),
         (
             # The path must contain an even number of segments
-            "https://example.com/foo/gtin/614141123452/123",
-            r"^Expected even number of path segments, got '/gtin/614141123452/123'.$",
+            "https://example.com/foo/01/614141123452/123",
+            r"^Expected even number of path segments, got '/01/614141123452/123'.$",
         ),
         (
-            # "exp" is not a valid qualifier for GTIN
-            "https://id.gs1.org/gtin/614141123452/exp/20250324",
-            r"^Expected one of 22/cpv/10/lot/21/ser as qualifier, got 'exp'.$",
+            # "15" is not a valid qualifier for GTIN
+            "https://id.gs1.org/01/614141123452/15/20250324",
+            r"^Expected one of \(22, 10, 21\) as qualifier, got '15'.$",
         ),
         (
-            # "cpv" is a valid qualifier, but not after "lot"
-            "https://id.gs1.org/gtin/614141123452/lot/ABC123/cpv/123456789",
-            r"^Expected one of 21/ser as qualifier, got 'cpv'.$",
+            # "22" is a valid qualifier, but not after "10"
+            "https://id.gs1.org/01/614141123452/10/ABC123/22/123456789",
+            r"^Expected one of \(21\) as qualifier, got '22'.$",
         ),
         (
-            # "lot" is a valid qualifier, but not after "ser"
-            "https://id.gs1.org/gtin/01234567890128/ser/12345XYZ/lot/ABC123",
-            r"^Did not expect a qualifier, got 'lot'.$",
+            # "10" is a valid qualifier, but not after "21"
+            "https://id.gs1.org/01/01234567890128/21/12345XYZ/10/ABC123",
+            r"^Did not expect a qualifier, got '10'.$",
         ),
         (
-            # "lot" is not a valid qualifier for SSCC
-            "https://id.gs1.org/sscc/106141412345678908/lot/ABC123",
-            r"^Did not expect a qualifier, got 'lot'.$",
+            # "10" is not a valid qualifier for SSCC
+            "https://id.gs1.org/00/106141412345678908/10/ABC123",
+            r"^Did not expect a qualifier, got '10'.$",
         ),
     ],
 )
@@ -372,47 +338,29 @@ def test_from_element_strings(
 
 
 @pytest.mark.parametrize(
-    ("value", "domain", "prefix", "short_names", "expected"),
+    ("value", "domain", "prefix", "expected"),
     [
         (
-            # Defaults creates a canonical URI
+            # Defaults creates a canonical URI, using the canonical hostname,
+            # numerical AIs, 14-digit GTINs.
             "https://example.com/01/614141123452",
             None,
             None,
-            False,
             "https://id.gs1.org/01/00614141123452",
         ),
         (
             # Custom domain
-            "https://example.com/01/614141123452",
+            "https://id.gs1.org/01/00614141123452",
             "brand.example.net",
             None,
-            False,
             "https://brand.example.net/01/00614141123452",
         ),
         (
             # Custom domain with prefix
-            "https://example.com/gtin/614141123452",
+            "https://id.gs1.org/01/00614141123452",
             "brand.example.net",
             "prefix",
-            False,
             "https://brand.example.net/prefix/01/00614141123452",
-        ),
-        (
-            # Short names instead of AIs in path
-            "https://id.gs1.org/01/614141123452/22/2A/10/ABC123",
-            "example.com",
-            "products",
-            True,
-            "https://example.com/products/gtin/00614141123452/cpv/2A/lot/ABC123",
-        ),
-        (
-            # Values in params always use AI, not short names
-            "https://example.com/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123&foo=bar",
-            "brand.example.net",
-            None,
-            True,
-            "https://brand.example.net/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123",
         ),
     ],
 )
@@ -421,14 +369,12 @@ def test_as_uri(
     value: str,
     domain: str | None,
     prefix: str | None,
-    short_names: bool,
     expected: str,
 ) -> None:
     assert (
         GS1DigitalLinkURI.parse(value).as_uri(
             domain=domain,
             prefix=prefix,
-            short_names=short_names,
         )
         == expected
     )
@@ -436,11 +382,11 @@ def test_as_uri(
 
 def test_as_uri_errors() -> None:
     with pytest.raises(ValueError, match="Prefix must not start with '/'"):
-        GS1DigitalLinkURI.parse("https://example.com/gtin/614141123452").as_uri(
+        GS1DigitalLinkURI.parse("https://example.com/01/614141123452").as_uri(
             prefix="/prefix"
         )
     with pytest.raises(ValueError, match="Prefix must not end with '/'"):
-        GS1DigitalLinkURI.parse("https://example.com/gtin/614141123452").as_uri(
+        GS1DigitalLinkURI.parse("https://example.com/01/614141123452").as_uri(
             prefix="prefix/"
         )
 
@@ -449,19 +395,22 @@ def test_as_uri_errors() -> None:
     ("value", "expected"),
     [
         (
+            "https://example.com/01/00614141123452",
+            "https://id.gs1.org/01/00614141123452",
+        ),
+        (
+            # With deprecated GTIN length
             "https://example.com/01/614141123452",
             "https://id.gs1.org/01/00614141123452",
         ),
         (
-            "https://example.com/gtin/614141123452",
-            "https://id.gs1.org/01/00614141123452",
-        ),
-        (
-            "https://example.com/gtin/614141123452/cpv/2A/lot/ABC123",
+            # With deprecated GTIN length and qualifiers
+            "https://example.com/01/614141123452/22/2A/10/ABC123",
             "https://id.gs1.org/01/00614141123452/22/2A/10/ABC123",
         ),
         (
-            "https://example.com/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123&foo=bar",
+            # Extra query parameters are ignored
+            "https://example.com/00/106141412345678908?02=00614141123452&37=25&10=ABC123&foo=bar",
             "https://id.gs1.org/00/106141412345678908?02=00614141123452&37=25&10=ABC123",
         ),
     ],
@@ -474,19 +423,22 @@ def test_as_canonical_uri(value: str, expected: str) -> None:
     ("value", "expected"),
     [
         (
+            "https://example.com/01/00614141123452",
+            "(01)00614141123452",
+        ),
+        (
+            # With deprecated GTIN length
             "https://example.com/01/614141123452",
             "(01)00614141123452",
         ),
         (
-            "https://example.com/gtin/614141123452",
-            "(01)00614141123452",
-        ),
-        (
-            "https://example.com/gtin/614141123452/cpv/2A/lot/ABC123",
+            # With deprecated GTIN length and qualifiers
+            "https://example.com/01/00614141123452/22/2A/10/ABC123",
             "(01)00614141123452(22)2A(10)ABC123",
         ),
         (
-            "https://example.com/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123&foo=bar",
+            # Extra query parameters are ignored
+            "https://example.com/00/106141412345678908?02=00614141123452&37=25&10=ABC123&foo=bar",
             "(00)106141412345678908(02)00614141123452(37)25(10)ABC123",
         ),
     ],
@@ -498,8 +450,8 @@ def test_as_gs1_message(value: str, expected: str) -> None:
 @pytest.mark.parametrize(
     ("value", "ai", "expected"),
     [
-        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "01", ["00614141123452"]),
-        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "10", ["ABC123"]),
+        ("https://id.gs1.org/01/614141123452/10/ABC123", "01", ["00614141123452"]),
+        ("https://id.gs1.org/01/614141123452/10/ABC123", "10", ["ABC123"]),
     ],
 )
 def test_filter_element_strings_by_ai(value: str, ai: str, expected: list[str]) -> None:
@@ -511,8 +463,8 @@ def test_filter_element_strings_by_ai(value: str, ai: str, expected: list[str]) 
 @pytest.mark.parametrize(
     ("value", "data_title", "expected"),
     [
-        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "GTIN", ["00614141123452"]),
-        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "BATCH", ["ABC123"]),
+        ("https://id.gs1.org/01/614141123452/10/ABC123", "GTIN", ["00614141123452"]),
+        ("https://id.gs1.org/01/614141123452/10/ABC123", "BATCH", ["ABC123"]),
     ],
 )
 def test_filter_element_strings_by_data_title(
@@ -528,9 +480,9 @@ def test_filter_element_strings_by_data_title(
 @pytest.mark.parametrize(
     ("value", "ai", "expected"),
     [
-        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "01", "00614141123452"),
-        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "10", "ABC123"),
-        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "15", None),
+        ("https://id.gs1.org/01/614141123452/10/ABC123", "01", "00614141123452"),
+        ("https://id.gs1.org/01/614141123452/10/ABC123", "10", "ABC123"),
+        ("https://id.gs1.org/01/614141123452/10/ABC123", "15", None),
     ],
 )
 def test_get_element_strings_by_ai(value: str, ai: str, expected: str | None) -> None:
@@ -546,10 +498,10 @@ def test_get_element_strings_by_ai(value: str, ai: str, expected: str | None) ->
 @pytest.mark.parametrize(
     ("value", "data_title", "expected"),
     [
-        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "GTIN", "00614141123452"),
-        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "BATCH", "ABC123"),
-        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "LOT", "ABC123"),
-        ("https://id.gs1.org/gtin/614141123452/lot/ABC123", "BEST BY", None),
+        ("https://id.gs1.org/01/614141123452/10/ABC123", "GTIN", "00614141123452"),
+        ("https://id.gs1.org/01/614141123452/10/ABC123", "BATCH", "ABC123"),
+        ("https://id.gs1.org/01/614141123452/10/ABC123", "LOT", "ABC123"),
+        ("https://id.gs1.org/01/614141123452/10/ABC123", "BEST BY", None),
     ],
 )
 def test_get_element_strings_by_data_title(

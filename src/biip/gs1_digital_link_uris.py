@@ -6,9 +6,9 @@ parameters.
 
 Examples of GS1 Digital Link URIs:
 
-- `https://id.gs1.org/gtin/614141123452/lot/ABC1/ser/12345?exp=180426`
-- `https://id.gs1.org/gtin/614141123452?3103=000195`
-- `https://id.gs1.org/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123`
+- `https://id.gs1.org/01/614141123452/lot/ABC1/ser/12345?exp=180426`
+- `https://id.gs1.org/01/614141123452?3103=000195`
+- `https://id.gs1.org/00/106141412345678908?02=00614141123452&37=25&10=ABC123`
 
 This makes it possible to use GS1 Digital Link URIs encoded in 2D barcodes both
 in supply chain and logistics applications, as well as for consumers to look up
@@ -27,7 +27,7 @@ Link URI parser directly instead of using [`biip.parse()`][biip.parse].
 If the parsing succeeds, it returns a
 [`GS1DigitalLinkURI`][biip.gs1_digital_link_uris.GS1DigitalLinkURI] object.
 
-    >>> dl_uri = GS1DigitalLinkURI.parse("https://id.gs1.org/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123")
+    >>> dl_uri = GS1DigitalLinkURI.parse("https://id.gs1.org/00/106141412345678908?02=00614141123452&37=25&10=ABC123")
 
 In this case, the URI is parsed into the SSCC of a shipping container, the GTIN
 of the product within the shipping container, the number of item within, and the
@@ -267,15 +267,12 @@ class GS1DigitalLinkURI:
         *,
         domain: str | None = None,
         prefix: str | None = None,
-        short_names: bool = False,
     ) -> str:
         """Render as a GS1 Digital Link URI.
 
         Args:
             domain: The domain name to use in the URI. Defaults to `id.gs1.org`.
             prefix: The path prefix to use in the URI. Defaults to no prefix.
-            short_names: Whether to use short names for AI values in the URI
-                path. Defaults to False.
 
         Returns:
             str: The GS1 Digital Link URI.
@@ -284,7 +281,6 @@ class GS1DigitalLinkURI:
             self.element_strings,
             domain=domain or "id.gs1.org",
             prefix=prefix,
-            short_names=short_names,
         )
 
     def as_canonical_uri(self) -> str:
@@ -328,17 +324,15 @@ def _get_qualifier(
     if not expected_qualifiers:
         msg = f"Did not expect a qualifier, got {qualifier_key!r}."
         raise ParseError(msg)
-    expected_qualifier_names = "/".join(
-        f"{eq.ai.ai}/{eq.short_name}" for eq in expected_qualifiers
-    )
+    expected_qualifier_names = ", ".join(f"{eq.ai.ai}" for eq in expected_qualifiers)
     while expected_qualifiers:
         # Consume the expected qualifier, so that they can only be used
         # once, and only in order.
         qualifier = expected_qualifiers.pop(0)
-        if qualifier_key in (qualifier.ai.ai, qualifier.short_name):
+        if qualifier_key == qualifier.ai.ai:
             return qualifier
     msg = (
-        f"Expected one of {expected_qualifier_names} as qualifier, "
+        f"Expected one of ({expected_qualifier_names}) as qualifier, "
         f"got {qualifier_key!r}."
     )
     raise ParseError(msg)
@@ -349,7 +343,6 @@ def _build_uri(
     *,
     domain: str = "id.gs1.org",
     prefix: str | None = None,
-    short_names: bool = False,
 ) -> str:
     primary_identifiers = [
         pi for pi in _PRIMARY_IDENTIFIERS if element_strings.get(ai=pi.ai)
@@ -366,16 +359,14 @@ def _build_uri(
     pi_element_string = element_strings.get(ai=primary_identifier.ai)
     assert pi_element_string
 
-    qualifiers = {
-        q: es
+    qualifiers = [
+        es
         for q in primary_identifier.qualifiers
         if (es := element_strings.get(ai=q.ai))
-    }
+    ]
 
     other_element_strings = [
-        es
-        for es in element_strings
-        if es not in (pi_element_string, *qualifiers.values())
+        es for es in element_strings if es not in (pi_element_string, *qualifiers)
     ]
 
     if prefix is not None:
@@ -389,16 +380,10 @@ def _build_uri(
     else:
         path = ""
 
-    if short_names:
-        path += f"/{primary_identifier.short_name}/{pi_element_string.value}"
-    else:
-        path += f"/{pi_element_string.ai.ai}/{pi_element_string.value}"
+    path += f"/{pi_element_string.ai.ai}/{pi_element_string.value}"
 
-    for qualifier, element_string in qualifiers.items():
-        if short_names:
-            path += f"/{qualifier.short_name}/{element_string.value}"
-        else:
-            path += f"/{element_string.ai.ai}/{element_string.value}"
+    for element_string in qualifiers:
+        path += f"/{element_string.ai.ai}/{element_string.value}"
 
     params: dict[str, str] = {es.ai.ai: es.value for es in other_element_strings}
 
@@ -416,7 +401,6 @@ def _build_uri(
 @dataclass(frozen=True)
 class _Component:
     ai: GS1ApplicationIdentifier
-    short_name: str
     zfill_to_width: int | None = None
     qualifiers: tuple[_Component, ...] = field(default_factory=tuple)
 
@@ -424,138 +408,50 @@ class _Component:
 _PRIMARY_IDENTIFIERS = [
     _Component(
         ai=GS1ApplicationIdentifier.extract("01"),
-        short_name="gtin",
         zfill_to_width=14,
         qualifiers=(
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("22"),
-                short_name="cpv",
-            ),
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("10"),
-                short_name="lot",
-            ),
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("21"),
-                short_name="ser",
-            ),
+            _Component(ai=GS1ApplicationIdentifier.extract("22")),
+            _Component(ai=GS1ApplicationIdentifier.extract("10")),
+            _Component(ai=GS1ApplicationIdentifier.extract("21")),
         ),
     ),
     _Component(
         ai=GS1ApplicationIdentifier.extract("8006"),
-        short_name="itip",
         qualifiers=(
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("22"),
-                short_name="cpv",
-            ),
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("10"),
-                short_name="lot",
-            ),
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("21"),
-                short_name="ser",
-            ),
+            _Component(ai=GS1ApplicationIdentifier.extract("22")),
+            _Component(ai=GS1ApplicationIdentifier.extract("10")),
+            _Component(ai=GS1ApplicationIdentifier.extract("21")),
         ),
     ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("8013"),
-        short_name="gmn",
-    ),
+    _Component(ai=GS1ApplicationIdentifier.extract("8013")),
     _Component(
         ai=GS1ApplicationIdentifier.extract("8010"),
-        short_name="cpid",
-        qualifiers=(
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("8011"),
-                short_name="cpsn",
-            ),
-        ),
+        qualifiers=(_Component(ai=GS1ApplicationIdentifier.extract("8011")),),
     ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("410"),
-        short_name="shipTo",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("411"),
-        short_name="billTo",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("412"),
-        short_name="purchasedFrom",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("413"),
-        short_name="shipFor",
-    ),
+    _Component(ai=GS1ApplicationIdentifier.extract("410")),
+    _Component(ai=GS1ApplicationIdentifier.extract("411")),
+    _Component(ai=GS1ApplicationIdentifier.extract("412")),
+    _Component(ai=GS1ApplicationIdentifier.extract("413")),
     _Component(
         ai=GS1ApplicationIdentifier.extract("414"),
-        short_name="gln",
-        qualifiers=(
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("254"),
-                short_name="glnx",
-            ),
-        ),
+        qualifiers=(_Component(ai=GS1ApplicationIdentifier.extract("254")),),
     ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("415"),
-        short_name="payTo",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("416"),
-        short_name="glnProd",
-    ),
+    _Component(ai=GS1ApplicationIdentifier.extract("415")),
+    _Component(ai=GS1ApplicationIdentifier.extract("416")),
     _Component(
         ai=GS1ApplicationIdentifier.extract("8017"),
-        short_name="gsrnp",
-        qualifiers=(
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("8019"),
-                short_name="srin",
-            ),
-        ),
+        qualifiers=(_Component(ai=GS1ApplicationIdentifier.extract("8019")),),
     ),
     _Component(
         ai=GS1ApplicationIdentifier.extract("8018"),
-        short_name="gsrn",
-        qualifiers=(
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("8019"),
-                short_name="srin",
-            ),
-        ),
+        qualifiers=(_Component(ai=GS1ApplicationIdentifier.extract("8019")),),
     ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("255"),
-        short_name="gcn",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("00"),
-        short_name="sscc",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("253"),
-        short_name="gdti",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("401"),
-        short_name="ginc",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("402"),
-        short_name="gsin",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("8003"),
-        short_name="grai",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("8004"),
-        short_name="giai",
-    ),
+    _Component(ai=GS1ApplicationIdentifier.extract("255")),
+    _Component(ai=GS1ApplicationIdentifier.extract("00")),
+    _Component(ai=GS1ApplicationIdentifier.extract("253")),
+    _Component(ai=GS1ApplicationIdentifier.extract("401")),
+    _Component(ai=GS1ApplicationIdentifier.extract("402")),
+    _Component(ai=GS1ApplicationIdentifier.extract("8003")),
+    _Component(ai=GS1ApplicationIdentifier.extract("8004")),
 ]
-_PRIMARY_IDENTIFIER_MAP = {pi.short_name: pi for pi in _PRIMARY_IDENTIFIERS} | {
-    pi.ai.ai: pi for pi in _PRIMARY_IDENTIFIERS
-}
+_PRIMARY_IDENTIFIER_MAP = {pi.ai.ai: pi for pi in _PRIMARY_IDENTIFIERS}
