@@ -409,9 +409,9 @@ def test_as_uri_errors() -> None:
             "https://id.gs1.org/01/00614141123452/22/2A/10/ABC123",
         ),
         (
-            # Extra query parameters are ignored
+            # Extra query parameters are ignored and query parameters are sorted
             "https://example.com/00/106141412345678908?02=00614141123452&37=25&10=ABC123&foo=bar",
-            "https://id.gs1.org/00/106141412345678908?02=00614141123452&37=25&10=ABC123",
+            "https://id.gs1.org/00/106141412345678908?02=00614141123452&10=ABC123&37=25",
         ),
     ],
 )

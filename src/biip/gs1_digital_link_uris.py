@@ -365,10 +365,6 @@ def _build_uri(
         if (es := element_strings.get(ai=q.ai))
     ]
 
-    other_element_strings = [
-        es for es in element_strings if es not in (pi_element_string, *qualifiers)
-    ]
-
     if prefix is not None:
         if prefix.startswith("/"):
             msg = "Prefix must not start with '/'"
@@ -385,7 +381,12 @@ def _build_uri(
     for element_string in qualifiers:
         path += f"/{element_string.ai.ai}/{element_string.value}"
 
-    params: dict[str, str] = {es.ai.ai: es.value for es in other_element_strings}
+    other_element_strings = [
+        es for es in element_strings if es not in (pi_element_string, *qualifiers)
+    ]
+    # Sort params by AI in lexicographical order
+    sorted_element_strings = sorted(other_element_strings, key=lambda es: es.ai.ai)
+    params: dict[str, str] = {es.ai.ai: es.value for es in sorted_element_strings}
 
     return urlunsplit(
         [
