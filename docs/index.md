@@ -143,6 +143,8 @@ Code](https://en.wikipedia.org/wiki/QR_code) barcode symbologies.
       domains, path prefixes, and with short names instead of AIs for the fields
       encoded in the path.
 - [x] Encode as GS1 messages.
+- [ ] Parse compressed GS1 Digital Link URIs is not supported.
+- [ ] Encode as compressed GS1 Dgitial Link URIs is not supported.
 
 ### GLN (Global Location Number)
 
