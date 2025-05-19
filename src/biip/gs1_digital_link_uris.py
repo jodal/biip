@@ -258,7 +258,7 @@ class GS1DigitalLinkURI:
             GS1DigitalLinkURI: The created GS1 Digital Link URI.
         """
         return GS1DigitalLinkURI(
-            value=_build_url(element_strings),
+            value=_build_uri(element_strings),
             element_strings=element_strings,
         )
 
@@ -280,7 +280,7 @@ class GS1DigitalLinkURI:
         Returns:
             str: The GS1 Digital Link URI.
         """
-        return _build_url(
+        return _build_uri(
             self.element_strings,
             domain=domain or "id.gs1.org",
             prefix=prefix,
@@ -302,7 +302,7 @@ class GS1DigitalLinkURI:
         References:
             GS1 Digital Link Standard: URI Syntax, section 4.12
         """
-        return _build_url(self.element_strings)
+        return _build_uri(self.element_strings)
 
     def as_gs1_message(self) -> GS1Message:
         """Converts the GS1 Digital Link URI to a GS1 Message."""
@@ -344,7 +344,7 @@ def _get_qualifier(
     raise ParseError(msg)
 
 
-def _build_url(
+def _build_uri(
     element_strings: GS1ElementStrings,
     *,
     domain: str = "id.gs1.org",
