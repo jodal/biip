@@ -1,37 +1,39 @@
-"""Support for GS1 Web URIs.
+"""Support for GS1 Digital Link URIs.
 
-GS1 Web URIs are HTTP(S) URIs pointing to any hostname, optionally with a path
-prefix, where GS1 element strings are encoded in the path and query parameters.
+GS1 Digital Link URIs are HTTPS URIs pointing to any hostname, optionally with a
+path prefix, where GS1 element strings are encoded in the path and query
+parameters.
 
-Examples of GS1 Web URIs:
+Examples of GS1 Digital Link URIs:
 
-- `https://id.gs1.org/gtin/614141123452/lot/ABC1/ser/12345?exp=180426`
-- `https://id.gs1.org/gtin/614141123452?3103=000195`
-- `https://id.gs1.org/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123`
+- `https://id.gs1.org/01/614141123452/lot/ABC1/ser/12345?exp=180426`
+- `https://id.gs1.org/01/614141123452?3103=000195`
+- `https://id.gs1.org/00/106141412345678908?02=00614141123452&37=25&10=ABC123`
 
-This makes it possible to use GS1 Web URIs encoded in 2D barcodes both in
-supply chain and logistics applications, as well as for consumers to look up
+This makes it possible to use GS1 Digital Link URIs encoded in 2D barcodes both
+in supply chain and logistics applications, as well as for consumers to look up
 product information.
 
 References:
-    https://www.gs1.org/standards/Digital-Link/1-0
+    https://www.gs1.org/standards/gs1-digital-link
 
 ## Example
 
-If you only want to parse GS1 Web URIs, you can import the GS1 Web URI parser
-directly instead of using [`biip.parse()`][biip.parse].
+If you only want to parse GS1 Digital Link URIs, you can import the GS1 Digital
+Link URI parser directly instead of using [`biip.parse()`][biip.parse].
 
-    >>> from biip.gs1_web_uris import GS1WebURI
+    >>> from biip.gs1_digital_link_uris import GS1DigitalLinkURI
 
-If the parsing succeeds, it returns a [`GS1WebURI`][biip.gs1_web_uris.GS1WebURI] object.
+If the parsing succeeds, it returns a
+[`GS1DigitalLinkURI`][biip.gs1_digital_link_uris.GS1DigitalLinkURI] object.
 
-    >>> web_uri = GS1WebURI.parse("https://id.gs1.org/sscc/106141412345678908?02=00614141123452&37=25&10=ABC123")
+    >>> dl_uri = GS1DigitalLinkURI.parse("https://id.gs1.org/00/106141412345678908?02=00614141123452&37=25&10=ABC123")
 
 In this case, the URI is parsed into the SSCC of a shipping container, the GTIN
 of the product within the shipping container, the number of item within, and the
 batch number.
 
-    >>> pprint(web_uri.element_strings)
+    >>> pprint(dl_uri.element_strings)
     [
         GS1ElementString(
             ai=GS1ApplicationIdentifier(
@@ -135,8 +137,8 @@ if TYPE_CHECKING:
 
 
 @dataclass(frozen=True)
-class GS1WebURI:
-    """A GS1 Web URI is a URI that contains GS1 element strings."""
+class GS1DigitalLinkURI:
+    """A GS1 Digital Link URI is a URI that contains GS1 element strings."""
 
     value: str
     """Raw unprocessed value."""
@@ -154,15 +156,15 @@ class GS1WebURI:
         value: str,
         *,
         config: ParseConfig | None = None,
-    ) -> GS1WebURI:
-        """Parse a string as a GS1 Web URI.
+    ) -> GS1DigitalLinkURI:
+        """Parse a string as a GS1 Digital Link URI.
 
         Args:
             value: The string to parse.
             config: The parse configuration.
 
         Returns:
-            The parsed GS1 Web URI.
+            The parsed GS1 Digital Link URI.
 
         Raises:
             ParseError: If the parsing fails.
@@ -244,17 +246,19 @@ class GS1WebURI:
         return cls(value=value, element_strings=element_strings)
 
     @classmethod
-    def from_element_strings(cls, element_strings: GS1ElementStrings) -> GS1WebURI:
-        """Create a GS1 Web URI from a list of GS1 element strings.
+    def from_element_strings(
+        cls, element_strings: GS1ElementStrings
+    ) -> GS1DigitalLinkURI:
+        """Create a GS1 Digital Link URI from a list of GS1 element strings.
 
         Args:
             element_strings: A list of GS1 element strings.
 
         Returns:
-            GS1WebURI: The created GS1 Web URI.
+            GS1DigitalLinkURI: The created GS1 Digital Link URI.
         """
-        return GS1WebURI(
-            value=_build_url(element_strings),
+        return GS1DigitalLinkURI(
+            value=_build_uri(element_strings),
             element_strings=element_strings,
         )
 
@@ -263,28 +267,24 @@ class GS1WebURI:
         *,
         domain: str | None = None,
         prefix: str | None = None,
-        short_names: bool = False,
     ) -> str:
-        """Render as a GS1 Web URI.
+        """Render as a GS1 Digital Link URI.
 
         Args:
             domain: The domain name to use in the URI. Defaults to `id.gs1.org`.
             prefix: The path prefix to use in the URI. Defaults to no prefix.
-            short_names: Whether to use short names for AI values in the URI
-                path. Defaults to False.
 
         Returns:
-            str: The GS1 Web URI.
+            str: The GS1 Digital Link URI.
         """
-        return _build_url(
+        return _build_uri(
             self.element_strings,
             domain=domain or "id.gs1.org",
             prefix=prefix,
-            short_names=short_names,
         )
 
     def as_canonical_uri(self) -> str:
-        """Render as a canonical GS1 Web URI.
+        """Render as a canonical GS1 Digital Link URI.
 
         Canonical URIs:
 
@@ -293,15 +293,15 @@ class GS1WebURI:
         - Excludes all query parameters that are not valid application identifiers.
 
         Returns:
-            str: The canonical GS1 Web URI.
+            str: The canonical GS1 Digital Link URI.
 
         References:
-            GS1 Web URI Structure Standard, section 5.2
+            GS1 Digital Link Standard: URI Syntax, section 4.12
         """
-        return _build_url(self.element_strings)
+        return _build_uri(self.element_strings)
 
     def as_gs1_message(self) -> GS1Message:
-        """Converts the GS1 Web URI to a GS1 Message."""
+        """Converts the GS1 Digital Link URI to a GS1 Message."""
         from biip.gs1_messages import GS1Message
 
         return GS1Message.from_element_strings(self.element_strings)
@@ -324,28 +324,25 @@ def _get_qualifier(
     if not expected_qualifiers:
         msg = f"Did not expect a qualifier, got {qualifier_key!r}."
         raise ParseError(msg)
-    expected_qualifier_names = "/".join(
-        f"{eq.ai.ai}/{eq.short_name}" for eq in expected_qualifiers
-    )
+    expected_qualifier_names = ", ".join(f"{eq.ai.ai}" for eq in expected_qualifiers)
     while expected_qualifiers:
         # Consume the expected qualifier, so that they can only be used
         # once, and only in order.
         qualifier = expected_qualifiers.pop(0)
-        if qualifier_key in (qualifier.ai.ai, qualifier.short_name):
+        if qualifier_key == qualifier.ai.ai:
             return qualifier
     msg = (
-        f"Expected one of {expected_qualifier_names} as qualifier, "
+        f"Expected one of ({expected_qualifier_names}) as qualifier, "
         f"got {qualifier_key!r}."
     )
     raise ParseError(msg)
 
 
-def _build_url(
+def _build_uri(
     element_strings: GS1ElementStrings,
     *,
     domain: str = "id.gs1.org",
     prefix: str | None = None,
-    short_names: bool = False,
 ) -> str:
     primary_identifiers = [
         pi for pi in _PRIMARY_IDENTIFIERS if element_strings.get(ai=pi.ai)
@@ -362,16 +359,10 @@ def _build_url(
     pi_element_string = element_strings.get(ai=primary_identifier.ai)
     assert pi_element_string
 
-    qualifiers = {
-        q: es
+    qualifiers = [
+        es
         for q in primary_identifier.qualifiers
         if (es := element_strings.get(ai=q.ai))
-    }
-
-    other_element_strings = [
-        es
-        for es in element_strings
-        if es not in (pi_element_string, *qualifiers.values())
     ]
 
     if prefix is not None:
@@ -385,18 +376,17 @@ def _build_url(
     else:
         path = ""
 
-    if short_names:
-        path += f"/{primary_identifier.short_name}/{pi_element_string.value}"
-    else:
-        path += f"/{pi_element_string.ai.ai}/{pi_element_string.value}"
+    path += f"/{pi_element_string.ai.ai}/{pi_element_string.value}"
 
-    for qualifier, element_string in qualifiers.items():
-        if short_names:
-            path += f"/{qualifier.short_name}/{element_string.value}"
-        else:
-            path += f"/{element_string.ai.ai}/{element_string.value}"
+    for element_string in qualifiers:
+        path += f"/{element_string.ai.ai}/{element_string.value}"
 
-    params: dict[str, str] = {es.ai.ai: es.value for es in other_element_strings}
+    other_element_strings = [
+        es for es in element_strings if es not in (pi_element_string, *qualifiers)
+    ]
+    # Sort params by AI in lexicographical order
+    sorted_element_strings = sorted(other_element_strings, key=lambda es: es.ai.ai)
+    params: dict[str, str] = {es.ai.ai: es.value for es in sorted_element_strings}
 
     return urlunsplit(
         [
@@ -412,146 +402,78 @@ def _build_url(
 @dataclass(frozen=True)
 class _Component:
     ai: GS1ApplicationIdentifier
-    short_name: str
     zfill_to_width: int | None = None
     qualifiers: tuple[_Component, ...] = field(default_factory=tuple)
 
 
 _PRIMARY_IDENTIFIERS = [
     _Component(
-        ai=GS1ApplicationIdentifier.extract("01"),
-        short_name="gtin",
+        ai=GS1ApplicationIdentifier.extract("01"),  # gtin
         zfill_to_width=14,
         qualifiers=(
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("22"),
-                short_name="cpv",
-            ),
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("10"),
-                short_name="lot",
-            ),
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("21"),
-                short_name="ser",
-            ),
+            _Component(ai=GS1ApplicationIdentifier.extract("22")),  # cpv
+            _Component(ai=GS1ApplicationIdentifier.extract("10")),  # lot
+            _Component(ai=GS1ApplicationIdentifier.extract("21")),  # ser
+            _Component(ai=GS1ApplicationIdentifier.extract("235")),  # tpx
         ),
     ),
     _Component(
-        ai=GS1ApplicationIdentifier.extract("8006"),
-        short_name="itip",
+        ai=GS1ApplicationIdentifier.extract("8006"),  # itip
         qualifiers=(
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("22"),
-                short_name="cpv",
-            ),
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("10"),
-                short_name="lot",
-            ),
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("21"),
-                short_name="ser",
-            ),
+            _Component(ai=GS1ApplicationIdentifier.extract("22")),  # cpv
+            _Component(ai=GS1ApplicationIdentifier.extract("10")),  # lot
+            _Component(ai=GS1ApplicationIdentifier.extract("21")),  # ser
         ),
     ),
+    _Component(ai=GS1ApplicationIdentifier.extract("8013")),  # gmn
     _Component(
-        ai=GS1ApplicationIdentifier.extract("8013"),
-        short_name="gmn",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("8010"),
-        short_name="cpid",
+        ai=GS1ApplicationIdentifier.extract("8010"),  # cpid
         qualifiers=(
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("8011"),
-                short_name="cpsn",
-            ),
+            _Component(ai=GS1ApplicationIdentifier.extract("8011")),  # cpsn
         ),
     ),
     _Component(
-        ai=GS1ApplicationIdentifier.extract("410"),
-        short_name="shipTo",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("411"),
-        short_name="billTo",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("412"),
-        short_name="purchasedFrom",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("413"),
-        short_name="shipFor",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("414"),
-        short_name="gln",
+        ai=GS1ApplicationIdentifier.extract("414"),  # gln
         qualifiers=(
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("254"),
-                short_name="glnx",
-            ),
+            _Component(ai=GS1ApplicationIdentifier.extract("254")),  # glnx
+            _Component(ai=GS1ApplicationIdentifier.extract("7040")),  # uic-ext
         ),
     ),
     _Component(
-        ai=GS1ApplicationIdentifier.extract("415"),
-        short_name="payTo",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("416"),
-        short_name="glnProd",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("8017"),
-        short_name="gsrnp",
+        ai=GS1ApplicationIdentifier.extract("415"),  # payTo
         qualifiers=(
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("8019"),
-                short_name="srin",
-            ),
+            _Component(ai=GS1ApplicationIdentifier.extract("8020")),  # refNo
         ),
     ),
     _Component(
-        ai=GS1ApplicationIdentifier.extract("8018"),
-        short_name="gsrn",
+        ai=GS1ApplicationIdentifier.extract("417"),  # partyGln
         qualifiers=(
-            _Component(
-                ai=GS1ApplicationIdentifier.extract("8019"),
-                short_name="srin",
-            ),
+            _Component(ai=GS1ApplicationIdentifier.extract("7040")),  # uic-ext
         ),
     ),
     _Component(
-        ai=GS1ApplicationIdentifier.extract("255"),
-        short_name="gcn",
+        ai=GS1ApplicationIdentifier.extract("8017"),  # gsrnp
+        qualifiers=(
+            _Component(ai=GS1ApplicationIdentifier.extract("8019")),  # srin
+        ),
     ),
     _Component(
-        ai=GS1ApplicationIdentifier.extract("00"),
-        short_name="sscc",
+        ai=GS1ApplicationIdentifier.extract("8018"),  # gsrn
+        qualifiers=(
+            _Component(ai=GS1ApplicationIdentifier.extract("8019")),  # srin
+        ),
     ),
+    _Component(ai=GS1ApplicationIdentifier.extract("255")),  # gcn
+    _Component(ai=GS1ApplicationIdentifier.extract("00")),  # sscc
+    _Component(ai=GS1ApplicationIdentifier.extract("253")),  # gdti
+    _Component(ai=GS1ApplicationIdentifier.extract("401")),  # ginc
+    _Component(ai=GS1ApplicationIdentifier.extract("402")),  # gsin
+    _Component(ai=GS1ApplicationIdentifier.extract("8003")),  # grai
     _Component(
-        ai=GS1ApplicationIdentifier.extract("253"),
-        short_name="gdti",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("401"),
-        short_name="ginc",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("402"),
-        short_name="gsin",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("8003"),
-        short_name="grai",
-    ),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("8004"),
-        short_name="giai",
+        ai=GS1ApplicationIdentifier.extract("8004"),  # giai
+        qualifiers=(
+            _Component(ai=GS1ApplicationIdentifier.extract("7040")),  # uic-ext
+        ),
     ),
 ]
-_PRIMARY_IDENTIFIER_MAP = {pi.short_name: pi for pi in _PRIMARY_IDENTIFIERS} | {
-    pi.ai.ai: pi for pi in _PRIMARY_IDENTIFIERS
-}
+_PRIMARY_IDENTIFIER_MAP = {pi.ai.ai: pi for pi in _PRIMARY_IDENTIFIERS}

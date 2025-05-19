@@ -4,6 +4,53 @@ When major versions of Biip are released, we try to keep the upgrade path as
 smooth as possible. However, there are some breaking changes that you need to
 consider when upgrading from one major version to another.
 
+## Upgrading from 4.x to 5.x
+
+### GS1 Web URIs are now GS1 Digital Link URIs
+
+GS1 Digital Link standard v1.1 renamed the concept from "Web URI" to "Digital
+Link URI". The corresponding APIs in Biip have been renamed.
+
+- `biip.ParseResult.gs1_web_uri` field has moved to
+  [`biip.ParseResult.gs1_digital_link_uri`][biip.ParseResult.gs1_digital_link_uri]
+  (PR #396)
+
+- `biip.ParseResult.gs1_web_uri_error` field has moved to
+  [`biip.ParseResult.gs1_digital_link_uri_error`][biip.ParseResult.gs1_digital_link_uri_error]
+  (PR #396)
+
+- `biip.gs1_messages.GS1Message.as_gs1_web_uri()` has moved to
+  [`biip.gs1_messages.GS1Message.as_gs1_digital_link_uri()`][biip.gs1_messages.GS1Message.as_gs1_digital_link_uri]
+  (PR #396)
+
+- `biip.gs1_web_uris.GS1WebURI` has moved to
+  [`biip.gs1_digital_link_uris.GS1DigitalLinkURI`][biip.gs1_digital_link_uris.GS1DigitalLinkURI]
+  (PR #396)
+
+- `biip.symbology.GS1Symbology.with_gs1_web_uri()` has moved to
+  [`biip.symbology.GS1Symbology.with_gs1_digital_link_uri()`][biip.symbology.GS1Symbology.with_gs1_digital_link_uri]
+  (PR #396)
+
+### GS1 Application Identifier aliases in URIs are not supported
+
+GS1 Digital Link standard v1.2 deprecated and v1.3 removed the concept of
+aliases. Biip no longer supports aliases in URIs, as this is recommended to not
+support in newer implementations to reduce complexity.
+
+That is, the following is not supported:
+
+```
+https://id.gs1.org/gtin/07032069804988100329/lot/ABC
+```
+
+But this is supported:
+
+```
+https://id.gs1.org/01/07032069804988100329/10/ABC
+```
+
+(Fixes: #394, PR: #396)
+
 ## Upgrading from 3.x to 4.x
 
 ### Result objects are immutable

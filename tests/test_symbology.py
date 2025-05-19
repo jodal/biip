@@ -13,9 +13,9 @@ def test_gs1_symbology_with_gs1_messages() -> None:
     assert GS1Symbology.GS1_128 in GS1Symbology.with_gs1_messages()
 
 
-def test_gs1_symbology_with_gs1_web_uri() -> None:
-    assert GS1Symbology.GS1_DATAMATRIX in GS1Symbology.with_gs1_web_uri()
-    assert GS1Symbology.GS1_QR_CODE in GS1Symbology.with_gs1_web_uri()
+def test_gs1_symbology_with_gs1_digital_link_uri() -> None:
+    assert GS1Symbology.GS1_DATAMATRIX in GS1Symbology.with_gs1_digital_link_uri()
+    assert GS1Symbology.GS1_QR_CODE in GS1Symbology.with_gs1_digital_link_uri()
 
 
 def test_gs1_symbology_with_gtin() -> None:

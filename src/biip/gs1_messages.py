@@ -123,7 +123,7 @@ from biip.gs1_application_identifiers import _GS1_APPLICATION_IDENTIFIERS
 from biip.gs1_element_strings import GS1ElementString, GS1ElementStrings
 
 if TYPE_CHECKING:
-    from biip.gs1_web_uris import GS1WebURI
+    from biip.gs1_digital_link_uris import GS1DigitalLinkURI
 
 
 @dataclass(frozen=True)
@@ -267,8 +267,8 @@ class GS1Message:
         """
         return "".join(es.as_hri() for es in self.element_strings)
 
-    def as_gs1_web_uri(self) -> GS1WebURI:
-        """Convert to a GS1 Web URI."""
-        from biip.gs1_web_uris import GS1WebURI
+    def as_gs1_digital_link_uri(self) -> GS1DigitalLinkURI:
+        """Convert to a GS1 Digital Link URI."""
+        from biip.gs1_digital_link_uris import GS1DigitalLinkURI
 
-        return GS1WebURI.from_element_strings(self.element_strings)
+        return GS1DigitalLinkURI.from_element_strings(self.element_strings)

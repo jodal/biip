@@ -19,6 +19,9 @@ The library can interpret the following formats:
 - GS1 AI element strings,
   commonly found in GS1-128 barcodes.
 
+- GS1 Digital Link URIs,
+  commonly found in QR codes and Data Matrix barcodes.
+
 - UPC-A and UPC-E numbers, as found in UPC-A and UPC-E barcodes.
 
 For a quickstart guide and a complete API reference,
