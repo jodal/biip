@@ -241,17 +241,17 @@ def test_parse_with_invalid_element_values(
         (
             # "15" is not a valid qualifier for GTIN
             "https://id.gs1.org/01/614141123452/15/20250324",
-            r"^Expected one of \(22, 10, 21\) as qualifier, got '15'.$",
+            r"^Expected one of \(22, 10, 21, 235\) as qualifier, got '15'.$",
         ),
         (
             # "22" is a valid qualifier, but not after "10"
             "https://id.gs1.org/01/614141123452/10/ABC123/22/123456789",
-            r"^Expected one of \(21\) as qualifier, got '22'.$",
+            r"^Expected one of \(21, 235\) as qualifier, got '22'.$",
         ),
         (
             # "10" is a valid qualifier, but not after "21"
             "https://id.gs1.org/01/01234567890128/21/12345XYZ/10/ABC123",
-            r"^Did not expect a qualifier, got '10'.$",
+            r"^Expected one of \(235\) as qualifier, got '10'.$",
         ),
         (
             # "10" is not a valid qualifier for SSCC

@@ -407,51 +407,72 @@ class _Component:
 
 _PRIMARY_IDENTIFIERS = [
     _Component(
-        ai=GS1ApplicationIdentifier.extract("01"),
+        ai=GS1ApplicationIdentifier.extract("01"),  # gtin
         zfill_to_width=14,
         qualifiers=(
-            _Component(ai=GS1ApplicationIdentifier.extract("22")),
-            _Component(ai=GS1ApplicationIdentifier.extract("10")),
-            _Component(ai=GS1ApplicationIdentifier.extract("21")),
+            _Component(ai=GS1ApplicationIdentifier.extract("22")),  # cpv
+            _Component(ai=GS1ApplicationIdentifier.extract("10")),  # lot
+            _Component(ai=GS1ApplicationIdentifier.extract("21")),  # ser
+            _Component(ai=GS1ApplicationIdentifier.extract("235")),  # tpx
         ),
     ),
     _Component(
-        ai=GS1ApplicationIdentifier.extract("8006"),
+        ai=GS1ApplicationIdentifier.extract("8006"),  # itip
         qualifiers=(
-            _Component(ai=GS1ApplicationIdentifier.extract("22")),
-            _Component(ai=GS1ApplicationIdentifier.extract("10")),
-            _Component(ai=GS1ApplicationIdentifier.extract("21")),
+            _Component(ai=GS1ApplicationIdentifier.extract("22")),  # cpv
+            _Component(ai=GS1ApplicationIdentifier.extract("10")),  # lot
+            _Component(ai=GS1ApplicationIdentifier.extract("21")),  # ser
         ),
     ),
-    _Component(ai=GS1ApplicationIdentifier.extract("8013")),
+    _Component(ai=GS1ApplicationIdentifier.extract("8013")),  # gmn
     _Component(
-        ai=GS1ApplicationIdentifier.extract("8010"),
-        qualifiers=(_Component(ai=GS1ApplicationIdentifier.extract("8011")),),
-    ),
-    _Component(ai=GS1ApplicationIdentifier.extract("410")),
-    _Component(ai=GS1ApplicationIdentifier.extract("411")),
-    _Component(ai=GS1ApplicationIdentifier.extract("412")),
-    _Component(ai=GS1ApplicationIdentifier.extract("413")),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("414"),
-        qualifiers=(_Component(ai=GS1ApplicationIdentifier.extract("254")),),
-    ),
-    _Component(ai=GS1ApplicationIdentifier.extract("415")),
-    _Component(ai=GS1ApplicationIdentifier.extract("416")),
-    _Component(
-        ai=GS1ApplicationIdentifier.extract("8017"),
-        qualifiers=(_Component(ai=GS1ApplicationIdentifier.extract("8019")),),
+        ai=GS1ApplicationIdentifier.extract("8010"),  # cpid
+        qualifiers=(
+            _Component(ai=GS1ApplicationIdentifier.extract("8011")),  # cpsn
+        ),
     ),
     _Component(
-        ai=GS1ApplicationIdentifier.extract("8018"),
-        qualifiers=(_Component(ai=GS1ApplicationIdentifier.extract("8019")),),
+        ai=GS1ApplicationIdentifier.extract("414"),  # gln
+        qualifiers=(
+            _Component(ai=GS1ApplicationIdentifier.extract("254")),  # glnx
+            _Component(ai=GS1ApplicationIdentifier.extract("7040")),  # uic-ext
+        ),
     ),
-    _Component(ai=GS1ApplicationIdentifier.extract("255")),
-    _Component(ai=GS1ApplicationIdentifier.extract("00")),
-    _Component(ai=GS1ApplicationIdentifier.extract("253")),
-    _Component(ai=GS1ApplicationIdentifier.extract("401")),
-    _Component(ai=GS1ApplicationIdentifier.extract("402")),
-    _Component(ai=GS1ApplicationIdentifier.extract("8003")),
-    _Component(ai=GS1ApplicationIdentifier.extract("8004")),
+    _Component(
+        ai=GS1ApplicationIdentifier.extract("415"),  # payTo
+        qualifiers=(
+            _Component(ai=GS1ApplicationIdentifier.extract("8020")),  # refNo
+        ),
+    ),
+    _Component(
+        ai=GS1ApplicationIdentifier.extract("417"),  # partyGln
+        qualifiers=(
+            _Component(ai=GS1ApplicationIdentifier.extract("7040")),  # uic-ext
+        ),
+    ),
+    _Component(
+        ai=GS1ApplicationIdentifier.extract("8017"),  # gsrnp
+        qualifiers=(
+            _Component(ai=GS1ApplicationIdentifier.extract("8019")),  # srin
+        ),
+    ),
+    _Component(
+        ai=GS1ApplicationIdentifier.extract("8018"),  # gsrn
+        qualifiers=(
+            _Component(ai=GS1ApplicationIdentifier.extract("8019")),  # srin
+        ),
+    ),
+    _Component(ai=GS1ApplicationIdentifier.extract("255")),  # gcn
+    _Component(ai=GS1ApplicationIdentifier.extract("00")),  # sscc
+    _Component(ai=GS1ApplicationIdentifier.extract("253")),  # gdti
+    _Component(ai=GS1ApplicationIdentifier.extract("401")),  # ginc
+    _Component(ai=GS1ApplicationIdentifier.extract("402")),  # gsin
+    _Component(ai=GS1ApplicationIdentifier.extract("8003")),  # grai
+    _Component(
+        ai=GS1ApplicationIdentifier.extract("8004"),  # giai
+        qualifiers=(
+            _Component(ai=GS1ApplicationIdentifier.extract("7040")),  # uic-ext
+        ),
+    ),
 ]
 _PRIMARY_IDENTIFIER_MAP = {pi.ai.ai: pi for pi in _PRIMARY_IDENTIFIERS}
