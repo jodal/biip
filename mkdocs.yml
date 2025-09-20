@@ -24,7 +24,12 @@ nav:
       - api/sscc.md
       - api/symbology.md
       - api/upc.md
-  - upgrading.md
+  - Upgrading:
+      - upgrading/index.md
+      - From 1.x to 2.x: upgrading/v2.md
+      - From 2.x to 3.x: upgrading/v3.md
+      - From 3.x to 4.x: upgrading/v4.md
+      - From 4.x to 5.x: upgrading/v5.md
 
 extra:
   social:
