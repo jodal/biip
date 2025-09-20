@@ -77,6 +77,10 @@ theme:
   features:
     - content.action.edit
     - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.sections
   icon:
     logo: fontawesome/solid/barcode
     repo: fontawesome/brands/github
