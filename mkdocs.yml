@@ -53,6 +53,7 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tasklist:
       custom_checkbox: true
+
 plugins:
   - mkdocstrings:
       default_handler: python
@@ -106,3 +107,7 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
+
+watch:
+  - docs
+  - src
