@@ -32,3 +32,8 @@ GTINs, this worked just like before. Because the data was prefixed by a
 Symbology Identifier, Biip only tried the GTIN parser. This is reflected
 in the lack of both results and error messages from the UPC, SSCC and GS1
 message parsers.
+
+/// note | Learn more
+To learn more about Symbology Identifiers, see the
+[`biip.symbology`](../reference/symbology.md) reference documentation.
+///

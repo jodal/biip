@@ -40,3 +40,8 @@ ParseResult(
     )
 )
 ```
+
+/// note | Learn more
+To learn more about Biip's high-level API, see the
+[`biip`](../reference/biip.md) reference documentation.
+///

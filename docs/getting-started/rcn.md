@@ -73,3 +73,8 @@ contain the same data. The difference is that while `price` is a simple
 [`Decimal`][decimal.Decimal] type, `money` also carries currency information.
 The `money` field is only set if the optional dependency
 [`py-moneyed`](https://pypi.org/project/py-moneyed/) is installed.
+
+/// note | Learn more
+To learn more about RCN, see the
+[`biip.rcn`](../reference/rcn.md) reference documentation.
+///

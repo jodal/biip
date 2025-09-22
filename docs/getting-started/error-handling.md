@@ -25,3 +25,8 @@ ParseResult(
 Biip always checks that the GTIN check digit is correct. If the check
 digit doesn't match the payload, parsing fails. In this case, Biip
 rejected `12345678` as a GTIN-8.
+
+/// note | Learn more
+To learn more about Biip's high-level API, see the
+[`biip`](../reference/biip.md) reference documentation.
+///

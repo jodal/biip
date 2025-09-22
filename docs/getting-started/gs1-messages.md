@@ -299,3 +299,8 @@ we also need to tell Biip what character to expect by creating a
 ```
 
 Once again, all three element strings was successfully extracted.
+
+/// note | Learn more
+To learn more about GS1 messages, see the
+[`biip.gs1_messages`](../reference/gs1_messages.md) reference documentation.
+///

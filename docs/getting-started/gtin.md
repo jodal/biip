@@ -49,3 +49,8 @@ lookup:
 By consistently using GTIN-14 internally in your application, you can
 avoid a lot of substring matching to find the database objects related
 to the barcode.
+
+/// note | Learn more
+To learn more about GTIN, see the
+[`biip.gtin`](../reference/gtin.md) reference documentation.
+///

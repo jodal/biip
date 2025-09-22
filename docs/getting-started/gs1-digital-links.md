@@ -116,3 +116,9 @@ Digital Link URI, Biip can also be helpful:
 ... )
 'https://another.example.net/database/01/07032069804988/10/0329?15=210526'
 ```
+
+/// note | Learn more
+To learn more about GS1 messages, see the
+[`biip.gs1_digital_link_uris`](../reference/gs1_digital_link_uris.md)
+reference documentation.
+///

@@ -51,6 +51,7 @@ extra_javascript:
   - javascript/readthedocs.js
 
 markdown_extensions:
+  - pymdownx.blocks.admonition
   - pymdownx.highlight:
       anchor_linenums: true
       default_lang: python
