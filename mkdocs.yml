@@ -8,7 +8,9 @@ repo_url: https://github.com/jodal/biip
 edit_uri: edit/main/docs/
 
 nav:
-  - index.md
+  - Introduction:
+      - index.md
+      - features.md
   - Getting started:
       - getting-started/index.md
       - getting-started/parsing.md
