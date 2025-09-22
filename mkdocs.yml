@@ -9,7 +9,16 @@ edit_uri: edit/main/docs/
 
 nav:
   - index.md
-  - quickstart.md
+  - Getting started:
+      - getting-started/index.md
+      - getting-started/parsing.md
+      - getting-started/error-handling.md
+      - getting-started/symbology-identifiers.md
+      - getting-started/gtin.md
+      - getting-started/rcn.md
+      - getting-started/gs1-messages.md
+      - getting-started/gs1-digital-links.md
+      - getting-started/deep-dive.md
   - Reference:
       - reference/biip.md
       - reference/checksums.md
