@@ -11,19 +11,19 @@ nav:
   - index.md
   - quickstart.md
   - Reference:
-      - api/index.md
-      - api/checksums.md
-      - api/gln.md
-      - api/gs1_application_identifiers.md
-      - api/gs1_digital_link_uris.md
-      - api/gs1_element_strings.md
-      - api/gs1_messages.md
-      - api/gs1_prefixes.md
-      - api/gtin.md
-      - api/rcn.md
-      - api/sscc.md
-      - api/symbology.md
-      - api/upc.md
+      - reference/biip.md
+      - reference/checksums.md
+      - reference/gln.md
+      - reference/gs1_application_identifiers.md
+      - reference/gs1_digital_link_uris.md
+      - reference/gs1_element_strings.md
+      - reference/gs1_messages.md
+      - reference/gs1_prefixes.md
+      - reference/gtin.md
+      - reference/rcn.md
+      - reference/sscc.md
+      - reference/symbology.md
+      - reference/upc.md
   - Upgrading:
       - upgrading/index.md
       - From 1.x to 2.x: upgrading/v2.md
