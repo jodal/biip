@@ -20,7 +20,16 @@ def main() -> None:
 
 def download(url: str) -> bytes:
     """Download the data from GS1."""
-    return httpx.get(url, timeout=30).content
+    return httpx.get(
+        url,
+        headers={
+            "user-agent": (  # Work around request blocking
+                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+            ),
+        },
+        timeout=30,
+    ).content
 
 
 def parse(html_content: bytes) -> TrieNode:

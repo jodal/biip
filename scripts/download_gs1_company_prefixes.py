@@ -20,7 +20,11 @@ def main() -> None:
 
 def download(url: str) -> bytes:
     """Download the data from GS1."""
-    return httpx.get(url, timeout=30).content
+    return httpx.get(
+        url,
+        headers={"user-agent": "curl/8.16.0"},  # Work around request blocking
+        timeout=30,
+    ).content
 
 
 def parse(xml_content: bytes) -> TrieNode:
