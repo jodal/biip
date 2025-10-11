@@ -12,6 +12,9 @@ classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Libraries",
 ]
+dependencies = [
+    "typing-extensions>=4.1; python_version<'3.11'"
+]
 
 [project.optional-dependencies]
 money = ["py-moneyed>=0.8"]
