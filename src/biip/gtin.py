@@ -57,7 +57,7 @@ from typing import TYPE_CHECKING, Any
 from biip import EncodeError, ParseError
 from biip._parser import ParseConfig
 from biip.checksums import gs1_standard_check_digit
-from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
+from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix, GS18Prefix
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -112,8 +112,11 @@ class Gtin:
     Classification is done after stripping leading zeros.
     """
 
-    prefix: GS1Prefix | None
+    prefix: GS1Prefix | GS18Prefix | None
     """The [GS1 Prefix][biip.gs1_prefixes.GS1Prefix].
+
+    When parsing GTIN-8, this will be a [GS1-8
+    Prefix][biip.gs1_prefixes.GS18Prefix] instead.
 
     Indicating what GS1 country organization that assigned
     code range.
@@ -201,11 +204,14 @@ class Gtin:
         elif gtin_format == GtinFormat.GTIN_12:
             # Add a zero to convert U.P.C. Company Prefix to GS1 Company Prefix
             prefix_value = stripped_value.zfill(13)
-        elif gtin_format == GtinFormat.GTIN_8:
-            prefix_value = stripped_value.zfill(12)
 
-        prefix = GS1Prefix.extract(prefix_value)
-        company_prefix = GS1CompanyPrefix.extract(prefix_value)
+        prefix: GS1Prefix | GS18Prefix | None
+        if gtin_format == GtinFormat.GTIN_8:
+            prefix = GS18Prefix.extract(prefix_value)
+            company_prefix = None
+        else:
+            prefix = GS1Prefix.extract(prefix_value)
+            company_prefix = GS1CompanyPrefix.extract(prefix_value)
 
         calculated_check_digit = gs1_standard_check_digit(payload)
         if check_digit != calculated_check_digit:

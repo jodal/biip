@@ -10,13 +10,11 @@ example, the value can be interpreted as either a GTIN or a GS1 Message.
     Gtin(
         value='96385074',
         format=GtinFormat.GTIN_8,
-        prefix=GS1Prefix(
-            value='00009',
-            usage='GS1 US'
+        prefix=GS18Prefix(
+            value='963',
+            usage='Global Office - GTIN-8'
         ),
-        company_prefix=GS1CompanyPrefix(
-            value='0000963'
-        ),
+        company_prefix=None,
         payload='9638507',
         check_digit=4
     )
