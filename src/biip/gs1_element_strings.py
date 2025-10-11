@@ -31,6 +31,7 @@ Examples:
             company_prefix=GS1CompanyPrefix(
                 value='703206'
             ),
+            item_reference='980498',
             payload='703206980498',
             check_digit=8
         )

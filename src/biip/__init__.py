@@ -15,6 +15,7 @@ example, the value can be interpreted as either a GTIN or a GS1 Message.
             usage='Global Office - GTIN-8'
         ),
         company_prefix=None,
+        item_reference=None,
         payload='9638507',
         check_digit=4
     )

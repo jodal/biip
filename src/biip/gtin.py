@@ -30,6 +30,7 @@ If parsing succeeds, it returns a [`Gtin`][biip.gtin.Gtin] object.
         company_prefix=GS1CompanyPrefix(
             value='703206'
         ),
+        item_reference='980498',
         payload='703206980498',
         check_digit=8
     )
@@ -129,6 +130,14 @@ class Gtin:
     Identifying the company that issued the GTIN.
     """
 
+    item_reference: str | None
+    """The item reference part of the GTIN.
+
+    For GTIN-12/13/14, this is the part of the payload that is assigned by the
+    company that owns the company prefix. It is only set if the company prefix
+    is known.
+    """
+
     payload: str
     """The actual payload.
 
@@ -222,9 +231,15 @@ class Gtin:
             case GtinFormat.GTIN_8:
                 prefix = GS18Prefix.extract(prefixed_value)
                 company_prefix = None
+                item_reference = None
             case GtinFormat.GTIN_12 | GtinFormat.GTIN_13 | GtinFormat.GTIN_14:
                 prefix = GS1Prefix.extract(prefixed_value)
                 company_prefix = GS1CompanyPrefix.extract(prefixed_value)
+                item_reference = (
+                    prefixed_value[len(company_prefix.value) :]
+                    if company_prefix
+                    else None
+                )
             case _:  # pyright: ignore[reportUnnecessaryComparison]  # pragma: no cover
                 assert_never()  # coverage.py cannot detect that all cases are covered
 
@@ -242,6 +257,7 @@ class Gtin:
                 format=gtin_format,
                 prefix=prefix,
                 company_prefix=company_prefix,
+                item_reference=item_reference,
                 payload=payload,
                 check_digit=check_digit,
                 packaging_level=packaging_level,
@@ -256,6 +272,7 @@ class Gtin:
             format=gtin_format,
             prefix=prefix,
             company_prefix=company_prefix,
+            item_reference=item_reference,
             payload=payload,
             check_digit=check_digit,
             packaging_level=packaging_level,
@@ -267,6 +284,7 @@ class Gtin:
         yield "format", self.format
         yield "prefix", self.prefix
         yield "company_prefix", self.company_prefix
+        yield "item_reference", self.item_reference
         yield "payload", self.payload
         yield "check_digit", self.check_digit
         yield "packaging_level", self.packaging_level, None

@@ -83,6 +83,7 @@ batch number.
                 company_prefix=GS1CompanyPrefix(
                     value='0614141'
                 ),
+                item_reference='12345',
                 payload='61414112345',
                 check_digit=2
             )
