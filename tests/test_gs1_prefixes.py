@@ -3,7 +3,7 @@
 import pytest
 
 from biip import ParseError
-from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
+from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix, GS18Prefix
 
 
 @pytest.mark.parametrize("bad_value", ["abcdef", "1a2b3c"])
@@ -68,12 +68,79 @@ def test_invalid_gs1_prefix(bad_value: str) -> None:
         ("9629", GS1Prefix(value="9629", usage="GS1 Global Office - GTIN-8")),
     ],
 )
-def test_gs1_prefix(value: str, expected: GS1Prefix) -> None:
+def test_gs1_prefix(value: str, expected: GS1Prefix | None) -> None:
     assert GS1Prefix.extract(value) == expected
 
 
 def test_gs1_prefix_is_hashable() -> None:
     prefix = GS1Prefix.extract("978")
+
+    assert hash(prefix) is not None
+
+
+@pytest.mark.parametrize("bad_value", ["abcdef", "1a2b3c"])
+def test_invalid_gs1_8_prefix(bad_value: str) -> None:
+    with pytest.raises(ParseError) as exc_info:
+        GS18Prefix.extract(bad_value)
+
+    assert str(exc_info.value) == f"Failed to get GS1-8 Prefix from {bad_value!r}."
+
+
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        (
+            # Undefined prefix, too short
+            "0",
+            None,
+        ),
+        (
+            "060999",
+            GS18Prefix(
+                value="060",
+                usage="Used to issue Restricted Circulation Numbers within a company",
+            ),
+        ),
+        (
+            "139999",
+            GS18Prefix(value="139", usage="GS1 US"),
+        ),
+        (
+            # Unassigned prefix
+            "6712670000276",
+            None,
+        ),
+        (
+            "701999",
+            GS18Prefix(value="701", usage="GS1 Norway"),
+        ),
+        (
+            # GS1 Prefix 978 is ISBN, but in GS1-8 it is reserved for future use
+            "9781492053743",
+            GS18Prefix(value="978", usage="Reserved for future use"),
+        ),
+        #
+        # Exceptions defined in the GS1 prefix table's footnotes
+        ("960", GS18Prefix(value="960", usage="GS1 UK - GTIN-8")),
+        ("961", GS18Prefix(value="961", usage="GS1 UK - GTIN-8")),
+        ("9620", GS18Prefix(value="962", usage="GS1 UK - GTIN-8")),
+        ("9621", GS18Prefix(value="962", usage="GS1 UK - GTIN-8")),
+        ("9622", GS18Prefix(value="962", usage="GS1 UK - GTIN-8")),
+        ("9623", GS18Prefix(value="962", usage="GS1 UK - GTIN-8")),
+        ("9624", GS18Prefix(value="962", usage="GS1 UK - GTIN-8")),
+        ("9625", GS18Prefix(value="962", usage="GS1 Poland - GTIN-8")),
+        ("9626", GS18Prefix(value="962", usage="GS1 Poland - GTIN-8")),
+        ("9627", GS18Prefix(value="962", usage="GS1 Global Office - GTIN-8")),
+        ("9628", GS18Prefix(value="962", usage="GS1 Global Office - GTIN-8")),
+        ("9629", GS18Prefix(value="962", usage="GS1 Global Office - GTIN-8")),
+    ],
+)
+def test_gs1_8_prefix(value: str, expected: GS18Prefix | None) -> None:
+    assert GS18Prefix.extract(value) == expected
+
+
+def test_gs1_8_prefix_is_hashable() -> None:
+    prefix = GS18Prefix.extract("978")
 
     assert hash(prefix) is not None
 

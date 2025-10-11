@@ -75,8 +75,9 @@ identify trade items, such as products or services.
 - [x] Parse GTIN-13, e.g. from EAN-13 barcodes.
 - [x] Parse GTIN-14, e.g. from ITF-14 and GS1-128 barcodes.
 - [x] Extract and validate check digit.
-- [x] Extract GS1 Prefix.
-- [x] Extract GS1 Company Prefix.
+- [x] Extract GS1 Prefix from GTIN-12/13/14.
+- [x] Extract GS1-8 Prefix from GTIN-8.
+- [x] Extract GS1 Company Prefix from GTIN-12/13/14.
 - [x] Extract packaging level digit from GTIN-14.
 - [x] Encode GTIN-8 as GTIN-12/13/14.
 - [x] Encode GTIN-12 as GTIN-13/14.

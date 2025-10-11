@@ -8,7 +8,7 @@ from biip.gs1_application_identifiers import GS1ApplicationIdentifier
 from biip.gs1_digital_link_uris import GS1DigitalLinkURI
 from biip.gs1_element_strings import GS1ElementString, GS1ElementStrings
 from biip.gs1_messages import GS1Message
-from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
+from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix, GS18Prefix
 from biip.gtin import Gtin, GtinFormat
 from biip.rcn import Rcn, RcnRegion, RcnUsage
 from biip.sscc import Sscc
@@ -27,8 +27,8 @@ from biip.upc import Upc, UpcFormat
                 gtin=Gtin(
                     value="96385074",
                     format=GtinFormat.GTIN_8,
-                    prefix=GS1Prefix(value="00009", usage="GS1 US"),
-                    company_prefix=GS1CompanyPrefix(value="0000963"),
+                    prefix=GS18Prefix(value="963", usage="Global Office - GTIN-8"),
+                    company_prefix=None,
                     payload="9638507",
                     check_digit=4,
                 ),
@@ -67,8 +67,8 @@ from biip.upc import Upc, UpcFormat
                 gtin=Gtin(
                     value="96385074",
                     format=GtinFormat.GTIN_8,
-                    prefix=GS1Prefix(value="00009", usage="GS1 US"),
-                    company_prefix=GS1CompanyPrefix(value="0000963"),
+                    prefix=GS18Prefix(value="963", usage="Global Office - GTIN-8"),
+                    company_prefix=None,
                     payload="9638507",
                     check_digit=4,
                 ),
@@ -83,8 +83,8 @@ from biip.upc import Upc, UpcFormat
                 gtin=Gtin(
                     value="12345670",
                     format=GtinFormat.GTIN_8,
-                    prefix=GS1Prefix(value="00001", usage="GS1 US"),
-                    company_prefix=GS1CompanyPrefix(value="0000123"),
+                    prefix=GS18Prefix(value="123", usage="GS1 US"),
+                    company_prefix=None,
                     payload="1234567",
                     check_digit=0,
                 ),

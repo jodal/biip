@@ -3,7 +3,7 @@
 import pytest
 
 from biip import ParseError
-from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix
+from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix, GS18Prefix
 from biip.gtin import Gtin, GtinFormat
 
 
@@ -61,8 +61,8 @@ def test_parse_gtin_8(value: str) -> None:
     assert Gtin.parse(value) == Gtin(
         value=value,
         format=GtinFormat.GTIN_8,
-        prefix=GS1Prefix(value="00009", usage="GS1 US"),
-        company_prefix=GS1CompanyPrefix(value="0000963"),
+        prefix=GS18Prefix(value="963", usage="Global Office - GTIN-8"),
+        company_prefix=None,
         payload="9638507",
         check_digit=4,
     )
