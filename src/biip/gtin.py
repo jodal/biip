@@ -56,6 +56,7 @@ from typing import TYPE_CHECKING, Any
 
 from biip import EncodeError, ParseError
 from biip._config import ParseConfig
+from biip._typing import assert_never
 from biip.checksums import gs1_standard_check_digit
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix, GS18Prefix
 
@@ -147,7 +148,7 @@ class Gtin:
     """
 
     @classmethod
-    def parse(
+    def parse(  # noqa: C901, PLR0912, PLR0915
         cls,
         value: str,
         *,
@@ -188,30 +189,8 @@ class Gtin:
             raise ParseError(msg)
 
         stripped_value = _strip_leading_zeros(value)
-        assert len(stripped_value) in (8, 12, 13, 14)
-
-        num_significant_digits = len(stripped_value)
-        gtin_format = GtinFormat(num_significant_digits)
-
         payload = stripped_value[:-1]
         check_digit = int(stripped_value[-1])
-
-        packaging_level: int | None = None
-        prefix_value = stripped_value
-        if gtin_format == GtinFormat.GTIN_14:
-            packaging_level = int(stripped_value[0])
-            prefix_value = stripped_value[1:]
-        elif gtin_format == GtinFormat.GTIN_12:
-            # Add a zero to convert U.P.C. Company Prefix to GS1 Company Prefix
-            prefix_value = stripped_value.zfill(13)
-
-        prefix: GS1Prefix | GS18Prefix | None
-        if gtin_format == GtinFormat.GTIN_8:
-            prefix = GS18Prefix.extract(prefix_value)
-            company_prefix = None
-        else:
-            prefix = GS1Prefix.extract(prefix_value)
-            company_prefix = GS1CompanyPrefix.extract(prefix_value)
 
         calculated_check_digit = gs1_standard_check_digit(payload)
         if check_digit != calculated_check_digit:
@@ -220,6 +199,36 @@ class Gtin:
                 f"Expected {calculated_check_digit!r}, got {check_digit!r}."
             )
             raise ParseError(msg)
+
+        num_significant_digits = len(stripped_value)
+        assert num_significant_digits in (8, 12, 13, 14)
+        gtin_format = GtinFormat(num_significant_digits)
+
+        packaging_level: int | None = None
+        prefixed_value: str
+        match gtin_format:
+            case GtinFormat.GTIN_8 | GtinFormat.GTIN_13:
+                prefixed_value = payload
+            case GtinFormat.GTIN_12:
+                # Add a zero to convert U.P.C. Company Prefix to GS1 Company Prefix
+                prefixed_value = f"0{payload}"
+            case GtinFormat.GTIN_14:
+                packaging_level = int(payload[0])
+                prefixed_value = payload[1:]
+            case _:  # pyright: ignore[reportUnnecessaryComparison]  # pragma: no cover
+                assert_never()  # coverage.py cannot detect that all cases are covered
+
+        prefix: GS1Prefix | GS18Prefix | None
+        company_prefix: GS1CompanyPrefix | None
+        match gtin_format:
+            case GtinFormat.GTIN_8:
+                prefix = GS18Prefix.extract(prefixed_value)
+                company_prefix = None
+            case GtinFormat.GTIN_12 | GtinFormat.GTIN_13 | GtinFormat.GTIN_14:
+                prefix = GS1Prefix.extract(prefixed_value)
+                company_prefix = GS1CompanyPrefix.extract(prefixed_value)
+            case _:  # pyright: ignore[reportUnnecessaryComparison]  # pragma: no cover
+                assert_never()  # coverage.py cannot detect that all cases are covered
 
         gtin_type: type[Gtin | Rcn]
         if (
