@@ -102,6 +102,72 @@ class GS1Prefix:
 
 
 @dataclass(frozen=True)
+class GS18Prefix:
+    """GS1-8 Prefix assigned by GS1.
+
+    This prefix is specifically for GTIN-8 numbers.
+
+    The GS1-8 Prefix does not identify the origin of a product, only where the
+    number was assigned to a GS1 member organization.
+
+    References:
+        GS1 General Specifications, section 1.4.3
+
+    Examples:
+        >>> from biip.gs1_prefixes import GS18Prefix
+        >>> GS1Prefix.extract("30056640")
+        GS1Prefix(value='300', usage='GS1 France')
+    """
+
+    value: str
+    """The prefix itself."""
+
+    usage: str
+    """Description of who is using the prefix."""
+
+    @classmethod
+    def extract(cls, value: str) -> GS18Prefix | None:
+        """Extract the GS1-8 Prefix from the given value.
+
+        Args:
+            value: The string to extract a GS1-8 Prefix from.
+
+        Returns:
+            Metadata about the extracted prefix, or `None` if the prefix is unknown.
+
+        Raises:
+            ParseError: If the parsing fails.
+        """
+        if not value.isdecimal():
+            msg = f"Failed to get GS1-8 Prefix from {value!r}."
+            raise ParseError(msg)
+
+        if len(value) < 3:
+            return None
+
+        prefix = value[:3]
+        int_prefix = int(prefix)
+
+        if (0 <= int_prefix <= 99) or (200 <= int_prefix <= 299):
+            return cls(
+                value=prefix,
+                usage="Used to issue Restricted Circulation Numbers within a company",
+            )
+
+        if (100 <= int_prefix <= 199) or (300 <= int_prefix <= 976):
+            # Use the regular GS1 prefix table for these
+            gs1_prefix = GS1Prefix.extract(value)
+            if gs1_prefix is None:
+                return None
+            return GS18Prefix(value=prefix, usage=gs1_prefix.usage)
+
+        if 977 <= int_prefix <= 999:
+            return cls(value=prefix, usage="Reserved for future use")
+
+        return None  # pragma: no cover
+
+
+@dataclass(frozen=True)
 class GS1CompanyPrefix:
     """Company prefix assigned by GS1.
 
