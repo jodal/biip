@@ -136,6 +136,8 @@ class Gtin:
     For GTIN-12/13/14, this is the part of the payload that is assigned by the
     company that owns the company prefix. It is only set if the company prefix
     is known.
+
+    For GTIN-8, this is the part of the payload after the GS1-8 Prefix.
     """
 
     payload: str
@@ -231,7 +233,7 @@ class Gtin:
             case GtinFormat.GTIN_8:
                 prefix = GS18Prefix.extract(prefixed_value)
                 company_prefix = None
-                item_reference = None
+                item_reference = prefixed_value[len(prefix.value) :] if prefix else None
             case GtinFormat.GTIN_12 | GtinFormat.GTIN_13 | GtinFormat.GTIN_14:
                 prefix = GS1Prefix.extract(prefixed_value)
                 company_prefix = GS1CompanyPrefix.extract(prefixed_value)

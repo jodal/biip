@@ -63,7 +63,7 @@ def test_parse_gtin_8(value: str) -> None:
         format=GtinFormat.GTIN_8,
         prefix=GS18Prefix(value="963", usage="Global Office - GTIN-8"),
         company_prefix=None,
-        item_reference=None,
+        item_reference="8507",
         payload="9638507",
         check_digit=4,
     )
