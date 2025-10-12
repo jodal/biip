@@ -140,6 +140,9 @@ class Gtin:
     For GTIN-8, this is the part of the payload after the GS1-8 Prefix.
 
     For company RCNs, this is the part of the payload after the GS1 Prefix.
+
+    For geographical RCNs, this is a part of the payload, depending on the
+    geographical region's RCN parsing rules.
     """
 
     payload: str
