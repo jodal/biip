@@ -123,7 +123,7 @@ feel for how the data groups into three element strings:
 
 And we can dig into the parsed element strings to get all the details:
 
-```python hl_lines="13-20 25 32 37 42"
+```python hl_lines="13-21 26 33 38 43"
 >>> print(result.gs1_message.element_strings)
 [
     GS1ElementString(
@@ -141,6 +141,7 @@ And we can dig into the parsed element strings to get all the details:
             format=GtinFormat.GTIN_13,
             prefix=GS1Prefix(value='703', usage='GS1 Norway'),
             company_prefix=GS1CompanyPrefix(value='703206'),
+            item_reference='980498',
             payload='703206980498',
             check_digit=8
         )

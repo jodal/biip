@@ -8,7 +8,7 @@ Nearly all products you can buy in a store are marked with an UPC or
 EAN-13 barcode. These barcodes contain a number called GTIN, short for
 Global Trade Item Number, which can be parsed by Biip:
 
-```python hl_lines="4-11"
+```python hl_lines="4-12"
 >>> print(biip.parse("7032069804988"))
 ParseResult(
     value='7032069804988',
@@ -17,6 +17,7 @@ ParseResult(
         format=GtinFormat.GTIN_13,
         prefix=GS1Prefix(value='703', usage='GS1 Norway'),
         company_prefix=GS1CompanyPrefix(value='703206'),
+        item_reference='980498',
         payload='703206980498',
         check_digit=8
     ),

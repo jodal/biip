@@ -21,6 +21,7 @@ ParseResult(
         format=GtinFormat.GTIN_13,
         prefix=GS1Prefix(value='978', usage='Bookland (ISBN)'),
         company_prefix=None,
+        item_reference=None,
         payload='978149205374',
         check_digit=3
     )

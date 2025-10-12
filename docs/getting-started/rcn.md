@@ -5,7 +5,7 @@ and either the price or the weight are encoded in the GTIN, you are
 dealing with Restricted Circulation Numbers, or RCN, another subset of
 GTIN:
 
-```python hl_lines="4-14"
+```python hl_lines="4-15"
 >>> print(biip.parse("2011122912346"))
 ParseResult(
     value='2011122912346',
@@ -17,6 +17,7 @@ ParseResult(
             usage='Used to issue GS1 Restricted Circulation Numbers within a geographic region (MO defined)'
         ),
         company_prefix=None,
+        item_reference=None,
         payload='201112291234',
         check_digit=6
     ),
@@ -40,7 +41,7 @@ market's rules is available.
 Because of the market variations, you must specify your geographical
 region for Biip to be able to extract price or weight from the RCN:
 
-```python hl_lines="1-2 15-18"
+```python hl_lines="1-2 14 16-20"
 >>> from biip.rcn import RcnRegion
 >>> config = biip.ParseConfig(rcn_region=RcnRegion.GREAT_BRITAIN)
 >>> print(biip.parse("2011122912346", config=config))
@@ -54,6 +55,7 @@ ParseResult(
             usage='Used to issue GS1 Restricted Circulation Numbers within a geographic region (MO defined)'
         ),
         company_prefix=None,
+        item_reference='11122',
         payload='201112291234',
         check_digit=6,
         usage=RcnUsage.GEOGRAPHICAL,

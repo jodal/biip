@@ -6,7 +6,7 @@ GTIN-12, GTIN-13, or GTIN-14. Biip supports all GTIN formats.
 
 Let's use the GTIN-12 `123601057072` as another example:
 
-```python hl_lines="5-12"
+```python hl_lines="5-13"
 >>> result = biip.parse("123601057072")
 >>> print(result)
 ParseResult(
