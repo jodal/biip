@@ -92,7 +92,7 @@ country. The rules for parsing company RCNs vary from company to company, and
 are thus not standardized.
 
 - [x] Classification of RCN usage to either a geographical region or a company.
-- [x] Extract item reference from company RCNs.
+- [x] Extract item reference from RCNs.
 - [x] Parsing of variable measurements (price/weight) into `Decimal`
       values.
 - [x] Parsing of price values into `Money` values if `py-moneyed` is
