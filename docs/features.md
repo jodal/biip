@@ -78,6 +78,7 @@ identify trade items, such as products or services.
 - [x] Extract GS1 Prefix from GTIN-12/13/14.
 - [x] Extract GS1-8 Prefix from GTIN-8.
 - [x] Extract GS1 Company Prefix from GTIN-12/13/14.
+- [x] Extract item reference from GTIN-8/12/13/14.
 - [x] Extract packaging level digit from GTIN-14.
 - [x] Encode GTIN-8 as GTIN-12/13/14.
 - [x] Encode GTIN-12 as GTIN-13/14.
@@ -91,6 +92,7 @@ country. The rules for parsing company RCNs vary from company to company, and
 are thus not standardized.
 
 - [x] Classification of RCN usage to either a geographical region or a company.
+- [x] Extract item reference from company RCNs.
 - [x] Parsing of variable measurements (price/weight) into `Decimal`
       values.
 - [x] Parsing of price values into `Money` values if `py-moneyed` is

@@ -16,6 +16,7 @@ ParseResult(
         format=GtinFormat.GTIN_12,
         prefix=GS1Prefix(value='012', usage='GS1 US'),
         company_prefix=None,
+        item_reference=None,
         payload='12360105707',
         check_digit=2
     ),

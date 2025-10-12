@@ -19,9 +19,9 @@ The library can interpret the following formats:
 ```python
 >>> from rich import print
 >>> import biip
->>> print(biip.parse("]E09781492053743"))
+>>> print(biip.parse("]E05710858000781"))
 ParseResult(
-    value=']E09781492053743',
+    value=']E05710858000781',
     symbology_identifier=SymbologyIdentifier(
         value=']E0',
         iso_symbology=ISOSymbology.EAN_UPC,
@@ -29,12 +29,13 @@ ParseResult(
         gs1_symbology=GS1Symbology.EAN_13
     ),
     gtin=Gtin(
-        value='9781492053743',
+        value='5710858000781',
         format=GtinFormat.GTIN_13,
-        prefix=GS1Prefix(value='978', usage='Bookland (ISBN)'),
-        company_prefix=None,
-        payload='978149205374',
-        check_digit=3
+        prefix=GS1Prefix(value='571', usage='GS1 Denmark'),
+        company_prefix=GS1CompanyPrefix(value='5710858'),
+        item_reference='00078',
+        payload='571085800078',
+        check_digit=1
     )
 )
 ```
