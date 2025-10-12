@@ -164,7 +164,10 @@ class GS18Prefix:
         if 977 <= int_prefix <= 999:
             return cls(value=prefix, usage="Reserved for future use")
 
-        return None  # pragma: no cover
+        msg = (  # pragma: no cover
+            "Unhandled case while parsing GS1-8 Prefix. This is a bug."
+        )
+        raise NotImplementedError(msg)  # pragma: no cover
 
 
 @dataclass(frozen=True)
