@@ -1,42 +1,186 @@
+from decimal import Decimal
+
 import pytest
+from moneyed import Money
 
 from biip import ParseConfig
+from biip.gs1_prefixes import GS1Prefix, GS18Prefix
 from biip.gtin import Gtin, GtinFormat
 from biip.rcn import Rcn, RcnRegion, RcnUsage
 
 
 @pytest.mark.parametrize(
-    ("value", "gtin_format", "rcn_usage"),
+    ("value", "rcn_region", "expected"),
     [
-        # RCN-8
-        ("00011112", GtinFormat.GTIN_8, RcnUsage.COMPANY),
-        ("00099998", GtinFormat.GTIN_8, RcnUsage.COMPANY),
-        # RCN-12
-        ("201111111115", GtinFormat.GTIN_12, RcnUsage.GEOGRAPHICAL),
-        ("291111111116", GtinFormat.GTIN_12, RcnUsage.GEOGRAPHICAL),
-        ("401111111119", GtinFormat.GTIN_12, RcnUsage.COMPANY),
-        ("491111111110", GtinFormat.GTIN_12, RcnUsage.COMPANY),
-        # RCN-13
-        ("2001111111119", GtinFormat.GTIN_13, RcnUsage.GEOGRAPHICAL),
-        ("2991111111113", GtinFormat.GTIN_13, RcnUsage.GEOGRAPHICAL),
+        # RCN-8 for company internal use only
+        (
+            "00011112",
+            None,
+            Rcn(
+                value="00011112",
+                format=GtinFormat.GTIN_8,
+                prefix=GS18Prefix.extract("000"),
+                company_prefix=None,
+                payload="0001111",
+                check_digit=2,
+                packaging_level=None,
+                usage=RcnUsage.COMPANY,
+                region=None,
+                weight=None,
+                count=None,
+                price=None,
+                money=None,
+            ),
+        ),
+        (
+            "00099998",
+            None,
+            Rcn(
+                value="00099998",
+                format=GtinFormat.GTIN_8,
+                prefix=GS18Prefix.extract("000"),
+                company_prefix=None,
+                payload="0009999",
+                check_digit=8,
+                packaging_level=None,
+                usage=RcnUsage.COMPANY,
+                region=None,
+                weight=None,
+                count=None,
+                price=None,
+                money=None,
+            ),
+        ),
+        #
+        # RCN-12 for geographical use only
+        (
+            "201111111115",
+            RcnRegion.SWEDEN,
+            Rcn(
+                value="201111111115",
+                format=GtinFormat.GTIN_12,
+                prefix=GS1Prefix.extract("020"),
+                company_prefix=None,
+                payload="20111111111",
+                check_digit=5,
+                packaging_level=None,
+                usage=RcnUsage.GEOGRAPHICAL,
+                region=RcnRegion.SWEDEN,
+                weight=None,
+                count=None,
+                price=None,
+                money=None,
+            ),
+        ),
+        (
+            "291111111116",
+            RcnRegion.SWEDEN,
+            Rcn(
+                value="291111111116",
+                format=GtinFormat.GTIN_12,
+                prefix=GS1Prefix.extract("029"),
+                company_prefix=None,
+                payload="29111111111",
+                check_digit=6,
+                packaging_level=None,
+                usage=RcnUsage.GEOGRAPHICAL,
+                region=RcnRegion.SWEDEN,
+                weight=None,
+                count=None,
+                price=None,
+                money=None,
+            ),
+        ),
+        #
+        # RCN-12 for company internal use only
+        (
+            "401111111119",
+            None,
+            Rcn(
+                value="401111111119",
+                format=GtinFormat.GTIN_12,
+                prefix=GS1Prefix.extract("040"),
+                company_prefix=None,
+                payload="40111111111",
+                check_digit=9,
+                packaging_level=None,
+                usage=RcnUsage.COMPANY,
+                region=None,
+                weight=None,
+                count=None,
+                price=None,
+                money=None,
+            ),
+        ),
+        (
+            "491111111110",
+            None,
+            Rcn(
+                value="491111111110",
+                format=GtinFormat.GTIN_12,
+                prefix=GS1Prefix.extract("049"),
+                company_prefix=None,
+                payload="49111111111",
+                check_digit=0,
+                packaging_level=None,
+                usage=RcnUsage.COMPANY,
+                region=None,
+                weight=None,
+                count=None,
+                price=None,
+                money=None,
+            ),
+        ),
+        #
+        # RCN-13 for geographical use only
+        (
+            "2001111111119",
+            RcnRegion.SWEDEN,
+            Rcn(
+                value="2001111111119",
+                format=GtinFormat.GTIN_13,
+                prefix=GS1Prefix.extract("200"),
+                company_prefix=None,
+                payload="200111111111",
+                check_digit=9,
+                packaging_level=None,
+                usage=RcnUsage.GEOGRAPHICAL,
+                region=RcnRegion.SWEDEN,
+                weight=None,
+                count=None,
+                price=Decimal("11.11"),
+                money=Money("11.11", "SEK"),
+            ),
+        ),
+        (
+            "2302148210869",
+            RcnRegion.NORWAY,
+            Rcn(
+                value="2302148210869",
+                format=GtinFormat.GTIN_13,
+                prefix=GS1Prefix.extract("230"),
+                company_prefix=None,
+                payload="230214821086",
+                check_digit=9,
+                packaging_level=None,
+                usage=RcnUsage.GEOGRAPHICAL,
+                region=RcnRegion.NORWAY,
+                weight=Decimal("1.086"),
+                count=None,
+                price=None,
+                money=None,
+            ),
+        ),
     ],
 )
-def test_gtin_parse_may_return_rcn_instance(
-    value: str, gtin_format: GtinFormat, rcn_usage: RcnUsage
-) -> None:
-    rcn = Gtin.parse(value, config=ParseConfig(rcn_region=RcnRegion.SWEDEN))
+def test_parse_rcn(value: str, rcn_region: RcnRegion | None, expected: Rcn) -> None:
+    rcn = Gtin.parse(value, config=ParseConfig(rcn_region=rcn_region))
 
-    assert isinstance(rcn, Rcn)
-    assert rcn.format == gtin_format
-    assert rcn.usage == rcn_usage
-    if rcn_usage == RcnUsage.GEOGRAPHICAL:
-        assert rcn.region == RcnRegion.SWEDEN
-    else:
-        assert rcn.region is None
+    assert rcn == expected
 
 
 def test_rcn_without_specified_region() -> None:
-    rcn = Gtin.parse("2991111111113", config=ParseConfig(rcn_region=None))
+    rcn = Gtin.parse("2001111111119", config=ParseConfig(rcn_region=None))
 
     assert isinstance(rcn, Rcn)
     assert rcn.format == GtinFormat.GTIN_13
