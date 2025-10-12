@@ -32,6 +32,8 @@ from biip.gtin import Gtin
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from biip.gs1_prefixes import GS1Prefix, GS18Prefix
+
 try:
     import moneyed  # noqa: TC002
 
@@ -50,6 +52,16 @@ class RcnUsage(Enum):
 
     COMPANY = "company"
     """Usage of RCN restricted to internally in a company."""
+
+    @staticmethod
+    def _from_prefix(prefix: GS1Prefix | GS18Prefix) -> RcnUsage | None:
+        if (
+            "Restricted Circulation Numbers within a geographic region"
+        ) in prefix.usage:
+            return RcnUsage.GEOGRAPHICAL
+        if "Restricted Circulation Numbers within a company" in prefix.usage:
+            return RcnUsage.COMPANY
+        return None
 
     def __repr__(self) -> str:
         """Canonical string representation of format."""
@@ -147,19 +159,6 @@ class Rcn(Gtin):
         yield "count", self.count, None
         yield "price", self.price, None
         yield "money", self.money, None
-
-    def _with_usage(self) -> Rcn:
-        # Classification as RCN depends on the prefix being known, so we won't
-        # get here unless it is known.
-        assert self.prefix is not None
-
-        usage = None
-        if "within a geographic region" in self.prefix.usage:
-            usage = RcnUsage.GEOGRAPHICAL
-        if "within a company" in self.prefix.usage:
-            usage = RcnUsage.COMPANY
-
-        return replace(self, usage=usage)
 
     def _parsed_with_regional_rules(self, *, config: ParseConfig) -> Rcn:
         rcn = self

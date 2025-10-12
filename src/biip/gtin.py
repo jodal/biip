@@ -148,7 +148,7 @@ class Gtin:
     """
 
     @classmethod
-    def parse(  # noqa: C901, PLR0912, PLR0915
+    def parse(  # noqa: C901
         cls,
         value: str,
         *,
@@ -172,8 +172,6 @@ class Gtin:
         """
         if config is None:
             config = ParseConfig()
-
-        from biip.rcn import Rcn
 
         value = value.strip()
 
@@ -230,17 +228,30 @@ class Gtin:
             case _:  # pyright: ignore[reportUnnecessaryComparison]  # pragma: no cover
                 assert_never()  # coverage.py cannot detect that all cases are covered
 
-        gtin_type: type[Gtin | Rcn]
-        if (
-            gtin_format <= GtinFormat.GTIN_13
-            and prefix is not None
-            and "Restricted Circulation Number" in prefix.usage
-        ):
-            gtin_type = Rcn
-        else:
-            gtin_type = Gtin
+        from biip.rcn import Rcn, RcnUsage
 
-        result = gtin_type(
+        rcn_usage = (
+            RcnUsage._from_prefix(prefix)  # noqa: SLF001
+            if gtin_format != GtinFormat.GTIN_14 and prefix is not None
+            else None
+        )
+
+        if rcn_usage:
+            result = Rcn(
+                value=value,
+                format=gtin_format,
+                prefix=prefix,
+                company_prefix=company_prefix,
+                payload=payload,
+                check_digit=check_digit,
+                packaging_level=packaging_level,
+                usage=rcn_usage,
+            )
+            return result._parsed_with_regional_rules(  # noqa: SLF001
+                config=config
+            )
+
+        return Gtin(
             value=value,
             format=gtin_format,
             prefix=prefix,
@@ -249,14 +260,6 @@ class Gtin:
             check_digit=check_digit,
             packaging_level=packaging_level,
         )
-
-        if isinstance(result, Rcn):
-            result = result._with_usage()  # noqa: SLF001
-            result = result._parsed_with_regional_rules(  # noqa: SLF001
-                config=config
-            )
-
-        return result
 
     def __rich_repr__(self) -> Iterator[tuple[str, Any] | tuple[str, Any, Any]]:  # noqa: D105
         # Skip printing fields with default values
