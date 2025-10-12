@@ -138,6 +138,8 @@ class Gtin:
     is known.
 
     For GTIN-8, this is the part of the payload after the GS1-8 Prefix.
+
+    For company RCNs, this is the part of the payload after the GS1 Prefix.
     """
 
     payload: str
@@ -159,7 +161,7 @@ class Gtin:
     """
 
     @classmethod
-    def parse(  # noqa: C901
+    def parse(  # noqa: C901, PLR0912, PLR0915
         cls,
         value: str,
         *,
@@ -233,15 +235,9 @@ class Gtin:
             case GtinFormat.GTIN_8:
                 prefix = GS18Prefix.extract(prefixed_value)
                 company_prefix = None
-                item_reference = prefixed_value[len(prefix.value) :] if prefix else None
             case GtinFormat.GTIN_12 | GtinFormat.GTIN_13 | GtinFormat.GTIN_14:
                 prefix = GS1Prefix.extract(prefixed_value)
                 company_prefix = GS1CompanyPrefix.extract(prefixed_value)
-                item_reference = (
-                    prefixed_value[len(company_prefix.value) :]
-                    if company_prefix
-                    else None
-                )
             case _:  # pyright: ignore[reportUnnecessaryComparison]  # pragma: no cover
                 assert_never()  # coverage.py cannot detect that all cases are covered
 
@@ -252,6 +248,25 @@ class Gtin:
             if gtin_format != GtinFormat.GTIN_14 and prefix is not None
             else None
         )
+
+        item_reference: str | None
+        match gtin_format:
+            case GtinFormat.GTIN_8 if rcn_usage == RcnUsage.COMPANY:
+                item_reference = prefixed_value[1:]
+            case GtinFormat.GTIN_8:
+                item_reference = prefixed_value[len(prefix.value) :] if prefix else None
+            case GtinFormat.GTIN_12 | GtinFormat.GTIN_13 if (
+                rcn_usage == RcnUsage.COMPANY
+            ):
+                item_reference = prefixed_value[2:]
+            case GtinFormat.GTIN_12 | GtinFormat.GTIN_13 | GtinFormat.GTIN_14:
+                item_reference = (
+                    prefixed_value[len(company_prefix.value) :]
+                    if company_prefix
+                    else None
+                )
+            case _:  # pyright: ignore[reportUnnecessaryComparison]  # pragma: no cover
+                assert_never()  # coverage.py cannot detect that all cases are covered
 
         if rcn_usage:
             result = Rcn(
