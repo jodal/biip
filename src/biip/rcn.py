@@ -182,6 +182,8 @@ class Rcn(Gtin):
         if config.rcn_verify_variable_measure:
             strategy.verify_check_digit(rcn)
 
+        item_reference = strategy.get_item_reference(self)
+
         if strategy.measure_type == _MeasureType.WEIGHT:
             weight = strategy.get_variable_measure(self)
         else:
@@ -208,6 +210,7 @@ class Rcn(Gtin):
 
         return replace(
             rcn,
+            item_reference=item_reference,
             weight=weight,
             count=count,
             price=price,
@@ -318,6 +321,11 @@ class _Strategy:
                 f"Expected {calculated_check_digit!r}, got {check_digit!r}."
             )
             raise ParseError(msg)
+
+    def get_item_reference(self, rcn: Rcn) -> str:
+        rcn_13 = rcn.as_gtin_13()
+        prefix_value = rcn_13[self.prefix_slice]
+        return prefix_value[2:]
 
     def get_variable_measure(self, rcn: Rcn) -> Decimal:
         rcn_13 = rcn.as_gtin_13()
