@@ -55,7 +55,7 @@ from enum import IntEnum
 from typing import TYPE_CHECKING, Any
 
 from biip import EncodeError, ParseError
-from biip._parser import ParseConfig
+from biip._config import ParseConfig
 from biip.checksums import gs1_standard_check_digit
 from biip.gs1_prefixes import GS1CompanyPrefix, GS1Prefix, GS18Prefix
 
