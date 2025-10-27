@@ -202,7 +202,7 @@ class Rcn(Gtin):
         assert rcn.region
         currency_code = rcn.region.get_currency_code()
         if price is not None and have_moneyed and currency_code is not None:
-            import moneyed
+            import moneyed  # noqa: PLC0415
 
             money = moneyed.Money(amount=price, currency=currency_code)
         else:

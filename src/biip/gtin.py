@@ -244,7 +244,7 @@ class Gtin:
             case _:  # pyright: ignore[reportUnnecessaryComparison]  # pragma: no cover
                 assert_never()  # coverage.py cannot detect that all cases are covered
 
-        from biip.rcn import Rcn, RcnUsage
+        from biip.rcn import Rcn, RcnUsage  # noqa: PLC0415
 
         rcn_usage = (
             RcnUsage._from_prefix(prefix)  # noqa: SLF001
