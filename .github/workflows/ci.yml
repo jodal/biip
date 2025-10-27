@@ -41,6 +41,9 @@ jobs:
           - name: "pyright"
             python: "3.13"
             tox: pyright
+          - name: "ty"
+            python: "3.13"
+            tox: ty
           - name: "ruff format"
             python: "3.13"
             tox: ruff-format
