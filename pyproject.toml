@@ -49,7 +49,7 @@ docs = [
     { include-group = "ruff" },
 ]
 mypy = ["mypy==1.18.2"]
-pyright = ["basedpyright>=1.31.7"]
+pyright = ["basedpyright==1.32.1"]
 ruff = ["ruff==0.11.2"]
 scripts = [
     "beautifulsoup4>=4.13.3",
