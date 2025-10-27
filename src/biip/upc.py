@@ -273,19 +273,19 @@ class Upc:
 
     def as_gtin_12(self) -> str:
         """Format as GTIN-12."""
-        from biip.gtin import Gtin
+        from biip.gtin import Gtin  # noqa: PLC0415
 
         return Gtin.parse(self.as_upc_a()).as_gtin_12()
 
     def as_gtin_13(self) -> str:
         """Format as GTIN-13."""
-        from biip.gtin import Gtin
+        from biip.gtin import Gtin  # noqa: PLC0415
 
         return Gtin.parse(self.as_upc_a()).as_gtin_13()
 
     def as_gtin_14(self) -> str:
         """Format as GTIN-14."""
-        from biip.gtin import Gtin
+        from biip.gtin import Gtin  # noqa: PLC0415
 
         return Gtin.parse(self.as_upc_a()).as_gtin_14()
 

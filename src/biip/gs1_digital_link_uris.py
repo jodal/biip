@@ -303,7 +303,7 @@ class GS1DigitalLinkURI:
 
     def as_gs1_message(self) -> GS1Message:
         """Converts the GS1 Digital Link URI to a GS1 Message."""
-        from biip.gs1_messages import GS1Message
+        from biip.gs1_messages import GS1Message  # noqa: PLC0415
 
         return GS1Message.from_element_strings(self.element_strings)
 

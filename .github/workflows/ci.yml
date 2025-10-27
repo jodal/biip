@@ -36,19 +36,22 @@ jobs:
             tox: "3.14"
             coverage: true
           - name: "mypy"
-            python: "3.13"
+            python: "3.14"
             tox: mypy
           - name: "pyright"
-            python: "3.13"
+            python: "3.14"
             tox: pyright
+          - name: "ty"
+            python: "3.14"
+            tox: ty
           - name: "ruff format"
-            python: "3.13"
+            python: "3.14"
             tox: ruff-format
           - name: "ruff check"
-            python: "3.13"
+            python: "3.14"
             tox: ruff-check
           - name: "Docs"
-            python: "3.13"
+            python: "3.14"
             tox: docs
 
     name: ${{ matrix.name }}

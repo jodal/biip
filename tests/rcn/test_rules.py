@@ -292,7 +292,7 @@ def test_region_norway(
     [
         ("2088060112343", None, Decimal("12.34"), Money("12.34", "SEK")),
         ("2188060112340", None, Decimal("123.4"), Money("123.4", "SEK")),
-        ("2288060112347", None, Decimal("1234"), Money("1234", "SEK")),
+        ("2288060112347", None, Decimal(1234), Money("1234", "SEK")),
         ("2388060112344", Decimal("1.234"), None, None),
         ("2488060112341", Decimal("12.34"), None, None),
         ("2588060112348", Decimal("123.4"), None, None),

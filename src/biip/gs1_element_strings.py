@@ -294,7 +294,7 @@ class GS1ElementString:
             decimal = None
 
         if amount_payable_with_currency and have_moneyed:
-            import moneyed
+            import moneyed  # noqa: PLC0415
 
             currency = moneyed.get_currency(iso=self.pattern_groups[0])
             money = moneyed.Money(amount=decimal, currency=currency)

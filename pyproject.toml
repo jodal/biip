@@ -39,17 +39,18 @@ dev = [
     { include-group = "mypy" },
     { include-group = "pyright" },
     { include-group = "ruff" },
-    { include-group = "tests" },
     { include-group = "scripts" },
+    { include-group = "tests" },
+    { include-group = "ty" },
 ]
 docs = [
     "mkdocs-material>=9.4",
     "mkdocstrings[python]>=0.24",
     { include-group = "ruff" },
 ]
-mypy = ["mypy==1.15.0"]
-pyright = ["basedpyright>=1.31.7"]
-ruff = ["ruff==0.11.2"]
+mypy = ["mypy==1.18.2"]
+pyright = ["basedpyright==1.32.1"]
+ruff = ["ruff==0.14.2"]
 scripts = [
     "beautifulsoup4>=4.13.3",
     "httpx>=0.28.1",
@@ -61,6 +62,7 @@ tests = [
     "pytest-cov>=6.0.0",
     "rich>=13.9.4",
 ]
+ty = ["ty==0.0.1a24"]
 
 
 [tool.basedpyright]
@@ -160,6 +162,7 @@ env_list = [
     "docs",
     "mypy",
     "pyright",
+    "ty",
     "ruff-format",
     "ruff-check",
 ]
@@ -206,6 +209,20 @@ commands = [
         "basedpyright",
         "--venvpath",
         "{envdir}",
+        { replace = "posargs", default = [
+            "src",
+            "tests",
+        ], extend = true },
+    ],
+]
+
+[tool.tox.env.ty]
+dependency_groups = ["scripts", "tests", "ty"]
+extras = ["money"]
+commands = [
+    [
+        "ty",
+        "check",
         { replace = "posargs", default = [
             "src",
             "tests",
