@@ -48,7 +48,7 @@ docs = [
     "mkdocstrings[python]>=0.24",
     { include-group = "ruff" },
 ]
-mypy = ["mypy==1.18.2"]
+mypy = ["mypy==1.20.2"]
 pyright = ["basedpyright==1.32.1"]
 ruff = ["ruff==0.14.2"]
 scripts = [
