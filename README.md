@@ -63,6 +63,6 @@ ParseResult(
 
 ## License
 
-Copyright 2020-2025 Stein Magnus Jodal and contributors.
+Copyright 2020-2026 Stein Magnus Jodal and contributors.
 Licensed under the
 [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).

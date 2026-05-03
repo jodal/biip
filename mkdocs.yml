@@ -2,7 +2,7 @@ site_name: Biip
 site_description: Biip interprets the data in barcodes.
 site_url: !ENV READTHEDOCS_CANONICAL_URL
 
-copyright: Copyright © 2020-2025 Stein Magnus Jodal
+copyright: Copyright © 2020-2026 Stein Magnus Jodal
 repo_name: jodal/biip
 repo_url: https://github.com/jodal/biip
 edit_uri: edit/main/docs/
