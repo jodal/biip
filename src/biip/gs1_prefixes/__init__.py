@@ -95,7 +95,7 @@ class GS1Prefix:
             node = node[digit]
 
             if isinstance(node, list):
-                length, usage = node
+                length, usage = tuple[int, str](node)
                 return cls(value=value[:length], usage=usage)
 
         return None
