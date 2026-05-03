@@ -269,7 +269,7 @@ class GS1ElementString:
         )
         amount_payable = self.ai.ai[:3] in ("390", "392")
         amount_payable_with_currency = self.ai.ai[:3] in ("391", "393")
-        percentage = self.ai.ai[:3] in ("394",)
+        percentage = self.ai.ai[:3] in ("394",)  # noqa: FURB171
 
         if (
             variable_measure
