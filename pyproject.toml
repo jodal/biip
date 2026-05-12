@@ -62,7 +62,7 @@ tests = [
     "pytest-cov>=6.0.0",
     "rich>=13.9.4",
 ]
-ty = ["ty==0.0.34"]
+ty = ["ty==0.0.35"]
 
 
 [tool.basedpyright]
