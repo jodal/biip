@@ -167,6 +167,7 @@ env_list = [
     "ty",
     "ruff-format",
     "ruff-check",
+    "zizmor",
 ]
 
 [tool.tox.env_run_base]
