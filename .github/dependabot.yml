@@ -4,9 +4,33 @@ updates:
   - package-ecosystem: pip
     directory: "/"
     schedule:
-      interval: daily
+      interval: monthly
+    cooldown:
+      default-days: 7
+    groups:
+      docs:
+        patterns:
+          - "sphinx*"
+      tests:
+        patterns:
+          - "pytest*"
+          - "coverage"
+      linters:
+        patterns:
+          - "mypy"
+          - "basedpyright"
+          - "ruff"
+          - "ty"
+          - "tox*"
+          - "zizmor"
 
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: daily
+      interval: monthly
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns:
+          - "*"

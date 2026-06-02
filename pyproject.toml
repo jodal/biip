@@ -42,6 +42,7 @@ dev = [
     { include-group = "scripts" },
     { include-group = "tests" },
     { include-group = "ty" },
+    { include-group = "zizmor" },
 ]
 docs = [
     "mkdocs-material>=9.4",
@@ -63,6 +64,7 @@ tests = [
     "rich>=13.9.4",
 ]
 ty = ["ty==0.0.42"]
+zizmor = ["zizmor==1.25.2"]
 
 
 [tool.basedpyright]
@@ -239,3 +241,8 @@ commands = [["ruff", "format", "--check", "{posargs:.}"]]
 skip_install = true
 dependency_groups = ["ruff"]
 commands = [["ruff", "check", "{posargs:.}"]]
+
+[tool.tox.env.zizmor]
+skip_install = true
+dependency_groups = ["zizmor"]
+commands = [["zizmor", "{posargs:.}"]]
