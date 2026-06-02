@@ -10,7 +10,7 @@ updates:
     groups:
       docs:
         patterns:
-          - "sphinx*"
+          - "mkdocs*"
       tests:
         patterns:
           - "pytest*"
