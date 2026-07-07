@@ -45,7 +45,6 @@ from __future__ import annotations
 import calendar
 import datetime as dt
 import re
-from collections.abc import Iterator
 from dataclasses import dataclass, replace
 from decimal import Decimal
 from typing import TYPE_CHECKING, Any

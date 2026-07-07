@@ -50,7 +50,6 @@ using it to query the product catalog.
 
 from __future__ import annotations
 
-from collections.abc import Iterator
 from dataclasses import dataclass
 from enum import IntEnum
 from typing import TYPE_CHECKING, Any
