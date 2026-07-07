@@ -50,8 +50,8 @@ docs = [
     { include-group = "ruff" },
 ]
 mypy = ["mypy==2.1.0"]
-pyright = ["basedpyright==1.39.6"]
-ruff = ["ruff==0.15.14"]
+pyright = ["basedpyright==1.39.8"]
+ruff = ["ruff==0.15.19"]
 scripts = [
     "beautifulsoup4>=4.13.3",
     "httpx>=0.28.1",
@@ -63,8 +63,8 @@ tests = [
     "pytest-cov>=6.0.0",
     "rich>=13.9.4",
 ]
-ty = ["ty==0.0.42"]
-zizmor = ["zizmor==1.25.2"]
+ty = ["ty==0.0.53"]
+zizmor = ["zizmor==1.26.1"]
 
 
 [tool.basedpyright]
