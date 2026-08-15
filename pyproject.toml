@@ -123,6 +123,7 @@ select = [
     "UP045",  # non-pep604-annotation-optional
 ]
 ignore = [
+    "CPY",     # flake8-copyright
     "PLR2004", # magic-value-comparison
     "S101",    # assert
     #
