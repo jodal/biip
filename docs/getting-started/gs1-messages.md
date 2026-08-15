@@ -219,11 +219,11 @@ section. It has the following AI definition:
 
 ```python hl_lines="6"
 GS1ApplicationIdentifier(
-    ai='10',
-    description='Batch or lot number',
-    data_title='BATCH/LOT',
+    ai="10",
+    description="Batch or lot number",
+    data_title="BATCH/LOT",
     separator_required=True,
-    format='N2+X..20'
+    format="N2+X..20",
 )
 ```
 
