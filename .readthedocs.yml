@@ -4,6 +4,13 @@ build:
   os: "ubuntu-26.04"
   tools:
     python: "3.14"
+  jobs:
+    build:
+      html:
+        - zensical build --strict
+    post_build:
+      - mkdir -p $READTHEDOCS_OUTPUT/html/
+      - cp -r site/* $READTHEDOCS_OUTPUT/html/
 
 python:
   install:
@@ -12,6 +19,3 @@ python:
       extras: all
       groups:
         - docs
-
-mkdocs:
-  configuration: mkdocs.yml

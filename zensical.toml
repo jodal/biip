@@ -1,0 +1,135 @@
+[project]
+site_name = "Biip"
+site_description = "Biip interprets the data in barcodes."
+site_url = "https://biip.readthedocs.io/stable/"
+copyright = "Copyright © 2020-2026 Stein Magnus Jodal"
+repo_name = "jodal/biip"
+repo_url = "https://github.com/jodal/biip"
+edit_uri = "edit/main/docs/"
+extra_css = ["stylesheets/extra.css"]
+extra_javascript = ["javascript/readthedocs.js"]
+nav = [
+    {"Introduction" = [
+        "index.md",
+        "features.md",
+    ]},
+    {"Getting started" = [
+        "getting-started/index.md",
+        "getting-started/parsing.md",
+        "getting-started/error-handling.md",
+        "getting-started/symbology-identifiers.md",
+        "getting-started/gtin.md",
+        "getting-started/rcn.md",
+        "getting-started/gs1-messages.md",
+        "getting-started/gs1-digital-links.md",
+        "getting-started/deep-dive.md",
+    ]},
+    {"Reference" = [
+        "reference/biip.md",
+        "reference/checksums.md",
+        "reference/gln.md",
+        "reference/gs1_application_identifiers.md",
+        "reference/gs1_digital_link_uris.md",
+        "reference/gs1_element_strings.md",
+        "reference/gs1_messages.md",
+        "reference/gs1_prefixes.md",
+        "reference/gtin.md",
+        "reference/rcn.md",
+        "reference/sscc.md",
+        "reference/symbology.md",
+        "reference/upc.md",
+    ]},
+    {"Upgrading" = [
+        "upgrading/index.md",
+        {"From 1.x to 2.x" = "upgrading/v2.md"},
+        {"From 2.x to 3.x" = "upgrading/v3.md"},
+        {"From 3.x to 4.x" = "upgrading/v4.md"},
+        {"From 4.x to 5.x" = "upgrading/v5.md"},
+    ]},
+]
+
+[project.theme]
+custom_dir = "overrides"
+features = [
+    "content.action.edit",
+    "navigation.footer",
+    "navigation.indexes",
+    "navigation.instant",
+    "navigation.instant.progress",
+    "navigation.sections",
+]
+
+[project.theme.icon]
+logo = "fontawesome/solid/barcode"
+repo = "fontawesome/brands/github"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+primary = "red"
+accent = "red"
+toggle.icon = "lucide/sun-moon"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "red"
+accent = "red"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "red"
+accent = "red"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to light mode"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/github"
+link = "https://github.com/jodal/biip"
+
+[project.plugins.mkdocstrings]
+default_handler = "python"
+
+[project.plugins.mkdocstrings.handlers.python]
+inventories = ["https://docs.python.org/3/objects.inv"]
+paths = ["src"]
+
+[project.plugins.mkdocstrings.handlers.python.options]
+docstring_style = "google"
+docstring_section_style = "list"
+filters = [
+    "!^_[^_]",
+    "!^__post_init__",
+    "!^__len__",
+    "!^__repr__",
+    "!^__str__",
+]
+separate_signature = true
+show_docstring_examples = true
+show_root_toc_entry = false
+show_symbol_type_heading = true
+show_symbol_type_toc = true
+show_signature_annotations = true
+
+[project.markdown_extensions.pymdownx.blocks.admonition]
+
+[project.markdown_extensions.pymdownx.highlight]
+anchor_linenums = true
+default_lang = "python"
+line_spans = "__span"
+pygments_lang_class = true
+
+[project.markdown_extensions.pymdownx.inlinehilite]
+
+[project.markdown_extensions.pymdownx.magiclink]
+repo_url_shorthand = true
+user = "jodal"
+repo = "biip"
+
+[project.markdown_extensions.pymdownx.superfences]
+
+[project.markdown_extensions.pymdownx.tasklist]
+custom_checkbox = true

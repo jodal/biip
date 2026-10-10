@@ -43,8 +43,8 @@ dev = [
     { include-group = "zizmor" },
 ]
 docs = [
-    "mkdocs-material>=9.4",
-    "mkdocstrings[python]>=0.24",
+    "mkdocstrings-python>=2.0.1",
+    "zensical>=0.0.69",
     { include-group = "ruff" },
 ]
 mypy = ["mypy==2.3.1"]
@@ -185,7 +185,7 @@ commands = [
 [tool.tox.env.docs]
 dependency_groups = ["docs"]
 extras = ["money"]
-commands = [["mkdocs", "build", "--site-dir={envtmpdir}"]]
+commands = [["zensical", "build", "--clean", "--strict"]]
 
 [tool.tox.env.mypy]
 dependency_groups = ["scripts", "tests", "mypy"]
