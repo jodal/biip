@@ -150,6 +150,14 @@ ignore-one-line-docstrings = true
 convention = "google"
 
 
+[tool.rumdl]
+flavor = "mkdocs"
+
+[tool.rumdl.MD013]
+# Code blocks contain doctest output that cannot be wrapped:
+code-blocks = false
+
+
 [tool.tox]
 env_list = [
     "3.11",
