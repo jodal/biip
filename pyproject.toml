@@ -149,9 +149,6 @@ ignore-one-line-docstrings = true
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.ruff.lint.pyupgrade]
-keep-runtime-typing = true
-
 
 [tool.tox]
 env_list = [
