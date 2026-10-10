@@ -2458,7 +2458,7 @@
   {
     "ai": "3640",
     "description": "Net volume, cubic inches (variable measure trade item)",
-    "data_title": "VOLUME (in\u00b3)",
+    "data_title": "NET VOLUME (in\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3640(\\d{6})$"
@@ -2466,7 +2466,7 @@
   {
     "ai": "3641",
     "description": "Net volume, cubic inches (variable measure trade item)",
-    "data_title": "VOLUME (in\u00b3)",
+    "data_title": "NET VOLUME (in\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3641(\\d{6})$"
@@ -2474,7 +2474,7 @@
   {
     "ai": "3642",
     "description": "Net volume, cubic inches (variable measure trade item)",
-    "data_title": "VOLUME (in\u00b3)",
+    "data_title": "NET VOLUME (in\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3642(\\d{6})$"
@@ -2482,7 +2482,7 @@
   {
     "ai": "3643",
     "description": "Net volume, cubic inches (variable measure trade item)",
-    "data_title": "VOLUME (in\u00b3)",
+    "data_title": "NET VOLUME (in\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3643(\\d{6})$"
@@ -2490,7 +2490,7 @@
   {
     "ai": "3644",
     "description": "Net volume, cubic inches (variable measure trade item)",
-    "data_title": "VOLUME (in\u00b3)",
+    "data_title": "NET VOLUME (in\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3644(\\d{6})$"
@@ -2498,7 +2498,7 @@
   {
     "ai": "3645",
     "description": "Net volume, cubic inches (variable measure trade item)",
-    "data_title": "VOLUME (in\u00b3)",
+    "data_title": "NET VOLUME (in\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3645(\\d{6})$"
@@ -2506,7 +2506,7 @@
   {
     "ai": "3650",
     "description": "Net volume, cubic feet (variable measure trade item)",
-    "data_title": "VOLUME (ft\u00b3)",
+    "data_title": "NET VOLUME (ft\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3650(\\d{6})$"
@@ -2514,7 +2514,7 @@
   {
     "ai": "3651",
     "description": "Net volume, cubic feet (variable measure trade item)",
-    "data_title": "VOLUME (ft\u00b3)",
+    "data_title": "NET VOLUME (ft\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3651(\\d{6})$"
@@ -2522,7 +2522,7 @@
   {
     "ai": "3652",
     "description": "Net volume, cubic feet (variable measure trade item)",
-    "data_title": "VOLUME (ft\u00b3)",
+    "data_title": "NET VOLUME (ft\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3652(\\d{6})$"
@@ -2530,7 +2530,7 @@
   {
     "ai": "3653",
     "description": "Net volume, cubic feet (variable measure trade item)",
-    "data_title": "VOLUME (ft\u00b3)",
+    "data_title": "NET VOLUME (ft\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3653(\\d{6})$"
@@ -2538,7 +2538,7 @@
   {
     "ai": "3654",
     "description": "Net volume, cubic feet (variable measure trade item)",
-    "data_title": "VOLUME (ft\u00b3)",
+    "data_title": "NET VOLUME (ft\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3654(\\d{6})$"
@@ -2546,7 +2546,7 @@
   {
     "ai": "3655",
     "description": "Net volume, cubic feet (variable measure trade item)",
-    "data_title": "VOLUME (ft\u00b3)",
+    "data_title": "NET VOLUME (ft\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3655(\\d{6})$"
@@ -2554,7 +2554,7 @@
   {
     "ai": "3660",
     "description": "Net volume, cubic yards (variable measure trade item)",
-    "data_title": "VOLUME (yd\u00b3)",
+    "data_title": "NET VOLUME (yd\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3660(\\d{6})$"
@@ -2562,7 +2562,7 @@
   {
     "ai": "3661",
     "description": "Net volume, cubic yards (variable measure trade item)",
-    "data_title": "VOLUME (yd\u00b3)",
+    "data_title": "NET VOLUME (yd\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3661(\\d{6})$"
@@ -2570,7 +2570,7 @@
   {
     "ai": "3662",
     "description": "Net volume, cubic yards (variable measure trade item)",
-    "data_title": "VOLUME (yd\u00b3)",
+    "data_title": "NET VOLUME (yd\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3662(\\d{6})$"
@@ -2578,7 +2578,7 @@
   {
     "ai": "3663",
     "description": "Net volume, cubic yards (variable measure trade item)",
-    "data_title": "VOLUME (yd\u00b3)",
+    "data_title": "NET VOLUME (yd\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3663(\\d{6})$"
@@ -2586,7 +2586,7 @@
   {
     "ai": "3664",
     "description": "Net volume, cubic yards (variable measure trade item)",
-    "data_title": "VOLUME (yd\u00b3)",
+    "data_title": "NET VOLUME (yd\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3664(\\d{6})$"
@@ -2594,7 +2594,7 @@
   {
     "ai": "3665",
     "description": "Net volume, cubic yards (variable measure trade item)",
-    "data_title": "VOLUME (yd\u00b3)",
+    "data_title": "NET VOLUME (yd\u00b3)",
     "separator_required": false,
     "format": "N4+N6",
     "pattern": "^3665(\\d{6})$"
@@ -3684,7 +3684,7 @@
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 0",
     "separator_required": true,
-    "format": "N3+X..27",
+    "format": "N4+N3+X..27",
     "pattern": "^7030(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
@@ -3692,7 +3692,7 @@
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 1",
     "separator_required": true,
-    "format": "N3+X..27",
+    "format": "N4+N3+X..27",
     "pattern": "^7031(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
@@ -3700,7 +3700,7 @@
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 2",
     "separator_required": true,
-    "format": "N3+X..27",
+    "format": "N4+N3+X..27",
     "pattern": "^7032(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
@@ -3708,7 +3708,7 @@
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 3",
     "separator_required": true,
-    "format": "N3+X..27",
+    "format": "N4+N3+X..27",
     "pattern": "^7033(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
@@ -3716,7 +3716,7 @@
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 4",
     "separator_required": true,
-    "format": "N3+X..27",
+    "format": "N4+N3+X..27",
     "pattern": "^7034(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
@@ -3724,7 +3724,7 @@
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 5",
     "separator_required": true,
-    "format": "N3+X..27",
+    "format": "N4+N3+X..27",
     "pattern": "^7035(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
@@ -3732,7 +3732,7 @@
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 6",
     "separator_required": true,
-    "format": "N3+X..27",
+    "format": "N4+N3+X..27",
     "pattern": "^7036(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
@@ -3740,7 +3740,7 @@
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 7",
     "separator_required": true,
-    "format": "N3+X..27",
+    "format": "N4+N3+X..27",
     "pattern": "^7037(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
@@ -3748,7 +3748,7 @@
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 8",
     "separator_required": true,
-    "format": "N3+X..27",
+    "format": "N4+N3+X..27",
     "pattern": "^7038(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
@@ -3756,7 +3756,7 @@
     "description": "Number of processor with three-digit ISO country code",
     "data_title": "PROCESSOR # 9",
     "separator_required": true,
-    "format": "N3+X..27",
+    "format": "N4+N3+X..27",
     "pattern": "^7039(\\d{3})([!%-?A-Z_a-z\\x22]{1,27})$"
   },
   {
@@ -3832,11 +3832,19 @@
     "pattern": "^716([!%-?A-Z_a-z\\x22]{1,20})$"
   },
   {
+    "ai": "717",
+    "description": "National Healthcare Reimbursement Number (NHRN) - Costa Rica Sanitary Register Number",
+    "data_title": "NHRN SRN",
+    "separator_required": true,
+    "format": "N3+X..20",
+    "pattern": "^717([!%-?A-Z_a-z\\x22]{1,20})$"
+  },
+  {
     "ai": "7230",
     "description": "Certification Reference",
     "data_title": "CERT # 0",
     "separator_required": true,
-    "format": "X2+X..28",
+    "format": "N4+X2+X..28",
     "pattern": "^7230([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
@@ -3844,7 +3852,7 @@
     "description": "Certification Reference",
     "data_title": "CERT # 1",
     "separator_required": true,
-    "format": "X2+X..28",
+    "format": "N4+X2+X..28",
     "pattern": "^7231([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
@@ -3852,7 +3860,7 @@
     "description": "Certification Reference",
     "data_title": "CERT # 2",
     "separator_required": true,
-    "format": "X2+X..28",
+    "format": "N4+X2+X..28",
     "pattern": "^7232([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
@@ -3860,7 +3868,7 @@
     "description": "Certification Reference",
     "data_title": "CERT # 3",
     "separator_required": true,
-    "format": "X2+X..28",
+    "format": "N4+X2+X..28",
     "pattern": "^7233([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
@@ -3868,7 +3876,7 @@
     "description": "Certification Reference",
     "data_title": "CERT # 4",
     "separator_required": true,
-    "format": "X2+X..28",
+    "format": "N4+X2+X..28",
     "pattern": "^7234([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
@@ -3876,7 +3884,7 @@
     "description": "Certification Reference",
     "data_title": "CERT # 5",
     "separator_required": true,
-    "format": "X2+X..28",
+    "format": "N4+X2+X..28",
     "pattern": "^7235([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
@@ -3884,7 +3892,7 @@
     "description": "Certification Reference",
     "data_title": "CERT # 6",
     "separator_required": true,
-    "format": "X2+X..28",
+    "format": "N4+X2+X..28",
     "pattern": "^7236([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
@@ -3892,7 +3900,7 @@
     "description": "Certification Reference",
     "data_title": "CERT # 7",
     "separator_required": true,
-    "format": "X2+X..28",
+    "format": "N4+X2+X..28",
     "pattern": "^7237([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
@@ -3900,7 +3908,7 @@
     "description": "Certification Reference",
     "data_title": "CERT # 8",
     "separator_required": true,
-    "format": "X2+X..28",
+    "format": "N4+X2+X..28",
     "pattern": "^7238([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
@@ -3908,7 +3916,7 @@
     "description": "Certification Reference",
     "data_title": "CERT # 9",
     "separator_required": true,
-    "format": "X2+X..28",
+    "format": "N4+X2+X..28",
     "pattern": "^7239([!%-?A-Z_a-z\\x22]{3,30})$"
   },
   {
@@ -4174,6 +4182,38 @@
     "separator_required": true,
     "format": "N4+Z..90",
     "pattern": "^8030([0-9A-Za-z_-]{1,90})$"
+  },
+  {
+    "ai": "8040",
+    "description": "Internatinal Mobile Equipment Identity (IMEI)",
+    "data_title": "IMEI",
+    "separator_required": true,
+    "format": "N4+N15",
+    "pattern": "^8040(\\d{15})$"
+  },
+  {
+    "ai": "8041",
+    "description": "Internatinal Mobile Equipment Identity 2 (IMEI2)",
+    "data_title": "IMEI2",
+    "separator_required": true,
+    "format": "N4+N15",
+    "pattern": "^8041(\\d{15})$"
+  },
+  {
+    "ai": "8042",
+    "description": "Embedded SIM number",
+    "data_title": "ESIM",
+    "separator_required": true,
+    "format": "N4+N32",
+    "pattern": "^8042(\\d{32})$"
+  },
+  {
+    "ai": "8043",
+    "description": "Physical SIM number",
+    "data_title": "PSIM",
+    "separator_required": true,
+    "format": "N4+N18+[N1..N2]",
+    "pattern": "^8043(\\d{18,20})$"
   },
   {
     "ai": "8110",
