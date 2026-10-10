@@ -45,11 +45,9 @@ def parse(html_content: bytes) -> TrieNode:
     for row in tbody.find_all("tr"):
         columns = row.find_all("td")
 
-        prefixes: str = columns[0].text.strip()
-        usage: str = columns[1].text.strip()
-
-        # Standardize separator between ranges
-        prefixes = prefixes.replace("  ", "&")
+        # Separate ranges in different text nodes with "&"
+        prefixes: str = columns[0].get_text("&").strip()
+        usage: str = columns[1].text.replace("\xa0", " ").strip()
 
         # Standardize separator between range ends
         prefixes = prefixes.replace("\u2013", "-")
