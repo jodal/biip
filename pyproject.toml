@@ -47,9 +47,9 @@ docs = [
     "zensical>=0.0.69",
     { include-group = "ruff" },
 ]
-mypy = ["mypy==2.3.1"]
+mypy = ["mypy==2.4.0"]
 pyright = ["basedpyright==1.40.1"]
-ruff = ["ruff==0.16.8"]
+ruff = ["ruff==0.16.10"]
 scripts = [
     "beautifulsoup4>=4.13.3",
     "httpx>=0.28.1",
@@ -61,7 +61,7 @@ tests = [
     "pytest-cov>=6.0.0",
     "rich>=13.9.4",
 ]
-ty = ["ty==0.0.83"]
+ty = ["ty==0.0.84"]
 zizmor = ["zizmor==1.30.1"]
 
 
