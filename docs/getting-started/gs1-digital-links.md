@@ -15,14 +15,16 @@ and the expiration date `2021-05-26` for easy tracking of the items through the
 supply chain. Using the GS1 Digital Link URI specification, they create the
 following URI:
 
-```
+```text
 https://www.example.com/products/01/07032069804988?10=0329&15=210526
 ```
 
 They put this in a GS1 QR code or a GS1 DataMatrix barcode, and print it on the
 product.
 
-When a consumer scans the barcode, they are taken to the product page. When the supply chain scans this barcode and use Biip to parse it, they get the following result:
+When a consumer scans the barcode, they are taken to the product page. When the
+supply chain scans this barcode and use Biip to parse it, they get the following
+result:
 
 ```python
 >>> result = biip.parse("https://www.example.com/products/01/07032069804988?10=0329&15=210526")

@@ -22,8 +22,8 @@ including
 - [x] Parse AI `01` and `02` as GTIN.
 - [x] Parse AI `410`-`417` as GLN.
 - [x] Parse dates/times into `datetime.date`/`datetime.datetime` values. The
-      year is interpreted to be within -49/+50 years from today. Dates with day "00"
-      are interpreted as the last day of the month.
+      year is interpreted to be within -49/+50 years from today. Dates with day
+      "00" are interpreted as the last day of the month.
 - [x] Parse variable measurement fields into `Decimal` values.
 - [x] Parse discount percentage into `Decimal` values.
 - [x] Parse amounts into `Decimal` values. Additionally, if py-moneyed
