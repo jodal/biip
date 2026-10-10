@@ -260,7 +260,7 @@ def test_extract_fails_with_invalid_date(ai_code: str, bad_value: str) -> None:
     )
 
 
-THIS_YEAR = dt.datetime.now(tz=dt.timezone.utc).year
+THIS_YEAR = dt.datetime.now(tz=dt.UTC).year
 THIS_YEAR_SHORT = str(THIS_YEAR)[2:]
 MIN_YEAR = THIS_YEAR - 49
 MIN_YEAR_SHORT = str(MIN_YEAR)[2:]
