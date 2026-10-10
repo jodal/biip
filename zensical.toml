@@ -67,7 +67,7 @@ repo = "fontawesome/brands/github"
 media = "(prefers-color-scheme)"
 primary = "red"
 accent = "red"
-toggle.icon = "material/brightness-auto"
+toggle.icon = "lucide/sun-moon"
 toggle.name = "Switch to light mode"
 
 [[project.theme.palette]]
@@ -75,7 +75,7 @@ media = "(prefers-color-scheme: light)"
 scheme = "default"
 primary = "red"
 accent = "red"
-toggle.icon = "material/brightness-7"
+toggle.icon = "lucide/sun"
 toggle.name = "Switch to dark mode"
 
 [[project.theme.palette]]
@@ -83,7 +83,7 @@ media = "(prefers-color-scheme: dark)"
 scheme = "slate"
 primary = "red"
 accent = "red"
-toggle.icon = "material/brightness-4"
+toggle.icon = "lucide/moon"
 toggle.name = "Switch to light mode"
 
 [[project.extra.social]]
