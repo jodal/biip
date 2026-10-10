@@ -3,7 +3,7 @@ name = "biip"
 version = "5.0.0"
 description = "Biip interprets the data in barcodes."
 authors = [{ name = "Stein Magnus Jodal", email = "stein.magnus@jodal.no" }]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 readme = "README.md"
 license = "Apache-2.0"
 keywords = ["barcodes", "ean", "isbn", "gs1", "gtin", "upc"]
@@ -12,9 +12,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Libraries",
 ]
-dependencies = [
-    "typing-extensions>=4.1; python_version<'3.11'"
-]
+dependencies = []
 
 [project.optional-dependencies]
 money = ["py-moneyed>=0.8"]
@@ -68,7 +66,7 @@ zizmor = ["zizmor==1.29.0"]
 
 
 [tool.basedpyright]
-pythonVersion = "3.10"
+pythonVersion = "3.11"
 typeCheckingMode = "strict"
 # Already covered by tests and careful import ordering:
 reportImportCycles = false
@@ -157,7 +155,6 @@ keep-runtime-typing = true
 
 [tool.tox]
 env_list = [
-    "3.10",
     "3.11",
     "3.12",
     "3.13",
