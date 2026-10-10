@@ -8,5 +8,6 @@
 /.venv/
 /coverage.xml
 /dist/
+/site/
 /docs/_build/
 __pycache__/
