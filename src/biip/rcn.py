@@ -21,7 +21,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field, replace
 from decimal import Decimal
-from enum import Enum
+from enum import Enum, StrEnum
 from typing import TYPE_CHECKING, Any
 
 from biip import EncodeError, ParseError
@@ -253,7 +253,7 @@ class Rcn(Gtin):
         return strategy.without_variable_measure(self)
 
 
-class _MeasureType(str, Enum):
+class _MeasureType(StrEnum):
     COUNT = "count"
     PRICE = "price"
     WEIGHT = "weight"
