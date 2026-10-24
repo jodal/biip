@@ -238,7 +238,7 @@ class GS1Message:
             msg = f"Expected HRI string {value!r} to start with a parenthesis."
             raise ParseError(msg)
 
-        pattern = r"\((\d+)\)(\w+)"
+        pattern = r"\((\d+)\)([^(]+)"
         matches: list[tuple[str, str]] = re.findall(pattern, value)
         if not matches:
             msg = (
