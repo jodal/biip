@@ -371,6 +371,25 @@ def test_parse_hri_strips_surrounding_whitespace() -> None:
     assert message.value == "17221231"
 
 
+def test_parse_hri_with_punctuation_in_data() -> None:
+    message = GS1Message.parse_hri("(90)N.IGK(7241)28")
+
+    assert [(es.ai.ai, es.value) for es in message.element_strings] == [
+        ("90", "N.IGK"),
+        ("7241", "28"),
+    ]
+
+
+def test_parse_hri_roundtrip_with_punctuation() -> None:
+    message = GS1Message.parse("90N.IGK\x1d7241" + "28")
+
+    roundtripped = GS1Message.parse_hri(message.as_hri())
+
+    assert [(es.ai.ai, es.value) for es in roundtripped.element_strings] == [
+        (es.ai.ai, es.value) for es in message.element_strings
+    ]
+
+
 @pytest.mark.parametrize(
     "value",
     [
