@@ -524,3 +524,76 @@ def test_get_element_strings_by_data_title(
     else:
         assert element_string is not None
         assert element_string.value == expected
+
+
+@pytest.mark.parametrize(
+    ("uri", "ai", "expected_value"),
+    [
+        (
+            # Percent-encoded "/" in serial number in the path
+            "https://id.gs1.org/01/09521234543213/21/ABC%2FDEF",
+            "21",
+            "ABC/DEF",
+        ),
+        (
+            # Percent-encoded "/" in lot number in the path
+            "https://id.gs1.org/01/09521234543213/10/LOT%2F1",
+            "10",
+            "LOT/1",
+        ),
+        (
+            # Percent-encoded reserved characters in path prefix segments
+            # are decoded without affecting primary identifier detection
+            "https://example.com/some%2Fprefix/01/09521234543213",
+            "01",
+            "09521234543213",
+        ),
+    ],
+)
+def test_parse_percent_decodes_path_segments(
+    uri: str, ai: str, expected_value: str
+) -> None:
+    assert GS1DigitalLinkURI.parse(uri).element_strings.get(ai=ai).value == (
+        expected_value
+    )
+
+
+@pytest.mark.parametrize(
+    ("element_strings", "expected_path"),
+    [
+        (
+            ["0109521234543213", "21ABC/DEF"],
+            "https://id.gs1.org/01/09521234543213/21/ABC%2FDEF",
+        ),
+        (
+            ["0109521234543213", "10LOT/1", "21SER%201"],
+            "https://id.gs1.org/01/09521234543213/10/LOT%2F1/21/SER%25201",
+        ),
+    ],
+)
+def test_as_uri_percent_encodes_path_segments(
+    element_strings: list[str], expected_path: str
+) -> None:
+    ess = GS1ElementStrings()
+    for raw in element_strings:
+        ess.append(GS1ElementString.extract(raw))
+    assert GS1DigitalLinkURI.from_element_strings(ess).as_uri() == expected_path
+
+
+@pytest.mark.parametrize(
+    "element_strings",
+    [
+        ["0109521234543213", "21ABC/DEF"],
+        ["0109521234543213", "10LOT/1"],
+        ["0109521234543213", "10A/B", "21C/D"],
+    ],
+)
+def test_uri_round_trip_with_reserved_characters(
+    element_strings: list[str],
+) -> None:
+    ess = GS1ElementStrings()
+    for raw in element_strings:
+        ess.append(GS1ElementString.extract(raw))
+    uri = GS1DigitalLinkURI.from_element_strings(ess).as_uri()
+    parsed = GS1DigitalLinkURI.parse(uri)
+    assert [es.value for es in parsed.element_strings] == [es.value for es in ess]
