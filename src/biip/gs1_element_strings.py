@@ -117,6 +117,32 @@ class GS1ElementString:
     """
 
     @classmethod
+    def parse(
+        cls,
+        value: str,
+        *,
+        config: ParseConfig | None = None,
+    ) -> GS1ElementString:
+        """Parse the given value as exactly one GS1 Element String.
+
+        The full value must match the pattern of the GS1 Application
+        Identifier. Other than that, the value is parsed in the same way as by
+        [`extract()`][biip.gs1_element_strings.GS1ElementString.extract].
+
+        Args:
+            value: The string to parse. Must contain exactly one Element String.
+            config: Configuration options for parsing.
+
+        Returns:
+            A data class with the Element String's parts and data extracted from it.
+
+        Raises:
+            ValueError: If the `separator_char` isn't exactly 1 character long.
+            ParseError: If the parsing fails.
+        """
+        return cls._parse_or_extract(value, config=config, full_match=True)
+
+    @classmethod
     def extract(
         cls,
         value: str,
@@ -157,6 +183,16 @@ class GS1ElementString:
             ValueError: If the `separator_char` isn't exactly 1 character long.
             ParseError: If the parsing fails.
         """
+        return cls._parse_or_extract(value, config=config, full_match=False)
+
+    @classmethod
+    def _parse_or_extract(
+        cls,
+        value: str,
+        *,
+        config: ParseConfig | None,
+        full_match: bool,
+    ) -> GS1ElementString:
         if config is None:
             config = ParseConfig()
 
@@ -169,11 +205,12 @@ class GS1ElementString:
 
         ai = GS1ApplicationIdentifier.extract(value)
 
-        for separator_char in config.separator_chars:
-            value = value.split(separator_char, maxsplit=1)[0]
-
-        pattern = ai.pattern.removesuffix("$")
-        matches = re.match(pattern, value)
+        if full_match:
+            matches = re.fullmatch(ai.pattern, value)
+        else:
+            for separator_char in config.separator_chars:
+                value = value.split(separator_char, maxsplit=1)[0]
+            matches = re.match(ai.pattern.removesuffix("$"), value)
         if not matches:
             msg = f"Failed to match {value!r} with GS1 AI {ai} pattern '{ai.pattern}'."
             raise ParseError(msg)

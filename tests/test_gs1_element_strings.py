@@ -207,6 +207,45 @@ def test_extract_fails_when_not_matching_pattern(ai_code: str, bad_value: str) -
 
 
 @pytest.mark.parametrize(
+    "value",
+    [
+        "0107032069804988",
+        "10ABC123",
+        "90N.IGK",
+    ],
+)
+def test_parse(value: str) -> None:
+    assert GS1ElementString.parse(value) == GS1ElementString.extract(value)
+
+
+@pytest.mark.parametrize(
+    ("ai_code", "bad_value"),
+    [
+        # Too short product number
+        ("01", "01123"),
+        # Too long product number
+        ("01", "010703206980498812"),
+        # Characters outside the GS1 AI encodable character set
+        ("90", "90ABæøå"),
+        # Separator and another element string
+        ("10", "10ABC123\x1d17221231"),
+    ],
+)
+def test_parse_fails_when_not_matching_full_pattern(
+    ai_code: str, bad_value: str
+) -> None:
+    ai = GS1ApplicationIdentifier.extract(ai_code)
+
+    with pytest.raises(ParseError) as exc_info:
+        GS1ElementString.parse(bad_value)
+
+    assert (
+        str(exc_info.value)
+        == f"Failed to match {bad_value!r} with GS1 AI {ai} pattern '{ai.pattern}'."
+    )
+
+
+@pytest.mark.parametrize(
     ("value", "expected_date", "expected_datetime"),
     [
         ("11030201", dt.date(2003, 2, 1), None),
