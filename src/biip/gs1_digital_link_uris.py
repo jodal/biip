@@ -121,7 +121,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
-from urllib.parse import parse_qs, quote, unquote, urlencode, urlparse, urlunsplit
+from urllib.parse import parse_qs, quote, unquote, urlencode, urlsplit, urlunsplit
 
 from biip import ParseConfig, ParseError
 from biip._exceptions import EncodeError
@@ -173,7 +173,7 @@ class GS1DigitalLinkURI:
         if config is None:
             config = ParseConfig()
 
-        parsed = urlparse(value)
+        parsed = urlsplit(value)
 
         match parsed.scheme:
             case "https" | "http":

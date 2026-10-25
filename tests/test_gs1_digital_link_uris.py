@@ -467,6 +467,11 @@ def test_as_canonical_uri(value: str, expected: str) -> None:
             "https://example.com/01/09521234543213/21/ABC%2FDEF",
             "(01)09521234543213(21)ABC/DEF",
         ),
+        (
+            # Not percent-encoded ";" in qualifier
+            "https://example.com/01/09521234543213/21/AB;C",
+            "(01)09521234543213(21)AB;C",
+        ),
     ],
 )
 def test_as_gs1_message(value: str, expected: str) -> None:
