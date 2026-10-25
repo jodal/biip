@@ -185,10 +185,8 @@ class GS1DigitalLinkURI:
                 msg = f"Expected URI scheme to be 'http' or 'https', got {scheme!r}."
                 raise ParseError(msg)
 
-        # Consume path prefix. Path segments are percent-decoded after
-        # splitting, so that an encoded "/" (%2F) inside a segment value does
-        # not create a phantom path separator.
-        path_parts = [unquote(part) for part in parsed.path.split("/")]
+        # Consume path prefix
+        path_parts = parsed.path.split("/")
         while path_parts:
             if path_parts[0] in _PRIMARY_IDENTIFIER_MAP:
                 break
@@ -202,6 +200,10 @@ class GS1DigitalLinkURI:
             path = f"/{'/'.join(path_parts)}"
             msg = f"Expected even number of path segments, got {path!r}."
             raise ParseError(msg)
+
+        # Percent-decode the segments after the split on "/", so that an
+        # encoded "/" (%2F) is part of a value and not a segment separator.
+        path_parts = [unquote(part) for part in path_parts]
 
         element_strings = GS1ElementStrings()
         path_pairs = _get_pairs(path_parts)

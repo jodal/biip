@@ -245,6 +245,14 @@ def test_parse_with_invalid_element_values(
             r"^Expected even number of path segments, got '/01/614141123452/123'.$",
         ),
         (
+            # The error shows the path segments before percent-decoding
+            "https://id.gs1.org/01/614141123452/21/A%2FB/10",
+            (
+                r"^Expected even number of path segments, "
+                r"got '/01/614141123452/21/A%2FB/10'.$"
+            ),
+        ),
+        (
             # "15" is not a valid qualifier for GTIN
             "https://id.gs1.org/01/614141123452/15/20250324",
             r"^Expected one of \(22, 10, 21, 235\) as qualifier, got '15'.$",
