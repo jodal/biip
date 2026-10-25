@@ -233,13 +233,13 @@ class GS1Message:
         if config is None:
             config = ParseConfig()
 
-        value = value.strip()
-        if not value.startswith("("):
+        hri = "".join(value.split())
+        if not hri.startswith("("):
             msg = f"Expected HRI string {value!r} to start with a parenthesis."
             raise ParseError(msg)
 
         pattern = r"\((\d+)\)([^(]+)"
-        matches: list[tuple[str, str]] = re.findall(pattern, value)
+        matches: list[tuple[str, str]] = re.findall(pattern, hri)
         if not matches:
             msg = (
                 f"Could not find any GS1 Application Identifiers in {value!r}. "
