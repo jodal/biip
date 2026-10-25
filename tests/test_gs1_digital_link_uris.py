@@ -280,6 +280,42 @@ def test_parse_error(value: str, error: str) -> None:
 
 
 @pytest.mark.parametrize(
+    ("value", "ai_code", "element_string"),
+    [
+        (
+            # Too long primary identifier
+            "https://id.gs1.org/01/070320698049881",
+            "01",
+            "01070320698049881",
+        ),
+        (
+            # Characters outside the GS1 AI encodable character set in qualifier
+            "https://id.gs1.org/01/07032069804988/21/A%C3%A6",
+            "21",
+            "21Aæ",
+        ),
+        (
+            # Too long date in query parameter
+            "https://id.gs1.org/01/07032069804988?15=21052612345",
+            "15",
+            "1521052612345",
+        ),
+    ],
+)
+def test_parse_fails_if_data_does_not_match_full_pattern(
+    value: str, ai_code: str, element_string: str
+) -> None:
+    ai = GS1ApplicationIdentifier.extract(ai_code)
+
+    with pytest.raises(ParseError) as exc_info:
+        GS1DigitalLinkURI.parse(value)
+
+    assert str(exc_info.value) == (
+        f"Failed to match {element_string!r} with GS1 AI {ai} pattern '{ai.pattern}'."
+    )
+
+
+@pytest.mark.parametrize(
     ("value", "expected"),
     [
         (
@@ -466,6 +502,11 @@ def test_as_canonical_uri(value: str, expected: str) -> None:
             # Percent-encoded "/" in qualifier
             "https://example.com/01/09521234543213/21/ABC%2FDEF",
             "(01)09521234543213(21)ABC/DEF",
+        ),
+        (
+            # Not percent-encoded ";" in qualifier
+            "https://example.com/01/09521234543213/21/AB;C",
+            "(01)09521234543213(21)AB;C",
         ),
     ],
 )
