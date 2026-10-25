@@ -214,7 +214,7 @@ class GS1DigitalLinkURI:
         if pi.zfill_to_width:
             pi_value = pi_value.zfill(pi.zfill_to_width)
         element_strings.append(
-            GS1ElementString.extract(
+            GS1ElementString.parse(
                 f"{pi.ai.ai}{pi_value}",
                 config=config,
             )
@@ -225,7 +225,7 @@ class GS1DigitalLinkURI:
         for qualifier_key, qualifier_value in path_pairs:
             qualifier = _get_qualifier(qualifier_key, expected_qualifiers)
             element_strings.append(
-                GS1ElementString.extract(
+                GS1ElementString.parse(
                     f"{qualifier.ai.ai}{qualifier_value}",
                     config=config,
                 )
@@ -242,7 +242,7 @@ class GS1DigitalLinkURI:
                 # Extra query parameters are ignored.
                 continue
             element_strings.append(
-                GS1ElementString.extract(
+                GS1ElementString.parse(
                     f"{ai.ai}{component_value}",
                     config=config,
                 )
