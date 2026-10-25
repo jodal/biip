@@ -346,6 +346,46 @@ def test_from_element_strings(
                 ),
             ),
         ),
+        (
+            "(90)N.IGK(7241)28",
+            GS1Message(
+                value="90N.IGK\x1d724128",
+                element_strings=GS1ElementStrings(
+                    [
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("90"),
+                            value="N.IGK",
+                            pattern_groups=["N.IGK"],
+                        ),
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("7241"),
+                            value="28",
+                            pattern_groups=["28"],
+                        ),
+                    ]
+                ),
+            ),
+        ),
+        (
+            "(711)?ABC(10)123",
+            GS1Message(
+                value="711?ABC\x1d10123",
+                element_strings=GS1ElementStrings(
+                    [
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("711"),
+                            value="?ABC",
+                            pattern_groups=["?ABC"],
+                        ),
+                        GS1ElementString(
+                            ai=GS1ApplicationIdentifier.extract("10"),
+                            value="123",
+                            pattern_groups=["123"],
+                        ),
+                    ]
+                ),
+            ),
+        ),
     ],
 )
 def test_parse_hri(value: str, expected: GS1Message) -> None:
@@ -369,6 +409,20 @@ def test_parse_hri_strips_surrounding_whitespace() -> None:
     message = GS1Message.parse_hri("  \t (17)221231 \n  ")
 
     assert message.value == "17221231"
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        "010703206980498815210526100329",
+        "90N.IGK\x1d724128",
+        "711?ABC\x1d10123",
+    ],
+)
+def test_parse_hri_roundtrip(value: str) -> None:
+    message = GS1Message.parse(value)
+
+    assert GS1Message.parse_hri(message.as_hri()) == message
 
 
 @pytest.mark.parametrize(
