@@ -524,11 +524,28 @@ def test_as_hri(value: str, expected: str) -> None:
         (
             "010703206980498815210526100329",
             "https://id.gs1.org/01/07032069804988/10/0329?15=210526",
-        )
+        ),
+        (
+            "010952123454321310a/b%c",
+            "https://id.gs1.org/01/09521234543213/10/a%2Fb%25c",
+        ),
     ],
 )
 def test_as_gs1_digital_link_uri(value: str, expected: str) -> None:
     assert GS1Message.parse(value).as_gs1_digital_link_uri().value == expected
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        "010703206980498815210526100329",
+        '010952123454321310a/b%c\x1d21!"%&()*+,-./:;<=>?_x',
+    ],
+)
+def test_gs1_digital_link_uri_roundtrip(value: str) -> None:
+    message = GS1Message.parse(value)
+
+    assert message.as_gs1_digital_link_uri().as_gs1_message() == message
 
 
 @pytest.mark.parametrize(
