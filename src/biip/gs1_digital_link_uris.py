@@ -121,7 +121,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
-from urllib.parse import parse_qs, urlencode, urlparse, urlunsplit
+from urllib.parse import parse_qs, quote, unquote, urlencode, urlparse, urlunsplit
 
 from biip import ParseConfig, ParseError
 from biip._exceptions import EncodeError
@@ -200,6 +200,10 @@ class GS1DigitalLinkURI:
             path = f"/{'/'.join(path_parts)}"
             msg = f"Expected even number of path segments, got {path!r}."
             raise ParseError(msg)
+
+        # Percent-decode the segments after the split on "/", so that an
+        # encoded "/" (%2F) is part of a value and not a segment separator.
+        path_parts = [unquote(part) for part in path_parts]
 
         element_strings = GS1ElementStrings()
         path_pairs = _get_pairs(path_parts)
@@ -377,10 +381,12 @@ def _build_uri(
     else:
         path = ""
 
-    path += f"/{pi_element_string.ai.ai}/{pi_element_string.value}"
+    # Path segment values are percent-encoded, since GS1 element string
+    # values can contain characters that are reserved in URIs, like "/".
+    path += f"/{pi_element_string.ai.ai}/{quote(pi_element_string.value, safe='')}"
 
     for element_string in qualifiers:
-        path += f"/{element_string.ai.ai}/{element_string.value}"
+        path += f"/{element_string.ai.ai}/{quote(element_string.value, safe='')}"
 
     other_element_strings = [
         es for es in element_strings if es not in (pi_element_string, *qualifiers)

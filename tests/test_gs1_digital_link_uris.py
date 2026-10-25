@@ -245,6 +245,14 @@ def test_parse_with_invalid_element_values(
             r"^Expected even number of path segments, got '/01/614141123452/123'.$",
         ),
         (
+            # The error shows the path segments before percent-decoding
+            "https://id.gs1.org/01/614141123452/21/A%2FB/10",
+            (
+                r"^Expected even number of path segments, "
+                r"got '/01/614141123452/21/A%2FB/10'.$"
+            ),
+        ),
+        (
             # "15" is not a valid qualifier for GTIN
             "https://id.gs1.org/01/614141123452/15/20250324",
             r"^Expected one of \(22, 10, 21, 235\) as qualifier, got '15'.$",
@@ -421,6 +429,11 @@ def test_as_uri_errors() -> None:
             "https://example.com/00/106141412345678908?02=00614141123452&37=25&10=ABC123&foo=bar",
             "https://id.gs1.org/00/106141412345678908?02=00614141123452&10=ABC123&37=25",
         ),
+        (
+            # Percent-encoded "/" in qualifier, from GS1 Digital Link section 5.10
+            "https://example.com/414/9520123456788/254/32a%2Fb",
+            "https://id.gs1.org/414/9520123456788/254/32a%2Fb",
+        ),
     ],
 )
 def test_as_canonical_uri(value: str, expected: str) -> None:
@@ -448,6 +461,11 @@ def test_as_canonical_uri(value: str, expected: str) -> None:
             # Extra query parameters are ignored
             "https://example.com/00/106141412345678908?02=00614141123452&37=25&10=ABC123&foo=bar",
             "(00)106141412345678908(02)00614141123452(37)25(10)ABC123",
+        ),
+        (
+            # Percent-encoded "/" in qualifier
+            "https://example.com/01/09521234543213/21/ABC%2FDEF",
+            "(01)09521234543213(21)ABC/DEF",
         ),
     ],
 )
