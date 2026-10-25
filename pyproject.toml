@@ -1,6 +1,6 @@
 [project]
 name = "biip"
-version = "5.1.0"
+version = "5.2.0"
 description = "Biip interprets the data in barcodes."
 authors = [{ name = "Stein Magnus Jodal", email = "stein.magnus@jodal.no" }]
 requires-python = ">=3.11"
