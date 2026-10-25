@@ -253,7 +253,7 @@ class GS1Message:
                 msg = f"Unknown GS1 Application Identifier {ai_number!r} in {value!r}."
                 raise ParseError(msg)
             element_strings.append(
-                GS1ElementString.extract(f"{ai_number}{ai_data}", config=config)
+                GS1ElementString.parse(f"{ai_number}{ai_data}", config=config)
             )
 
         return GS1Message.from_element_strings(element_strings)
