@@ -405,10 +405,18 @@ def test_parse_hri_with_gtin_with_variable_weight() -> None:
     assert gtin.weight == Decimal("1.086")
 
 
-def test_parse_hri_strips_surrounding_whitespace() -> None:
-    message = GS1Message.parse_hri("  \t (17)221231 \n  ")
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        ("  \t (17)221231 \n  ", "17221231"),
+        ("(01) 07032069804988 (15) 210526", "010703206980498815210526"),
+        ("(10) ABC 123\t(17)221231", "10ABC123\x1d17221231"),
+    ],
+)
+def test_parse_hri_ignores_whitespace(value: str, expected: str) -> None:
+    message = GS1Message.parse_hri(value)
 
-    assert message.value == "17221231"
+    assert message.value == expected
 
 
 @pytest.mark.parametrize(
