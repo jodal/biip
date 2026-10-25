@@ -121,7 +121,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
-from urllib.parse import parse_qs, urlencode, urlparse, urlunsplit
+from urllib.parse import parse_qs, quote, unquote, urlencode, urlparse, urlunsplit
 
 from biip import ParseConfig, ParseError
 from biip._exceptions import EncodeError
@@ -185,8 +185,10 @@ class GS1DigitalLinkURI:
                 msg = f"Expected URI scheme to be 'http' or 'https', got {scheme!r}."
                 raise ParseError(msg)
 
-        # Consume path prefix
-        path_parts = parsed.path.split("/")
+        # Consume path prefix. Path segments are percent-decoded after
+        # splitting, so that an encoded "/" (%2F) inside a segment value does
+        # not create a phantom path separator.
+        path_parts = [unquote(part) for part in parsed.path.split("/")]
         while path_parts:
             if path_parts[0] in _PRIMARY_IDENTIFIER_MAP:
                 break
@@ -377,10 +379,12 @@ def _build_uri(
     else:
         path = ""
 
-    path += f"/{pi_element_string.ai.ai}/{pi_element_string.value}"
+    # Path segment values are percent-encoded, since GS1 element string
+    # values can contain characters that are reserved in URIs, like "/".
+    path += f"/{pi_element_string.ai.ai}/{quote(pi_element_string.value, safe='')}"
 
     for element_string in qualifiers:
-        path += f"/{element_string.ai.ai}/{element_string.value}"
+        path += f"/{element_string.ai.ai}/{quote(element_string.value, safe='')}"
 
     other_element_strings = [
         es for es in element_strings if es not in (pi_element_string, *qualifiers)
