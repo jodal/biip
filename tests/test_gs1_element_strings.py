@@ -262,6 +262,8 @@ def test_parse_fails_when_not_matching_full_pattern(
         ("70030701021415", dt.date(2007, 1, 2), dt.datetime(2007, 1, 2, 14, 15)),  # noqa: DTZ001
         ("7006030102", dt.date(2003, 1, 2), None),
         ("7007030102", dt.date(2003, 1, 2), None),
+        ("7007030102030115", dt.date(2003, 1, 2), None),
+        ("7007250901251031", dt.date(2025, 9, 1), None),
         ("7011030102", dt.date(2003, 1, 2), None),
         ("70110301021430", dt.date(2003, 1, 2), dt.datetime(2003, 1, 2, 14, 30)),  # noqa: DTZ001
         ("800800010214", dt.date(2000, 1, 2), dt.datetime(2000, 1, 2, 14, 0)),  # noqa: DTZ001
@@ -285,6 +287,8 @@ def test_extract_date_and_datetime(
         ("11", "120230"),
         # Bad best before date
         ("15", "990229"),
+        # Bad harvest date range end
+        ("7007", "250901251399"),
     ],
 )
 def test_extract_fails_with_invalid_date(ai_code: str, bad_value: str) -> None:

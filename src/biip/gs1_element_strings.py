@@ -285,7 +285,12 @@ class GS1ElementString:
             return self
 
         try:
-            date, datetime = _parse_date_and_datetime(self.value)
+            if self.ai.ai == "7007":
+                # Harvest date is YYMMDD[YYMMDD], a date or a date range.
+                dates = [_parse_date_and_datetime(g)[0] for g in self.pattern_groups]
+                date, datetime = dates[0], None
+            else:
+                date, datetime = _parse_date_and_datetime(self.value)
         except ValueError as exc:
             if not config.gs1_element_strings_verify_date:
                 return self
